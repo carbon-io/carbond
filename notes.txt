@@ -1,0 +1,77 @@
+Plan
+  o start using just for internal microservices
+  o then look at for apps
+
+datanodes.io
+
+Use cases:
+
+o P: Your friends can see your User obj but not all fields
+  S: /public-users and /private-users with different ACLs and different projections / xforms
+
+o P: DOS attack by sending unindexed queries
+  S1: Query permissions (coarse grained (like false))
+  S2: "Data forms" but read version "Data Queries"
+  S3: Endpoint rules on constrainable fields (might still not be enough (i.e. $ne DOS))
+-----
+
+o May need more fine grained permissions. Example, might want 'query' persmission to close collection endpoint (considering {} a query)
+  Also the dual aof 'object' permission to see by ID. Combo powerful
+
+
+DatanodeClient
+  o MongoDBDatanodeClient
+     - not full substitute for leafnode -- only when looking at
+       mongodb as a datanode. if doing admin use leadnode
+  o RESTDatanodeClient
+
+But how do you interact with endpoints that are not collections? Maybe
+you dont
+
+Maybe DNs should be less open-ended. Only allowing for collections and
+commands?
+
+On server
+Collections take one are (query) and endpoint pattern is
+<root>[/?id][?<query>]
+  doGetObject(id)
+  doGetObjects(query, options)
+  doDeleteObject(id)
+  doDeleteObjects(query)
+  doUpdateObject(id, update)
+  doInsert(o)
+  doSave(o)
+
+Command (POST) (should allow at any endpoint?)
+  doCommand(cmd)
+
+Dataforms and Data Views?
+
+On client (allows callback and sync style)
+   .<http-method>(path)? // lower lower leval? (or could be .getRESTClient())
+   .getEndpoints() // this is lower level interface?
+   .getCollection(n)
+      .findById(id)
+      .find(q, options)
+      .findOne()
+      .insert()
+      .update(id, update)
+      .save(o)
+      .deleteById(id)
+      .delete(query)
+      .findAndModify()???? (later)
+      
+   .command(cmd)
+
+.connect(uri)
+
+
+
+cmdline (should it just work with o when given http url?)
+% o http://localhost:8800/
+
+-- Every serverside call (like form calls (but what about collections/cmds?)) get user id from client
+   being authenticated. DatanodeClients used from browser need to
+   authenticate for end user
+
+-- Datanode support for Kerberos? That would be cool
