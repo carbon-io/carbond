@@ -66,6 +66,11 @@ On client (allows callback and sync style)
 .connect(uri)
 
 
+var panama = datanode.connect("http://panama.mongolab.com")
+panama.getCollection("events").insert(e)
+panama.getCommand("shutdown").exec()
+panama.command("shutdown", {})
+panama.command("restart", {"wait": 1000})
 
 cmdline (should it just work with o when given http url?)
 % o http://localhost:8800/
