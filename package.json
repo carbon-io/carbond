@@ -1,26 +1,28 @@
 {
-    "name": "datanode",
-    "version": "0.1.0",
-    "description": "ooh baby",
-    "keywords": ["datanode", "datanodejs"],
-    "contributors": [
-        "Will Shulman <will@objectlabs.com>"
-    ],
-    "repository" : { 
-        "type" : "git",
-        "url" : "https://github.com/willshulman/datanode"
-    },
-    "directories" : {
-        "lib" : "./lib",
-        "bin" : "./bin"
-    },
-    "engines": { "node": "~0.8.6" },
-    "dependencies": {
-        "express" : "2.5.10",
-        "request" : "2.34.0",
-        "fibers": "0.6.9",
-        "swagger-ui" : "2.1.0-alpha.1",
-        "leafnode": "git+ssh://git@github.com:objectlabs/leafnode.git"
-    },
-    "preferGlobal": false
+  "name": "datanode",
+  "version": "0.1.0",
+  "description": "ooh baby",
+  "keywords": ["datanode", "datanodejs"],
+  "contributors": [
+    "Will Shulman <will@objectlabs.com>"
+  ],
+  "repository" : { 
+    "type" : "git",
+    "url" : "https://github.com/willshulman/datanode"
+  },
+  "directories" : {
+    "lib" : "./lib",
+    "bin" : "./bin"
+  },
+  "engines": { "node": "~0.8.6" },
+  "dependencies": {
+    "express" : "2.5.10",
+    "request" : "2.34.0",
+    "fibers": "0.6.9",
+    "mongodb": "1.4.x",
+    "microservice": "0.1.0",
+    "swagger-ui" : "2.1.0-alpha.1",
+    "leafnode": "git+ssh://git@github.com:objectlabs/leafnode.git"
+  },
+  "preferGlobal": false
 }
