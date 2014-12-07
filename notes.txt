@@ -102,6 +102,7 @@ o auditing (different?)
 o monitoring (both alive-ness and performance and correctness (from
    --testdefs)
 o auto /status endpoint plus pacemaker that calls status()
+o auto profiling (linked to Telemetry)
 o pluggable auth model (apikey, http basic, etc...)
 o acl / security 
 o autogen forms?
@@ -127,7 +128,7 @@ Doc up a list of Endpoint types with methods
   collection: "todos",
   params: {
     color: {
-       
+       // swagger style? dont need everything (line "in" etc...)
     }
   },
   
@@ -148,3 +149,32 @@ Doc up a list of Endpoint types with methods
   }
 
 }
+
+-------------------------
+
+For Collections
+   - supportsCollectionRead (find)
+     - supportsCollectionQuery?
+   - supportsCollectionUpdate (update)
+   - supportsCollectionDelete (remove)
+   - supportsObjectRead  (findById findOne)
+   - supportsObjectCreate (insert)
+   - supportsObjectUpdate (update, save)
+   - supportsObjectDelete (removeById)
+
+Tranforms?
+  - Read transform (for collection and obj reads)
+  - Write transform (for insert, update, and save) (or is update same
+  as save?)
+
+-------------------------
+
+Inchworm example
+
+supportsObjectCreate
+supportsObjectRead
+supportsObjectDelete
+
+What is a View?
+   
+
