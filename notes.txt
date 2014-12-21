@@ -120,6 +120,9 @@ Doc up a list of Endpoint types with methods
   Endpoint
     Collection
     DataView / CollectionView *** OR SHOULD ALL COLLECTIONS HAVE VIEWS??????????????
+       - maybe we do not need views on non data collections since if
+        you want to make a view it should be easy enough subclassing
+        Endpoint and using params
     DataForm / 
      
 

@@ -1,21 +1,29 @@
-o start/stpo at cmdline?
-o try subclassing Collection
-o review start taking cb but init not doing so
 o Views and forms
-o flesh out api for MongoDBCollections to be like current data api
 o Error codes
-o document Datanode / ObjectServer
+o Flesh out api for MongoDBCollections to be like current data api
+o Document Datanode / ObjectServer
 o Do example of custom collection
 o Do example of feedback form for customer why you left?
-o Auth / AC per endpoint? Telemetry example is a good one
-o envelope format for GET
-o validate schema
-o client
-o client cmdline
-o shell
-o do a pass on trying to cause error and see how they get handled
+o Do a pass on trying to cause errors and see how they get handled
 o review sync changes 
-o socket.io
 o ObjectIds in swagger coming out wrong -- probably toString of ObjectId
 o Show example of Inch with nested :id endpoint
 o How do we get a log on every object in the system not just top level?
+o Why is collection post returning array from insert (driver or us?)
+  can see in swagger ui
+o Operation class
+
+LATER
+o try subclassing Collection, review start taking cb but init not
+doing so 
+o Auth / AC per endpoint? Telemetry example is a good one
+o envelope format for GET
+o validate schema 
+o client 
+o client cmdline 
+o shell
+o socket.io
+
+PUNTED?
+o start/stpo at cmdline? NO THIS SHOULD BE MANAGED BY PROCESS MANAGER
+o 
