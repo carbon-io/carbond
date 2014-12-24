@@ -20,7 +20,9 @@ Properties
 * ```port``` - the port to listen on
 * ```description``` - a short description of this API
 * ```dbUri``` - the URI for the database (e.g.: ```'mongodb://localhost:27017/mydb' ```)
-   - ```{}```
+   - ```
+   {}
+   ```
 * ```apiRootPath``` - the root URL path for this API. All HTTP requests must use this prefix to reach the endpoints of this API
 * ```authenticator``` - the ```Authenticator``` object for this API. The authenticator is used to authenticate API users
 * ```endpoints``` - an array of ```Endpoint``` objects used to define the set of endpoints that comprise this API
