@@ -27,9 +27,14 @@ Properties
 Methods
 ----------
 
-* ```start(options, cb)```
+###start
 
-* ```stop(options, cb)```
+#### start
+
+```start(options, cb)```
+
+
+```start(options, cb)```
 
 
 Example
