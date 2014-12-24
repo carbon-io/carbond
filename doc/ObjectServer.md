@@ -17,7 +17,7 @@ The ```ObjectServer``` class is the top-level class for defining APIs.
 Example
 ----------
 
-```
+```javascript
 o({
   _type: 'datanode/ObjectServer',
   
