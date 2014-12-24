@@ -38,6 +38,9 @@ o({
 Properties
 ----------
 
+* ```port``` - the port to listen on
+* ```description``` - a short description of this API
+
 Methods
 ----------
 
