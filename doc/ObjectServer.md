@@ -3,7 +3,7 @@ class ObjectServer
 
 The ```ObjectServer``` class is the top-level class for defining APIs. 
 
-```javascript
+```js
 {
   port: <int>,
   description: <string>,
