@@ -14,6 +14,16 @@ The ```ObjectServer``` class is the top-level class for defining APIs.
 }
 ```
 
+Properties
+----------
+
+* ```port``` - the port to listen on
+* ```description``` - a short description of this API
+* ```dbUri```: - the URI for the database (ex: ```javascript 'mongodb://localhost:27017/mydb' ```)
+
+Methods
+----------
+
 Example
 ----------
 
@@ -34,15 +44,5 @@ o({
 })
 
 ```
-
-Properties
-----------
-
-* ```port``` - the port to listen on
-* ```description``` - a short description of this API
-
-Methods
-----------
-
 
 
