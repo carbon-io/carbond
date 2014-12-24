@@ -27,6 +27,10 @@ Properties
 Methods
 ----------
 
+*** start
+** start
+*** ```start(options, cb)```
+
 Example
 ----------
 
