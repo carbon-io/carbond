@@ -29,11 +29,11 @@ Methods
 
 ###start
 
-## start
+#### start
 
 ### ```start(options, cb)```
 
-## ```start(options, cb)```
+#### ```start(options, cb)```
 
 
 Example
