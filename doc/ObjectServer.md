@@ -20,7 +20,6 @@ Properties
 * ```port``` - the port to listen on
 * ```description``` - a short description of this API
 * ```dbUri``` - the URI for the database (e.g.: ```'mongodb://localhost:27017/mydb' ```)
-   - 
   ```
   {}
   ```
