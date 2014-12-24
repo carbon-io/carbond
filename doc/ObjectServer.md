@@ -32,7 +32,6 @@ Example
 
 ```node
 var o = require('maker').o(module)
-var _o = require('maker')._o(module)
 
 o({
   _type: 'datanode/ObjectServer',
