@@ -1,4 +1,7 @@
 o Views and forms
+o Inchworm /values?ids=
+   - maybe id=1&id=2 just works?
+o Example where endpoints are in other components
 o Error codes
 o Flesh out api for MongoDBCollections to be like current data api
 o Document Datanode / ObjectServer
@@ -23,6 +26,13 @@ o client
 o client cmdline 
 o shell
 o socket.io
+o CREATE method
+o MongoDBDatabase endpoint
+  - I think we should be able to re-use MongoDBCollections even if we
+  are lazy to create them, but might choose to impl not lazy collction creation?
+o decide on /lib/ shorcut in maker
+o write reasoning for o({...}) to understand _type in nested docs vs
+needed nested o({...})
 
 PUNTED?
 o start/stpo at cmdline? NO THIS SHOULD BE MANAGED BY PROCESS MANAGER

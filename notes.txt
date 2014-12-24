@@ -181,3 +181,54 @@ supportsObjectDelete
 What is a View?
    
 
+----------
+Error handling
+
+Maybe we define a BasicEndpoint that handles this:
+
+{
+  _type: 'datanode/BasicEndpoint',
+  
+  get: function(params, cb) {
+     if (!params.foo) {
+        cb(new InvalidParametersError("Foo parameter required"))
+     } else {
+       cb({foo: params.foo})
+     }
+  }
+}
+
+http://stackoverflow.com/questions/783818/how-do-i-create-a-custom-error-in-javascript
+http://j-query.blogspot.com/2014/03/custom-error-objects-in-javascript.html
+
+oo({
+  _type: Error,
+  code: 401
+})
+
+-------
+% hexshell localhost:8080
+> ls
+todos users
+> cd todos
+> options // ls?
+['get', 'post']
+> GET
+[...]
+> POST {a: 1}
+> this
+{ ... meta ... }
+
+o Can potentially use the Swagger spec that gets beamed
+o Should also have non-interactive mode or another tool called hexc
+that is more cmdline tool
+o Maybe it should be a javascript shell? Like mongo? Ooooh
+o 
+
+
+
+
+
+
+
+
