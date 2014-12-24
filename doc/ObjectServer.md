@@ -17,6 +17,24 @@ The ```ObjectServer``` class is the top-level class for defining APIs.
 Example
 ----------
 
+```
+o({
+  _type: 'datanode/ObjectServer',
+  
+  port: 8888,
+  dbUri: 'mongodb://localhost:27101/mydb',
+  endpoints: {
+    hello: {
+      _type: 'datanode/Endpoint',
+      get: function(req, res) {
+        res.send({msg: "hello world!"})  
+      }
+    }
+  ]
+})
+
+```
+
 Properties
 ----------
 
