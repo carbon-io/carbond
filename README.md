@@ -19,7 +19,7 @@ o({
     hello: {
       _type: 'datanode/Endpoint',
       get: function(req, res) {
-        req.send({msg: "hello world!"})  
+        res.send({msg: "hello world!"})  
       }
     }
   ]
