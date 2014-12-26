@@ -9,7 +9,7 @@ Configuration
 ```
 {
   path: <string>,
-  endpoints: <Endpoint>
+  endpoints: [<Endpoint>]
 }
 ```
 
