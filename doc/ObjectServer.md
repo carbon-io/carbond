@@ -10,7 +10,9 @@ The ```ObjectServer``` class is the top-level class for defining APIs.
   dbUri: <string>,
   apiRootPath: <string>,
   authenticator: <Authenticator>,
-  endpoints: [<Endpoint>],
+  endpoints: {
+    <string>: <Endpoint>,
+    ...
 }
 ```
 
@@ -27,7 +29,7 @@ Properties
 
 * ```authenticator``` - the ```Authenticator``` object for this API. The authenticator is used to authenticate API user
 
-* ```endpoints``` - an array of ```Endpoint``` objects used to define the set of endpoints that comprise this API
+* ```endpoints``` - an set of ```Endpoint``` definitions used to define the set of endpoints that comprise this API. This is an object whose keys are path string and values are instances of ```Endpoint```. Each path key will be interpreted as relative to this ```ObjectServer```s ```apiRootPath``` property. These paths can also define variable bindings (e.g. ```orders/:id```)  
 
 Methods
 ----------
