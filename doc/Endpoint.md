@@ -40,7 +40,7 @@ Each endpoint can implement one or more operations representing each of the HTTP
 
 Each operation is represented as either:
 * A function of the form ```function(req, res)```
-* An ```Operation``` object. This is more elaborate definition which allows for a description, parameter definitions, and other useful meta-data as well as a ```service``` function of the form ```function(req, res)```
+* An ```Operation``` object. This is more elaborate definition which allows for a description, parameter definitions, and other useful meta-data as well as a ```service``` method of the form ```function(req, res)```
 
 #### get
 Implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
