@@ -44,18 +44,40 @@ Each operation is represented as either:
 
 #### get
 Implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
-  * ```req```
-  * ```res```
+  * ```req```: the ```HttpRequest``` object
+  * ```res```: the ```HttpResponse``` object 
 
 #### put
-Implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
-  * ```req```
-  * ```res```
+Implementation of HTTP ```PUT```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
+  * ```req```: the ```HttpRequest``` object
+  * ```res```: the ```HttpResponse``` object 
   
 #### post
+Implementation of HTTP ```POST```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
+  * ```req```: the ```HttpRequest``` object
+  * ```res```: the ```HttpResponse``` object 
+  
 #### delete
-#### options
+Implementation of HTTP ```DELETE```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
+  * ```req```: the ```HttpRequest``` object
+  * ```res```: the ```HttpResponse``` object 
+  * 
+
+#### create (proposed)
+Implementation of HTTP ```CREATE```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
+  * ```req```: the ```HttpRequest``` object
+  * ```res```: the ```HttpResponse``` object 
+  
 #### head
+Implementation of HTTP ```HEAD```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
+  * ```req```: the ```HttpRequest``` object
+  * ```res```: the ```HttpResponse``` object 
+  
+#### options
+Implementation of HTTP ```OPTIONS```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
+  * ```req```: the ```HttpRequest``` object
+  * ```res```: the ```HttpResponse``` object 
+  
 
 Example
 ----------
