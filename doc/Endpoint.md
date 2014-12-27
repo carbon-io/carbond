@@ -61,7 +61,6 @@ Implementation of HTTP ```POST```. Either a ```function``` or an ```Operation```
 Implementation of HTTP ```DELETE```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
   * ```req```: the ```HttpRequest``` object
   * ```res```: the ```HttpResponse``` object 
-  * 
 
 #### create (proposed)
 Implementation of HTTP ```CREATE```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
