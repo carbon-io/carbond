@@ -8,7 +8,6 @@ Configuration
 
 ```
 {
-  path: <string>,
   [get: <function> | <Operation>],
   [put: <function> | <Operation>],
   [post: <function> | <Operation>],
@@ -16,14 +15,17 @@ Configuration
   [create: <function> | <Operation>],
   [head: <function> | <Operation>],
   [options: <function> | <Operation>],
-  endpoints: [<Endpoint>]
+  endpoints: { 
+    <string>: <Endpoint>
+    ...
+  }
 }
 ```
 
 Properties
 ----------
 
-* ```path``` - the path to which this endpoint is bound. The path can contain variable patterns such as ```/orders/:id```.
+* ```path``` (read-only) - the path to which this endpoint is bound. The path can contain variable patterns such as ```orders/:id```. The ```path``` property is not configured directly on ```Endpoint``` objects but are specified as lvals in enclosing defininitions of endpoints such as in an ```ObjectServer`` or a parent ```Endpoint```
 
 * ```objectserver``` (read-only) - the ```ObjectServer``` of which this endpoint is a part
 
