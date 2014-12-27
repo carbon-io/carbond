@@ -10,6 +10,7 @@ Configuration
 
 ```
 {
+  _type: 'datanode/Endpoint',
   [get: <function> | <Operation>],
   [put: <function> | <Operation>],
   [post: <function> | <Operation>],
