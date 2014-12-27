@@ -36,7 +36,7 @@ Operations
 
 Each endpoint can implement one or more operations representing one of the HTTP methods: ```GET, PUT, POST, DELETE, CREATE, HEAD, OPTIONS```. Each operation is represented as either:
 * A function of the form ```function(req, res)```
-* An ```Operation``` object, which is more elaborate definition which allows for a description, parameter definitions, and other useful meta-data as well as a ```service``` function of the form ```function(req, res)```
+* An ```Operation``` object. This is more elaborate definition which allows for a description, parameter definitions, and other useful meta-data as well as a ```service``` function of the form ```function(req, res)```
 
 #### get
 #### put
