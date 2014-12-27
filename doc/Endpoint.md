@@ -43,6 +43,9 @@ Each operation is represented as either:
 * An ```Operation``` object. This is more elaborate definition which allows for a description, parameter definitions, and other useful meta-data as well as a ```service``` function of the form ```function(req, res)```
 
 #### get
+  * ```req```
+  * ```res```
+
 #### put
 #### post
 #### delete
