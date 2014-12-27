@@ -1,7 +1,9 @@
 class Endpoint
 ----------
 
-An ```Endpoint``` is a representation of a RESTFul resource. Each endpoint can implement one or more operations representing one of the HTTP methods: ```GET, PUT, POST, DELETE, CREATE, HEAD, OPTIONS```. 
+An ```Endpoint``` is a representation of a RESTFul resource. Each endpoint can implement one or more operations representing each of the HTTP methods: ```GET, PUT, POST, DELETE, CREATE, HEAD, OPTIONS```. 
+
+Endpoints can also define child endpoints whose paths will be interpreted relative to the ```path``` of this ```Endpoint``` object.
 
 Configuration
 ----------
@@ -34,7 +36,9 @@ Properties
 Operations
 ----------
 
-Each endpoint can implement one or more operations representing one of the HTTP methods: ```GET, PUT, POST, DELETE, CREATE, HEAD, OPTIONS```. Each operation is represented as either:
+Each endpoint can implement one or more operations representing each of the HTTP methods: ```GET, PUT, POST, DELETE, CREATE, HEAD, OPTIONS```. 
+
+Each operation is represented as either:
 * A function of the form ```function(req, res)```
 * An ```Operation``` object. This is more elaborate definition which allows for a description, parameter definitions, and other useful meta-data as well as a ```service``` function of the form ```function(req, res)```
 
