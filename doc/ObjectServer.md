@@ -29,7 +29,7 @@ Properties
 
 * ```authenticator``` - the ```Authenticator``` object for this API. The authenticator is used to authenticate API user
 
-* ```endpoints``` - an set of ```Endpoint``` definitions used to define the set of endpoints that comprise this API. This is an object whose keys are path string and values are instances of ```Endpoint```. Each path key will be interpreted as relative to this ```ObjectServer```s ```apiRootPath``` property. These paths can also define variable bindings (e.g. ```orders/:id```)  
+* ```endpoints``` - an set of ```Endpoint``` definitions used to define the endpoints that comprise this API. This is an object whose keys are path string and values are instances of ```Endpoint```. Each path key will be interpreted as relative to this ```ObjectServer```s ```apiRootPath``` property. These paths can also define variable bindings (e.g. ```orders/:id```)  
 
 Methods
 ----------
