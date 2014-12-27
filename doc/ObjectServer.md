@@ -5,6 +5,8 @@ The ```ObjectServer``` class is the top-level class for defining APIs.
 
 ```
 {
+  _type: 'datanode/ObjectServer',
+
   port: <int>,
   description: <string>,
   dbUri: <string>,
