@@ -40,3 +40,17 @@ o({
 })
 ```
 
+Other stuff
+----------
+
+* Running a datanode
+* Logging
+* Swagger
+* Commandline args
+* Configuration Subclassing or creating instance of ObjectServer
+* Error handling
+* Fibers
+* Multi-file implementations (could go with productionalizing) 
+* 
+
+
