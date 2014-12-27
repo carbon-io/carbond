@@ -1,7 +1,7 @@
 class Endpoint
 ----------
 
-The ```Endpoint``` class. 
+An ```Endpoint``` is a representation of a RESTFul resource. 
 
 Configuration
 ----------
@@ -9,6 +9,13 @@ Configuration
 ```
 {
   path: <string>,
+  [get: <function> | <Operation>],
+  [put: <function> | <Operation>],
+  [post: <function> | <Operation>],
+  [delete: <function> | <Operation>],
+  [create: <function> | <Operation>],
+  [head: <function> | <Operation>],
+  [options: <function> | <Operation>],
   endpoints: [<Endpoint>]
 }
 ```
