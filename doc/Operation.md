@@ -8,17 +8,10 @@ Configuration
 
 ```
 {
-  [get: <function> | <Operation>],
-  [put: <function> | <Operation>],
-  [post: <function> | <Operation>],
-  [delete: <function> | <Operation>],
-  [create: <function> | <Operation>],
-  [head: <function> | <Operation>],
-  [options: <function> | <Operation>],
-  endpoints: { 
-    <string>: <Endpoint>
-    ...
-  }
+  _type: 'datanode/Operation',
+  [description: <string>],
+  [params: <Object>],
+  service: <function>
 }
 ```
 
@@ -30,3 +23,7 @@ Properties
 * ```objectserver``` (read-only) - the ```ObjectServer``` of which this endpoint is a part
 
 * ```endpoints``` - an set of child ```Endpoint``` definitions. This is an object whose keys are path string and values are instances of ```Endpoint```. Each path key will be interpreted as relative to this ```Endpoint```s ```path``` property. Path keys can define variable bindings (e.g. ```orders/:id```)  
+
+Methods
+----------
+
