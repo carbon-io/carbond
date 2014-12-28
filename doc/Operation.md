@@ -10,7 +10,13 @@ Configuration
 {
   _type: 'datanode/Operation',
   [description: <string>],
-  [params: <Object>],
+  [params: {
+    <string>: {
+      type: ('string', 'array', 'int' ...) // XXX flesh out
+      paramType: ('query' | 'body'),
+    },
+    ...
+  }],
   service: <function>
 }
 ```
