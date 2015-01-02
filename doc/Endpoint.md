@@ -51,7 +51,7 @@ Each endpoint can implement one or more operations representing each of the HTTP
 
 For each HTTP method, an enpoint can choose to implement either an asynchronous or a synchronous operation for that method. 
 
-#### Asynchronous operations
+### Asynchronous operations
 
 Asynchronous operations begin with an ```_``` and are implemented by the ```_get```, ```_put```, ```_post```, ```_delete```, ```_create```, ```_head```, ```_options``` class methods. 
 
