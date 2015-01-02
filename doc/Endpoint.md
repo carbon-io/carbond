@@ -53,6 +53,8 @@ For each HTTP method, an enpoint can choose to implement either an asynchronous 
 
 #### Asynchronous operations
 
+Asynchronous operations begin with an ```_``` and are implemented by the ```_get```, ```_put```, ```_post```, ```_delete```, ```_create```, ```_head```, ```_options``` class methods. 
+
 Each operation is represented as either:
 * A function of the form ```function(req, res)```
 * An ```Operation``` object. This is more elaborate definition which allows for a description, parameter definitions, and other useful meta-data as well as a ```service``` method of the form ```function(req, res)```
