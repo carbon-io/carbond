@@ -61,6 +61,15 @@ Each asynchronous operation is represented as either:
 * A function of the form ```function(req, res)```
 * An ```Operation``` object. This is more elaborate definition which allows for a description, parameter definitions, and other useful meta-data as well as a ```service``` method of the form ```function(req, res)```
 
+When implementing an an asynchronous endpoint the response object is used directly to return a response to the client.
+
+*Example*
+```
+_get: function(req, res) {
+  res.send({msg: "hello world!"})  
+}
+```
+
 #### Synchronous operations
 
 Synchronous operations are implemented by the ```get```, ```put```, ```post```, ```delete```, ```create```, ```head```, ```options``` class methods. 
