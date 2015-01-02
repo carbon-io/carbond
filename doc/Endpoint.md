@@ -11,20 +11,23 @@ Configuration
 ```
 {
   _type: 'datanode/Endpoint',
+
   [get: <function> | <Operation>],
-  [_get: <function> | <Operation>],
   [put: <function> | <Operation>],
-  [_put: <function> | <Operation>],
   [post: <function> | <Operation>],
-  [_post: <function> | <Operation>],
   [delete: <function> | <Operation>],
-  [_delete: <function> | <Operation>],
   [create: <function> | <Operation>],
-  [_create: <function> | <Operation>],
   [head: <function> | <Operation>],
-  [_head: <function> | <Operation>],
   [options: <function> | <Operation>],
+
+  [_get: <function> | <Operation>],
+  [_put: <function> | <Operation>],
+  [_post: <function> | <Operation>],
+  [_delete: <function> | <Operation>],
+  [_create: <function> | <Operation>],
+  [_head: <function> | <Operation>],
   [_options: <function> | <Operation>],
+
   endpoints: { 
     <string>: <Endpoint>
     ...
