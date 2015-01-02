@@ -70,7 +70,7 @@ _get: function(req, res) {
 }
 ```
 
-*XXX come back to talk about errors*
+*XXX come back to talk about error handling*
 
 #### Synchronous operations
 
@@ -87,7 +87,7 @@ get: function(req, res) {
 }
 ```
 
-*XXX come back to talk about errors*
+*XXX come back to talk about error handling*
 
 ##### get
 Synchronous implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
