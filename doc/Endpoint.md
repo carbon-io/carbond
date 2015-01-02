@@ -89,6 +89,8 @@ get: function(req, res) {
 
 *XXX come back to talk about error handling*
 
+### Operation details
+
 ##### get
 Synchronous implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
   * ```params```: an ```Object``` containing all path and query parameters
