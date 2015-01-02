@@ -79,7 +79,7 @@ Synchronous operations are implemented by the ```get```, ```put```, ```post```, 
 Synchronous operations provide a higher-level synchronous interface for implementing HTTP methods. The synchronous operations present a more restrictive but usually more conventient handing of parameters and errors. 
 
 **Example**
-```
+```node
 get: function(req, res) {
   return {
     msg: "hello world!"
