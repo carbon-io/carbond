@@ -68,16 +68,15 @@ Synchronous operations are implemented by the ```get```, ```put```, ```post```, 
 Synchronous operations provide a higher-level synchronous interface for implementing HTTP methods. The synchronous operations present a more restrictive but usually more conventient handing of parameters and errors. 
 
 
-##### _get
-Implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
-  * ```req```: the ```HttpRequest``` object
-  * ```res```: the ```HttpResponse``` object 
+##### get
+Synchronous implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
+  * ```params```: an ```Object``` containing all path and query parameters
 
 #### put
-Implementation of HTTP ```PUT```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
-  * ```req```: the ```HttpRequest``` object
-  * ```res```: the ```HttpResponse``` object 
-  
+Synchronous implementation of HTTP ```PUT```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
+  * ```obj```: the JSON object contained in the body of this HTTP request
+  * ```params```: an ```Object``` containing all path and query parameters
+
 #### post
 Implementation of HTTP ```POST```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
   * ```req```: the ```HttpRequest``` object
