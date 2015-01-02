@@ -28,10 +28,10 @@ Configuration
   [head: <function> | <Operation>],
   [options: <function> | <Operation>],
 
-  endpoints: { 
+  [endpoints: { 
     <string>: <Endpoint>
     ...
-  }
+  }]
 }
 ```
 
