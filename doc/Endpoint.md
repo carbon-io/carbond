@@ -101,8 +101,8 @@ get: function(params) {
 get: {
   description: "My hello world operation",
   params: {}
-  service: function(params) {
-    res.send({msg: "hello world!"})  
+  return {
+    msg: "hello world!"
   }
 }
 ```
