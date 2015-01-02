@@ -169,6 +169,20 @@ If the operation is defined by a function it will have these parameters:
 
 If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
 
+#### _get
+Implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. 
+
+If the operation is defined by a function it will have these parameters:
+  * ```req```: the ```HttpRequest``` object
+  * ```res```: the ```HttpResponse``` object 
+
+#### _put
+Implementation of HTTP ```PUT```. Either a ```function``` or an ```Operation``` object. 
+
+If the operation is defined by a function it will have these parameters:
+  * ```req```: the ```HttpRequest``` object
+  * ```res```: the ```HttpResponse``` object 
+
 #### _post
 Implementation of HTTP ```POST```. Either a ```function``` or an ```Operation``` object. 
 
@@ -187,7 +201,7 @@ If the operation is defined by a function it will have these parameters:
 
 If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
 
-#### create (proposed)
+#### _create (proposed)
 Implementation of HTTP ```CREATE```. Either a ```function``` or an ```Operation``` object. 
 
 If the operation is defined by a function it will have these parameters:
@@ -196,7 +210,7 @@ If the operation is defined by a function it will have these parameters:
 
 If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
   
-#### head
+#### _head
 Implementation of HTTP ```HEAD```. Either a ```function``` or an ```Operation``` object. 
 
 If the operation is defined by a function it will have these parameters:
@@ -205,7 +219,7 @@ If the operation is defined by a function it will have these parameters:
   
 If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
 
-#### options
+#### _options
 Implementation of HTTP ```OPTIONS```. Either a ```function``` or an ```Operation``` object. 
 
 If the operation is defined by a function it will have these parameters:
