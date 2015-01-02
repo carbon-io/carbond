@@ -12,14 +12,6 @@ Configuration
 {
   _type: 'datanode/Endpoint',
 
-  [get: <function> | <Operation>],
-  [put: <function> | <Operation>],
-  [post: <function> | <Operation>],
-  [delete: <function> | <Operation>],
-  [create: <function> | <Operation>],
-  [head: <function> | <Operation>],
-  [options: <function> | <Operation>],
-
   [_get: <function> | <Operation>],
   [_put: <function> | <Operation>],
   [_post: <function> | <Operation>],
@@ -27,6 +19,14 @@ Configuration
   [_create: <function> | <Operation>],
   [_head: <function> | <Operation>],
   [_options: <function> | <Operation>],
+  
+  [get: <function> | <Operation>],
+  [put: <function> | <Operation>],
+  [post: <function> | <Operation>],
+  [delete: <function> | <Operation>],
+  [create: <function> | <Operation>],
+  [head: <function> | <Operation>],
+  [options: <function> | <Operation>],
 
   endpoints: { 
     <string>: <Endpoint>
