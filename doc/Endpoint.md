@@ -55,7 +55,9 @@ For each HTTP method, an enpoint can choose to implement either an asynchronous 
 
 Asynchronous operations begin with an ```_``` and are implemented by the ```_get```, ```_put```, ```_post```, ```_delete```, ```_create```, ```_head```, ```_options``` class methods. 
 
-Each operation is represented as either:
+Asynchronous operations provide direct access to the raw ```HttpRequest``` and ```HttpResponse``` objects and should be used when low-level manipulation of these objects are required or the endpoint author wishes to use an asynchronous. Implementing an operation using the asynchronous interface is slightly more work than implementing the equivalent synchronous interface and requires more manual handling of errors. 
+
+Each asynchronous operation is represented as either:
 * A function of the form ```function(req, res)```
 * An ```Operation``` object. This is more elaborate definition which allows for a description, parameter definitions, and other useful meta-data as well as a ```service``` method of the form ```function(req, res)```
 
