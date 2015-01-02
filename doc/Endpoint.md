@@ -201,7 +201,7 @@ If the operation is defined by a function it will have these parameters:
 
 If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
 
-#### _create (proposed)
+#### _create
 Implementation of HTTP ```CREATE```. Either a ```function``` or an ```Operation``` object. 
 
 If the operation is defined by a function it will have these parameters:
