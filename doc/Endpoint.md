@@ -165,7 +165,7 @@ If the operation is defined by an ```Operation``` object the definition will hav
 Synchronous implementation of HTTP ```OPTIONS```. Either a ```function``` or an ```Operation``` object. 
 
 If the operation is defined by a function it will have these parameters:
-  * **none**
+  * *none*
 
 If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
 
