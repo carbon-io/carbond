@@ -70,6 +70,8 @@ _get: function(req, res) {
 }
 ```
 
+**XXX come back to talk about errors***
+
 #### Synchronous operations
 
 Synchronous operations are implemented by the ```get```, ```put```, ```post```, ```delete```, ```create```, ```head```, ```options``` class methods. 
@@ -84,6 +86,8 @@ get: function(req, res) {
   }
 }
 ```
+
+**XXX come back to talk about errors***
 
 ##### get
 Synchronous implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
