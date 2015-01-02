@@ -116,42 +116,64 @@ get: {
 #### get
 Synchronous implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. 
 
-If a function it will have the parameters:
-
+If the operation is defined by a function it will have the parameters:
   * ```params```: an ```Object``` containing all path and query parameters
 
-If an ```Operation``` object the definition will have a ```service``` method of the same signature.
+If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
 
 #### put
-Synchronous implementation of HTTP ```PUT```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
+Synchronous implementation of HTTP ```PUT```. Either a ```function``` or an ```Operation``` object. 
+
+If the operation is defined by a function it will have the parameters:
   * ```obj```: the JSON object contained in the body of this HTTP request
   * ```params```: an ```Object``` containing all path and query parameters
 
-#### post
-Implementation of HTTP ```POST```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
-  * ```req```: the ```HttpRequest``` object
-  * ```res```: the ```HttpResponse``` object 
-  
-#### delete
-Implementation of HTTP ```DELETE```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
+If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
+
+#### _post
+Implementation of HTTP ```POST```. Either a ```function``` or an ```Operation``` object. 
+
+If the operation is defined by a function it will have the parameters:
   * ```req```: the ```HttpRequest``` object
   * ```res```: the ```HttpResponse``` object 
 
-#### create (proposed)
-Implementation of HTTP ```CREATE```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
+If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
+
+#### _delete
+Implementation of HTTP ```DELETE```. Either a ```function``` or an ```Operation``` object. 
+
+If the operation is defined by a function it will have the parameters:
   * ```req```: the ```HttpRequest``` object
   * ```res```: the ```HttpResponse``` object 
+
+If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
+
+#### create (proposed)
+Implementation of HTTP ```CREATE```. Either a ```function``` or an ```Operation``` object. 
+
+If the operation is defined by a function it will have the parameters:
+  * ```req```: the ```HttpRequest``` object
+  * ```res```: the ```HttpResponse``` object 
+
+If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
   
 #### head
-Implementation of HTTP ```HEAD```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
+Implementation of HTTP ```HEAD```. Either a ```function``` or an ```Operation``` object. 
+
+If the operation is defined by a function it will have the parameters:
   * ```req```: the ```HttpRequest``` object
   * ```res```: the ```HttpResponse``` object 
   
+If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
+
 #### options
-Implementation of HTTP ```OPTIONS```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
+Implementation of HTTP ```OPTIONS```. Either a ```function``` or an ```Operation``` object. 
+
+If the operation is defined by a function it will have the parameters:
   * ```req```: the ```HttpRequest``` object
   * ```res```: the ```HttpResponse``` object 
-  
+
+If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
 
 Example
 ----------
