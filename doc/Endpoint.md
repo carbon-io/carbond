@@ -28,7 +28,7 @@ Configuration
 Properties
 ----------
 
-* ```path``` (read-only) - the path to which this endpoint is bound. The path can contain variable patterns such as ```orders/:id```. The ```path``` property is not configured directly on ```Endpoint``` objects but are specified as lvals in enclosing defininitions of endpoints such as in an ```ObjectServer``` or a parent ```Endpoint``` object. When retrieved the value of this property will be the absolute path of the endpoint from ```/```. 
+* ```path``` (read-only) - the path to which this endpoint is bound. The path can contain variable patterns such (e.g. ```'orders/:id'```). The ```path``` property is not configured directly on ```Endpoint``` objects but are specified as lvals in enclosing defininitions of endpoints such as in an ```ObjectServer``` or a parent ```Endpoint``` object. When retrieved the value of this property will be the absolute path of the endpoint from ```/```. 
 
 * ```objectserver``` (read-only) - the ```ObjectServer``` of which this endpoint is a part
 
