@@ -114,8 +114,13 @@ get: {
 ### Operation details
 
 #### get
-Synchronous implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
+Synchronous implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. 
+
+If a function it will have the parameters:
+
   * ```params```: an ```Object``` containing all path and query parameters
+
+If an ```Operation``` object the definition will have a ```service``` method of the same signature.
 
 #### put
 Synchronous implementation of HTTP ```PUT```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
