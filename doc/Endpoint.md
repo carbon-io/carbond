@@ -55,13 +55,20 @@ For each HTTP method, an enpoint can choose to implement either an asynchronous 
 
 Asynchronous operations begin with an ```_``` and are implemented by the ```_get```, ```_put```, ```_post```, ```_delete```, ```_create```, ```_head```, ```_options``` class methods. 
 
-Asynchronous operations provide direct access to the raw ```HttpRequest``` and ```HttpResponse``` objects and should be used when low-level manipulation of these objects are required or the endpoint author wishes to use an asynchronous. Implementing an operation using the asynchronous interface is slightly more work than implementing the equivalent synchronous interface and requires more manual handling of errors. 
+Asynchronous operations provide direct access to the raw ```HttpRequest``` and ```HttpResponse``` objects and should be used when low-level manipulation of these objects are required or the endpoint author wishes to use an asynchronous style. Implementing an operation using the asynchronous interface is slightly more work than implementing the equivalent synchronous interface and requires more manual handling of errors. 
 
 Each asynchronous operation is represented as either:
 * A function of the form ```function(req, res)```
 * An ```Operation``` object. This is more elaborate definition which allows for a description, parameter definitions, and other useful meta-data as well as a ```service``` method of the form ```function(req, res)```
 
-#### _get
+#### Synchronous operations
+
+Synchronous operations are implemented by the ```get```, ```put```, ```post```, ```delete```, ```create```, ```head```, ```options``` class methods. 
+
+Synchronous operations provide a higher-level synchronous interface for implementing HTTP methods. The synchronous operations present a more restrictive but usually more conventient handing of parameters and errors. 
+
+
+##### _get
 Implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
   * ```req```: the ```HttpRequest``` object
   * ```res```: the ```HttpResponse``` object 
