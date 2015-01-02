@@ -63,10 +63,20 @@ Each asynchronous operation is represented as either:
 
 When implementing an an asynchronous endpoint the response object is used directly to return a response to the client.
 
-**Example**
+**Examples**
 ```node
 _get: function(req, res) {
   res.send({msg: "hello world!"})  
+}
+```
+
+```node
+_get: {
+  description: "My hello world operation",
+  params: {}
+  service: function(req, res) {
+    res.send({msg: "hello world!"})  
+  }
 }
 ```
 
@@ -80,11 +90,21 @@ Synchronous operations provide a higher-level synchronous interface for implemen
 
 **Example**
 ```node
-get: function(req, res) {
+get: function(params) {
   return {
     msg: "hello world!"
   }
 }
+
+```node
+_get: {
+  description: "My hello world operation",
+  params: {}
+  service: function(params) {
+    res.send({msg: "hello world!"})  
+  }
+}
+```
 ```
 
 *XXX come back to talk about error handling*
