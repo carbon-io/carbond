@@ -95,6 +95,7 @@ get: function(params) {
     msg: "hello world!"
   }
 }
+```
 
 ```node
 _get: {
@@ -104,7 +105,6 @@ _get: {
     res.send({msg: "hello world!"})  
   }
 }
-```
 ```
 
 *XXX come back to talk about error handling*
