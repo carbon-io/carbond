@@ -98,7 +98,7 @@ get: function(params) {
 ```
 
 ```node
-_get: {
+get: {
   description: "My hello world operation",
   params: {}
   service: function(params) {
