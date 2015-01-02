@@ -47,7 +47,9 @@ Properties
 Operations
 ----------
 
-Each endpoint can implement one or more operations representing each of the HTTP methods: ```GET, PUT, POST, DELETE, CREATE, HEAD, OPTIONS```. 
+Each endpoint can implement one or more operations representing each of the HTTP methods: ```GET, PUT, POST, DELETE, CREATE, HEAD, OPTIONS```. There is no requirement an endpoint implement all HTTP methods. It only needs to implement those it wishes to support.
+
+For each HTTP method, an enpoint can implement either _sync_
 
 Each operation is represented as either:
 * A function of the form ```function(req, res)```
