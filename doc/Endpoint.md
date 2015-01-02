@@ -12,12 +12,19 @@ Configuration
 {
   _type: 'datanode/Endpoint',
   [get: <function> | <Operation>],
+  [_get: <function> | <Operation>],
   [put: <function> | <Operation>],
+  [_put: <function> | <Operation>],
   [post: <function> | <Operation>],
+  [_post: <function> | <Operation>],
   [delete: <function> | <Operation>],
+  [_delete: <function> | <Operation>],
   [create: <function> | <Operation>],
+  [_create: <function> | <Operation>],
   [head: <function> | <Operation>],
+  [_head: <function> | <Operation>],
   [options: <function> | <Operation>],
+  [_options: <function> | <Operation>],
   endpoints: { 
     <string>: <Endpoint>
     ...
@@ -43,7 +50,7 @@ Each operation is represented as either:
 * A function of the form ```function(req, res)```
 * An ```Operation``` object. This is more elaborate definition which allows for a description, parameter definitions, and other useful meta-data as well as a ```service``` method of the form ```function(req, res)```
 
-#### get
+#### _get
 Implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
   * ```req```: the ```HttpRequest``` object
   * ```res```: the ```HttpResponse``` object 
