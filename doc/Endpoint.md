@@ -86,7 +86,7 @@ _get: {
 
 Synchronous operations are implemented by the ```get```, ```put```, ```post```, ```delete```, ```create```, ```head```, ```options``` class methods. 
 
-Synchronous operations provide a higher-level synchronous interface for implementing HTTP methods. The synchronous operations present a more restrictive but usually more conventient handing of parameters and errors. 
+Synchronous operations provide a higher-level synchronous interface for implementing HTTP methods. The synchronous operations present a more convenient but more restrictive interface, as you do not have direct access to the underlying ```HttpRequest``` and ```HttpResponse``` objects. 
 
 **Examples**
 ```node
