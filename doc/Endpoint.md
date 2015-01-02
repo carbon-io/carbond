@@ -63,7 +63,7 @@ Each asynchronous operation is represented as either:
 
 When implementing an an asynchronous endpoint the response object is used directly to return a response to the client.
 
-*Example*
+**Example**
 ```
 _get: function(req, res) {
   res.send({msg: "hello world!"})  
@@ -76,6 +76,14 @@ Synchronous operations are implemented by the ```get```, ```put```, ```post```, 
 
 Synchronous operations provide a higher-level synchronous interface for implementing HTTP methods. The synchronous operations present a more restrictive but usually more conventient handing of parameters and errors. 
 
+**Example**
+```
+get: function(req, res) {
+  return {
+    msg: "hello world!"
+  }
+}
+```
 
 ##### get
 Synchronous implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. If a function it will have the parameters:
