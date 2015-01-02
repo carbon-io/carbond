@@ -64,7 +64,7 @@ Each asynchronous operation is represented as either:
 When implementing an an asynchronous endpoint the response object is used directly to return a response to the client.
 
 **Example**
-```
+```node
 _get: function(req, res) {
   res.send({msg: "hello world!"})  
 }
