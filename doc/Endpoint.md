@@ -113,62 +113,6 @@ get: {
 
 ### Operation details
 
-#### get
-Synchronous implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. 
-
-If the operation is defined by a function it will have these parameters:
-  * ```params```: an ```Object``` containing all path and query parameters
-
-If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
-
-#### put
-Synchronous implementation of HTTP ```PUT```. Either a ```function``` or an ```Operation``` object. 
-
-If the operation is defined by a function it will have these parameters:
-  * ```obj```: the JSON object contained in the body of this HTTP request
-  * ```params```: an ```Object``` containing all path and query parameters
-
-If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
-
-#### post
-Synchronous implementation of HTTP ```POST```. Either a ```function``` or an ```Operation``` object. 
-
-If the operation is defined by a function it will have these parameters:
-  * ```obj```: the JSON object contained in the body of this HTTP request
-  * ```params```: an ```Object``` containing all path and query parameters
-  
-#### delete
-Synchronous implementation of HTTP ```DELETE```. Either a ```function``` or an ```Operation``` object. 
-
-If the operation is defined by a function it will have these parameters:
-  * ```params```: an ```Object``` containing all path and query parameters
-
-If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
-
-#### create
-Synchronous implementation of HTTP ```CREATE```. Either a ```function``` or an ```Operation``` object. 
-
-If the operation is defined by a function it will have these parameters:
-  * ```params```: an ```Object``` containing all path and query parameters
-
-If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
-
-#### head
-Synchronous implementation of HTTP ```HEAD```. Either a ```function``` or an ```Operation``` object. 
-
-If the operation is defined by a function it will have these parameters:
-  * ```params```: an ```Object``` containing all path and query parameters
-
-If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
-
-#### options
-Synchronous implementation of HTTP ```OPTIONS```. Either a ```function``` or an ```Operation``` object. 
-
-If the operation is defined by a function it will have these parameters:
-  * *none*
-
-If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
-
 #### _get
 Implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. 
 
@@ -227,6 +171,63 @@ If the operation is defined by a function it will have these parameters:
   * ```res```: the ```HttpResponse``` object 
 
 If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
+
+#### get
+Synchronous implementation of HTTP ```GET```. Either a ```function``` or an ```Operation``` object. 
+
+If the operation is defined by a function it will have these parameters:
+  * ```params```: an ```Object``` containing all path and query parameters
+
+If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
+
+#### put
+Synchronous implementation of HTTP ```PUT```. Either a ```function``` or an ```Operation``` object. 
+
+If the operation is defined by a function it will have these parameters:
+  * ```obj```: the JSON object contained in the body of this HTTP request
+  * ```params```: an ```Object``` containing all path and query parameters
+
+If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
+
+#### post
+Synchronous implementation of HTTP ```POST```. Either a ```function``` or an ```Operation``` object. 
+
+If the operation is defined by a function it will have these parameters:
+  * ```obj```: the JSON object contained in the body of this HTTP request
+  * ```params```: an ```Object``` containing all path and query parameters
+  
+#### delete
+Synchronous implementation of HTTP ```DELETE```. Either a ```function``` or an ```Operation``` object. 
+
+If the operation is defined by a function it will have these parameters:
+  * ```params```: an ```Object``` containing all path and query parameters
+
+If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
+
+#### create
+Synchronous implementation of HTTP ```CREATE```. Either a ```function``` or an ```Operation``` object. 
+
+If the operation is defined by a function it will have these parameters:
+  * ```params```: an ```Object``` containing all path and query parameters
+
+If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
+
+#### head
+Synchronous implementation of HTTP ```HEAD```. Either a ```function``` or an ```Operation``` object. 
+
+If the operation is defined by a function it will have these parameters:
+  * ```params```: an ```Object``` containing all path and query parameters
+
+If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
+
+#### options
+Synchronous implementation of HTTP ```OPTIONS```. Either a ```function``` or an ```Operation``` object. 
+
+If the operation is defined by a function it will have these parameters:
+  * *none*
+
+If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
+
 
 Examples
 ----------
