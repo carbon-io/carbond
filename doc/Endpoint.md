@@ -228,7 +228,7 @@ If the operation is defined by a function it will have these parameters:
 
 If the operation is defined by an ```Operation``` object the definition will have a ```service``` method of the same signature.
 
-Example
+Examples
 ----------
 
 ```node
