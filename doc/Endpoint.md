@@ -66,7 +66,7 @@ When implementing an an asynchronous endpoint the response object is used direct
 **Examples**
 ```node
 _get: function(req, res) {
-  res.send({msg: "hello world!"})  
+  res.send({ msg: "hello world!" })  
 }
 ```
 
@@ -75,7 +75,7 @@ _get: {
   description: "My hello world operation",
   params: {}
   service: function(req, res) {
-    res.send({msg: "hello world!"})  
+    res.send({ msg: "hello world!" })  
   }
 }
 ```
@@ -91,9 +91,7 @@ Synchronous operations provide a higher-level synchronous interface for implemen
 **Examples**
 ```node
 get: function(params) {
-  return {
-    msg: "hello world!"
-  }
+  return { msg: "hello world!" }
 }
 ```
 
@@ -102,9 +100,7 @@ get: {
   description: "My hello world operation",
   params: {}
   service: function(params) {
-    return {
-      msg: "hello world!"
-    }
+    return { msg: "hello world!" }
   }
 }
 ```
