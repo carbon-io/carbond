@@ -47,7 +47,7 @@ Each operation is represented as either:
 
 When responding to HTTP requests, two styles are supported:
 * An asynchronous style where operations write directly to the ```HttpResponse``` object passed to the operation. This style is useful when the operation needs to manipulate the ```HttpResponse``` object to do more than simply return JSON (e.g. set HTTP headers), or wished to pass the response to other functions.
-* A synchronous style where the operation simply returns a JSON object from the operation, or throws an exception to signal an error condition. This style is useful when programming in a more synchronous style and / or coordinating with exceptions thrown deeper in the call stack.
+* A synchronous style where the operation simply returns a JSON object from the operation, or throws an exception to signal an error condition. When using this style the ```HttpResponse``` parameter can be omitted from the function signature of the operation. This style is useful when programming in a more synchronous style and / or coordinating with exceptions thrown deeper in the call stack.
 
 **Examples (asynchronous)**
 ```node
