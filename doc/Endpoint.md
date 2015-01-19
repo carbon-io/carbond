@@ -68,7 +68,7 @@ get: {
 
 **Examples (synchronous)**
 ```node
-get: function(params) {
+get: function(req) {
   return { msg: "hello world!" }
 }
 ```
@@ -77,7 +77,7 @@ get: function(params) {
 get: {
   description: "My hello world operation",
   params: {}
-  service: function(params) {
+  service: function(req) {
     return { msg: "hello world!" }
   }
 }
