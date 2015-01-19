@@ -5,6 +5,11 @@ An ```Endpoint``` is a representation of a RESTFul resource. Each endpoint can i
 
 Endpoints can also define child endpoints whose paths will be interpreted relative to the ```path``` of this ```Endpoint``` object.
 
+```
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+
 Configuration
 ----------
 
