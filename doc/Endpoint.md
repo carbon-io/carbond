@@ -46,10 +46,10 @@ Each operation is represented as either:
 * An ```Operation``` object. This is more elaborate definition which allows for a description, parameter definitions, and other useful meta-data as well as a ```service``` method of the form ```function(req, res)```
 
 When responding to HTTP requests, two styles are supported:
-* An asynchronous style where operations write directly to the ```HttpResponse``` object passed to the operation
-* A synchronous style where the operation simply returns a JSON object from the operation, or throws an exception to signal an error condition
+* An asynchronous style where operations write directly to the ```HttpResponse``` object passed to the operation. This style is useful when the operation needs to manipulate the ```HttpResponse``` object to do more than simply return JSON (e.g. set HTTP headers), or wished to pass the response to other functions.
+* A synchronous style where the operation simply returns a JSON object from the operation, or throws an exception to signal an error condition. This style is useful when programming in a more synchronous style and / or coordinating with exceptions thrown deeper in the call stack.
 
-**Examples**
+**Examples (asynchronous)**
 ```node
 get: function(req, res) {
   res.send({ msg: "hello world!" })  
@@ -62,6 +62,23 @@ get: {
   params: {}
   service: function(req, res) {
     res.send({ msg: "hello world!" })  
+  }
+}
+```
+
+**Examples (synchronous)**
+```node
+get: function(params) {
+  return { msg: "hello world!" }
+}
+```
+
+```node
+get: {
+  description: "My hello world operation",
+  params: {}
+  service: function(params) {
+    return { msg: "hello world!" }
   }
 }
 ```
