@@ -15,6 +15,11 @@ o How do we get a log on every object in the system not just top level?
 o Why is collection post returning array from insert (driver or us?)
   can see in swagger ui
 o Operation class
+o Do we want an Endpoint.operations() that gets all the defined operations?
+o What's up with swagger and :id? vs :id
+o change apiRootPath to path and make ObjectServer an Endpoint
+o How does one make /bin wrappers. shebang or bsh?
+o test _super more -- in Inchworm.js it freaked
 
 LATER
 o try subclassing Collection, review start taking cb but init not

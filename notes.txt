@@ -226,9 +226,12 @@ o Maybe it should be a javascript shell? Like mongo? Ooooh
 o 
 
 
+-----------
+Data binding
 
+The big question is do we want db.getCollection('foo').find() to
+return object bound to their classes yet? 
 
+Related is how we do subobj types
 
-
-
-
+And how do we do it if there is no db involved? 
