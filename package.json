@@ -18,7 +18,7 @@
   "dependencies": {
     "express" : "2.5.10",
     "request" : "2.34.0",
-    "fibers": "0.6.9",
+    "fibers-utils": "git+ssh://git@github.com:objectlabs/fibers-utils.git",
     "mongodb": "1.4.x",
     "microservice": "0.1.0",
     "swagger-ui" : "2.1.0-alpha.1",

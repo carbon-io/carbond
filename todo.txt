@@ -1,10 +1,10 @@
+o Try to figure out how to get a fiber to wrap _main as well as o({}) when in main case
 o Views and forms
 o Inchworm /values?ids=
    - maybe id=1&id=2 just works?
 o Example where endpoints are in other components
 o Error codes
 o Flesh out api for MongoDBCollections to be like current data api
-o Document Datanode / ObjectServer
 o Do example of custom collection
 o Do example of feedback form for customer why you left?
 o Do a pass on trying to cause errors and see how they get handled
@@ -20,6 +20,7 @@ o What's up with swagger and :id? vs :id
 o change apiRootPath to path and make ObjectServer an Endpoint
 o How does one make /bin wrappers. shebang or bsh?
 o test _super more -- in Inchworm.js it freaked
+o ObjectServer an Endpoint
 
 LATER
 o try subclassing Collection, review start taking cb but init not
@@ -38,7 +39,19 @@ o MongoDBDatabase endpoint
 o decide on /lib/ shorcut in maker
 o write reasoning for o({...}) to understand _type in nested docs vs
 needed nested o({...})
+- LRU cache endpoint based on a field
 
 PUNTED?
 o start/stpo at cmdline? NO THIS SHOULD BE MANAGED BY PROCESS MANAGER
 o 
+
+
+--------
+
+> a = { get foo() { return 7 }}
+{ foo: [Getter] }
+> a
+{ foo: [Getter] }
+> a.foo
+7
+http://stackoverflow.com/questions/14047809/js-defineproperty-and-prototype
