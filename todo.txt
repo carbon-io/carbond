@@ -1,4 +1,3 @@
-o Try to figure out how to get a fiber to wrap _main as well as o({}) when in main case
 o Views and forms
 o Inchworm /values?ids=
    - maybe id=1&id=2 just works?
@@ -21,10 +20,14 @@ o change apiRootPath to path and make ObjectServer an Endpoint
 o How does one make /bin wrappers. shebang or bsh?
 o test _super more -- in Inchworm.js it freaked
 o ObjectServer an Endpoint
+o in swagger ui if you do an obj get with no id the request url is
+odd. Think this is swagge bug
+   http://Wills-MacBook-Pro.local:8888/zipcodes/{id}
 
 LATER
 o try subclassing Collection, review start taking cb but init not
 doing so 
+o UserOwnedMDBCollection
 o Auth / AC per endpoint? Telemetry example is a good one
 o envelope format for GET
 o validate schema 

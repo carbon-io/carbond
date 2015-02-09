@@ -235,3 +235,8 @@ return object bound to their classes yet?
 Related is how we do subobj types
 
 And how do we do it if there is no db involved? 
+
+----
+UserOwnedMongoDBCollection
+  collection: foo
+  userIdProperty: user
