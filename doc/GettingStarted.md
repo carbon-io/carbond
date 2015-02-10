@@ -27,7 +27,7 @@ Your package.json should include ```datanode```
 }
 ```
 
-#### Create the API
+### Create the API
 
 Here comes the magic. Create a file called HelloWorldAPI.js
 
@@ -47,3 +47,6 @@ module.exports = o({
   }
 })
 ```
+
+### Run the API
+
