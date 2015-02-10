@@ -72,3 +72,6 @@ In your web browser navigate to [http://localhost:8888/apidoc](http://localhost:
 
 _INSERT IMAGE_
 
+### More examples
+
+Studying xamples is a great way to learn. We have tons of examples at LINK
