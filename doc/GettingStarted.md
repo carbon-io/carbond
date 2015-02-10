@@ -58,7 +58,7 @@ module.exports = o({
 
 You now have a RESTful web service running on port 8888. You can connect to it via HTTP in a variety of ways. 
 
-** Simple curl test **
+**Simple curl test**
 
 ```console
 % curl localhost:8888/hello
@@ -66,7 +66,7 @@ You now have a RESTful web service running on port 8888. You can connect to it v
 %
 ```
 
-** API Browser **
+**API Browser**
 
 In your web browser navigate to: 
    
