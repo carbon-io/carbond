@@ -1,8 +1,7 @@
-# Getting started (Hello World)
-***
-
-Creating the package
+Getting started (Hello World)
 ----------
+
+### Creating the package
 
 The first step is to create a standard Node.js package
 
@@ -25,8 +24,7 @@ Your package.json should include ```datanode```
 }
 ```
 
-Creating the API
-----------
+### Creating the API
 
 Here comes the magic. Create a file called HelloWorldAPI.js
 
