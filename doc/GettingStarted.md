@@ -54,8 +54,23 @@ module.exports = o({
 [Mon Feb 09 2015 21:56:41 GMT-0800 (PST)] INFO: ObjectServer running
 ```
 
+### Connecting to your API
+
+You now have a RESTful web service running on port 8888. You can connect to it via HTTP in a variety of ways. 
+
+** Simple curl test **
+
 ```console
 % curl localhost:8888/hello
 {"msg":"Well hello there world"}
 %
 ```
+
+** API Browser **
+
+In your web browser navigate to: 
+   
+   ```http://localhost:8888/apidoc```
+ 
+
+
