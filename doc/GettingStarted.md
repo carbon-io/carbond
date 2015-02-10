@@ -28,7 +28,7 @@ Your package.json should include ```datanode```
 
 #### Create the API
 
-Create a file called HelloWorldAPI.js
+Here comes the magic. Create a file called HelloWorldAPI.js
 
 ```node
 var o = require('maker').o(module)
