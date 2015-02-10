@@ -1,10 +1,8 @@
-# Getting started
+# Getting started (Hello World)
 ***
 
-Defining your first API
+Creating the package
 ----------
-
-### Creating the package
 
 The first step is to create a standard Node.js package
 
@@ -27,7 +25,8 @@ Your package.json should include ```datanode```
 }
 ```
 
-### Creating the API
+Creating the API
+----------
 
 Here comes the magic. Create a file called HelloWorldAPI.js
 
@@ -41,7 +40,7 @@ module.exports = o({
     hello: {
       _type: 'datanode/Endpoint',
       get: function(req) {
-        return { msg: "hello world!" }
+        return { msg: "Hello World!" }
       }
     }
   }
