@@ -16,7 +16,7 @@ The first step is to create a standard Node.js package
 
 Your package.json should include ```datanode```
 
-```json
+```node
 {
     "name": "hello-world",
     "description": "Hello World API",
