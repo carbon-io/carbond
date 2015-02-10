@@ -74,4 +74,4 @@ _INSERT IMAGE_
 
 ### More examples
 
-Studying xamples is a great way to learn. We have tons of examples at LINK
+Studying examples is a great way to learn. We have tons of examples at LINK
