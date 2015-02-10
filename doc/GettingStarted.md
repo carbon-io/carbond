@@ -47,7 +47,7 @@ module.exports = o({
 
 ### Running the API
 
-```zsh
+```bash session
 % node HelloService.js
 [Mon Feb 09 2015 21:56:41 GMT-0800 (PST)] INFO: ObjectServer starting...
 [Mon Feb 09 2015 21:56:41 GMT-0800 (PST)] INFO: ObjectServer listening on port 8888
