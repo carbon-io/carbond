@@ -32,7 +32,7 @@ Your package.json should include ```datanode```
 Here comes the magic. Create a file called HelloWorldAPI.js
 
 ```node
-var o = require('maker').o(module)
+var o = require('maker').o(module, true)
 
 module.exports = o({
   _type: 'datanode/ObjectServer',
