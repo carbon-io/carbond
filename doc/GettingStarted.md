@@ -35,7 +35,6 @@ var o = require('maker').o(module)
 
 module.exports = o({
   _type: 'datanode/ObjectServer',
-
   port: 8888,
   endpoints: {
     hello: {
@@ -44,6 +43,6 @@ module.exports = o({
         return { msg: "hello world!" }
       }
     }
-  ]
+  }
 })
 ```
