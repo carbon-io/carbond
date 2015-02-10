@@ -1,7 +1,6 @@
 Getting started
-==========
 
-
+***
 
 Defining your first API
 ----------
