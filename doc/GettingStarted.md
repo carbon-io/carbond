@@ -54,3 +54,8 @@ module.exports = o({
 [Mon Feb 09 2015 21:56:41 GMT-0800 (PST)] INFO: ObjectServer running
 ```
 
+```console
+% curl localhost:8888/hello
+{"msg":"Well hello there world"}
+%
+```
