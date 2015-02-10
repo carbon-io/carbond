@@ -1,14 +1,12 @@
-o({})
+Getting started
 ==========
 
 ***
 
-Getting started
+Defining your first API
 ----------
 
-### Defining your first API
-
-#### Create your package
+### Create your package
 
 The first step is to create a standard Node.js package
 
