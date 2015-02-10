@@ -68,10 +68,8 @@ You now have a RESTful web service running on port 8888. You can connect to it v
 
 **API Browser**
 
-In your web browser navigate to: 
+In your web browser navigate to [http://localhost:8888/apidoc](http://localhost:8888/apidoc)
 
-   [http://localhost:8888/apidoc](http://localhost:8888/apidoc)
-
-dasd 
+<insert image>
 
 
