@@ -26,7 +26,7 @@ Your package.json should include ```datanode```
 
 ### Creating the API
 
-Here comes the magic. Create a file called HelloWorldAPI.js
+Here comes the magic. Create a file called HelloService.js
 
 ```node
 var o = require('maker').o(module, true)
@@ -48,7 +48,9 @@ module.exports = o({
 ### Running the API
 
 ```zsh
-% node HelloWorld.js
-
+% node HelloService.js
+[Mon Feb 09 2015 21:56:41 GMT-0800 (PST)] INFO: ObjectServer starting...
+[Mon Feb 09 2015 21:56:41 GMT-0800 (PST)] INFO: ObjectServer listening on port 8888
+[Mon Feb 09 2015 21:56:41 GMT-0800 (PST)] INFO: ObjectServer running
 ```
 
