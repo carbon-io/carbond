@@ -47,7 +47,7 @@ module.exports = o({
 
 ### Running the API
 
-```shell
+```bash
 % node HelloWorld.js
 
 ```
