@@ -62,7 +62,7 @@ You now have a RESTful web service running on port 8888. You can connect to it v
 
 ```console
 % curl localhost:8888/hello
-{"msg":"Well hello there world"}
+{"msg":"Hello World!"}
 %
 ```
 
