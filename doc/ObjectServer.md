@@ -49,23 +49,20 @@ Example
 ----------
 
 ```node
-var o = require('maker').o(module)
+var o = require('maker').o(module, true)
 
-o({
+module.exports = o({
   _type: 'datanode/ObjectServer',
-  
   port: 8888,
-  dbUri: 'mongodb://localhost:27017/mydb',
   endpoints: {
     hello: {
       _type: 'datanode/Endpoint',
-      get: function(req, res) {
+      get: function(req) {
         return { msg: "Hello World!" }
       }
     }
-  ]
+  }
 })
-
 ```
 
 
