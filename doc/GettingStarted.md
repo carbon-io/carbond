@@ -1,9 +1,11 @@
 Getting started (Hello World)
 ----------
 
-### Creating the package
+### Creating the API
 
 The first step is to create a standard Node.js package
+
+**Creating the package**
 
 ```
 <path-to-your-app>/
@@ -24,7 +26,8 @@ Your package.json should include ```datanode```
 }
 ```
 
-### Creating the API
+**Defining the API**
+
 
 Here comes the magic. Create a file called HelloService.js
 
