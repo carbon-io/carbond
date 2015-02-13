@@ -1,10 +1,10 @@
 datanode
 ----------
 
-* Getting started
-  * Defining your first API
-  * Start your datanode
-  * Play with your API using the auto-generated interactive API documentation
+* [Getting started](GettingStarted)
+  * Creating the API
+  * Running the API
+  * Connecting to the API
 * User guide
   * Overview
   * Fibers
