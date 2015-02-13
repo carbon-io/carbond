@@ -24,7 +24,7 @@ Your package.json should include ```datanode```
 }
 ```
 
-Next we define the API. Here is where the magic is. Create a file called HelloService.js
+Next we define the API. This is where the magic is. Create a file called HelloService.js
 
 ```node
 var o = require('maker').o(module, true)
