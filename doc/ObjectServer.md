@@ -35,14 +35,7 @@ Properties
 Methods
 ----------
 
-###start
-
-#### start
-
-```start(options, cb)```
-
-
-```start(options, cb)```
+TBD`
 
 
 Example
