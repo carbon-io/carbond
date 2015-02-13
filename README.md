@@ -9,7 +9,8 @@ datanode
   * Overview
   * Fibers
   * Maker
-  * The ObjectServer, Endpoints
+  * [ObjectServer](doc/ObjectServer.md)
+  * [Endpoints](doc/Endpoint.md)
   * Running a datanode
   * Commandline args
   * Auto-generated interactive API documentation
