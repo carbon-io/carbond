@@ -1,7 +1,7 @@
 datanode
 ----------
 
-* [Getting started](GettingStarted)
+* [Getting started](doc/GettingStarted)
   * Creating the API
   * Running the API
   * Connecting to the API
