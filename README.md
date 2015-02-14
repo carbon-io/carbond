@@ -1,15 +1,16 @@
 datanode
 ----------
 
-* Getting started
-  * Defining your first API
-  * Start your datanode
-  * Play with your API using the auto-generated interactive API documentation
+* [Getting started](doc/GettingStarted.md)
+  * Creating the API
+  * Running the API
+  * Connecting to the API
 * User guide
   * Overview
   * Fibers
   * Maker
-  * The ObjectServer, Endpoints
+  * [ObjectServer](doc/ObjectServer.md)
+  * [Endpoints](doc/Endpoint.md)
   * Running a datanode
   * Commandline args
   * Auto-generated interactive API documentation
