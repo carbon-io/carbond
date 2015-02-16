@@ -239,4 +239,174 @@ And how do we do it if there is no db involved?
 ----
 UserOwnedMongoDBCollection
   collection: foo
-  userIdProperty: user
+  userIdProperty: user 
+
+-----
+Collection ACLs
+
+{
+
+  acl: {
+    _type: 'datanode/EndpointAcl',
+    entries: {
+      "*": {   
+        get: function(req) { return req.user.group === "FunkyGroup" },
+        put: false,
+        post: false,
+        delete: false,
+        head: false,
+        options: false,
+      },
+      "role:Admin": {
+         get: true,
+         put: true,
+         post: true,
+         delete: false,
+         head: true,
+      },
+      "title:CFO": {
+         read: true,
+         find: true,
+         insert: true,
+         update: true,
+         delete: false,
+      }
+    }
+}
+
+{
+
+  acl: {
+    _type: 'datanode/CollectionAcl',
+    permissionDefinitions: {
+      read: false, // <perm>: <default>
+      ...
+    },
+    groupDefinitions: {
+      group: 'group',
+      role: 'role',
+    },
+    entries: {
+      "*": {   
+        read: function(req) { return req.user.group === "FunkyGroup" },
+        find: function(user) { return user.group === "FunkyGroup" },,
+        insert: false,
+        update: false,
+        delete: false,
+      },
+      "role:Admin": {
+         read: true,
+         find: true,
+         insert: true,
+         update: true,
+         delete: true,
+      }
+    }
+}
+
+OR
+
+{ // private collection 
+
+  __acls__: {
+    "*": false 
+}
+
+{ // public collection 
+
+  __acls__: {
+    "*": true 
+}
+
+{ // local access collection 
+
+  __acls__: {
+    "*": function(req) { return req.ip === 127.0.0.1 } // XXX spoofable?
+}
+
+Doc ACLs
+
+{
+
+  __acl__: {
+    "*": {
+      read: false,
+      write: false,
+      delete: false,
+      admin: false 
+    },
+    "user:1234": {
+        read: true,
+        write: true,
+        delete: true,
+        admin: true,
+        owner: true // (maybe as owner he is the only one that can see 
+                       acl properties (or as admin) 
+    },
+    "user:1234": {
+        read: {
+          "*": true,
+          "ssn": false,
+          "address.zip": false
+        },
+        write: false,
+        delete: false,
+        admin: false // XXX would we ever give someone else ability?
+    }
+    
+  }
+}
+
+o Should we make roles more first class and hierarchical?
+o Do we allow for overlapping acl rules? How do we deal with that?
+o Do we strip objects of non-acl passing or just reject and require
+fields mask from client call results in doc that passes acl 
+o ACL infrastructure must be easy to use manually when not using
+MongoDBCollection
+o How do Collection ACLs differ from ACLs on Enpoints
+  - probably just different permissions (http methods vs collection methods)
+o Should have "root" user concept for the programmer (not app users)
+  - pass / key configured in app (or db?)
+  - bypasses all security (code can say req.user ==
+  objectserver.rootUser) or something like that
+  - 
+
+How will we write MongoDBCollection?
+collectionRead
+  - will apply acl on each result object
+collectionInsert
+  - will apply ACL if exists on incoming object or add default acl
+collectionUpdate
+  - need to get the actual acl from each object before updating
+  - may have to not impl as multi-update in mongodb and impl like this
+    - get all objects that match query (can mask for just acl)
+    - for each object look at acl
+      - if passes acl then issue atomic update or save to single doc 
+    - must convince this race is no worse than natural race
+    - ** must make sure we look at the ACL on object in db as well as
+    one coming in (if any)
+    - ** must merge in existing ACLs on save so we don't stomp on them / remove them
+    - ** may be able to optimize by augmenting query with matches on
+    ACL ruls but could get complex with both property level ac as well
+    as the possibility of many acls matching (role and user for example)
+collectionCreate
+  - TBD but probably no-op
+collectionDelete
+  - Same as update. 
+objectRead
+  - Just look at ACL
+objectUpdate
+  - Read first, check ACL and then apply update
+objectDelete
+  - Read first, check ACL and then delete
+
+
+http://docs.spring.io/spring-security/site/docs/3.0.x/reference/domain-acls.html
+http://www.cs.mun.ca/~michael/java/jdk1.1-beta2-docs/guide/security/Acl.html
+------
+
+
+
+
+
+

@@ -17,12 +17,13 @@
   "engines": { "node": "~0.8.6" },
   "dependencies": {
     "express" : "2.5.10",
+    "basic-auth": "~1.0.0",
     "request" : "2.34.0",
     "mongodb": "1.4.x",
     "microservice": "0.1.0",
     "swagger-ui" : "2.1.0-alpha.1",
     "bunyan": "1.2.*",
-    "leafnode": "git+ssh://git@github.com:objectlabs/leafnode.git"
+    "leafnode": "git+ssh://git@github.com:objectlabs/leafnode.git#v2.1.2"
   },
   "preferGlobal": false
 }

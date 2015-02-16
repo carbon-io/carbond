@@ -1,3 +1,9 @@
+o in maker defineProperties and _init called from constructor (not _C
+but real consstructor)
+o Finish with Operation
+o Maker to allow _type passed in
+o In ACLs how to deal with numeric user spec values vs strings?
+o MOngoDBCollection db vs dbs
 o Views and forms
 o Inchworm /values?ids=
    - maybe id=1&id=2 just works?
@@ -27,6 +33,7 @@ odd. Think this is swagge bug
 LATER
 o try subclassing Collection, review start taking cb but init not
 doing so 
+o X-Powered-By: Express
 o UserOwnedMDBCollection
 o Auth / AC per endpoint? Telemetry example is a good one
 o envelope format for GET
@@ -43,6 +50,7 @@ o decide on /lib/ shorcut in maker
 o write reasoning for o({...}) to understand _type in nested docs vs
 needed nested o({...})
 - LRU cache endpoint based on a field
+o what is difference between PUT and PATCH?
 
 PUNTED?
 o start/stpo at cmdline? NO THIS SHOULD BE MANAGED BY PROCESS MANAGER
