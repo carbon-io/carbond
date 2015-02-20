@@ -48,12 +48,12 @@ module.exports = o({
   _type: 'datanode/ObjectServer',
   port: 8888,
   endpoints: {
-    hello: {
+    hello: o({
       _type: 'datanode/Endpoint',
       get: function(req) {
         return { msg: "Hello World!" }
       }
-    }
+    })
   }
 })
 ```
