@@ -66,3 +66,10 @@ o
 > a.foo
 7
 http://stackoverflow.com/questions/14047809/js-defineproperty-and-prototype
+
+
+------ main booty
+https://www.npmjs.com/package/lone (eh seems complex)
+http://stackoverflow.com/questions/9449485/node-js-native-module-third-party-main-not-working (gyp)
+   https://github.com/joyent/node/blob/master/node.gyp
+http://qnalist.com/questions/5517523/tutorial-one-hackish-way-to-compile-js-and-native-addons-into-nodejs
