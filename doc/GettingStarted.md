@@ -27,20 +27,21 @@ Your package.json should include ```datanode```
 Next we define the API. This is where the magic is. Create a file called HelloService.js
 
 ```node
-var o = require('maker').o(module, true)
+var o = require('maker').o(module)
+var __ = require('maker').__(module, true)
 
-module.exports = o({
+module.exports = __(function() { return o({
   _type: 'datanode/ObjectServer',
   port: 8888,
   endpoints: {
-    hello: {
+    hello: o({
       _type: 'datanode/Endpoint',
       get: function(req) {
         return { msg: "Hello World!" }
       }
-    }
+    })
   }
-})
+})})
 ```
 
 ### Running the API
