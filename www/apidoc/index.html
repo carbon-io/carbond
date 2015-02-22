@@ -31,7 +31,7 @@
         docExpansion: "full",
         onComplete: function(swaggerApi, swaggerUi) {
           log("Loaded SwaggerUI");
-//          Docs.toggleEndpointListForResource('/hello');
+          log(swaggerApi)
           if(typeof initOAuth == "function") {
             /*
             initOAuth({
@@ -49,12 +49,32 @@
         sorter : "alpha"
       });
 
+      function addApiKeyAuthorization() {
+        var key = $('#input_apiKey')[0].value;
+        log("key: " + key);
+        if(key && key.trim() != "") {
+          log("added key " + key);
+          window.authorizations.add("api_key", new ApiKeyAuthorization("api_key", key, "query"));
+        }
+      }
+      $('#input_apiKey').change(function() {
+        addApiKeyAuthorization();
+      });
+
       window.swaggerUi.load();
   });
   </script>
 </head>
 
 <body class="swagger-section">
+<div id='header'>
+  <form id='api_selector'>
+  <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
+  </form>
+  <br><br>
+</div>
+<br>
+
 <div id="swagger-ui-container" class="swagger-ui-wrap"></div>
 </body>
 </html>
