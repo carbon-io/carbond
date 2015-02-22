@@ -1,38 +1,32 @@
+o simplify instantiate by type
 o in maker defineProperties and _init called from constructor (not _C
-but real consstructor)
+but real consstructor) so we can have new called on oo produced classes
 o Finish with Operation
 o Maker to allow _type passed in
-o In ACLs how to deal with numeric user spec values vs strings?
 o MOngoDBCollection db vs dbs
 o Views and forms
 o Inchworm /values?ids=
    - maybe id=1&id=2 just works?
 o Example where endpoints are in other components
-o Error codes
+o Responds with stuff in swagger spec (for errors etc...)
 o Flesh out api for MongoDBCollections to be like current data api
-o Do example of custom collection
 o Do example of feedback form for customer why you left?
 o Do a pass on trying to cause errors and see how they get handled
 o review sync changes 
 o ObjectIds in swagger coming out wrong -- probably toString of ObjectId
 o Show example of Inch with nested :id endpoint
-o How do we get a log on every object in the system not just top level?
 o Why is collection post returning array from insert (driver or us?)
   can see in swagger ui
-o Operation class
 o Do we want an Endpoint.operations() that gets all the defined operations?
 o What's up with swagger and :id? vs :id
-o change apiRootPath to path and make ObjectServer an Endpoint
 o How does one make /bin wrappers. shebang or bsh?
 o test _super more -- in Inchworm.js it freaked
-o ObjectServer an Endpoint
 o in swagger ui if you do an obj get with no id the request url is
 odd. Think this is swagge bug
    http://Wills-MacBook-Pro.local:8888/zipcodes/{id}
 
 LATER
-o try subclassing Collection, review start taking cb but init not
-doing so 
+o leafnode async
 o X-Powered-By: Express
 o UserOwnedMDBCollection
 o Auth / AC per endpoint? Telemetry example is a good one
