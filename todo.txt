@@ -1,4 +1,5 @@
-o simplify instantiate by type
+o should json parse apiKey (number vs string etc...)
+o Swagger ui and auth
 o in maker defineProperties and _init called from constructor (not _C
 but real consstructor) so we can have new called on oo produced classes
 o Finish with Operation
@@ -7,6 +8,8 @@ o MOngoDBCollection db vs dbs
 o Views and forms
 o Inchworm /values?ids=
    - maybe id=1&id=2 just works?
+o Upgrade Express
+  -- when you do need to change req.header to req.get (maybe) in ApiKeyAuthenticator.js
 o Example where endpoints are in other components
 o Responds with stuff in swagger spec (for errors etc...)
 o Flesh out api for MongoDBCollections to be like current data api
@@ -28,6 +31,7 @@ odd. Think this is swagge bug
 LATER
 o leafnode async
 o X-Powered-By: Express
+o Deal with encryption in authenticators
 o UserOwnedMDBCollection
 o Auth / AC per endpoint? Telemetry example is a good one
 o envelope format for GET
@@ -37,6 +41,8 @@ o client cmdline
 o shell
 o socket.io
 o CREATE method
+o Make sure you cant, as a client, use HTTP Method foo and end up
+calling endpoint.foo (security)
 o MongoDBDatabase endpoint
   - I think we should be able to re-use MongoDBCollections even if we
   are lazy to create them, but might choose to impl not lazy collction creation?
@@ -48,7 +54,8 @@ o what is difference between PUT and PATCH?
 
 PUNTED?
 o start/stpo at cmdline? NO THIS SHOULD BE MANAGED BY PROCESS MANAGER
-o 
+o indexes. maybe allow def on OS and have flags for auto-create vs
+having to run command vs nothing
 
 
 --------
@@ -67,3 +74,81 @@ https://www.npmjs.com/package/lone (eh seems complex)
 http://stackoverflow.com/questions/9449485/node-js-native-module-third-party-main-not-working (gyp)
    https://github.com/joyent/node/blob/master/node.gyp
 http://qnalist.com/questions/5517523/tutorial-one-hackish-way-to-compile-js-and-native-addons-into-nodejs
+
+--------------------
+Creating users: how do we control the object created and how do we
+control DOS?
+   - just make it artificially slow? 
+   - ip throttling? (Good for DOS but not DDOS)
+   - Schema on post / insert good enough?
+     - WAIT -- maybe use default acl template to define what fields
+     they can write to... that is clean
+       -- and then maybe for User collections you forbit the client
+       from inserting a doc with an acl
+     - adding custom fields? -- override insert and call
+     this._super('insert')(newO)
+     - or insertXform: function(obj) { ... } // maybe I both like and
+     say why is this needed if you can _super?
+   - How do you get a new user id? Just do ObjectId or let user
+     - create involved? i think so even if there is no CREATE HTTP
+     verb -- still who calls create, client or insert... hmmmm
+     complicated more I think about it
+   select? Offer other sequence generators? This generic for all
+   collections? OS must make _id -- should also allow to be supplied
+  
+
+Example default user acl:
+
+{ 
+  aclTemplate: {
+    "*": { 
+       read: {
+         _id: true,
+         username: true,
+         '*': false
+       },
+       write: false
+    },
+    "user:@req.user._id": { // which came from create(). Maybe better
+                          // or should it just be <owner>?
+
+     read: {
+        "secretField": false
+        "*": true // needed since otherwise no field mention is false
+     },
+     write: {
+       username: true, 
+       password: true,
+       email: true,
+       "*": false // would be implied if absent
+     } 
+     
+   }
+  }
+}
+
+Do we want to make calling create() a formal part of the process?
+
+Should this be the default of create() (or the wrapper to create):
+
+create: function() {
+  var result = {
+    _id: this.generateId(),
+  }
+
+  result.__acl__ = newAcl(result) // so that the generator has the
+                                  // user _id and whatever else is needed in the template
+}
+
+But you can write:
+
+create: function(req) { // want req? ideally no. maybe create(user)?
+   return {
+      _id: this.generateId() // should this be in wrapper too?
+      password: "passwordchangeme",
+      organization: this.
+   }
+}
+
+Another idea is have req.user be { _id: <id>, __acl__: <acl> } on the
+request at right times (like when using User collection)
