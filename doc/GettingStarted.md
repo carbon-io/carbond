@@ -26,6 +26,13 @@ Your package.json should include ```datanode```
 
 Next we define the API. This is where the magic is. Create a file called HelloService.js
 
+```
+<path-to-your-app>/
+    package.json
+    README.md
+    HelloService.js
+```
+
 ```node
 var o = require('maker').o(module)
 var __ = require('maker').__(module, true)
