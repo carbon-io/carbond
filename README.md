@@ -15,7 +15,7 @@ datanode
   * Commandline args
   * Auto-generated interactive API documentation
   * Security
-    * Authentication
+    * [Authentication](doc/Authentication.md)
     * Access Control
   * Logging
   * Error handling
