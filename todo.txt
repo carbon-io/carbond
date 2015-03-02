@@ -1,29 +1,34 @@
-o should json parse apiKey (number vs string etc...)
 o Swagger ui and auth
+  - Need to add the api key header name in CORS headers for swagger
+  header to work for key
+o Clean up options in acl (not needed)
+  --
+  http://iankent.uk/2014/02/11/globally-handling-options-requests-in-play-framework/
+
+o Clean up response codes (201 for posts?)
+  http://blog.ploeh.dk/2013/04/30/rest-lesson-learned-avoid-204-responses/
+
 o in maker defineProperties and _init called from constructor (not _C
 but real consstructor) so we can have new called on oo produced classes
 o Finish with Operation
 o Maker to allow _type passed in
-o MOngoDBCollection db vs dbs
+o MongoDBCollection db vs dbs
 o Views and forms
 o Inchworm /values?ids=
    - maybe id=1&id=2 just works?
+o Show example of Inch with nested :id endpoint
 o Upgrade Express
   -- when you do need to change req.header to req.get (maybe) in ApiKeyAuthenticator.js
-o Example where endpoints are in other components
 o Responds with stuff in swagger spec (for errors etc...)
 o Flesh out api for MongoDBCollections to be like current data api
 o Do example of feedback form for customer why you left?
 o Do a pass on trying to cause errors and see how they get handled
-o review sync changes 
 o ObjectIds in swagger coming out wrong -- probably toString of ObjectId
-o Show example of Inch with nested :id endpoint
 o Why is collection post returning array from insert (driver or us?)
   can see in swagger ui
 o Do we want an Endpoint.operations() that gets all the defined operations?
 o What's up with swagger and :id? vs :id
 o How does one make /bin wrappers. shebang or bsh?
-o test _super more -- in Inchworm.js it freaked
 o in swagger ui if you do an obj get with no id the request url is
 odd. Think this is swagge bug
    http://Wills-MacBook-Pro.local:8888/zipcodes/{id}
@@ -152,3 +157,10 @@ create: function(req) { // want req? ideally no. maybe create(user)?
 
 Another idea is have req.user be { _id: <id>, __acl__: <acl> } on the
 request at right times (like when using User collection)
+
+
+-----
+
+Blogger
+
+http://webcache.googleusercontent.com/search?q=cache:vlJ_IH4ZBP4J:npmawesome.com/posts/2014-04-29-compare-express-restify-hapi-loopback/+&cd=8&hl=en&ct=clnk&gl=us
