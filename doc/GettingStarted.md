@@ -24,7 +24,7 @@ Your package.json should include ```datanode```
 }
 ```
 
-Next we define the API. This is where the magic is. Create a file called HelloService.js
+Next we define the API. This is where the magic is. Create a file called HelloService.js:
 
 ```
 <path-to-your-app>/
