@@ -30,18 +30,20 @@ Next we define the API. This is where the magic is. Create a file called HelloSe
 var o = require('maker').o(module)
 var __ = require('maker').__(module, true)
 
-module.exports = __(function() { return o({
-  _type: 'datanode/ObjectServer',
-  port: 8888,
-  endpoints: {
-    hello: o({
-      _type: 'datanode/Endpoint',
-      get: function(req) {
-        return { msg: "Hello World!" }
-      }
-    })
-  }
-})})
+__(function() {
+  module.exports = o({
+    _type: 'datanode/ObjectServer',
+    port: 8888,
+    endpoints: {
+      hello: o({
+        _type: 'datanode/Endpoint',
+        get: function(req) {
+          return { msg: "Hello World!" }
+        }
+      })
+    }
+  })
+})
 ```
 
 ### Running the API
