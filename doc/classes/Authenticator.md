@@ -13,7 +13,7 @@ Methods
 
 #### authenticate(req)
 
-*Parameters*
+**Parameters**
 * req - the ```HttpRequestObject``` to authenticate
 
-*Returns* - an object representing the authenticated user
+**Returns** - an object representing the authenticated user
