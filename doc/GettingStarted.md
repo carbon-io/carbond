@@ -53,7 +53,7 @@ module.exports = __(function() { return o({
 [Mon Feb 09 2015 21:56:41 GMT-0800 (PST)] INFO: ObjectServer running
 ```
 
-### Connecting to your API
+### Connecting to the API
 
 You now have a RESTful web service running on port 8888. You can connect to it via HTTP in a variety of ways. 
 
