@@ -15,8 +15,8 @@ datanode
   * Commandline args
   * Auto-generated interactive API documentation
   * Security
-   * Authentication
-   * Access Control
+    * Authentication
+    * Access Control
   * Logging
   * Error handling
   * Production best-practices
