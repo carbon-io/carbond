@@ -6,7 +6,7 @@ An ```Authenticator``` is an abstract class representing an authentciation schem
 Properties
 ----------
 
-__none__
+_none_
 
 Methods
 ----------
