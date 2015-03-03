@@ -26,7 +26,7 @@ o({
 Examples
 ----------
 
-Basic Authentication
+HTTP Basic authentication
 ```node
 var o = require('maker').o(module, true)
 
@@ -50,7 +50,7 @@ module.exports = o({
 })
 ```
 
-API Key Authentication
+API Key authentication
 ```node
 var o = require('carbon').atom.o(module, true)
 
@@ -75,7 +75,7 @@ module.exports = o({
 })
 ```
 
-Custom Authentication
+Custom authentication
 ```node
 var o = require('carbon').bond.o(module, true)
 
