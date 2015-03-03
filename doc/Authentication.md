@@ -93,7 +93,9 @@ var o = require('carbon').bond.o(module, true)
 
 module.exports = o({
   _type: 'datanode/ObjectServer',
+  
   port: 8888,
+  
   authenticator: o({
     _type: 'Authenticator',
     authenticate: function(req) {
@@ -101,6 +103,7 @@ module.exports = o({
       return user;
     }
   }),
+  
   endpoints: {
     hello: o({
       _type: 'datanode/Endpoint',
