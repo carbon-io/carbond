@@ -25,3 +25,74 @@ o({
 
 Examples
 ----------
+
+```node
+var o = require('maker').o(module, true)
+
+module.exports = o({
+  _type: 'datanode/ObjectServer',
+  port: 8888,
+  authenticator: o({
+    _type: 'datanode/security/MongoDBHttpBasicAuthenticator',
+    userCollection: "users",
+    usernameField: "username",
+    passwordField: "password"
+  }),
+  endpoints: {
+    hello: o({
+      _type: 'datanode/Endpoint',
+      get: function(req) {
+        return { msg: "Hello World!" }
+      }
+    })
+  }
+})
+```
+
+```node
+var o = require('maker').o(module, true)
+
+module.exports = o({
+  _type: 'datanode/ObjectServer',
+  port: 8888,
+  authenticator: o({
+    _type: 'datanode/security/MongoDBApiKeyAuthenticator',
+    apiKeyParameterName: "API_KEY",
+    apiKeyIn: "header", // can be "header" or "query"
+    userCollection: "users",
+    apiKeyUserField: "apiKey"
+  }),
+  endpoints: {
+    hello: o({
+      _type: 'datanode/Endpoint',
+      get: function(req) {
+        return { msg: "Hello World!" }
+      }
+    })
+  }
+})
+```
+
+```node
+var o = require('maker').o(module, true)
+
+module.exports = o({
+  _type: 'datanode/ObjectServer',
+  port: 8888,
+  authenticator: o({
+    _type: 'Authenticator',
+    authenticate: function(req) {
+      var user = figureOutWhoUserIs();
+      return user;
+    }
+  }),
+  endpoints: {
+    hello: o({
+      _type: 'datanode/Endpoint',
+      get: function(req) {
+        return { msg: "Hello World!" }
+      }
+    })
+  }
+})
+```
