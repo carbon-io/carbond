@@ -1,11 +1,25 @@
 Authentication
 ----------
 
-Datanode comes with a pluggable authentication system along with several out-of-the-box ```Authenticator```s:
+An Object Server accomplishes user authentication via ```Authenticator``` components which are responsible for associating incoming requests with users.
+
+Every Object Server can be configured with an ```Authenticator```. When so configured, the Object Server will dispatch each HTTP request to that ```Authenticator```'s ```authenticate``` method. This method will use credentials in the request (e.g. HTTP Basic credentials, API-key) to authenticate and return the user associated with those credentials. The Object Server will then assign the ```user``` property on the ```HttpRequest``` object. 
+
+The user associated with the request can later be accessed via 
+
+```
+req.user
+```
+
+in code that takes ```HttpRequest``` objects as parameters. 
+
+Datanode comes with several out-of-the-box ```Authenticator```s:
 
 * An ```HttpBasicAuthenticator```
 * An ```ApiKeyAuthenticator``` 
 * An ```OauthAuthenticator``` _(not yet implemented)_
+
+Furthemore, custom ```Authenticator```s can be defined by subclassing existing ```Authenticator``` classes.
 
 Custom Authenticators
 ----------
