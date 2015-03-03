@@ -50,7 +50,7 @@ module.exports = o({
 ```
 
 ```node
-var o = require('maker').o(module, true)
+var o = require('carbon').atom.o(module, true)
 
 module.exports = o({
   _type: 'datanode/ObjectServer',
@@ -74,7 +74,7 @@ module.exports = o({
 ```
 
 ```node
-var o = require('maker').o(module, true)
+var o = require('carbon').bond.o(module, true)
 
 module.exports = o({
   _type: 'datanode/ObjectServer',
