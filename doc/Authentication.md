@@ -5,7 +5,7 @@ An Object Server accomplishes user authentication via ```Authenticator``` compon
 
 Every Object Server can be configured with an ```Authenticator```. When so configured, the Object Server will dispatch each HTTP request to that ```Authenticator```'s ```authenticate(req)``` method. This method will use credentials in the request (e.g. HTTP Basic credentials, API-key) to authenticate and return the user associated with those credentials, if one exists. The Object Server will then store the resolved user object in the ```HttpRequest``` object. 
 
-The user associated with the request can later be accessed via the ```user``` property like so:
+The user associated with the request can later be accessed via the ```user``` property of the request like so:
 
 ```
 req.user
