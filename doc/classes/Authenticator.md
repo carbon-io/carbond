@@ -23,7 +23,7 @@ Methods
 **Parameters**
 * ```user``` (```object```) - the user object to test for root equivalence 
 
-**Returns** (``boolean```) - a true iff the supplied user is a root user
+**Returns** (```boolean```) - a true iff the supplied user is a root user
 
 #### getAuthenticationHeaders()
 
