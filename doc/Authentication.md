@@ -55,7 +55,7 @@ module.exports = o({
     hello: o({
       _type: 'datanode/Endpoint',
       get: function(req) {
-        return { msg: "Hello World!" }
+        return { msg: "Hello " + req.user.email}
       }
     })
   }
@@ -80,7 +80,7 @@ module.exports = o({
     hello: o({
       _type: 'datanode/Endpoint',
       get: function(req) {
-        return { msg: "Hello World!" }
+        return { msg: "Hello " + req.user.email}
       }
     })
   }
@@ -108,7 +108,7 @@ module.exports = o({
     hello: o({
       _type: 'datanode/Endpoint',
       get: function(req) {
-        return { msg: "Hello World!" }
+        return { msg: "Hello " + req.user.email}
       }
     })
   }
