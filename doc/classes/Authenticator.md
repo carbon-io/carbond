@@ -14,7 +14,7 @@ Methods
 #### authenticate(req)
 
 **Parameters**
-* ```req``` - the ```HttpRequestObject``` to authenticate
+* ```req``` - the ```HttpRequest``` object to authenticate
 
 **Returns** (```object```) - an object representing the authenticated user
 
