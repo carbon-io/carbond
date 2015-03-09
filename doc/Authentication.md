@@ -40,7 +40,7 @@ Examples
 
 HTTP Basic authentication
 ```node
-var o = require('maker').o(module, true)
+var o = require('maker').o(module)
 
 module.exports = o({
   _type: 'datanode/ObjectServer',
@@ -64,7 +64,7 @@ module.exports = o({
 
 API Key authentication
 ```node
-var o = require('carbon').atom.o(module, true)
+var o = require('carbon').atom.o(module)
 
 module.exports = o({
   _type: 'datanode/ObjectServer',
@@ -89,7 +89,7 @@ module.exports = o({
 
 Custom authentication
 ```node
-var o = require('carbon').bond.o(module, true)
+var o = require('carbon').bond.o(module)
 
 module.exports = o({
   _type: 'datanode/ObjectServer',
