@@ -16,7 +16,7 @@ datanode
   * Auto-generated interactive API documentation
   * Security
     * [Authentication](doc/Authentication.md)
-    * Access Control
+    * [Access Control](doc/AccessControl.md)
   * Logging
   * Error handling
   * Production best-practices
