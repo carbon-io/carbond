@@ -20,6 +20,7 @@
     "basic-auth": "~1.0.0",
     "request" : "2.34.0",
     "mongodb": "1.4.x",
+    "mongodb-extended-json": "1.1.2",
     "swagger-ui" : "2.1.0-alpha.1",
     "bunyan": "1.2.*",
     "maker": "git+ssh://git@github.com:objectlabs/maker.git",

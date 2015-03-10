@@ -5,7 +5,7 @@ var assert = require('assert')
  * acl tests
  */
 var acl = o({
-  _type: '../lib/Acl',
+  _type: '../lib/security/Acl',
   
   permissionDefinitions: {
     read: true,
@@ -130,7 +130,7 @@ assert(exceptionThrown)
 
 // invalid user spec
 var acl2 = o({
-  _type: '../lib/Acl',
+  _type: '../lib/security/Acl',
   
   permissionDefinitions: {},
   groupDefinitions: {},

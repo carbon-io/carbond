@@ -1,46 +1,57 @@
-o Swagger ui and auth
-  - Need to add the api key header name in CORS headers for swagger
-  header to work for key
-o Clean up options in acl (not needed)
+o Remove parent from Endpoint. Can have multiple parents!!! 
+o 405 Method Not Allowed
+o reject when no user? based on flag?
+o Document ACLs
+o Clean up 'options' in acl (not needed)
   --
   http://iankent.uk/2014/02/11/globally-handling-options-requests-in-play-framework/
 
-o Clean up response codes (201 for posts?)
-  http://blog.ploeh.dk/2013/04/30/rest-lesson-learned-avoid-204-responses/
-
 o in maker defineProperties and _init called from constructor (not _C
 but real consstructor) so we can have new called on oo produced classes
+
+o JSON parsing of params. 
+  - settle arrays ([1, 2, 3] vs a=1&a=2&a=3)
+  - doc
+
 o Finish with Operation
 o Maker to allow _type passed in
-o MongoDBCollection db vs dbs
 o Views and forms
-o Inchworm /values?ids=
-   - maybe id=1&id=2 just works?
-o Show example of Inch with nested :id endpoint
 o Upgrade Express
   -- when you do need to change req.header to req.get (maybe) in ApiKeyAuthenticator.js
-o Responds with stuff in swagger spec (for errors etc...)
-o Flesh out api for MongoDBCollections to be like current data api
-o Do example of feedback form for customer why you left?
+o _id generators
 o Do a pass on trying to cause errors and see how they get handled
-o ObjectIds in swagger coming out wrong -- probably toString of ObjectId
 o Why is collection post returning array from insert (driver or us?)
   can see in swagger ui
+o Responds with stuff in swagger spec (for errors etc...)
 o Do we want an Endpoint.operations() that gets all the defined operations?
-o What's up with swagger and :id? vs :id
 o How does one make /bin wrappers. shebang or bsh?
-o in swagger ui if you do an obj get with no id the request url is
-odd. Think this is swagge bug
-   http://Wills-MacBook-Pro.local:8888/zipcodes/{id}
+o Flesh out api for MongoDBCollections to be like current data api
+o Clean up response codes (201 for posts?) 
+  http://blog.ploeh.dk/2013/04/30/rest-lesson-learned-avoid-204-responses/
 
-LATER
+-- SWAGGER
+
+o Swagger Issues
+  - in swagger ui if you do an obj get with no id the request url is 
+    odd. Think this is swagge bug (http://Wills-MacBook-Pro.local:8888/zipcodes/{id})
+  - What's up with swagger and :id? vs :id
+  - ObjectIds in swagger coming out wrong -- probably toString of ObjectId  
+o Swagger ui and auth 
+  - Need to add the api key header name in CORS headers for swagger 
+  header to work for key 
+  - drive client auth from this (if possible) 
+    https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md#securityDefinitionsObject
+
+
+-- LATER
 o leafnode async
 o X-Powered-By: Express
 o Deal with encryption in authenticators
 o UserOwnedMDBCollection
 o Auth / AC per endpoint? Telemetry example is a good one
-o envelope format for GET
+o envelope format / _links
 o validate schema 
+  - https://github.com/zaggino/z-schema
 o client 
 o client cmdline 
 o shell
@@ -56,6 +67,9 @@ o write reasoning for o({...}) to understand _type in nested docs vs
 needed nested o({...})
 - LRU cache endpoint based on a field
 o what is difference between PUT and PATCH?
+o CORS security review
+  - http://docs.strongloop.com/display/public/LB/Security+considerations
+
 
 PUNTED?
 o start/stpo at cmdline? NO THIS SHOULD BE MANAGED BY PROCESS MANAGER
@@ -116,20 +130,21 @@ Example default user acl:
     },
     "user:@req.user._id": { // which came from create(). Maybe better
                           // or should it just be <owner>?
+    "__owner__": { // which came from create(). Maybe better
 
-     read: {
-        "secretField": false
-        "*": true // needed since otherwise no field mention is false
-     },
-     write: {
-       username: true, 
-       password: true,
-       email: true,
-       "*": false // would be implied if absent
-     } 
+       read: {
+          "secretField": false
+          "*": true // needed since otherwise no field mention is false
+       },
+       write: {
+         username: true, 
+         password: true,
+         email: true,
+         "*": false // would be implied if absent
+       } 
      
+     }
    }
-  }
 }
 
 Do we want to make calling create() a formal part of the process?
@@ -164,3 +179,8 @@ request at right times (like when using User collection)
 Blogger
 
 http://webcache.googleusercontent.com/search?q=cache:vlJ_IH4ZBP4J:npmawesome.com/posts/2014-04-29-compare-express-restify-hapi-loopback/+&cd=8&hl=en&ct=clnk&gl=us
+-----
+
+ClassDOjo?
+http://caines.ca/blog/2013/04/29/so-i-wrote-a-json-api-framework-and-the-framework-was-the-least-interesting-part/
+

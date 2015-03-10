@@ -405,8 +405,6 @@ http://docs.spring.io/spring-security/site/docs/3.0.x/reference/domain-acls.html
 http://www.cs.mun.ca/~michael/java/jdk1.1-beta2-docs/guide/security/Acl.html
 ------
 
-
-
-
-
-
+When a framework resorts to code generation, GUIs, or cmdline tools
+for creating code it is a sign that the language and the formalisms
+underlying the framework are inadequite (StrongLoop)
