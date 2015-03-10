@@ -17,6 +17,7 @@ datanode
   * Security
     * [Authentication](doc/Authentication.md)
     * [Access Control](doc/AccessControl.md)
+    * [Security strategies](doc/SecurityStrategies.md)
   * Logging
   * Error handling
   * Production best-practices
