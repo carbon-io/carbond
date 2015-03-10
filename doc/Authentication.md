@@ -51,6 +51,7 @@ module.exports = o({
     usernameField: "username",
     passwordField: "password"
   }),
+  
   endpoints: {
     hello: o({
       _type: 'datanode/Endpoint',
