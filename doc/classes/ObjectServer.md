@@ -3,7 +3,7 @@ class ObjectServer
 
 The ```ObjectServer``` class is the top-level class for defining APIs. 
 
-```
+```node
 {
   _type: 'datanode/ObjectServer',
   port: <int>,

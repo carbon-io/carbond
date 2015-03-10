@@ -14,19 +14,19 @@ Methods
 #### authenticate(req)
 
 **Parameters**
-* _req_ - the ```HttpRequestObject``` to authenticate
+* ```req``` - the ```HttpRequest``` object to authenticate
 
-**Returns** (```object```)- an object representing the authenticated user
+**Returns** (```object```) - an object representing the authenticated user
 
 #### isRootUser(user)
 
 **Parameters**
-* _user_ (```object```)- the user object to test for root equivalence 
+* ```user``` (```object```) - the user object to test for root equivalence 
 
-**Returns** (``boolean```) - a true iff the supplied user is a root user
+**Returns** (```boolean```) - ```true``` iff the supplied user is a root user
 
 #### getAuthenticationHeaders()
 
 **Parameters**
 
-**Returns** ```[string]```- an array of authenication header names
+**Returns** ```[string]``` - an array of authenication header names

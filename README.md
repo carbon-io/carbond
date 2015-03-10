@@ -9,14 +9,14 @@ datanode
   * Overview
   * Fibers
   * Maker
-  * [ObjectServer](doc/ObjectServer.md)
-  * [Endpoints](doc/Endpoint.md)
+  * [ObjectServer](doc/classes/ObjectServer.md)
+  * [Endpoints](doc/classes/Endpoint.md)
   * Running a datanode
   * Commandline args
   * Auto-generated interactive API documentation
   * Security
     * [Authentication](doc/Authentication.md)
-    * Access Control
+    * [Access Control](doc/AccessControl.md)
   * Logging
   * Error handling
   * Production best-practices
