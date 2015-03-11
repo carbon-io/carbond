@@ -25,6 +25,8 @@ With this code it would be impossible for the authenticated user to retrieve dat
 
 ### Explicit Security
 
+Explicit security relies on ACLs defined on endpoints and data to describe what permissions users have and automatically enforce those permissions. Using this technique often involves less code and more configuration. 
+
 For example, a ```/users/:userId/contacts``` endpoint meant to retrieve the all the ```Contact```s the currently authenticated user has permission to see might be written as:
 
 ```
