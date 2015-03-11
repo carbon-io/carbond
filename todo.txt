@@ -1,6 +1,3 @@
-o Remove parent from Endpoint. Can have multiple parents!!! 
-o 405 Method Not Allowed
-o reject when no user? based on flag?
 o Document ACLs
 o Clean up 'options' in acl (not needed)
   --
@@ -13,19 +10,29 @@ o JSON parsing of params.
   - settle arrays ([1, 2, 3] vs a=1&a=2&a=3)
   - doc
 
-o Finish with Operation
-o Maker to allow _type passed in
+o finish root user impl
+
+o Add -p and -rootkey (or pair) to ObjectServer (unless root user is in db?)
+  - might be nice for root user to be out of db. 
+  - have sep header for root auth
+ 
 o Views and forms
+o Decide how we want to deal with queryablity with collections 
+  - will almost always want off so how deal? 
+  - schemas for valid query patterns?
 o Upgrade Express
   -- when you do need to change req.header to req.get (maybe) in ApiKeyAuthenticator.js
 o _id generators
 o Do a pass on trying to cause errors and see how they get handled
 o Why is collection post returning array from insert (driver or us?)
   can see in swagger ui
+
 o Responds with stuff in swagger spec (for errors etc...)
+
 o Do we want an Endpoint.operations() that gets all the defined operations?
-o How does one make /bin wrappers. shebang or bsh?
+
 o Flesh out api for MongoDBCollections to be like current data api
+
 o Clean up response codes (201 for posts?) 
   http://blog.ploeh.dk/2013/04/30/rest-lesson-learned-avoid-204-responses/
 
@@ -43,7 +50,7 @@ o Swagger ui and auth
     https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md#securityDefinitionsObject
 
 
--- LATER
+-- MED
 o leafnode async
 o X-Powered-By: Express
 o Deal with encryption in authenticators
@@ -59,17 +66,23 @@ o socket.io
 o CREATE method
 o Make sure you cant, as a client, use HTTP Method foo and end up
 calling endpoint.foo (security)
+o 405 Method Not Allowed
+  - not sure we can do this since there is no route registered with
+  express if no method. 
 o MongoDBDatabase endpoint
   - I think we should be able to re-use MongoDBCollections even if we
   are lazy to create them, but might choose to impl not lazy collction creation?
 o decide on /lib/ shorcut in maker
 o write reasoning for o({...}) to understand _type in nested docs vs
 needed nested o({...})
-- LRU cache endpoint based on a field
 o what is difference between PUT and PATCH?
 o CORS security review
   - http://docs.strongloop.com/display/public/LB/Security+considerations
 
+
+-- LATER
+o LRU cache endpoint based on a field
+o How does one make /bin wrappers. shebang or bsh?
 
 PUNTED?
 o start/stpo at cmdline? NO THIS SHOULD BE MANAGED BY PROCESS MANAGER

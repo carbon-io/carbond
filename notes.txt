@@ -408,3 +408,44 @@ http://www.cs.mun.ca/~michael/java/jdk1.1-beta2-docs/guide/security/Acl.html
 When a framework resorts to code generation, GUIs, or cmdline tools
 for creating code it is a sign that the language and the formalisms
 underlying the framework are inadequite (StrongLoop)
+
+------
+
+{
+  __systemacl__: {
+    entries: {
+      "__owner__": { // do we also need * here to say nobody can write role?
+        "*": true,
+        write: {
+          "role": false,
+          "title": false,
+          "*": true
+        }
+      },
+
+      'role:"Admin"': {
+        "*": true
+      }
+    }
+  }
+}
+
+  __acl__: {
+   // other stuff managed by the user
+   // would we want? We would only need that when client creates or manipulates acl?
+   "__owner__": {
+     "*": true
+   }
+  }
+}
+
+How do you create a default user?
+  - user can post JSON and have role injected?
+  - user can select role if creating first user of account?
+  - 
+
+How does one create an Admin user?
+  - Must be an admin user or root?
+  - 
+
+
