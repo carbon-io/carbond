@@ -13,7 +13,7 @@ datanode
   * [Endpoints](doc/classes/Endpoint.md)
   * Running a datanode
   * Commandline args
-  * Auto-generated interactive API documentation
+  * Auto-generated interactive API documentation (API Explorer)
   * Security
     * [Authentication](doc/Authentication.md)
     * [Access Control](doc/AccessControl.md)
