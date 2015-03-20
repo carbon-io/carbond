@@ -29,7 +29,6 @@ datanode
     * ObjectServer
     * Endpoint
     * Authenticator
-    * ?
     * Configuration Subclassing or creating instance of ObjectServer
     * Multi-file implementations (could go with productionalizing) (directory layout)
   * Class Reference
