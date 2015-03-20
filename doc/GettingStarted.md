@@ -38,6 +38,7 @@ Next we define the API. This is where the magic is. Create a file called HelloSe
     HelloService.js
 ```
 
+HelloService.js
 ```node
 var o = require('maker').o(module)
 var __ = require('maker').__(module, true)
