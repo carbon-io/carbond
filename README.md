@@ -21,7 +21,6 @@ datanode
     * [Security strategies](doc/SecurityStrategies.md)
   * Running a datanode
   * Auto-generated interactive API documentation (API Explorer)
-  
   * Logging
   * Error handling
   * Production best-practices
@@ -29,9 +28,6 @@ datanode
     * ObjectServer
     * Endpoint
     * Authenticator
-    * Configuration Subclassing or creating instance of ObjectServer
-    * Multi-file implementations (could go with productionalizing) (directory layout)
-  * Class Reference
 * Examples
 
 
