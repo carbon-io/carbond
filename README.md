@@ -7,8 +7,8 @@ datanode
   * [Connecting to the API](doc/GettingStarted.md#connecting-to-the-api)
 * User guide
   * Overview
-  * Fibers
   * Maker
+  * Fibers
   * [ObjectServer](doc/classes/ObjectServer.md)
   * [Endpoints](doc/classes/Endpoint.md)
   * Running a datanode
