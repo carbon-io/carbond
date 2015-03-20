@@ -1,7 +1,7 @@
 Getting started (Hello World)
 ----------
 
-### Creating the API
+### Creating your first API
 
 The first step is to create a standard Node.js package
 
