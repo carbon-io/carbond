@@ -449,3 +449,10 @@ How does one create an Admin user?
   - 
 
 
+00000
+
+We dont believe req / resp converations between entities is async
+logically (physically go for it) 
+
+-------
+

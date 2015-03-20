@@ -1,10 +1,14 @@
+o owner:true
+o Errors from sanitize
 o Document ACLs
+o impl write portion for obj acl
+o impl full proper sanitize (properties + recursive w no loops)
+
+o maker: have init take same args as constructor
+
 o Clean up 'options' in acl (not needed)
   --
   http://iankent.uk/2014/02/11/globally-handling-options-requests-in-play-framework/
-
-o in maker defineProperties and _init called from constructor (not _C
-but real consstructor) so we can have new called on oo produced classes
 
 o JSON parsing of params. 
   - settle arrays ([1, 2, 3] vs a=1&a=2&a=3)
@@ -12,29 +16,41 @@ o JSON parsing of params.
 
 o finish root user impl
 
-o Add -p and -rootkey (or pair) to ObjectServer (unless root user is in db?)
+o Add -p and -root-secret-key (or pair) to ObjectServer (unless root user is in db?)
   - might be nice for root user to be out of db. 
   - have sep header for root auth
+  - maybe what we do is take secret-key and the up to configurer
+  whether they want root-access-key. If they do it's 2-factor
+  potentially (when split config and flag passed). If they
+  don't want to use root-access-key root-secret-key becomes a single
+  value api key?
+
+o we took initDBs out of init. Hels with help. Is this ok? Composite
+object servers?
  
 o Views and forms
 o Decide how we want to deal with queryablity with collections 
   - will almost always want off so how deal? 
   - schemas for valid query patterns?
+
 o Upgrade Express
   -- when you do need to change req.header to req.get (maybe) in ApiKeyAuthenticator.js
+
 o _id generators
-o Do a pass on trying to cause errors and see how they get handled
+
 o Why is collection post returning array from insert (driver or us?)
   can see in swagger ui
-
-o Responds with stuff in swagger spec (for errors etc...)
 
 o Do we want an Endpoint.operations() that gets all the defined operations?
 
 o Flesh out api for MongoDBCollections to be like current data api
 
-o Clean up response codes (201 for posts?) 
-  http://blog.ploeh.dk/2013/04/30/rest-lesson-learned-avoid-204-responses/
+o document in maker that you can call constructor (or is it obvious)?
+
+o Error
+  - http://dailyjs.com/2014/01/30/exception-error/
+
+o Responds with stuff in swagger spec (for errors etc...)
 
 -- SWAGGER
 
@@ -52,6 +68,7 @@ o Swagger ui and auth
 
 -- MED
 o leafnode async
+o remember changing schema of acls that will be in people's data is hard....
 o X-Powered-By: Express
 o Deal with encryption in authenticators
 o UserOwnedMDBCollection
@@ -60,12 +77,10 @@ o envelope format / _links
 o validate schema 
   - https://github.com/zaggino/z-schema
 o client 
-o client cmdline 
-o shell
-o socket.io
-o CREATE method
 o Make sure you cant, as a client, use HTTP Method foo and end up
 calling endpoint.foo (security)
+o Clean up response codes (201 for posts?) 
+  http://blog.ploeh.dk/2013/04/30/rest-lesson-learned-avoid-204-responses/
 o 405 Method Not Allowed
   - not sure we can do this since there is no route registered with
   express if no method. 
@@ -73,16 +88,20 @@ o MongoDBDatabase endpoint
   - I think we should be able to re-use MongoDBCollections even if we
   are lazy to create them, but might choose to impl not lazy collction creation?
 o decide on /lib/ shorcut in maker
-o write reasoning for o({...}) to understand _type in nested docs vs
-needed nested o({...})
 o what is difference between PUT and PATCH?
 o CORS security review
   - http://docs.strongloop.com/display/public/LB/Security+considerations
-
+o errors (error middleware?)
+   - https://www.joyent.com/developers/node/design/errors
+  
 
 -- LATER
 o LRU cache endpoint based on a field
 o How does one make /bin wrappers. shebang or bsh?
+o socket.io
+o shell
+o client cmdline
+o CREATE method
 
 PUNTED?
 o start/stpo at cmdline? NO THIS SHOULD BE MANAGED BY PROCESS MANAGER
