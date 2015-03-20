@@ -2,7 +2,7 @@ datanode
 ----------
 
 * [Getting started](doc/GettingStarted.md)
-  * [Creating the API](doc/GettingStarted.md#creating-the-api)
+  * [Creating your first API](doc/GettingStarted.md#creating-the-api)
   * [Running the API](doc/doc/GettingStarted.md#running-the-api)
   * [Connecting to the API](doc/GettingStarted.md#connecting-to-the-api)
 * User guide
