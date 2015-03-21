@@ -1,29 +1,35 @@
-datanode
+carbon io
 ----------
 
 * [Getting started](doc/GettingStarted.md)
-  * [Creating the API](doc/GettingStarted.md#creating-the-api)
+  * [Creating your first API](doc/GettingStarted.md#creating-the-api)
   * [Running the API](doc/doc/GettingStarted.md#running-the-api)
   * [Connecting to the API](doc/GettingStarted.md#connecting-to-the-api)
+  * [More examples](doc/GettingStarted.md#more-examples)
 * User guide
   * Overview
-  * Fibers
-  * Maker
+    * Design philosophy 
+    * Maker
+    * Fibers
+    * Leafnode MongoDB driver
+    * Express
+    * JSON Schema
+    * Swagger
   * [ObjectServer](doc/classes/ObjectServer.md)
-  * [Endpoints](doc/classes/Endpoint.md)
-  * Running a datanode
-  * Commandline args
-  * Auto-generated interactive API documentation (API Explorer)
+    * Databases
+    * [Endpoints](doc/classes/Endpoint.md)
+    * Basic endpoint types
   * Security
     * [Authentication](doc/Authentication.md)
     * [Access Control](doc/AccessControl.md)
     * [Security strategies](doc/SecurityStrategies.md)
+  * Running a datanode
+  * Auto-generated interactive API documentation (API Explorer)
   * Logging
   * Error handling
   * Production best-practices
-    * Configuration Subclassing or creating instance of ObjectServer
-    * Multi-file implementations (could go with productionalizing) (directory layout)
-  * Class Reference
-* Examples
-
+  * Class reference
+    * ObjectServer
+    * Endpoint
+    * Authenticator
 

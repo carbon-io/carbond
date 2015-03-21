@@ -1,7 +1,7 @@
 Getting started (Hello World)
 ----------
 
-### Creating the API
+### Creating your first API
 
 The first step is to create a standard Node.js package
 
@@ -50,6 +50,28 @@ __(function() {
     endpoints: {
       hello: o({
         _type: 'datanode/Endpoint',
+        get: function(req) {
+          return { msg: "Hello World!" }
+        }
+      })
+    }
+  })
+})
+```
+
+```node
+var carbon = require('carbon')
+var o = carbon.atom.o(module)
+var _o = carbon.bond._o(module)
+var __ = carbon.fibers.__(module, true)
+
+__(function() {
+  module.exports = o({
+    _type: carbon.carbond.ObjectServer,
+    port: 8888,
+    endpoints: {
+      hello: o({
+        _type: carbon.carbond.Endpoint,
         get: function(req) {
           return { msg: "Hello World!" }
         }
