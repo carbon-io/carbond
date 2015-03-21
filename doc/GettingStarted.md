@@ -59,7 +59,7 @@ __(function() {
 })
 ```
 
-```node linenums
+```node linenumber
 var carbon = require('carbon')
 var o = carbon.atom.o(module)
 var _o = carbon.bond._o(module)
