@@ -106,7 +106,7 @@ You now have a RESTful web service running on port 8888. You can connect to it v
 
 In your web browser navigate to [http://localhost:8888/apidoc](http://localhost:8888/apidoc)
 
-_INSERT IMAGE_
+![HelloService](./hello-service.png)
 
 ### More examples
 
