@@ -39,12 +39,12 @@ ACL objects are comprised of:
 ### Example
 ```node
 {
-  permissionDefinitions: { // map of permissions to defaults boolean values
+  permissionDefinitions: { // This ACL has two permissions, read and write
     read: false,
     write: false
   },
   
-  groupDefinitions: {
+  groupDefinitions: { // This ACL defines three groups, role, title, and region
     role: 'role',
     title: function(user) { return user.title; },
     region: 'address.zip'
