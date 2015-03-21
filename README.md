@@ -1,4 +1,4 @@
-datanode
+carbon
 ----------
 
 * [Getting started](doc/GettingStarted.md)
