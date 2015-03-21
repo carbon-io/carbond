@@ -15,14 +15,15 @@ carbon io
     * Express
     * JSON Schema
     * Swagger
+  * Installing 
   * [ObjectServer](doc/classes/ObjectServer.md)
     * Databases
     * [Endpoints](doc/classes/Endpoint.md)
     * Basic endpoint types
-  * Security
-    * [Authentication](doc/Authentication.md)
-    * [Access Control](doc/AccessControl.md)
-    * [Security strategies](doc/SecurityStrategies.md)
+    * Security
+      * [Authentication](doc/Authentication.md)
+      * [Access Control](doc/AccessControl.md)
+      * [Security strategies](doc/SecurityStrategies.md)
   * Running a datanode
   * Auto-generated interactive API documentation (API Explorer)
   * Logging
