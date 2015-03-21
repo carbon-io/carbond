@@ -35,3 +35,34 @@ ACL objects are comprised of:
   }
 }
 ```
+
+Examples
+----------
+```node
+{
+  permissionDefinitions: { // map of permissions to defaults boolean values
+    read: false,
+    write: false
+  },
+  
+  groupDefinitions: {
+    role: 'role',
+    title: function(user) { return user.title; },
+    region: 'address.zip'
+  },
+  
+  entries: {  
+    'role:"Admin"': {
+      "*": true
+    },
+    'title:"CFO"': {
+      read: true,
+      write: true
+    },
+    'user:1234': {
+      read: true,
+      write: false
+    }
+  }
+}
+```
