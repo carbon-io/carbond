@@ -12,7 +12,7 @@ ACLs
 
 ACL objects are comprised of:
 
-* ```permissionDefinitions``` - This defines the set of permissions that can be used in this ACL by mapping default permission names, as ```string```s, to default values in the form of _permission predicate_s. Permission predicates are either simple boolean values or a function that takes a user object and returns a boolean value. 
+* ```permissionDefinitions``` - This defines the set of permissions that can be used in this ACL by mapping default permission names, as ```string```s, to default values in the form of _permission predicates_. Permission predicates are either simple boolean values or a function that takes a user object and returns a boolean value. 
 
 * ```groupDefinitions``` - This defines the set of group names that will be used in the ACL. Each entry defines a group by mapping it to a property path, as a ```string```, or a function that takes a user and returns a value. If provided with a property path the path is evaluated against the authenticated user when checking ACL permissions. By default there always exists a group with the name ```user``` to allow for individual users to be specified in ACL entries. 
 
