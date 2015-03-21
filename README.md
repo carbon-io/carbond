@@ -18,7 +18,7 @@ carbon io
   * [ObjectServer](doc/classes/ObjectServer.md)
     * Databases
     * [Endpoints](doc/classes/Endpoint.md)
-    * Collections
+    * Collection endpoints
     * Other endpoint types
   * Security
     * [Authentication](doc/Authentication.md)
