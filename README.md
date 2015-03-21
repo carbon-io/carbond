@@ -31,6 +31,4 @@ carbon io
     * ObjectServer
     * Endpoint
     * Authenticator
-* Examples
-
 
