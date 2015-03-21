@@ -7,15 +7,16 @@ carbon io
   * [Connecting to the API](doc/GettingStarted.md#connecting-to-the-api)
   * [More examples](doc/GettingStarted.md#more-examples)
 * User guide
+  * Installing 
   * Overview
     * Design philosophy 
+  * Core components
     * Maker
     * Fibers
     * Leafnode MongoDB driver
     * Express
     * JSON Schema
     * Swagger
-  * Installing 
   * [ObjectServer](doc/classes/ObjectServer.md)
     * Databases
     * [Endpoints](doc/classes/Endpoint.md)
