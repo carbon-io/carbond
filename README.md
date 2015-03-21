@@ -3,7 +3,7 @@ carbon io
 
 * [Getting started](doc/GettingStarted.md)
   * [Creating your first API](doc/GettingStarted.md#creating-the-api)
-  * [Running the API](doc/doc/GettingStarted.md#running-the-api)
+  * [Running the API](doc/GettingStarted.md#running-the-api)
   * [Connecting to the API](doc/GettingStarted.md#connecting-to-the-api)
   * [More examples](doc/GettingStarted.md#more-examples)
 * User guide
