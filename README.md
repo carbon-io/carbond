@@ -5,12 +5,13 @@ datanode
   * [Creating your first API](doc/GettingStarted.md#creating-the-api)
   * [Running the API](doc/doc/GettingStarted.md#running-the-api)
   * [Connecting to the API](doc/GettingStarted.md#connecting-to-the-api)
-* More examples
+  * [More examples](doc/GettingStarted.md#more-examples)
 * User guide
   * Overview
     * Design philosophy 
     * Maker
     * Fibers
+    * Leafnode
     * Express
     * Swagger
   * [ObjectServer](doc/classes/ObjectServer.md)
