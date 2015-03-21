@@ -7,7 +7,7 @@ datanode
   * [Connecting to the API](doc/GettingStarted.md#connecting-to-the-api)
 * User guide
   * Overview
-    * Design goals 
+    * Design philosophy 
     * Maker
     * Fibers
     * Express
