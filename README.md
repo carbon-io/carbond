@@ -13,6 +13,7 @@ carbon io
     * Fibers
     * Leafnode
     * Express
+    * JSON Schema
     * Swagger
   * [ObjectServer](doc/classes/ObjectServer.md)
     * Databases
