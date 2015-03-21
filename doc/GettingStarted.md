@@ -110,4 +110,4 @@ In your web browser navigate to [http://localhost:8888/apidoc](http://localhost:
 
 ### More examples
 
-Studying examples is a great way to learn. We have tons of examples at LINK
+Studying examples is a great way to learn. We have an entire [github repository full of runnable examples](https://github.com/willshulman/datanode-examples) to explore. 
