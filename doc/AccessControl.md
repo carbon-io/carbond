@@ -36,8 +36,7 @@ ACL objects are comprised of:
 }
 ```
 
-Examples
-----------
+### Example
 ```node
 {
   permissionDefinitions: { // map of permissions to defaults boolean values
