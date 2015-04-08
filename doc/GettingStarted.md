@@ -59,7 +59,7 @@ __(function() {
 })
 ```
 
-```node
+```node 
 var carbon = require('carbon')
 var o = carbon.atom.o(module)
 var _o = carbon.bond._o(module)
@@ -104,10 +104,10 @@ You now have a RESTful web service running on port 8888. You can connect to it v
 
 **API Browser**
 
-In your web browser navigate to [http://localhost:8888/apidoc](http://localhost:8888/apidoc)
+In your web browser navigate to [http://localhost:8888/apidoc](http://localhost:8888/apidoc) to use the auto-generated API Browser. 
 
-_INSERT IMAGE_
+![HelloService](./hello-service.png)
 
 ### More examples
 
-Studying examples is a great way to learn. We have tons of examples at LINK
+Studying examples is a great way to learn. We have an entire [github repository full of runnable examples](https://github.com/willshulman/datanode-examples) to explore. 
