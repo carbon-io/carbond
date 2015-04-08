@@ -24,7 +24,7 @@
     "swagger-ui" : "2.1.0-alpha.1",
     "bunyan": "1.2.*",
     "maker": "git+ssh://git@github.com:objectlabs/maker.git",
-    "leafnode": "git+ssh://git@github.com:objectlabs/leafnode.git#v2.1.2"
+    "leafnode": "git+ssh://git@github.com:objectlabs/leafnode.git"
   },
   "preferGlobal": false
 }
