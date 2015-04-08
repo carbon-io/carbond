@@ -448,8 +448,17 @@ How does one create an Admin user?
   - Must be an admin user or root?
   - 
 
+- acl:
+- dataAcl:
+- enablePersistentDataAcls 
+- persistentDataAclTemplate or initialDataAcl
 
-00000
+- acl:
+- dataAcl:
+- enableInstanceAcls 
+- initialInstanceAcl
+
+------------
 
 We dont believe req / resp converations between entities is async
 logically (physically go for it) 

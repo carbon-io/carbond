@@ -146,3 +146,42 @@ try {
   exceptionThrown = true
 }
 assert(exceptionThrown)
+
+// and test
+
+var acl3 = o({
+  _type: '../lib/security/Acl',
+  
+  permissionDefinitions: {
+    read: true,
+    write: false
+  },
+
+  entries: {
+    'user:3': { 
+      read: true,
+      write: true
+    }
+  }
+})
+
+var acl4 = o({
+  _type: '../lib/security/Acl',
+  
+  permissionDefinitions: {
+    read: true,
+    write: false
+  },
+
+  entries: {
+    'user:3': { 
+      read: true,
+      write: false
+    }
+  }
+})
+
+var andAcl = acl3.and(acl4)
+assert(andAcl.hasPermission(u3, 'read'))
+assert(!andAcl.hasPermission(u3, 'write'))
+
