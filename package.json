@@ -10,7 +10,7 @@
     "type" : "git",
     "url" : "https://github.com/willshulman/datanode"
   },
-  "main": "./lib/carbond.js",
+  "main": "index.js",
   "directories" : {
     "lib" : "./lib",
     "bin" : "./bin"
