@@ -66,20 +66,20 @@ ACL objects are comprised of:
   
   entries: [
     {
-      match: { role: "Admin" },
+      user: { role: "Admin" },
       permissions: {
         "*": true
       }
     },
     {
-      match: { title: "CFO" },
+      user: { title: "CFO" },
       permissions: {
         read: true,
         write: true
       }
     },
    {
-      match: { user: 1234 },
+      user: { user: 1234 },
       permissions: {
         read: true,
         write: false
