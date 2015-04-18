@@ -63,5 +63,28 @@ ACL objects are comprised of:
       write: false
     }
   }
+  
+  entries: [
+    {
+      match: { role: "Admin" },
+      permissions: {
+        "*": true
+      }
+    },
+    {
+      match: { title: "CFO" },
+      permissions: {
+        read: true,
+        write: true
+      }
+    },
+   {
+      match: { user: 1234 },
+      permissions: {
+        read: true,
+        write: false
+      }
+    }
+  ]
 }
 ```
