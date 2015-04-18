@@ -66,13 +66,13 @@ ACL objects are comprised of:
   
   entries: [
     {
-      user: { role: "Admin" },
+      group: { role: "Admin" },
       permissions: {
         "*": true
       }
     },
     {
-      user: { title: "CFO" },
+      group: { title: "CFO" },
       permissions: {
         read: true,
         write: true
