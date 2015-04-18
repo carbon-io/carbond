@@ -11,7 +11,7 @@ carbond is the server component of carbon-io platform.
     * [Authentication](doc/Authentication.md)
     * [Access Control](doc/AccessControl.md)
     * [Security strategies](doc/SecurityStrategies.md)
-* Running a datanode
+* Starting an ObjectServer
 * Auto-generated interactive API documentation (API Explorer)
 * Logging
 * Error handling
