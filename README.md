@@ -57,6 +57,72 @@ __(function() {
 })
 ```
 
+```Endpoints``` (of which ```ObjectServer is a subclass```) can be defined using templated paths as well as have child endpoints. Here is an example of using templated paths:
+
+```node
+var carbon = require('carbon-io')
+var o  = carbon.atom.o(module)
+var __ = carbon.fiber.__(module, true)
+
+__(function() {
+  module.exports = o({
+    _type: carbon.carbond.ObjectServer,
+    port: 8888,
+    endpoints: {
+      'users': o({
+        _type: carbon.carbond.Endpoint,
+        get: function(req) {
+          // get all users
+        }
+      }),
+      'users/:id': o({
+        _type: carbon.carbond.Endpoint,
+        get: function(req) {
+          // get all users
+        },
+        delete: function(req) {
+          // delete the user
+        }
+      }),
+    }
+  })
+})
+```
+
+Here is a similar example of the same API but using sub endpoints:
+
+```node
+var carbon = require('carbon-io')
+var o  = carbon.atom.o(module)
+var __ = carbon.fiber.__(module, true)
+
+__(function() {
+  module.exports = o({
+    _type: carbon.carbond.ObjectServer,
+    port: 8888,
+    endpoints: {
+      'users': o({
+        _type: carbon.carbond.Endpoint,
+        get: function(req) {
+          // get all users
+        },
+        endpoints: {
+          ":id": o({
+            _type: carbon.carbond.Endpoint,
+            get: function(req) {
+              // get all users
+            },
+            delete: function(req) {
+              // delete the user
+            }
+          }),
+        }
+      }),
+    }
+  })
+})
+```
+
 Operations
 ----------
 
