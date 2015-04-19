@@ -29,7 +29,7 @@ APIs are defined via ```ObjectServers```. Put simply, an ```ObjectServer``` is a
 
 Each ```Endpoint``` represents a single URI and can support any number of the HTTP operations: ```GET```, ```POST```, ```PUT```, ```DELETE```, ```HEAD```, and ```OPTIONS```. 
 
-Here is a very simple example of an ```ObjectServer``` that runs on port 8888 and that defines a single ```Endpoint``` at the path ```/hello``` which defines two operations, ```get``` and ```post```:
+Here is a very simple example of an ```ObjectServer``` that runs on port ```8888``` and that defines a single ```Endpoint``` at the path ```/hello``` which defines two operations, ```get``` and ```post```:
 
 ```node
 var carbon = require('carbon-io')
