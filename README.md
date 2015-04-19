@@ -31,7 +31,7 @@ Each ```Endpoint``` represents a single URI and can support any number of the HT
 
 Here is a very simple example on an ```ObjectServer``` with a single ```Endpoint```, ```/hello```, which defines two operations, ```get``` and ```post```:
 
-```
+```node
 var carbon = require('carbon-io')
 var o  = carbon.atom.o(module)
 var __ = carbon.fiber.__(module, true)
