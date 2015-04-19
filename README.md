@@ -22,9 +22,9 @@ Contents
 * Error handling
 * Production best-practices
 * Class reference
-  * [ObjectServer](doc/classes/ObjectServer.md)
-  * [Endpoint](doc/classes/Endpoint.md)
-  * Authenticator
+  * [carbond.ObjectServer](doc/classes/ObjectServer.md)
+  * [carbond.Endpoint](doc/classes/Endpoint.md)
+  * [carbond.security.Endpoint](doc/classes/Endpoint.md)
 
 Quick start
 ---------
