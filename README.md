@@ -57,5 +57,50 @@ __(function() {
 })
 ```
 
+Operations
+----------
 
+Each endpoint can implement one or more operations representing each of the HTTP methods: ```GET```, ```PUT```, ```POST```, ```CREATE```, ```DELETE```, ```HEAD```, ```OPTIONS```. There is no requirement an endpoint implement all HTTP methods. It only needs to implement those it wishes to support.
+
+Each operation is represented as either:
+* A function of the form ```function(req, res)```
+* An ```Operation``` object. This is more elaborate definition which allows for a description, parameter definitions, and other useful meta-data as well as a ```service``` method of the form ```function(req, res)```
+
+When responding to HTTP requests, two styles are supported:
+* An asynchronous style where operations write directly to the ```HttpResponse``` object passed to the operation. This style is useful when the operation needs to manipulate the ```HttpResponse``` object to do more than simply return JSON (e.g. set HTTP headers), or wished to pass the response to other functions.
+* A synchronous style where the operation simply returns a JSON object from the operation, or throws an exception to signal an error condition. When using this style the ```HttpResponse``` parameter can be omitted from the function signature of the operation. This style is useful when programming in a more synchronous style and / or coordinating with exceptions thrown deeper in the call stack.
+
+**Examples (asynchronous)**
+```node
+get: function(req, res) {
+  res.send({ msg: "hello world!" })  
+}
+```
+
+```node
+get: {
+  description: "My hello world operation",
+  params: {}
+  service: function(req, res) {
+    res.send({ msg: "hello world!" })  
+  }
+}
+```
+
+**Examples (synchronous)**
+```node
+get: function(req) {
+  return { msg: "hello world!" }
+}
+```
+
+```node
+get: {
+  description: "My hello world operation",
+  params: {}
+  service: function(req) {
+    return { msg: "hello world!" }
+  }
+}
+```
 
