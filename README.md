@@ -2,8 +2,10 @@ carbond
 ==========
 ***
 
-carbond is the server component of carbon-io platform. 
+carbond is the server component of the Carbon.io. 
 
+Contents
+---------
 * [ObjectServer](doc/classes/ObjectServer.md)
   * Databases
   * [Endpoints](doc/classes/Endpoint.md)
