@@ -6,6 +6,7 @@ Carbond is the server component of the Carbon.io.
 
 Contents
 ---------
+* Quick start (#quick-start)
 * [ObjectServers and Endpoints](#objectservers-and-endpoints)
 * [Operations] (#operations)
 * Databases
@@ -24,6 +25,12 @@ Contents
   * [ObjectServer](doc/classes/ObjectServer.md)
   * [Endpoint](doc/classes/Endpoint.md)
   * Authenticator
+
+Quick start
+---------
+
+For a quick start guide on how to create an API using Carbond, run it, and connect to it, please see the [main Carbon.io quick start guide](https://github.com/carbon-io/carbond/edit/master/README.md#quick-start).
+
 
 ObjectServers and Endpoints
 ---------
