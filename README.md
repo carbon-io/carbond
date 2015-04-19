@@ -6,9 +6,10 @@ Carbond is the server component of the Carbon.io.
 
 Contents
 ---------
-* [ObjectServers and Endpoints](#objectservers-and-endpoints) and 
+* [ObjectServers and Endpoints](#objectservers-and-endpoints)
+* [Operations] (#operations)
 * Databases
-* [Endpoints](doc/classes/Endpoint.md)
+* 
 * Basic endpoint types
 * Security
   * [Authentication](doc/Authentication.md)
@@ -20,8 +21,8 @@ Contents
 * Error handling
 * Production best-practices
 * Class reference
-  * ObjectServer
-  * Endpoint
+  * [ObjectServer](doc/classes/ObjectServer.md)
+  * [Endpoint](doc/classes/Endpoint.md)
   * Authenticator
 
 ObjectServers and Endpoints
