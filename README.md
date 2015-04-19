@@ -78,7 +78,8 @@ __(function() {
       'users/:id': o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
-          // get all users
+          // get the user
+          return getUserById(req.params.id)
         },
         delete: function(req) {
           // delete the user
@@ -110,7 +111,8 @@ __(function() {
           ":id": o({
             _type: carbon.carbond.Endpoint,
             get: function(req) {
-              // get all users
+              // get the user
+              return getUserById(req.params.id)
             },
             delete: function(req) {
               // delete the user
