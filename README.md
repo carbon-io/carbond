@@ -24,7 +24,15 @@ Contents
 * Class reference
   * [carbond.ObjectServer](doc/classes/ObjectServer.md)
   * [carbond.Endpoint](doc/classes/Endpoint.md)
-  * [carbond.security.Endpoint](doc/classes/Endpoint.md)
+  * [carbond.Operation](doc/classes/Operation.md)
+  * [carbond.Collection](doc/classes/Operation.md)
+  * [carbond.MongoDBCollection](doc/classes/Operation.md)
+  * [carbond.security.Authenticator](doc/classes/security/Authenticator.md)
+  * [carbond.security.Acl](doc/classes/security/Acl.md)
+  * [carbond.security.EndpointAcl](doc/classes/security/EndpointAcl.md)
+  * [carbond.security.CollectionAcl](doc/classes/security/CollectionAcl.md)
+  * [carbond.security.HttpBasicAuthenticator](doc/classes/security/HttpBasicAuthenticator.md)
+  * [carbond.security.MongoDBHttpBasicAuthenticator](doc/classes/security/MongoDBHttpBasicAuthenticator.md)
 
 Quick start
 ---------
