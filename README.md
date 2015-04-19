@@ -29,7 +29,7 @@ Contents
 Quick start
 ---------
 
-For a quick start guide on how to create an API using Carbond, run it, and connect to it, please see the [main Carbon.io quick start guide](https://github.com/carbon-io/carbond/edit/master/README.md#quick-start).
+For a quick start guide on how to create an API using Carbond, run it, and connect to it, please see the [main Carbon.io quick start guide](https://github.com/carbon-io/carbon-io/README.md#quick-start).
 
 
 ObjectServers and Endpoints
