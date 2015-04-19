@@ -1,8 +1,8 @@
-carbond
+Carbond
 ==========
 ***
 
-carbond is the server component of the Carbon.io. 
+Carbond is the server component of the Carbon.io. 
 
 Contents
 ---------
