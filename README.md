@@ -22,3 +22,38 @@ carbond is the server component of carbon-io platform.
   * Endpoint
   * Authenticator
 
+ObjectServers and Endpoints
+---------
+
+APIs are defined via ```ObjectServers```. Put simply, an ```ObjectServer``` is an HTTP server that exposes a JSON REST API and which is defined as a tree of ```Endpoints```.
+
+Each ```Endpoint``` represents a single URI and can support any number of the HTTP operations: ```GET```, ```POST```, ```PUT```, ```DELETE```, ```HEAD```, and ```OPTIONS```. 
+
+Here is a very simple example on an ```ObjectServer``` with a single ```Endpoint```, ```/hello```, which defines two operations, ```get``` and ```post```:
+
+```
+var carbon = require('carbon-io')
+var o  = carbon.atom.o(module)
+var __ = carbon.fiber.__(module, true)
+
+__(function() {
+  module.exports = o({
+    _type: carbon.carbond.ObjectServer,
+    port: 8888,
+    endpoints: {
+      hello: o({
+        _type: carbon.carbond.Endpoint,
+        get: function(req) {
+          return { msg: "Hello World!" }
+        },
+        post: function(req) {
+          return { msg: "Hello World! " + req.body }
+        }
+      })
+    }
+  })
+})
+```
+
+
+
