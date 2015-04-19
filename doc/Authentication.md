@@ -11,7 +11,7 @@ The user associated with the request can later be accessed via the ```user``` pr
 req.user
 ```
 
-Datanode comes with several out-of-the-box ```Authenticator```s:
+Carbond comes with several out-of-the-box ```Authenticator```s:
 
 * An ```HttpBasicAuthenticator```
 * An ```ApiKeyAuthenticator``` 
