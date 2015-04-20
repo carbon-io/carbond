@@ -70,6 +70,33 @@ You then install the package dependencies like so
 % npm install .
 ```
 
+Next you create your app / service. All ```carbond``` services will have the same top-level structure
+
+```
+<path-to-your-app>/
+    package.json
+    MyService.js
+```
+
+```node
+var carbon = require('carbon-io')
+var o  = carbon.atom.o(module)
+var __ = carbon.fiber.__(module, true)
+
+__(function() {
+  module.exports = o({
+    _type: carbon.carbond.ObjectServer,
+    .
+    .
+    .
+    // implementation of your service goes here
+    .
+    .
+    .
+  })
+})
+```
+
 ObjectServers and Endpoints
 ---------
 
