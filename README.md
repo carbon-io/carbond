@@ -40,6 +40,28 @@ Quick start
 
 For a quick start guide on how to create an API using Carbond, run it, and connect to it, please see the [main Carbon.io quick start guide](https://github.com/carbon-io/carbon-io/blob/master/README.md#quick-start-hello-world).
 
+Application structure
+---------
+
+To build a ```carbond``` application you start by creating a standard node package:
+
+```
+<path-to-your-app>/
+    package.json
+```
+
+Your package.json should include carbon-io
+
+```json
+{
+    "name": "hello-world",
+    "description": "Hello World API",
+    "engines": { "node": "~0.8.6" },
+    "dependencies": {
+        "carbon-io" : "> 0.1.0"
+    }
+}
+```
 
 ObjectServers and Endpoints
 ---------
