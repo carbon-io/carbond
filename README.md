@@ -63,6 +63,13 @@ Your package.json should include carbon-io
 }
 ```
 
+You then install the package dependencies like so
+
+```console
+% cd <path-to-your-app>
+% npm install .
+```
+
 ObjectServers and Endpoints
 ---------
 
