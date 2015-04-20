@@ -78,6 +78,8 @@ Next you create your app / service. All ```carbond``` services will have the sam
     MyService.js
 ```
 
+In ```MyService.js```:
+
 ```node
 var carbon = require('carbon-io')
 var o  = carbon.atom.o(module)
