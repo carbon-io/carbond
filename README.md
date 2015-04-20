@@ -99,7 +99,7 @@ __(function() {
 })
 ```
 
-The pre-ample requires the main ```carbon-io``` package as well as define the ```o``` and ```__``` operators. 
+The pre-ample requires the main ```carbon-io``` package as well as defines the ```o``` and ```__``` operators. 
 
 ```
 var carbon = require('carbon-io')
