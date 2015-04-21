@@ -43,9 +43,6 @@ o Decide how we want to deal with queryablity with collections
   - will almost always want off so how deal? 
   - schemas for valid query patterns?
 
-o Upgrade Express
-  -- when you do need to change req.header to req.get (maybe) in ApiKeyAuthenticator.js
-
 o _id generators
 
 o Why is collection post returning array from insert (driver or us?)
