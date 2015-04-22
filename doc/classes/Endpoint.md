@@ -10,7 +10,7 @@ Configuration
 
 ```
 {
-  _type: 'datanode/Endpoint',
+  _type: carbon.carbond.Endpoint,
   
   [get: <function> | <Operation>],
   [put: <function> | <Operation>],
