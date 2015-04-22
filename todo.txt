@@ -1,49 +1,49 @@
+
+AC
+-------------------------
 o Endpoint.sanitizesOutput
 o make sure you cant change obj[ownerField]
 o rm dynamic spec stuff from acl
 o   - maybe not? what if role:Editor says write false but owner says
 write true? Dont want and semantics
-
 o UserCollection (just pretend with system acl field level)
 o Errors from sanitize (sort of good for now?)
-o Document ACLs
-o 
-o 
-o impl write portion for obj acl
-o impl full proper sanitize (properties + recursive w no loops)
-
-o maker: have init take same args as constructor
-
-o Clean up 'options' in acl (not needed)
+o impl write portion for obj acl 
+o impl full proper sanitize (properties + recursive w no loops) 
+o Clean up 'options' in acl (not needed) 
   --
   http://iankent.uk/2014/02/11/globally-handling-options-requests-in-play-framework/
+o finish root user impl 
+  - have sep header for root auth 
+  - maybe what we do is take secret-key and the up to configurer 
+  whether they want root-access-key. If they do it's 2-factor 
+  potentially (when split config and flag passed). If they 
+  don't want to use root-access-key root-secret-key becomes a single 
+  value api key?
 
+Core
+-------------------------
+o logInfo
+o enabled: { } for Collection
 o JSON parsing of params. 
   - settle arrays ([1, 2, 3] vs a=1&a=2&a=3)
   - doc
+o Schema support
 
-o finish root user impl
+o property cmdArgs non boolean (name value)
+o add dbUri and dbUris cmdArgs
 
-o example of get with parameters
+ o X-Powered-By: Express
 
-o Add -p and -root-secret-key (or pair) to ObjectServer (unless root user is in db?)
-  - might be nice for root user to be out of db. 
-  - have sep header for root auth
-  - maybe what we do is take secret-key and the up to configurer
-  whether they want root-access-key. If they do it's 2-factor
-  potentially (when split config and flag passed). If they
-  don't want to use root-access-key root-secret-key becomes a single
-  value api key?
-
-o we took initDBs out of init. Hels with help. Is this ok? Composite
-object servers?
- 
 o Views and forms
+
 o Decide how we want to deal with queryablity with collections 
   - will almost always want off so how deal? 
   - schemas for valid query patterns?
 
 o _id generators
+
+o Responds with stuff in swagger spec (for errors etc...)
 
 o Why is collection post returning array from insert (driver or us?)
   can see in swagger ui
@@ -52,12 +52,8 @@ o Do we want an Endpoint.operations() that gets all the defined operations?
 
 o Flesh out api for MongoDBCollections to be like current data api
 
-o document in maker that you can call constructor (or is it obvious)?
-
-o Error
+o Errors
   - http://dailyjs.com/2014/01/30/exception-error/
-
-o Responds with stuff in swagger spec (for errors etc...)
 
 -- SWAGGER
 
@@ -73,14 +69,19 @@ o Swagger ui and auth
     https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md#securityDefinitionsObject
 
 
+-- DOC
+o document logging in ObjectServer
+o document in atom how to pass constructor args, how they chain and _init 
+
 -- MED
 o leafnode async
 o remember changing schema of acls that will be in people's data is hard....
-o X-Powered-By: Express
 o Deal with encryption in authenticators
 o UserOwnedMDBCollection
 o Auth / AC per endpoint? Telemetry example is a good one
 o envelope format / _links
+o we took initDBs out of init. Hels with help. Is this ok? Composite 
+object servers?
 o validate schema 
   - https://github.com/zaggino/z-schema
 o client 
@@ -223,3 +224,21 @@ http://webcache.googleusercontent.com/search?q=cache:vlJ_IH4ZBP4J:npmawesome.com
 ClassDOjo?
 http://caines.ca/blog/2013/04/29/so-i-wrote-a-json-api-framework-and-the-framework-was-the-least-interesting-part/
 
+----------
+Could this be easier?
+
+__(function() {
+  module.exports = o({
+    _type: carbon.carbond.ObjectServer
+    port: 8888,
+    dbUri: "mongodb://will:will@ds049150.mongolab.com:49150/datanode-sandbox",
+    endpoints : {
+      "zipcodes": o({
+        _type: carbon.carbond.MongoDBCollection
+        collection: "zipcodes"
+      })
+    }
+  })
+})
+
+----------
