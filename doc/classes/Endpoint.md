@@ -34,7 +34,7 @@ Properties
 
 * ```objectserver``` (read-only) - the ```ObjectServer``` to which this endpoint belongs
 
-* ```endpoints``` - a set of child ```Endpoint``` definitions. This is an object whose keys are path string and values are instances of ```Endpoint```. Each path key will be interpreted as relative to this ```Endpoint```s ```path``` property. 
+* ```endpoints``` - a set of child ```Endpoint``` definitions. This is an object whose keys are path strings and values are instances of ```Endpoint```. Each path key will be interpreted as relative to this ```Endpoint```s ```path``` property. 
 
 Operations
 ----------
