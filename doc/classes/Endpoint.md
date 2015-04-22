@@ -21,7 +21,7 @@ Configuration
   [options: <function> | <Operation>],
 
   [endpoints: { 
-    <string>: <Endpoint>
+    <path-template>: <Endpoint>
     ...
   }]
 }
