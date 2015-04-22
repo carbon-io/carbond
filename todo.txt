@@ -1,7 +1,5 @@
 Core 
 -------------------------
-o Errors 
-  - http://dailyjs.com/2014/01/30/exception-error/
 
 o HTTPS
 
@@ -75,6 +73,7 @@ o document in atom how to pass constructor args, how they chain and _init
 
 -- MED
 o leafnode async
+o Should HttpError superclass capture stack trace?
 o remember changing schema of acls that will be in people's data is hard....
 o Deal with encryption in authenticators
 o UserOwnedMDBCollection
@@ -242,3 +241,5 @@ __(function() {
 })
 
 ----------
+o Errors 
+  - http://dailyjs.com/2014/01/30/exception-error/
