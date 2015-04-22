@@ -1,3 +1,37 @@
+Core 
+-------------------------
+o Errors 
+  - http://dailyjs.com/2014/01/30/exception-error/
+
+o HTTPS
+
+o enabled: { } for Collection 
+o JSON parsing of params. 
+  - settle arrays ([1, 2, 3] vs a=1&a=2&a=3) 
+  - doc 
+o Schema support 
+
+o property cmdArgs non boolean (name value) 
+o add dbUri and dbUris cmdArgs 
+
+o X-Powered-By: Express 
+
+
+o Decide how we want to deal with queryablity with collections 
+  - will almost always want off so how deal? 
+  - schemas for valid query patterns?
+
+o _id generators 
+
+o Responds with stuff in swagger spec (for errors etc...) 
+
+o Why is collection post returning array from insert (driver or us?) 
+  can see in swagger ui 
+
+o Do we want an Endpoint.operations() that gets all the defined operations?
+o Views and forms 
+
+o Flesh out api for MongoDBCollections to be like current data api 
 
 AC
 -------------------------
@@ -20,40 +54,6 @@ o finish root user impl
   potentially (when split config and flag passed). If they 
   don't want to use root-access-key root-secret-key becomes a single 
   value api key?
-
-Core
--------------------------
-o logInfo
-o enabled: { } for Collection
-o JSON parsing of params. 
-  - settle arrays ([1, 2, 3] vs a=1&a=2&a=3)
-  - doc
-o Schema support
-
-o property cmdArgs non boolean (name value)
-o add dbUri and dbUris cmdArgs
-
- o X-Powered-By: Express
-
-o Views and forms
-
-o Decide how we want to deal with queryablity with collections 
-  - will almost always want off so how deal? 
-  - schemas for valid query patterns?
-
-o _id generators
-
-o Responds with stuff in swagger spec (for errors etc...)
-
-o Why is collection post returning array from insert (driver or us?)
-  can see in swagger ui
-
-o Do we want an Endpoint.operations() that gets all the defined operations?
-
-o Flesh out api for MongoDBCollections to be like current data api
-
-o Errors
-  - http://dailyjs.com/2014/01/30/exception-error/
 
 -- SWAGGER
 
