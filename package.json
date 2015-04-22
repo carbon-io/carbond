@@ -26,6 +26,7 @@
     "swagger-ui" : "2.1.0-alpha.1",
     "bunyan": "1.2.*",
     "atom": "git+ssh://git@github.com:carbon-io/atom.git",
+    "bond": "git+ssh://git@github.com:carbon-io/bond.git",
     "leafnode": "git+ssh://git@github.com:objectlabs/leafnode.git#v2.1.5"
   },
   "preferGlobal": false
