@@ -154,14 +154,15 @@ Examples
 ----------
 
 ```node
-var o = require('maker').o(module, true)
+var carbon = require('carbon.io')
+var o = carbon.atom.o(module)
 
 module.exports = o({
-  _type: 'datanode/ObjectServer',
+  _type: carbon.carbond.ObjectServer,
   port: 8888,
   endpoints: {
     hello: o({
-      _type: 'datanode/Endpoint',
+      _type: carbon.carbond.Endpoint,
       get: function(req) {
         return { msg: "Hello World!" }
       }
