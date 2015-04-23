@@ -14,8 +14,9 @@ The ```ObjectServer``` class is the top-level class for defining APIs.
   verbosity: <verbosity>,
   authenticator: <Authenticator>,
   endpoints: {
-    <string>: <Endpoint>,
+    <path>: <Endpoint>,
     ...
+  }
 }
 ```
 
