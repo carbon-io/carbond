@@ -9,6 +9,7 @@ The ```ObjectServer``` class is the top-level class for defining APIs.
   port: <int>,
   description: <string>,
   dbUri: <string>,
+  dbUris: [<string>],
   path: <string>,
   processUser: <string>,
   verbosity: <verbosity>,
