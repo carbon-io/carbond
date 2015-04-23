@@ -1,7 +1,7 @@
-class ObjectServer
+class carbond.ObjectServer
 ----------
 
-The ```carbond.ObjectServer``` class is the top-level class for defining APIs. 
+The ```ObjectServer``` class is the top-level class for defining APIs. 
 
 ```node
 {
