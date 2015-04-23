@@ -2,17 +2,16 @@ Core
 -------------------------
 
 o HTTPS
+o processUser
 
 o enabled: { } for Collection 
+o Schema support 
 o JSON parsing of params. 
   - settle arrays ([1, 2, 3] vs a=1&a=2&a=3) 
   - doc 
-o Schema support 
 
 o property cmdArgs non boolean (name value) 
 o add dbUri and dbUris cmdArgs 
-
-o X-Powered-By: Express 
 
 
 o Decide how we want to deal with queryablity with collections 
@@ -73,7 +72,6 @@ o document in atom how to pass constructor args, how they chain and _init
 
 -- MED
 o leafnode async
-o Should HttpError superclass capture stack trace?
 o remember changing schema of acls that will be in people's data is hard....
 o Deal with encryption in authenticators
 o UserOwnedMDBCollection
@@ -100,7 +98,7 @@ o CORS security review
   - http://docs.strongloop.com/display/public/LB/Security+considerations
 o errors (error middleware?)
    - https://www.joyent.com/developers/node/design/errors
-  
+o verify X-Powered-By is not express and make Carbon  
 
 -- LATER
 o LRU cache endpoint based on a field
