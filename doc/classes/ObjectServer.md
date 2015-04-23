@@ -5,7 +5,7 @@ The ```ObjectServer``` class is the top-level class for defining APIs.
 
 ```node
 {
-  _type: 'datanode/ObjectServer',
+  _type: carbon.carbond.ObjectServer,
   port: <int>,
   description: <string>,
   dbUri: <string>,
@@ -39,7 +39,7 @@ Properties
 
 * ```authenticator``` - the ```Authenticator``` object for this API. The authenticator is used to authenticate the API user
 
-* ```endpoints``` - an set of ```Endpoint``` definitions. This is an object whose keys are path strings and values are instances of ```Endpoint```. Each path key will be interpreted as relative to this ```ObjectServer```s ```path``` property. These paths can also define variable bindings (e.g. ```orders/:id```)  
+* ```endpoints``` - a set of ```Endpoint``` definitions. This is an object whose keys are path strings and values are instances of ```Endpoint```. Each path key will be interpreted as relative to this ```ObjectServer```s ```path``` property. These paths can also define variable bindings (e.g. ```orders/:id```)  
 
 Methods
 ----------
