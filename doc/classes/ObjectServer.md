@@ -24,9 +24,9 @@ The ```ObjectServer``` class is the top-level class for defining APIs.
 Properties
 ----------
 
-* ```port``` - the port to listen on
+* ```port```: The port to listen on
 
-* ```description``` - a short description of this API
+* ```description```: A short description of this API
 
 * ```dbUri``` - the URI for the database (e.g.: ```'mongodb://localhost:27017/mydb' ```). The server will connect to this database at startup and expose it through the ```db``` property
 
