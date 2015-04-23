@@ -37,7 +37,7 @@ Properties
   to bind to a privileged port but don't want the process to remain
   running as root 
 
-* ```verbosity``` - controls the logging level. One of (```'debug'``` | ```'info'``` | ```'warn'``` | ```'error'``` | ```'fatal'```)
+* ```verbosity``` - controls the logging level. One of (```'debug'``` | ```'info'``` | ```'warn'``` | ```'error'``` | ```'fatal'```). **Default:** ```'info'```
 
 * ```authenticator``` - the ```Authenticator``` object for this API. The authenticator is used to authenticate the API user
 
