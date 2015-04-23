@@ -26,7 +26,7 @@ Properties
 
 * ```port```: The port to listen on
 
-* ```description```:A short description of this API
+* ```description```: A short description of this API
 
 * ```dbUri```: The URI for the database (e.g.: ```'mongodb://localhost:27017/mydb' ```). The server will connect to this database at startup and expose it through the ```db``` property
 
