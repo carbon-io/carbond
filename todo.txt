@@ -3,8 +3,10 @@ Core
 
 o HTTPS
 o processUser
+    - https://thomashunter.name/blog/drop-root-privileges-in-node-js/
 
 o enabled: { } for Collection 
+
 o Schema support 
 o JSON parsing of params. 
   - settle arrays ([1, 2, 3] vs a=1&a=2&a=3) 
@@ -13,17 +15,11 @@ o JSON parsing of params.
 o property cmdArgs non boolean (name value) 
 o add dbUri and dbUris cmdArgs 
 
-
 o Decide how we want to deal with queryablity with collections 
   - will almost always want off so how deal? 
   - schemas for valid query patterns?
 
 o _id generators 
-
-o Responds with stuff in swagger spec (for errors etc...) 
-
-o Why is collection post returning array from insert (driver or us?) 
-  can see in swagger ui 
 
 o Do we want an Endpoint.operations() that gets all the defined operations?
 o Views and forms 
@@ -61,6 +57,7 @@ o Swagger Issues
   - ObjectIds in swagger coming out wrong -- probably toString of ObjectId  
 o Swagger ui and auth 
   - Need to add the api key header name in CORS headers for swagger 
+  - root auth
   header to work for key 
   - drive client auth from this (if possible) 
     https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md#securityDefinitionsObject
@@ -79,13 +76,13 @@ o Auth / AC per endpoint? Telemetry example is a good one
 o envelope format / _links
 o we took initDBs out of init. Hels with help. Is this ok? Composite 
 object servers?
-o validate schema 
-  - https://github.com/zaggino/z-schema
+o Responds with stuff in swagger spec (for errors etc...) 
 o client 
 o Make sure you cant, as a client, use HTTP Method foo and end up
 calling endpoint.foo (security)
 o Clean up response codes (201 for posts?) 
   http://blog.ploeh.dk/2013/04/30/rest-lesson-learned-avoid-204-responses/
+o 201 location: on insert?
 o 405 Method Not Allowed
   - not sure we can do this since there is no route registered with
   express if no method. 
@@ -241,3 +238,11 @@ __(function() {
 ----------
 o Errors 
   - http://dailyjs.com/2014/01/30/exception-error/
+----------
+o JSON schema
+  - http://spacetelescope.github.io/understanding-json-schema/index.html
+
+----------
+setuid
+  - https://thomashunter.name/blog/drop-root-privileges-in-node-js/
+  - http://syskall.com/dont-run-node-dot-js-as-root/ (dont do this)
