@@ -5,17 +5,37 @@ o HTTPS
 
 o enabled: { } for Collection 
 
+o can augment cmdargs (object server will define as undefined and then
+add in its defaults on top of what instance has configured.
+
 o Schema support 
 o JSON parsing of params. 
   - settle arrays ([1, 2, 3] vs a=1&a=2&a=3) 
   - doc 
+* remember to do Collection schema and query schema
+* remember to do ejson expand of schema
+* fix defineExpressRoute
 o query schemas in Collections
 
-o _id generators 
-
 o Views and forms 
-
+o _id generators 
 o Flesh out api for MongoDBCollections to be like current data api 
+
+o if you send non escaped params in query string server freaks
+  [15-04-26|14:03:56]% curl 'localhost:8888/hello?message="Nice "'
+  curl: (52) Empty reply from server
+
+o invalid json sent in body fails body parser in non-friendly way
+(should be able to get out to client...)
+SyntaxError: Unexpected string
+    at Object.parse (native)
+    at parse (/Users/will/src/github/carbon-io/carbond/node_modules/body-parser/lib/types/json.js:84:17)
+    at /Users/will/src/github/carbon-io/carbond/node_modules/body-parser/lib/read.js:102:18
+    at IncomingMessage.onEnd (/Users/will/src/github/carbon-io/carbond/node_modules/body-parser/node_modules/raw-body/index.js:149:7)
+    at IncomingMessage.g (events.js:180:16)
+    at IncomingMessage.EventEmitter.emit (events.js:92:17)
+    at _stream_readable.js:920:16
+    at process._tickCallback (node.js:415:13)
 
 AC
 -------------------------
