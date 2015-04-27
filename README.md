@@ -17,11 +17,10 @@ Contents
   * [Authentication](doc/Authentication.md)
   * [Access Control](doc/AccessControl.md)
   * [Security strategies](doc/SecurityStrategies.md)
+* Error handling
+* Logging
 * Starting an ObjectServer
 * Auto-generated interactive API documentation (API Explorer)
-* Logging
-* Error handling
-* Production best-practices
 * Class reference
   * [carbond.ObjectServer](doc/classes/ObjectServer.md)
   * [carbond.Endpoint](doc/classes/Endpoint.md)
