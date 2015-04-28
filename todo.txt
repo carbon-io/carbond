@@ -16,10 +16,12 @@ o JSON parsing of params.
 * remember to do ejson expand of schema
 * fix defineExpressRoute
 o query schemas in Collections
+  - XXX just find()?
 
 o Views and forms 
 o _id generators 
 o Flesh out api for MongoDBCollections to be like current data api 
+
 
 o if you send non escaped params in query string server freaks
   [15-04-26|14:03:56]% curl 'localhost:8888/hello?message="Nice "'
@@ -261,3 +263,6 @@ o JSON schema
 setuid
   - https://thomashunter.name/blog/drop-root-privileges-in-node-js/
   - http://syskall.com/dont-run-node-dot-js-as-root/ (dont do this)
+
+ssl
+http://www.gettingcirrius.com/2012/06/securing-nodejs-and-express-with-ssl.html
