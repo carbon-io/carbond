@@ -1,4 +1,4 @@
-var o = require('maker').o(module)
+var o = require('atom').o(module)
 var assert = require('assert')
 
 /*******************************************************************************

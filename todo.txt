@@ -3,25 +3,21 @@ Core
 
 o HTTPS
 
-o enabled: { } for Collection 
-
 o can augment cmdargs (object server will define as undefined and then
 add in its defaults on top of what instance has configured.
 
-o Schema support 
-o JSON parsing of params. 
-  - settle arrays ([1, 2, 3] vs a=1&a=2&a=3) 
-  - doc 
-* remember to do Collection schema and query schema
+o Response obj and response schema? Do we want to validate objects
+going out?
+
+- settle arrays ([1, 2, 3] vs a=1&a=2&a=3) 
 * remember to do ejson expand of schema
 * fix defineExpressRoute
-o query schemas in Collections
-  - XXX just find()?
+* maybe Operation.service should handle validation and everything no?
+o query schemas in Collections just find()?
 
 o Views and forms 
 o _id generators 
 o Flesh out api for MongoDBCollections to be like current data api 
-
 
 o if you send non escaped params in query string server freaks
   [15-04-26|14:03:56]% curl 'localhost:8888/hello?message="Nice "'
@@ -266,3 +262,10 @@ setuid
 
 ssl
 http://www.gettingcirrius.com/2012/06/securing-nodejs-and-express-with-ssl.html
+
+great API docs
+  http://getkong.org/docs/0.2.0-2/admin-api/
+
+
+Should we use ejson vs mongodb-extended-json
+
