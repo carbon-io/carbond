@@ -1,10 +1,12 @@
-module.exports = {
+module.exports = { // XXX should be able to automate this
   ObjectServer: require('./lib/ObjectServer'),
   Endpoint: require('./lib/Endpoint'),
   Operation: require('./lib/Operation'),
   Collection: require('./lib/Collection'),
   MongoDBCollection: require('./lib/MongoDBCollection'),
   UserCollection: require('./lib/UserCollection'),
+  IdGenerator: require('./lib/IdGenerator'),
+  ObjectIdGenerator: require('./lib/ObjectIdGenerator'),
   security: {
     Authenticator: require('./lib/security/Authenticator'),
     HttpBasicAuthenticator: require('./lib/security/HttpBasicAuthenticator'),

@@ -6,49 +6,37 @@ o HTTPS
 o can augment cmdargs (object server will define as undefined and then
 add in its defaults on top of what instance has configured.
 
-o Response obj and response schema? Do we want to validate objects
+o JSON SCHEMA
+o query schemas in Collections just find()? Or remove and update
+
+* fix defineExpressRoute 
+  * endpoint._init handle?
+  * maybe Operation.service should handle validation and everything no?
+
+o COLLECTION 
+o Flesh out api for MongoDBCollections to be like current data api
+(with AC)
+
+o Response obj and response schema? Do we want to validate objects 
 going out?
-
-- settle arrays ([1, 2, 3] vs a=1&a=2&a=3) 
-* remember to do ejson expand of schema
-* fix defineExpressRoute
-* maybe Operation.service should handle validation and everything no?
-o query schemas in Collections just find()?
-
-o Views and forms 
-o _id generators 
-o Flesh out api for MongoDBCollections to be like current data api 
-
-o if you send non escaped params in query string server freaks
-  [15-04-26|14:03:56]% curl 'localhost:8888/hello?message="Nice "'
-  curl: (52) Empty reply from server
-
-o invalid json sent in body fails body parser in non-friendly way
-(should be able to get out to client...)
-SyntaxError: Unexpected string
-    at Object.parse (native)
-    at parse (/Users/will/src/github/carbon-io/carbond/node_modules/body-parser/lib/types/json.js:84:17)
-    at /Users/will/src/github/carbon-io/carbond/node_modules/body-parser/lib/read.js:102:18
-    at IncomingMessage.onEnd (/Users/will/src/github/carbon-io/carbond/node_modules/body-parser/node_modules/raw-body/index.js:149:7)
-    at IncomingMessage.g (events.js:180:16)
-    at IncomingMessage.EventEmitter.emit (events.js:92:17)
-    at _stream_readable.js:920:16
-    at process._tickCallback (node.js:415:13)
 
 AC
 -------------------------
+o Unit tests failing
+o Robert suggestions
 o Endpoint.sanitizesOutput
+
 o make sure you cant change obj[ownerField]. Could be big hole
 o rm dynamic spec stuff from acl
 o   - maybe not? what if role:Editor says write false but owner says
 write true? Dont want and semantics
-o UserCollection (just pretend with system acl field level)
 o Errors from sanitize (sort of good for now?)
 o impl write portion for obj acl 
 o impl full proper sanitize (properties + recursive w no loops) 
 o Clean up 'options' in acl (not needed) 
   --
   http://iankent.uk/2014/02/11/globally-handling-options-requests-in-play-framework/
+
 o finish root user impl 
   - have sep header for root auth 
   - maybe what we do is take secret-key and the up to configurer 
@@ -57,29 +45,53 @@ o finish root user impl
   don't want to use root-access-key root-secret-key becomes a single 
   value api key?
 
+o UserCollection (just pretend with system acl field level)
+
 -- SWAGGER
 
 o Swagger Issues
   - in swagger ui if you do an obj get with no id the request url is 
-    odd. Think this is swagge bug (http://Wills-MacBook-Pro.local:8888/zipcodes/{id})
+    odd. Think this is swagger bug (http://Wills-MacBook-Pro.local:8888/zipcodes/{id})
   - What's up with swagger and :id? vs :id
-  - ObjectIds in swagger coming out wrong -- probably toString of ObjectId  
 o Swagger ui and auth 
-  - Need to add the api key header name in CORS headers for swagger 
   - root auth
-  header to work for key 
   - drive client auth from this (if possible) 
     https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md#securityDefinitionsObject
+
+
+-- BUGS
+o BUGS 
+o if you send non escaped params in query string server freaks 
+  [15-04-26|14:03:56]% curl 'localhost:8888/hello?message="Nice "' 
+  curl: (52) Empty reply from server 
+    http://stackoverflow.com/questions/18157117/node-js-curl-52-empty-reply-from-server-with-space-in-request-not-encoded
+
+o invalid json sent in body fails body parser in non-friendly way 
+(should be able to get out to client...) 
+SyntaxError: Unexpected string 
+    at Object.parse (native) 
+    at parse (/Users/will/src/github/carbon-io/carbond/node_modules/body-parser/lib/types/json.js:84:17) 
+    at /Users/will/src/github/carbon-io/carbond/node_modules/body-parser/lib/read.js:102:18 
+    at IncomingMessage.onEnd (/Users/will/src/github/carbon-io/carbond/node_modules/body-parser/node_modules/raw-body/index.js:149:7) 
+    at IncomingMessage.g (events.js:180:16) 
+    at IncomingMessage.EventEmitter.emit (events.js:92:17) 
+    at _stream_readable.js:920:16 
+    at process._tickCallback (node.js:415:13) 
 
 
 -- DOC
 o document logging in ObjectServer
 o document in atom how to pass constructor args, how they chain and _init 
 o sslOptions
+o json schema stuff
+o settle arrays ([1, 2, 3] vs a=1&a=2&a=3) 
 
+
+====================================================================================================
 -- MED
 o leafnode async
 o fibrous
+o Views and Forms and Commands
 o property cmdArgs non boolean (name value) 
 o add dbUri and dbUris cmdArgs 
 o remember changing schema of acls that will be in people's data is hard....
