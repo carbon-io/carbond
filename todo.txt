@@ -3,12 +3,6 @@ Core
 
 o HTTPS
 
-o can augment cmdargs (object server will define as undefined and then
-add in its defaults on top of what instance has configured.
-
-o JSON SCHEMA
-o query schemas in Collections just find()? Or remove and update
-
 * fix defineExpressRoute 
   * endpoint._init handle?
   * maybe Operation.service should handle validation and everything no?
@@ -16,9 +10,12 @@ o query schemas in Collections just find()? Or remove and update
 o COLLECTION 
 o Flesh out api for MongoDBCollections to be like current data api
 (with AC)
+  o query schemas in Collections should also apply to delete and update
 
 o Response obj and response schema? Do we want to validate objects 
 going out?
+
+o bond scopes
 
 AC
 -------------------------
