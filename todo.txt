@@ -1,9 +1,8 @@
 Core 
 -------------------------
 
-o HTTPS
-
-* fix defineExpressRoute 
+o FACTORING IMPROVEMENTS
+  * fix defineExpressRoute 
   * endpoint._init handle?
   * maybe Operation.service should handle validation and everything no?
 
