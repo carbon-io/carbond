@@ -19,41 +19,62 @@ var acl = o({
     // user is not in groupDefinitions although it can be. This is to check _id is properly used as default
   },
 
-  entries: {
-    '*': {
-      read: true,
-      write: true,
-      exec: false
+  entries: [
+    { 
+      user: '*',
+      permissions: {
+        read: true,
+        write: true,
+        exec: false
+      }
     },
 
-    'user:3': { 
-      read: true,
-      write: true
+    {
+      user: 3,
+      permissions: { 
+        read: true,
+        write: true
+      }
     },
 
-    'user:5': {
-      "*": function(user) { return user.isAwesome }
+    {
+      user: 5,
+      permissions: {
+        "*": function(user) { return user.isAwesome }
+      }
     },
     
-    'user:"6"': {
-      read: false
+    {
+      user: 6,
+      permissions: {
+        read: false
+      }
     },
 
-    'role:"Admin"': {
-      "*": true
+    {
+      user: { role: "Admin" },
+      permissions: {
+        "*": true
+      }
     },
 
-    'title:"CEO"': {
-      read: true,
-      write: true,
-      exec: false
+    {
+      user: { title: "CEO" },
+      permissions: {
+        read: true,
+        write: true,
+        exec: false
+      }
     },
 
-    'title:"COO"': {
-      read: true,
-      write: false
+    { 
+      user: { title: "COO" },
+      permissions: {
+        read: true,
+        write: false
+      }
     }
-  }
+  ]
 })
 
 var u1 = {
@@ -80,7 +101,7 @@ var u5 = {
 }
 
 var u6 = {
-  _id: '6'
+  _id: 6
 }
 
 // u1
@@ -134,18 +155,18 @@ var acl2 = o({
   
   permissionDefinitions: {},
   groupDefinitions: {},
-  entries: {
-    "foop:3": {}
-  }
+  entries: [
+    {
+      user: { foop: 3 },
+      permissions: {}
+    }
+  ]
 })
 
-var exceptionThrown = false
-try {
+// should barf
+assert.throws(function() {
   acl2.hasPermission(u1, 'read')
-} catch (e) {
-  exceptionThrown = true
-}
-assert(exceptionThrown)
+})
 
 // and test
 
@@ -157,12 +178,15 @@ var acl3 = o({
     write: false
   },
 
-  entries: {
-    'user:3': { 
-      read: true,
-      write: true
+  entries: [
+    {
+      user: 3,
+      permissions: {
+        read: true,
+        write: true
+      }
     }
-  }
+  ]
 })
 
 var acl4 = o({
@@ -173,12 +197,15 @@ var acl4 = o({
     write: false
   },
 
-  entries: {
-    'user:3': { 
-      read: true,
-      write: false
+  entries: [
+    {
+      user: 3,
+      permissions: {
+        read: true,
+        write: false
+      }
     }
-  }
+  ]
 })
 
 var andAcl = acl3.and(acl4)
