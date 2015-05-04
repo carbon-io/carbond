@@ -16,7 +16,7 @@ ACL objects are comprised of:
 
 * ```groupDefinitions``` - This defines the set of group names that will be used in the ACL. Each entry defines a group by mapping it to a property path, as a ```string```, or a function that takes a user and returns a value. If provided with a property path the path is evaluated against the authenticated user when checking ACL permissions. By default there always exists a group with the name ```user``` to allow for individual users to be specified in ACL entries. 
 
-* ```entries``` - This defines the actual access control list for the ACL as a mapping of _user specifiers_ to a set of _permissions_. Each user specifier is a ```string``` of the form ```<group-name>:<value>``` where ```group-name``` is one of the groups defined in ```groupDefinitions```. Each permission object is a mapping of a permisson (defined in ```permissionDefinitions```) to a _permission predicate_. Permission predicates are either simple boolean values or a function that takes a user object and returns a boolean value. 
+* ```entries``` - This defines the actual access control list for the ACL as an array of _entry_ objects each having a _user specifier_ and a set of _permissions_. Each user specifier is either of the form ```user: <userId>``` or of the form ```user: {<group-name>: <value>}``` where ```group-name``` is one of the groups defined in ```groupDefinitions```. Each permission object is a mapping of a permisson (defined in ```permissionDefinitions```) to a _permission predicate_. Permission predicates are either simple boolean values or a function that takes a user object and returns a boolean value. 
 
 ```node
 {
@@ -50,20 +50,6 @@ ACL objects are comprised of:
     region: 'address.zip'
   },
   
-  entries: {  
-    'role:"Admin"': {
-      "*": true
-    },
-    'title:"CFO"': {
-      read: true,
-      write: true
-    },
-    'user:1234': {
-      read: true,
-      write: false
-    }
-  }
-  
   entries: [
     {
       user: { role: "Admin" },
@@ -79,7 +65,7 @@ ACL objects are comprised of:
       }
     },
    {
-      user: { user: 1234 },
+      user: 1234,
       permissions: {
         read: true,
         write: false
