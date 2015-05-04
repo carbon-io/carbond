@@ -28,11 +28,14 @@ ACL objects are comprised of:
     <string>: <string> // map of group names to property paths (or function(user) --> value )
   },
   
-  entries: { // actual ACL entries 
-    <user-specifier(string)>: { // map of user specifier to list of permissions
-      <permission(string)>: <permission-predicate>(boolean | function)>
+  entries: [ // actual ACL entries 
+    {
+      user: <user-spec> { 
+      permissions: { 
+        <permission>: <function> | <boolean>
+      }
     }
-  }
+  ]
 }
 ```
 
