@@ -1,6 +1,8 @@
 Core 
 -------------------------
 
+o change https check to priv port check
+
 o FACTORING IMPROVEMENTS
   * fix defineExpressRoute 
   * endpoint._init handle?
@@ -18,14 +20,12 @@ o bond scopes
 
 AC
 -------------------------
-o Unit tests failing
-o Robert suggestions
 o Endpoint.sanitizesOutput
 
 o make sure you cant change obj[ownerField]. Could be big hole
 o rm dynamic spec stuff from acl
 o   - maybe not? what if role:Editor says write false but owner says
-write true? Dont want and semantics
+      write true? Dont want and semantics
 o Errors from sanitize (sort of good for now?)
 o impl write portion for obj acl 
 o impl full proper sanitize (properties + recursive w no loops) 
@@ -42,6 +42,7 @@ o finish root user impl
   value api key?
 
 o UserCollection (just pretend with system acl field level)
+  o creating new user
 
 -- SWAGGER
 
