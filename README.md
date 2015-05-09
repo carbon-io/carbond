@@ -239,16 +239,16 @@ When responding to HTTP requests, two styles are supported:
 **Examples (asynchronous)**
 ```node
 get: function(req, res) {
-  res.send({ msg: "hello world!" })  
+  res.send({ msg: "Hello World!" })  
 }
 ```
 
 ```node
 get: {
   description: "My hello world operation",
-  params: {}
+  parameters: {}
   service: function(req, res) {
-    res.send({ msg: "hello world!" })  
+    res.send({ msg: "Hello World!" })  
   }
 }
 ```
@@ -256,17 +256,64 @@ get: {
 **Examples (synchronous)**
 ```node
 get: function(req) {
-  return { msg: "hello world!" }
+  return { msg: "Hello World!" }
 }
 ```
 
 ```node
 get: {
   description: "My hello world operation",
-  params: {}
+  parameters: {}
   service: function(req) {
-    return { msg: "hello world!" }
+    return { msg: "Hello World!" }
   }
 }
 ```
+
+Operation Parameters
+----------
+
+Each ```Operation``` can define the set of parameters it takes. Each ```OperationParameter``` can specify the location of the parameter (path, query string, or body) as well as a JSON schema definition to which the parameter must conform. 
+
+**Examples**
+
+```node
+get: {
+  description: "My hello world operation",
+  parameters: {
+    name: 'message',
+    description: "A message to say to the world",
+    location: 'query',
+    required: true,
+    schema: { type: 'string' }
+  }
+  service: function(req) {
+    return { msg: "Hello World! " + req.parameters.message }
+  }
+}
+```
+
+```node
+post: {
+  description: "Adds a Zipcode object to the zipcodes collection",
+  parameters: {
+    name: 'body',
+    description: "A Zipcode object",
+    location: 'body',
+    required: true,
+    schema: { 
+      type: 'object',
+      properties: {
+        _id: { type: 'number' },
+        state: { type: 'string' }
+      }
+    }
+  }
+  service: function(req) {
+    this.objectserver.db.getCollection("zipcodes").insert(req.parameters.body)
+  }
+}
+```
+
+
 
