@@ -49,7 +49,7 @@ To build a ```carbond``` application you start by creating a standard node packa
     package.json
 ```
 
-Your ```package.json``` file should include ```carbon-io``
+Your ```package.json``` file should include ```carbon-io```
 
 ```json
 {
