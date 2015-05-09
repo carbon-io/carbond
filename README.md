@@ -283,11 +283,12 @@ Formally defining parameters for operations helps you to build a self-describing
 get: {
   description: "My hello world operation",
   parameters: {
-    name: 'message',
-    description: "A message to say to the world",
-    location: 'query',
-    required: true,
-    schema: { type: 'string' }
+    message: {
+      description: "A message to say to the world",
+      location: 'query',
+      required: true,
+      schema: { type: 'string' }
+    }
   }
   service: function(req) {
     return { msg: "Hello World! " + req.parameters.message }
@@ -299,15 +300,16 @@ get: {
 post: {
   description: "Adds a Zipcode object to the zipcodes collection",
   parameters: {
-    name: 'body',
-    description: "A Zipcode object",
-    location: 'body',
-    required: true,
-    schema: { 
-      type: 'object',
-      properties: {
-        _id: { type: 'number' },
-        state: { type: 'string' }
+    body: {
+      description: "A Zipcode object",
+      location: 'body',
+      required: true,
+      schema: { 
+        type: 'object',
+        properties: {
+          _id: { type: 'number' },
+          state: { type: 'string' }
+        }
       }
     }
   }
