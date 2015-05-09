@@ -19,8 +19,8 @@ Contents
   * [Security strategies](doc/SecurityStrategies.md)
 * Error handling
 * Logging
-* Starting an ObjectServer
-* Auto-generated interactive API documentation (API Explorer)
+* Running the ObjectServer
+* API Explorer (auto-generated interactive API documentation)
 * Class reference
   * [carbond.ObjectServer](doc/classes/ObjectServer.md)
   * [carbond.Endpoint](doc/classes/Endpoint.md)
