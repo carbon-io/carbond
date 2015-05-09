@@ -275,6 +275,8 @@ Operation Parameters
 
 Each ```Operation``` can define the set of parameters it takes. Each ```OperationParameter``` can specify the location of the parameter (path, query string, or body) as well as a JSON schema definition to which the parameter must conform. 
 
+Formally defining parameters for operations helps you to build a self-describing API for which the framework can then auto-generate API documention and interactive administration tools. 
+
 **Examples**
 
 ```node
