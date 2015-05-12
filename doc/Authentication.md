@@ -26,7 +26,7 @@ You can define your own custom ```Authenticator```s by creating an instance of `
 
 ```node
 o({
-  _type: 'datanode/Authenticator',
+  _type: carbon.carbond.security.Authenticator,
   
   authenticate: function(req) {
     var user = figureOutWhoUserIs();
@@ -40,8 +40,6 @@ Examples
 
 HTTP Basic authentication
 ```node
-var o = require('maker').o(module)
-
 module.exports = o({
   _type: 'datanode/ObjectServer',
   port: 8888,
@@ -65,8 +63,6 @@ module.exports = o({
 
 API Key authentication
 ```node
-var o = require('carbon').atom.o(module)
-
 module.exports = o({
   _type: 'datanode/ObjectServer',
   port: 8888,
@@ -90,8 +86,6 @@ module.exports = o({
 
 Custom authentication
 ```node
-var o = require('carbon').bond.o(module)
-
 module.exports = o({
   _type: 'datanode/ObjectServer',
   
