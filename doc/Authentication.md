@@ -38,7 +38,7 @@ o({
 Examples
 ----------
 
-*HTTP Basic authentication*
+**HTTP Basic authentication**
 ```node
 module.exports = o({
   _type: carbon.carbond.ObjectServer,
@@ -61,7 +61,7 @@ module.exports = o({
 })
 ```
 
-*API Key authentication*
+**API Key authentication**
 ```node
 module.exports = o({
   _type: carbon.carbond.ObjectServer,
@@ -84,7 +84,7 @@ module.exports = o({
 })
 ```
 
-*Custom authentication*
+**Custom authentication**
 ```node
 module.exports = o({
   _type: carbon.carbond.ObjectServer,
