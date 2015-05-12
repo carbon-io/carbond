@@ -19,19 +19,26 @@ Contents
   * [Security strategies](doc/SecurityStrategies.md)
 * Error handling
 * Logging
-* Starting an ObjectServer
-* Auto-generated interactive API documentation (API Explorer)
+* Running the ObjectServer
+* API Explorer (auto-generated interactive API documentation)
 * Class reference
-  * [carbond.ObjectServer](doc/classes/ObjectServer.md)
-  * [carbond.Endpoint](doc/classes/Endpoint.md)
-  * [carbond.Operation](doc/classes/Operation.md)
   * [carbond.Collection](doc/classes/Collection.md)
+  * [carbond.Endpoint](doc/classes/Endpoint.md)
+  * [carbond.IdGenerator](doc/classes/IdGenerator.md)
   * [carbond.MongoDBCollection](doc/classes/MongoDBCollection.md)
-  * [carbond.security.Authenticator](doc/classes/security/Authenticator.md)
+  * [carbond.ObjectServer](doc/classes/ObjectServer.md)
+  * [carbond.Operation](doc/classes/Operation.md)
+  * [carbond.OperationParameter](doc/classes/OperationParameter.md)
+  * [carbond.ObjectIdGenerator](doc/classes/ObjectIdGenerator.md)
+  * [carbond.SslOptions](doc/classes/SslOptions.md)
+  * [carbond.UserCollection](doc/classes/UserCollection.md)
   * [carbond.security.Acl](doc/classes/security/Acl.md)
-  * [carbond.security.EndpointAcl](doc/classes/security/EndpointAcl.md)
+  * [carbond.security.ApiKeyAuthenticator](doc/classes/security/ApiKeyAuthenticator.md)
+  * [carbond.security.Authenticator](doc/classes/security/Authenticator.md)
   * [carbond.security.CollectionAcl](doc/classes/security/CollectionAcl.md)
+  * [carbond.security.EndpointAcl](doc/classes/security/EndpointAcl.md)
   * [carbond.security.HttpBasicAuthenticator](doc/classes/security/HttpBasicAuthenticator.md)
+  * [carbond.security.MongoDBApiKeyAuthenticator](doc/classes/security/MongoDBApiKeyAuthenticator.md)
   * [carbond.security.MongoDBHttpBasicAuthenticator](doc/classes/security/MongoDBHttpBasicAuthenticator.md)
 
 Quick start
@@ -49,13 +56,12 @@ To build a ```carbond``` application you start by creating a standard node packa
     package.json
 ```
 
-Your ```package.json``` file should include carbon-io
+Your ```package.json``` file should include ```carbon-io```
 
 ```json
 {
     "name": "hello-world",
     "description": "Hello World API",
-    "engines": { "node": "~0.8.6" },
     "dependencies": {
         "carbon-io" : "> 0.1.0"
     }
@@ -240,16 +246,16 @@ When responding to HTTP requests, two styles are supported:
 **Examples (asynchronous)**
 ```node
 get: function(req, res) {
-  res.send({ msg: "hello world!" })  
+  res.send({ msg: "Hello World!" })  
 }
 ```
 
 ```node
 get: {
   description: "My hello world operation",
-  params: {}
+  parameters: {}
   service: function(req, res) {
-    res.send({ msg: "hello world!" })  
+    res.send({ msg: "Hello World!" })  
   }
 }
 ```
@@ -257,17 +263,68 @@ get: {
 **Examples (synchronous)**
 ```node
 get: function(req) {
-  return { msg: "hello world!" }
+  return { msg: "Hello World!" }
 }
 ```
 
 ```node
 get: {
   description: "My hello world operation",
-  params: {}
+  parameters: {}
   service: function(req) {
-    return { msg: "hello world!" }
+    return { msg: "Hello World!" }
   }
 }
 ```
+
+Operation Parameters
+----------
+
+Each ```Operation``` can define the set of parameters it takes. Each ```OperationParameter``` can specify the location of the parameter (path, query string, or body) as well as a JSON schema definition to which the parameter must conform. 
+
+Formally defining parameters for operations helps you to build a self-describing API for which the framework can then auto-generate API documention and interactive administration tools. 
+
+**Examples**
+
+```node
+get: {
+  description: "My hello world operation",
+  parameters: {
+    message: {
+      description: "A message to say to the world",
+      location: 'query',
+      required: true,
+      schema: { type: 'string' }
+    }
+  }
+  service: function(req) {
+    return { msg: "Hello World! " + req.parameters.message }
+  }
+}
+```
+
+```node
+post: {
+  description: "Adds a Zipcode object to the zipcodes collection",
+  parameters: {
+    body: {
+      description: "A Zipcode object",
+      location: 'body',
+      required: true,
+      schema: { 
+        type: 'object',
+        properties: {
+          _id: { type: 'number' },
+          state: { type: 'string' }
+        }
+      }
+    }
+  }
+  service: function(req) {
+    this.objectserver.db.getCollection("zipcodes").insert(req.parameters.body)
+  }
+}
+```
+
+
 
