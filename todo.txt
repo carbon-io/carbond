@@ -1,6 +1,7 @@
 Core 
 -------------------------
 
+o .json vs .send
 o change https check to priv port check
 
 o FACTORING IMPROVEMENTS
@@ -278,3 +279,6 @@ great API docs
 
 Should we use ejson vs mongodb-extended-json
 
+Firebase port to mongo todo app
+
+http://thejackalofjavascript.com/re-architecting-a-firebase-app-in-node/
