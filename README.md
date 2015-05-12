@@ -10,6 +10,7 @@ Contents
 * [Application structure](#application-structure)
 * [ObjectServers and Endpoints](#objectservers-and-endpoints)
 * [Operations] (#operations)
+* [Operation parameters] (#operation-parameters)
 * Databases
 * 
 * Basic endpoint types
