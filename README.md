@@ -278,7 +278,7 @@ get: {
 }
 ```
 
-Operation Parameters
+Operation parameters
 ----------
 
 Each ```Operation``` can define the set of parameters it takes. Each ```OperationParameter``` can specify the location of the parameter (path, query string, or body) as well as a JSON schema definition to which the parameter must conform. 
