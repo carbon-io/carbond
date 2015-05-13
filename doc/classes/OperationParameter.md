@@ -23,7 +23,7 @@ Configuration
 Properties
 ----------
 
-* ```description```: A description for this parameter
+* ```description```: A description for this parameter.
 
 * ```location```: The location in which this parameter will be passed. Can be one of ```'query'```, ```'path'```, or ```'body'```.
 
