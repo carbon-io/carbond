@@ -4,6 +4,8 @@ class OperationParameter
 ```Operation```s can optionally define one or more ```OperationParameter```s. Each ```OperationParameter``` can specify the 
 location of the parameter (path, query string, or body) as well as a JSON schema definition to which the parameter must conform.
 
+Carbond supports both JSON and [EJSON](http://docs.mongodb.org/manual/reference/mongodb-extended-json/) (Extended JSON, which includes support additional types such as ```Date``` and ```ObjectId```). 
+
 Formally defining parameters for operations helps you to build a self-describing API for which the framework can then 
 auto-generate API documention and interactive administration tools.
 
