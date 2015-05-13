@@ -33,6 +33,8 @@ Properties
 as JSON / EBSON and automaticall validate that incoming data conforms to the schema and report a 403 Error to the client 
 if data violates the schema. 
 
+* ```required```: The parameter is considered required iff this flag is set to ```true```. 
+
 Methods
 ----------
 
