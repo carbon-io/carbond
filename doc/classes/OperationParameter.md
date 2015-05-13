@@ -1,7 +1,7 @@
 class OperationParameter
 ----------
 
-```Operation```s can optionally define one or more ```OperationParameters```. Each ```OperationParameter``` can specify the 
+```Operation```s can optionally define one or more ```OperationParameter```s. Each ```OperationParameter``` can specify the 
 location of the parameter (path, query string, or body) as well as a JSON schema definition to which the parameter must conform.
 
 Formally defining parameters for operations helps you to build a self-describing API for which the framework can then 
