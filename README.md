@@ -14,6 +14,9 @@ Contents
 * Databases
 * Collections
 * Basic endpoint types
+  * Endpoint
+  * Collection
+  * MongoDBCollection
 * Security
   * [Authentication](doc/Authentication.md)
   * [Access Control](doc/AccessControl.md)
