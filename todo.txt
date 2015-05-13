@@ -1,6 +1,10 @@
 Core 
 -------------------------
 
+o tag for abdul
+o env:
+o strings in path parameters
+
 o .json vs .send
 o change https check to priv port check
 
@@ -12,7 +16,7 @@ o FACTORING IMPROVEMENTS
 o COLLECTION 
 o Flesh out api for MongoDBCollections to be like current data api
 (with AC)
-  o query schemas in Collections should also apply to delete and update
+  o query schemas in Collections should also apply atto delete and update
 
 o Response obj and response schema? Do we want to validate objects 
 going out?
