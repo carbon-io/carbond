@@ -26,7 +26,7 @@ You can define your own custom ```Authenticator```s by creating an instance of `
 
 ```node
 o({
-  _type: 'datanode/Authenticator',
+  _type: carbon.carbond.security.Authenticator,
   
   authenticate: function(req) {
     var user = figureOutWhoUserIs();
@@ -38,12 +38,10 @@ o({
 Examples
 ----------
 
-HTTP Basic authentication
+**HTTP Basic authentication**
 ```node
-var o = require('maker').o(module)
-
 module.exports = o({
-  _type: 'datanode/ObjectServer',
+  _type: carbon.carbond.ObjectServer,
   port: 8888,
   authenticator: o({
     _type: 'datanode/security/MongoDBHttpBasicAuthenticator',
@@ -54,7 +52,7 @@ module.exports = o({
   
   endpoints: {
     hello: o({
-      _type: 'datanode/Endpoint',
+      _type: carbon.carbond.Endpoint,
       get: function(req) {
         return { msg: "Hello " + req.user.email}
       }
@@ -63,15 +61,13 @@ module.exports = o({
 })
 ```
 
-API Key authentication
+**API Key authentication**
 ```node
-var o = require('carbon').atom.o(module)
-
 module.exports = o({
-  _type: 'datanode/ObjectServer',
+  _type: carbon.carbond.ObjectServer,
   port: 8888,
   authenticator: o({
-    _type: 'datanode/security/MongoDBApiKeyAuthenticator',
+    _type: carbon.carbond.security.MongoDBApiKeyAuthenticator,
     apiKeyParameterName: "API_KEY",
     apiKeyIn: "header", // can be "header" or "query"
     userCollection: "users",
@@ -79,7 +75,7 @@ module.exports = o({
   }),
   endpoints: {
     hello: o({
-      _type: 'datanode/Endpoint',
+      _type: carbon.carbond.Endpoint,
       get: function(req) {
         return { msg: "Hello " + req.user.email}
       }
@@ -88,17 +84,15 @@ module.exports = o({
 })
 ```
 
-Custom authentication
+**Custom authentication**
 ```node
-var o = require('carbon').bond.o(module)
-
 module.exports = o({
-  _type: 'datanode/ObjectServer',
+  _type: carbon.carbond.ObjectServer,
   
   port: 8888,
   
   authenticator: o({
-    _type: 'Authenticator',
+    _type: carbon.carbond.security.Authenticator,
     authenticate: function(req) {
       var user = figureOutWhoUserIs();
       return user;
@@ -107,7 +101,7 @@ module.exports = o({
   
   endpoints: {
     hello: o({
-      _type: 'datanode/Endpoint',
+      _type: carbon.carbond.Enpoint,
       get: function(req) {
         return { msg: "Hello " + req.user.email}
       }

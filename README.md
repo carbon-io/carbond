@@ -10,9 +10,13 @@ Contents
 * [Application structure](#application-structure)
 * [ObjectServers and Endpoints](#objectservers-and-endpoints)
 * [Operations] (#operations)
+* [Operation parameters] (#operation-parameters)
 * Databases
-* 
+* Collections
 * Basic endpoint types
+  * Endpoint
+  * Collection
+  * MongoDBCollection
 * Security
   * [Authentication](doc/Authentication.md)
   * [Access Control](doc/AccessControl.md)
@@ -277,7 +281,7 @@ get: {
 }
 ```
 
-Operation Parameters
+Operation parameters
 ----------
 
 Each ```Operation``` can define the set of parameters it takes. Each ```OperationParameter``` can specify the location of the parameter (path, query string, or body) as well as a JSON schema definition to which the parameter must conform. 
