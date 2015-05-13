@@ -12,7 +12,7 @@ Contents
 * [Operations] (#operations)
 * [Operation parameters] (#operation-parameters)
 * Databases
-* 
+* Collections
 * Basic endpoint types
 * Security
   * [Authentication](doc/Authentication.md)
