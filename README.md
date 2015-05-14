@@ -286,7 +286,7 @@ Operation parameters
 
 Each ```Operation``` can define the set of parameters it takes. Each ```OperationParameter``` can specify the location of the parameter (path, query string, or body) as well as a JSON schema definition to which the parameter must conform. 
 
-All parameters defined on an Operation will be available via the parameters property of the request object and can be accessed as req.parameters[<parameter-name>] or req.parameters.<parameter-name>.
+All parameters defined on an ```Operation``` will be available via the ```parameters``` property of the ```HttpRequest``` object and can be accessed as ```req.parameters[<parameter-name>]``` or ```req.parameters.<parameter-name>```.
 
 Carbond supports both JSON and [EJSON](http://docs.mongodb.org/manual/reference/mongodb-extended-json/) (Extended JSON, which includes support additional types such as ```Date``` and ```ObjectId```). 
 
