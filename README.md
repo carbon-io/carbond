@@ -295,41 +295,45 @@ Formally defining parameters for operations helps you to build a self-describing
 **Examples**
 
 ```node
-get: {
-  description: "My hello world operation",
-  parameters: {
-    message: {
-      description: "A message to say to the world",
-      location: 'query',
-      required: true,
-      schema: { type: 'string' }
+{
+  get: {
+    description: "My hello world operation",
+    parameters: {
+      message: {
+        description: "A message to say to the world",
+        location: 'query',
+        required: true,  
+        schema: { type: 'string' }
+      }
     }
-  }
-  service: function(req) {
-    return { msg: "Hello World! " + req.parameters.message }
+    service: function(req) {
+      return { msg: "Hello World! " + req.parameters.message }
+    }
   }
 }
 ```
 
 ```node
-post: {
-  description: "Adds a Zipcode object to the zipcodes collection",
-  parameters: {
-    body: {
-      description: "A Zipcode object",
-      location: 'body',
-      required: true,
-      schema: { 
-        type: 'object',
-        properties: {
-          _id: { type: 'number' },
-          state: { type: 'string' }
+{
+  post: {
+    description: "Adds a Zipcode object to the zipcodes collection",
+    parameters: {
+      body: {
+        description: "A Zipcode object",
+        location: 'body',
+        required: true,
+        schema: { 
+          type: 'object',
+          properties: {
+            _id: { type: 'number' },
+            state: { type: 'string' }
+          }
         }
       }
     }
-  }
-  service: function(req) {
-    this.objectserver.db.getCollection("zipcodes").insert(req.parameters.body)
+    service: function(req) {
+      this.objectserver.db.getCollection("zipcodes").insert(req.parameters.body)
+    } 
   }
 }
 ```
