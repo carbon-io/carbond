@@ -45,6 +45,7 @@ To support [EJSON](http://docs.mongodb.org/manual/reference/mongodb-extended-jso
 
 Methods
 ----------
+*none*
 
 Examples
 ----------
