@@ -38,8 +38,9 @@ To support [EJSON](http://docs.mongodb.org/manual/reference/mongodb-extended-jso
    * ```Date```
    * ```Timestamp```
    * ```Regex```
-   * ```Undefined```
-   * ```NumberLong```. These types can be specified like other JSON Schema primitive type:  <br/><br/>``` { type: "Date" } ```
+   * ```NumberLong```
+   * ```Undefined```. 
+   These types can be specified like other JSON Schema primitive type:  <br/><br/>``` { type: "Date" } ```
 
 * ```required```: The parameter is considered required iff this flag is set to ```true```. 
 
