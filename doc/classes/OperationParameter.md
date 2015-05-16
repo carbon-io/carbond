@@ -33,15 +33,13 @@ Properties
 
 * ```schema```: A [JSON Schema](http://json-schema.org/) definition. If supplied Carbond will parse the parameter 
 as JSON / [EJSON](http://docs.mongodb.org/manual/reference/mongodb-extended-json/) and automaticall validate that incoming data conforms to the schema and report a 403 Error to the client if data violates the schema. If ```null``` or ```undefined``` the defined parameter will not be parsed and will be a raw ```string```. To specify this parameter as an EJSON value of any type, a schema value of ```{}``` should be supplied. <br/><br/>
-To support [EJSON](http://docs.mongodb.org/manual/reference/mongodb-extended-json/), we extend JSON Schema to support the following additional types: 
+To support [EJSON](http://docs.mongodb.org/manual/reference/mongodb-extended-json/), we extend JSON Schema to support the following additional types which can be used like other JSON Schema primitives like ```string```: 
    * ```ObjectId```
    * ```Date```
    * ```Timestamp```
    * ```Regex```
    * ```NumberLong```
    * ```Undefined``` 
-  <br/>
-These types can be specified like other JSON Schema primitive type:  <br/><br/>``` { type: "Date" } ```
 
 * ```required```: The parameter is considered required iff this flag is set to ```true```. 
 
