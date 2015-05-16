@@ -32,8 +32,7 @@ Properties
 * ```location```: The location in which this parameter will be passed. Can be one of ```'query'```, ```'path'```, or ```'body'```.
 
 * ```schema```: A [JSON Schema](http://json-schema.org/) definition. If supplied Carbond will parse the parameter 
-as JSON / EBSON and automaticall validate that incoming data conforms to the schema and report a 403 Error to the client 
-if data violates the schema. 
+as JSON / [EJSON](http://docs.mongodb.org/manual/reference/mongodb-extended-json/) and automaticall validate that incoming data conforms to the schema and report a 403 Error to the client if data violates the schema. If ```null``` or ```undefined``` the defined parameter will not be parsed and will be a raw ```string```. To specify this parameter as an EJSON value of any type, a schema value of ```{}``` should be supplied. 
 
 * ```required```: The parameter is considered required iff this flag is set to ```true```. 
 
