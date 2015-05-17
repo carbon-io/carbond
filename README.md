@@ -12,7 +12,7 @@ Contents
 * [Operations](#operations)
 * [Operation parameters](#operation-parameters)
 * [Database management](#database-management)
-* Collections
+* [Collections](#collections)
 * Basic endpoint types
   * Endpoint
   * Collection
