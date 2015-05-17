@@ -344,12 +344,63 @@ Database management
 Carbond makes it easy to manage connections to multiple databases in your application. The ```ObjectServer``` class has two properties for specifying database URIs. 
 
 * ```dbUri```: A connection string specified as a [MongoDB URI](http://docs.mongodb.org/manual/reference/connection-string/) (e.g. ```"mongodb:username:password@localhost:27017/mydb"```). The application can reference a connection to this database via the ```db``` property on the application's ```ObjectServer```. 
+* 
 * ```dbUris```: A mapping of names to MongoDB URIs<br/>. The application can reference a connection to these databases via the
 ```ObjectServer``` as ```dbs[<name>]``` or ```dbs.<name>```. 
+
 ```node
 {
   main: "mongodb:username:password@localhost:27017/main",
   reporting: "mongodb:username:password@localhost:27018/reporting"
 }
+```
+
+**Examples**
+
+An ```ObjectServer``` with a single db connection:
+```node
+__(function() {
+  module.exports = o({
+    _type: carbon.carbond.ObjectServer,
+    port: 8888,
+    dbUri: "mongodb://localhost:27017/mydb",
+    endpoints: {
+      hello: o({
+        _type: carbon.carbond.Endpoint,
+        get: function(req) {
+          return this.db.messages.find().toArray()
+        }
+      })
+    }
+  })
+})
+```
+
+An ```ObjectServer``` that connects to multiple databases:
+```node
+__(function() {
+  module.exports = o({
+    _type: carbon.carbond.ObjectServer,
+    port: 8888,
+    dbUris: {
+      main: "mongodb://localhost:27017/mydb",
+      reporting: "mongodb://localhost:27017/reporting"
+    }
+    endpoints: {
+      hello: o({
+        _type: carbon.carbond.Endpoint,
+        get: function(req) {
+          return this.dbs['main'].messages.find().toArray()
+        }
+      }),
+      goodbye: o({
+        _type: carbon.carbond.Endpoint,
+        get: function(req) {
+          return this.dbs['reporting'].dashboards.find().toArray()
+        }
+      })
+    }
+  })
+})
 ```
 
