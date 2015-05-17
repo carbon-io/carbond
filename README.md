@@ -408,3 +408,18 @@ Carbond ```Collection```s provide a higher level of abstraction for defining ```
 * ```updateObject```
 * ```removeObject```
 
+Which results in the following tree of ```Endpoint```s and ```Operations```:
+* ```/<collection>```
+  * ```GET``` which maps to ```find```
+  * ```POST``` which maps to ```insert```
+  * ```PUT``` which maps to ```update```
+  * ```DELETE``` which maps to ```remove```
+* ```/<collection>/:id```
+  *  ```GET``` which maps to ```getObject```
+  *  ```PUT``` which maps to ```updateObject```
+  *  ```DELETE``` which maps to ```removeObject```
+    
+
+
+
+
