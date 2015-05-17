@@ -344,8 +344,8 @@ Database management
 Carbond makes it easy to manage connections to multiple databases in your application. The ```ObjectServer``` class has two properties for specifying database URIs. 
 
 * ```dbUri```: A connection string specified as a [MongoDB URI](http://docs.mongodb.org/manual/reference/connection-string/) (e.g. ```"mongodb:username:password@localhost:27017/mydb"```). The application can reference a connection to this database via the ```db``` property on the application's ```ObjectServer```. 
-* 
-* ```dbUris```: A mapping of names to MongoDB URIs<br/>. The application can reference a connection to these databases via the
+
+* ```dbUris```: A mapping of names to MongoDB URIs. The application can reference a connection to these databases via the
 ```ObjectServer``` as ```dbs[<name>]``` or ```dbs.<name>```. 
 
 ```node
