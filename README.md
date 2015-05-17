@@ -422,7 +422,6 @@ Which results in the following tree of ```Endpoint```s and ```Operations```:
 
 When defining a [```Collection```](doc/classes/Collection.md) one is not required to define all methods. For example, here is a collection that only defines the ```insert``` method:
 
-**Example**
 ```node
 __(function() {
   module.exports = o({
