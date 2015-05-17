@@ -341,14 +341,15 @@ Formally defining parameters for operations helps you to build a self-describing
 Database management
 ----------
 
-Carbond makes it easy to manage connections to multiple databases in your application. The ```ObjectServer``` class has two properties for specifying database URIs
+Carbond makes it easy to manage connections to multiple databases in your application. The ```ObjectServer``` class has two properties for specifying database URIs. 
 
-* ```dbUri```: A connection string specified as a [MongoDB URI](http://docs.mongodb.org/manual/reference/connection-string/) (e.g. ```mongodb:username:password@localhost:27017/mydb```).
-* ```dbUris```: A mapping of names to MongoDB URIs<br/>
+* ```dbUri```: A connection string specified as a [MongoDB URI](http://docs.mongodb.org/manual/reference/connection-string/) (e.g. ```mongodb:username:password@localhost:27017/mydb```). The application can reference a connection to this database via the ```ObjectServer``` as ```db```. 
+* ```dbUris```: A mapping of names to MongoDB URIs<br/>. The application can reference a connection to these databases via the
+```ObjectServer``` as ```dbs[<name>]``` or ```dbs.<name>```. 
 ```node
 {
-  main: "```mongodb:username:password@localhost:27017/main```",
-  reporting: "```mongodb:username:password@localhost:27018/reporting```"
+  main: "mongodb:username:password@localhost:27017/main",
+  reporting: "mongodb:username:password@localhost:27018/reporting"
 }
 ```
 
