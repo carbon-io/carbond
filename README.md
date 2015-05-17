@@ -396,3 +396,15 @@ __(function() {
 })
 ```
 
+Collections
+----------
+
+Carbond ```Collection```s provide a higher level of abstraction for defining ```Endpoints``` that behave like a collection of resources. When you define a ```Collection``` you define the following methods:
+* ```insert```
+* ```find```
+* ```update```
+* ```remove```
+* ```getObject```
+* ```updateObject```
+* ```removeObject```
+
