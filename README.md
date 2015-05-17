@@ -368,7 +368,7 @@ __(function() {
       hello: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
-          return this.db.messages.find().toArray()
+          return this.db.getCollection('messages').find().toArray()
         }
       })
     }
@@ -390,13 +390,13 @@ __(function() {
       hello: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
-          return this.dbs['main'].messages.find().toArray()
+          return this.dbs['main'].getCollection('messages').find().toArray()
         }
       }),
       goodbye: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
-          return this.dbs['reporting'].dashboards.find().toArray()
+          return this.dbs['reporting'].getCollection('dashboards').find().toArray()
         }
       })
     }
