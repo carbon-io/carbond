@@ -399,7 +399,7 @@ __(function() {
 Collections
 ----------
 
-Carbond ```Collection```s provide a high-level abstraction for defining ```Endpoints``` that behave like a collection of resources. When you define a ```Collection``` you define the following methods:
+Carbond ```Collection```s provide a high-level abstraction for defining ```Endpoint```s that behave like a collection of resources. When you define a ```Collection``` you define the following methods:
 * ```insert```
 * ```find```
 * ```update```
@@ -420,6 +420,24 @@ Which results in the following tree of ```Endpoint```s and ```Operations```:
   *  ```DELETE``` which maps to ```removeObject```
     
 
+When defining a [```Collection```](doc/classes/Collection.md) one is not required to define all methods. For example, here is a collection that only defines the ```insert``` method:
 
-
+**Example**
+```node
+__(function() {
+  module.exports = o({
+    _type: carbon.carbond.ObjectServer,
+    port: 8888,
+    dbUri: "mongodb://localhost:27017/mydb",
+    endpoints: {
+      feedback: o({
+        _type: carbon.carbond.Collection,
+        insert: function(obj) {
+          return this.db.getCollection('feedback').insert(obj)
+        }
+      })
+    }
+  })
+})
+```
 
