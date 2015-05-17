@@ -347,12 +347,6 @@ Carbond makes it easy to manage connections to multiple databases in your applic
 
 * ```dbUris```: A mapping of names to MongoDB URIs. The application can reference a connection to these databases via the
 ```ObjectServer``` as ```dbs[<name>]``` or ```dbs.<name>```. <br/>
-```node
-{
-  main: "mongodb:username:password@localhost:27017/main",
-  reporting: "mongodb:username:password@localhost:27018/reporting"
-}
-```
 
 **Examples**
 
