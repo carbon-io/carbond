@@ -17,4 +17,4 @@ Methods
 **Parameters**
 _none_
 
-**Returns** (```any```) - an value 
+**Returns** (```any```): A value 
