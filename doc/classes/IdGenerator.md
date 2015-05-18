@@ -1,4 +1,4 @@
-class IdGeneraor
+class IdGenerator
 ----------
 
 An ```IdGenerator``` is an abstract class representing a method of ```_id``` generation. ```IdGenerator```s have  
