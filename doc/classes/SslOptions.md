@@ -45,3 +45,35 @@ _none_
 
 Examples
 ----------
+
+```node
+var carbon = require('carbon-io')
+var o   = carbon.atom.o(module)
+var __  = carbon.fiber.__(module, true)
+
+var path = require('path')
+
+__(function() {
+  module.exports = o({
+    _type: carbon.carbond.ObjectServer,
+    port: 8888,
+
+    sslOptions: {
+      serverCertPath: path.join(__dirname, 'cert.pem'),
+      serverKeyPath: path.join(__dirname, 'key.pem')
+    },
+
+    endpoints : {
+      "hello": o({
+        _type: carbon.carbond.Endpoint,
+        
+        get: function(req) {
+          return { "msg" : "Hello world!" }
+        }
+      })
+    }
+
+  })
+})
+
+```
