@@ -1,38 +1,43 @@
 class SslOptions
 ----------
 
-Instances of this class represent a set of ssl related options for an ```ObjectServer```. 
+Instances of this class represent a set of ssl related options for an ```ObjectServer```. Options mostly mirror those of the Node.js [```tls```](https://nodejs.org/api/tls.html#tls_tls_connect_port_host_options_callback) and [```https```](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener) modules.
 
 Configuration
 ----------
 
 ```
 {
-  _type: carbon.carbond.Endpoint,
+  _type: carbon.carbond.SslOptions,
   
-  [get: <function> | <Operation>],
-  [put: <function> | <Operation>],
-  [post: <function> | <Operation>],
-  [create: <function> | <Operation>],
-  [delete: <function> | <Operation>],
-  [head: <function> | <Operation>],
-  [options: <function> | <Operation>],
-
-  [endpoints: { 
-    <path>: <Endpoint>
-    ...
-  }]
+  serverCertPath: <string>,
+  serverKeyPath: <string>, 
+  [serverKeyPassphrase: <string>], 
+  [trustedCertsPaths = <string>], 
+  [crl: <string>],
+  [ciphers: <string>],
+  [ecdhCurve (<string> | false)],
+  [dhparam: <string],
+  [handshakeTimeout: <number>],
+  [honorCipherOrder: <boolean>],
+  [requestCert: <boolean>], 
+  [rejectUnauthorized: <boolean>],
+  [checkServerIdentity = <function>],
+  [NPNProtocols: (<Array> | <Buffer)],
+  [SNICallback: <function>],
+  [sessionTimeout: <number>],
+  [ticketKeys: <Buffer>],
+  [sessionIdContext: <string>],
+  [secureProtocol: <string>],
+  [secureOptions: <string>]
 }
 ```
 
 Properties
 ----------
 
-* ```path``` (read-only) - the path to which this endpoint is bound. The path can contain variable patterns (e.g. ```'orders/:id'```). The ```path``` property is not configured directly on ```Endpoint``` objects but are specified as lvals in enclosing defininitions of endpoints such as in an ```ObjectServer``` or a parent ```Endpoint``` object. When retrieved the value of this property will be the absolute path of the endpoint from ```/```. 
-
-* ```objectserver``` (read-only) - the ```ObjectServer``` to which this endpoint belongs
-
-* ```endpoints``` - a set of child ```Endpoint``` definitions. This is an object whose keys are path strings and values are instances of ```Endpoint```. Each path key will be interpreted as relative to this ```Endpoint```s ```path``` property. 
+* ```serverCertPath```: The path 
+* ```serverKeyPath```: The foo
 
 Methods
 ----------
