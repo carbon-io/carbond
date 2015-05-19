@@ -44,7 +44,7 @@ module.exports = o({
   _type: carbon.carbond.ObjectServer,
   port: 8888,
   authenticator: o({
-    _type: 'datanode/security/MongoDBHttpBasicAuthenticator',
+    _type: carbon.carbond.security.MongoDBHttpBasicAuthenticator,
     userCollection: "users",
     usernameField: "username",
     passwordField: "password"
