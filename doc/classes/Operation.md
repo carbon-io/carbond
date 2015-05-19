@@ -1,20 +1,17 @@
 class Operation
 ----------
 
-An ```Operation``` 
+An ```Operation``` represents a single HTTP method on an endpoint (```GET```, ```PUT```, ```POST```, ```CREATE```, ```DELETE```, ```HEAD```, ```OPTIONS```). 
 
 Configuration
 ----------
 
 ```
 {
-  _type: 'datanode/Operation',
+  _type: carbon.carbond.Operation,
   [description: <string>],
-  [params: {
-    <string>: {
-      type: ('string', 'array', 'int' ...) // XXX flesh out
-      paramType: ('query' | 'body'),
-    },
+  [parameters: {
+    <name>: <[OperationParameter](doc/classes/OperationParameter.md)>,
     ...
   }],
   service: <function>
