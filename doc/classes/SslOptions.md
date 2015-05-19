@@ -59,7 +59,12 @@ Properties
 
 Methods
 ----------
+#### asHttpsOptions()
+
+**Parameters**
 _none_
+
+**Returns** (```object```): An object suitable as options to  [```https.createServer```](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener).
 
 Examples
 ----------
