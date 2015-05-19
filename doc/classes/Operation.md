@@ -6,7 +6,7 @@ An ```Operation``` represents a single HTTP method on an endpoint (```GET```, ``
 An ```Operation``` implements this HTTP method via service. XXX 
 
 
-Each ```Operation``` can define any number of [```OperationParameter```s](doc/classes/OperationParameter.md). All parameters provided to an ```Operation``` will be available via the ```parameters``` property of the ```HttpRequest``` object and can be accessed as ```req.parameters[<parameter-name>]``` or ```req.parameters.<parameter-name>```.
+Each ```Operation``` can define any number of [```OperationParameter```s](OperationParameter.md). All parameters provided to an ```Operation``` will be available via the ```parameters``` property of the ```HttpRequest``` object and can be accessed as ```req.parameters[<parameter-name>]``` or ```req.parameters.<parameter-name>```.
 
 Carbond supports both JSON and [EJSON](http://docs.mongodb.org/manual/reference/mongodb-extended-json/) (Extended JSON, which includes support additional types such as ```Date``` and ```ObjectId```). 
 
