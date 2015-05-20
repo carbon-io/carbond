@@ -1,12 +1,14 @@
 Core 
 -------------------------
+o make parameters apply from parent endpoints
+o requestCtx for Collections
+
+o endpoint.path an issue....
 
 o tag for abdul
 o env:
-o strings in path parameters
 
 o .json vs .send
-o change https check to priv port check
 
 o FACTORING IMPROVEMENTS
   * fix defineExpressRoute 
