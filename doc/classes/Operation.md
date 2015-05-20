@@ -1,20 +1,26 @@
 class Operation
 ----------
 
-An ```Operation``` 
+An ```Operation``` represents a single HTTP method on an endpoint (```GET```, ```PUT```, ```POST```, ```CREATE```, ```DELETE```, ```HEAD```, ```OPTIONS```). 
+
+An ```Operation``` implements this HTTP method via service. XXX 
+
+
+Each ```Operation``` can define any number of [```OperationParameter```s](OperationParameter.md). All parameters provided to an ```Operation``` will be available via the ```parameters``` property of the ```HttpRequest``` object and can be accessed as ```req.parameters[<parameter-name>]``` or ```req.parameters.<parameter-name>```.
+
+Carbond supports both JSON and [EJSON](http://docs.mongodb.org/manual/reference/mongodb-extended-json/) (Extended JSON, which includes support additional types such as ```Date``` and ```ObjectId```). 
+
+Formally defining parameters for operations helps you to build a self-describing API for which the framework can then auto-generate API documention and interactive administration tools. 
 
 Configuration
 ----------
 
 ```
 {
-  _type: 'datanode/Operation',
+  _type: carbon.carbond.Operation,
   [description: <string>],
-  [params: {
-    <string>: {
-      type: ('string', 'array', 'int' ...) // XXX flesh out
-      paramType: ('query' | 'body'),
-    },
+  [parameters: {
+    <name>: <OperationParameter>,
     ...
   }],
   service: <function>

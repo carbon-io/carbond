@@ -9,10 +9,10 @@ Contents
 * [Quick start](#quick-start)
 * [Application structure](#application-structure)
 * [ObjectServers and Endpoints](#objectservers-and-endpoints)
-* [Operations] (#operations)
-* [Operation parameters] (#operation-parameters)
-* Databases
-* Collections
+* [Operations](#operations)
+* [Operation parameters](#operation-parameters)
+* [Database management](#database-management)
+* [Collections](#collections)
 * Basic endpoint types
   * Endpoint
   * Collection
@@ -286,49 +286,157 @@ Operation parameters
 
 Each ```Operation``` can define the set of parameters it takes. Each ```OperationParameter``` can specify the location of the parameter (path, query string, or body) as well as a JSON schema definition to which the parameter must conform. 
 
+All parameters provided to an ```Operation``` will be available via the ```parameters``` property of the ```HttpRequest``` object and can be accessed as ```req.parameters[<parameter-name>]``` or ```req.parameters.<parameter-name>```.
+
+Carbond supports both JSON and [EJSON](http://docs.mongodb.org/manual/reference/mongodb-extended-json/) (Extended JSON, which includes support additional types such as ```Date``` and ```ObjectId```). 
+
 Formally defining parameters for operations helps you to build a self-describing API for which the framework can then auto-generate API documention and interactive administration tools. 
 
 **Examples**
 
 ```node
-get: {
-  description: "My hello world operation",
-  parameters: {
-    message: {
-      description: "A message to say to the world",
-      location: 'query',
-      required: true,
-      schema: { type: 'string' }
+{
+  get: {
+    description: "My hello world operation",
+    parameters: {
+      message: {
+        description: "A message to say to the world",
+        location: 'query',
+        required: true,  
+        schema: { type: 'string' }
+      }
     }
-  }
-  service: function(req) {
-    return { msg: "Hello World! " + req.parameters.message }
+    service: function(req) {
+      return { msg: "Hello World! " + req.parameters.message }
+    }
   }
 }
 ```
 
 ```node
-post: {
-  description: "Adds a Zipcode object to the zipcodes collection",
-  parameters: {
-    body: {
-      description: "A Zipcode object",
-      location: 'body',
-      required: true,
-      schema: { 
-        type: 'object',
-        properties: {
-          _id: { type: 'number' },
-          state: { type: 'string' }
+{
+  post: {
+    description: "Adds a Zipcode object to the zipcodes collection",
+    parameters: {
+      body: {
+        description: "A Zipcode object",
+        location: 'body',
+        required: true,
+        schema: { 
+          type: 'object',
+          properties: {
+            _id: { type: 'number' },
+            state: { type: 'string' }
+          }
         }
       }
     }
-  }
-  service: function(req) {
-    this.objectserver.db.getCollection("zipcodes").insert(req.parameters.body)
+    service: function(req) {
+      this.objectserver.db.getCollection("zipcodes").insert(req.parameters.body)
+    } 
   }
 }
 ```
 
+Database management
+----------
 
+Carbond makes it easy to manage connections to multiple databases in your application. The ```ObjectServer``` class has two properties for specifying database URIs:
+
+* ```dbUri```: A connection string specified as a [MongoDB URI](http://docs.mongodb.org/manual/reference/connection-string/) (e.g. ```"mongodb:username:password@localhost:27017/mydb"```). The ```ObjectServer``` will connect to this database on startup. The application can then reference a connection to this database via the ```db``` property on the application's ```ObjectServer```. 
+
+* ```dbUris```: A mapping of names to [MongoDB URIs](http://docs.mongodb.org/manual/reference/connection-string/). The ```ObjectServer``` will connect to these databases on startup. The application can reference a connection to these databases via the ```ObjectServer``` as ```dbs[<name>]``` or ```dbs.<name>```. <br/>
+
+**Examples**
+
+An ```ObjectServer``` with a single db connection:
+```node
+__(function() {
+  module.exports = o({
+    _type: carbon.carbond.ObjectServer,
+    port: 8888,
+    dbUri: "mongodb://localhost:27017/mydb",
+    endpoints: {
+      hello: o({
+        _type: carbon.carbond.Endpoint,
+        get: function(req) {
+          return this.db.getCollection('messages').find().toArray()
+        }
+      })
+    }
+  })
+})
+```
+
+An ```ObjectServer``` that connects to multiple databases:
+```node
+__(function() {
+  module.exports = o({
+    _type: carbon.carbond.ObjectServer,
+    port: 8888,
+    dbUris: {
+      main: "mongodb://localhost:27017/mydb",
+      reporting: "mongodb://localhost:27017/reporting"
+    }
+    endpoints: {
+      hello: o({
+        _type: carbon.carbond.Endpoint,
+        get: function(req) {
+          return this.dbs['main'].getCollection('messages').find().toArray()
+        }
+      }),
+      goodbye: o({
+        _type: carbon.carbond.Endpoint,
+        get: function(req) {
+          return this.dbs['reporting'].getCollection('dashboards').find().toArray()
+        }
+      })
+    }
+  })
+})
+```
+
+Collections
+----------
+
+Carbond ```Collection```s provide a high-level abstraction for defining ```Endpoint```s that behave like a collection of resources. When you define a ```Collection``` you define the following methods:
+* ```insert```
+* ```find```
+* ```update```
+* ```remove```
+* ```getObject```
+* ```updateObject```
+* ```removeObject```
+
+Which results in the following tree of ```Endpoint```s and ```Operations```:
+* ```/<collection>```
+  * ```GET``` which maps to ```find```
+  * ```POST``` which maps to ```insert```
+  * ```PUT``` which maps to ```update```
+  * ```DELETE``` which maps to ```remove```
+* ```/<collection>/:id```
+  *  ```GET``` which maps to ```getObject```
+  *  ```PUT``` which maps to ```updateObject```
+  *  ```DELETE``` which maps to ```removeObject```
+    
+
+When defining a [```Collection```](doc/classes/Collection.md) one is not required to define all methods. For example, here is a collection that only defines the ```insert``` method:
+
+```node
+__(function() {
+  module.exports = o({
+    _type: carbon.carbond.ObjectServer,
+    port: 8888,
+    dbUri: "mongodb://localhost:27017/mydb",
+    endpoints: {
+      feedback: o({
+        _type: carbon.carbond.Collection,
+        insert: function(obj) {
+          return this.db.getCollection('feedback').insert(obj)
+        }
+      })
+    }
+  })
+})
+```
 
