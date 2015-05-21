@@ -400,13 +400,13 @@ Collections
 ----------
 
 Carbond ```Collection```s provide a high-level abstraction for defining ```Endpoint```s that behave like a collection of resources. When you define a ```Collection``` you define the following methods:
-* ```insert```
-* ```find```
-* ```update```
-* ```remove```
-* ```getObject```
-* ```updateObject```
-* ```removeObject```
+* ```insert(obj, reqCtx)```
+* ```find(query, options, reqCtx)```
+* ```update(query, obj, options, reqCtx)```
+* ```remove(query, reqCtx)```
+* ```getObject(id, reqCtx)```
+* ```updateObject(id, reqCtx)```
+* ```removeObject(id, reqCtx)```
 
 Which results in the following tree of ```Endpoint```s and ```Operations```:
 * ```/<collection>```
