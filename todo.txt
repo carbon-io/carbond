@@ -6,7 +6,10 @@ o requestCtx for Collections
 o circluar atom pointers dont really work
 o kill if (operation.service)
 
-o endpoint.path an issue....
+o collection sub-endpoints smarter about schema (but looking at _id in
+parent schema)
+
+o endpoint.path an issue.... with multiple filings yes?
 o name collision with collections and :id
 
 o max stack on Collection _init _super (and this.con.pro._init)
