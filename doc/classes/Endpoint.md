@@ -11,7 +11,11 @@ Configuration
 ```
 {
   _type: carbon.carbond.Endpoint,
-  
+
+  [parameters: {
+    <name> : <OperationParameter>
+  }]  
+
   [get: <function> | <Operation>],
   [put: <function> | <Operation>],
   [post: <function> | <Operation>],
@@ -35,6 +39,8 @@ Properties
 * ```parent``` (read-only): The parent ```Endpoint``` of this ```Endpoint```.
 
 * ```objectserver``` (read-only): The ```ObjectServer``` to which this endpoint belongs.
+
+* ```parameters```: A mapping of parameter names to ```OperationParameter``` objects. Parameters defined for an ```Endpoint``` are inherited by all operations of this ```Endpoint``` as well as by all child ```Endpoints``` of this ```Endpoint```.
 
 * ```endpoints```: A set of child ```Endpoint``` definitions. This is an object whose keys are path strings and values are instances of ```Endpoint```. Each path key will be interpreted as relative to this ```Endpoint```s ```path``` property. 
 
