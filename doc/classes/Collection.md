@@ -64,8 +64,18 @@ Properties
 Methods
 ----------
 
-Dynamic endpoints
+RESTFul interface
 ----------
+
+* ```/<collection>```
+  * ```GET``` which maps to ```find```
+  * ```POST``` which maps to ```insert```
+  * ```PUT``` which maps to ```update```
+  * ```DELETE``` which maps to ```remove```
+* ```/<collection>/:id```
+  *  ```GET``` which maps to ```getObject```
+  *  ```PUT``` which maps to ```updateObject```
+  *  ```DELETE``` which maps to ```removeObject```
 
 
 Examples
