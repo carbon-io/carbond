@@ -17,6 +17,7 @@ Configuration
 ```
 {
   [_type: carbon.carbond.OperationParameter,]
+  
   [description: <string>],
   [location: <string> ('query' | 'path' | 'body')],
   [schema: <object>] // JSON Schema object (http://json-schema.org/)
