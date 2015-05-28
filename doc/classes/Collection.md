@@ -83,20 +83,20 @@ Examples
 ----------
 
 ```node
-var carbon = require('carbon.io')
-var o = carbon.atom.o(module)
-
-module.exports = o({
-  _type: carbon.carbond.ObjectServer,
-  port: 8888,
-  endpoints: {
-    hello: o({
-      _type: carbon.carbond.Endpoint,
-      get: function(req) {
-        return { msg: "Hello World!" }
-      }
-    })
-  }
+__(function() {
+  module.exports = o({
+    _type: carbon.carbond.ObjectServer,
+    port: 8888,
+    dbUri: "mongodb://localhost:27017/mydb",
+    endpoints: {
+      feedback: o({
+        _type: carbon.carbond.Collection,
+        insert: function(obj) {
+          return this.db.getCollection('feedback').insert(obj)
+        }
+      })
+    }
+  })
 })
 ```
 
