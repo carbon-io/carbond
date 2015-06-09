@@ -12,6 +12,4 @@ var idg2 = o({ _type: '../lib/ObjectIdGenerator', generateStrings: true })
 assert(idg1.generateId() instanceof BSON.ObjectID)
 assert(typeof(idg2.generateId()) === 'string')
 
-
-
             

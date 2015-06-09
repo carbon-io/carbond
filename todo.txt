@@ -1,7 +1,21 @@
 Core 
 -------------------------
 
+o Abdul has case where getObject wants id to be string but does not
+want to specify _id in parent schema. In this case path param
+validator is not cool without quotes around the string. One solution
+would be to not only be forgiving when defined as string but when
+defined as any type?
+o Also, wanted to send ObjectId as string in path and could not
+
+o Signal handler and stop()
+ - maybe do stop()
+
+o POST without JSON body (string in body) no client error
+
 o _super wrong. de-support and also test _type 
+
+o private env prefix should be different
 
 o better examples of using _init in class in Atom docs
 
@@ -11,7 +25,8 @@ o name collision with collections and :id
    - variable var name
 
 o tag for abdul
-o env:
+o bond scopes
+  o env:
 
 o .json vs .send
 
@@ -27,8 +42,6 @@ o Flesh out api for MongoDBCollections to be like current data api
 
 o Response obj and response schema? Do we want to validate objects 
 going out?
-
-o bond scopes
 
 AC
 -------------------------
@@ -293,3 +306,6 @@ Should we use ejson vs mongodb-extended-json
 Firebase port to mongo todo app
 
 http://thejackalofjavascript.com/re-architecting-a-firebase-app-in-node/
+
+PUT vs PATCH
+  http://restful-api-design.readthedocs.org/en/latest/methods.html
