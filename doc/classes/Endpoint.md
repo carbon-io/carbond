@@ -11,7 +11,11 @@ Configuration
 ```
 {
   _type: carbon.carbond.Endpoint,
-  
+
+  [parameters: {
+    <name> : <OperationParameter>
+  }]  
+
   [get: <function> | <Operation>],
   [put: <function> | <Operation>],
   [post: <function> | <Operation>],
@@ -30,11 +34,15 @@ Configuration
 Properties
 ----------
 
-* ```path``` (read-only) - the path to which this endpoint is bound. The path can contain variable patterns (e.g. ```'orders/:id'```). The ```path``` property is not configured directly on ```Endpoint``` objects but are specified as lvals in enclosing defininitions of endpoints such as in an ```ObjectServer``` or a parent ```Endpoint``` object. When retrieved the value of this property will be the absolute path of the endpoint from ```/```. 
+* ```path``` (read-only): The path to which this endpoint is bound. The path can contain variable patterns (e.g. ```'orders/:id'```). The ```path``` property is not configured directly on ```Endpoint``` objects but are specified as lvals in enclosing definitions of endpoints such as in an ```ObjectServer``` or a parent ```Endpoint``` object. When retrieved the value of this property will be the absolute path of the endpoint from ```/```. 
 
-* ```objectserver``` (read-only) - the ```ObjectServer``` to which this endpoint belongs
+* ```parent``` (read-only): The parent ```Endpoint``` of this ```Endpoint```.
 
-* ```endpoints``` - a set of child ```Endpoint``` definitions. This is an object whose keys are path strings and values are instances of ```Endpoint```. Each path key will be interpreted as relative to this ```Endpoint```s ```path``` property. 
+* ```objectserver``` (read-only): The ```ObjectServer``` to which this endpoint belongs.
+
+* ```parameters```: A mapping of parameter names to ```OperationParameter``` objects. Parameters defined for an ```Endpoint``` are inherited by all operations of this ```Endpoint``` as well as by all child ```Endpoints``` of this ```Endpoint```.
+
+* ```endpoints```: A set of child ```Endpoint``` definitions. This is an object whose keys are path strings and values are instances of ```Endpoint```. Each path key will be interpreted as relative to this ```Endpoint```s ```path``` property. 
 
 Operations
 ----------
