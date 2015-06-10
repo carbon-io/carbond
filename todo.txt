@@ -8,8 +8,8 @@ would be to not only be forgiving when defined as string but when
 defined as any type?
 o Also, wanted to send ObjectId as string in path and could not
 
-o Signal handler and stop()
- - maybe do stop()
+o Do we want doStart to match doStop?
+  -- or maybe preListen and preShutdown?
 
 o POST without JSON body (string in body) no client error
 
