@@ -379,13 +379,13 @@ __(function() {
       reporting: "mongodb://localhost:27017/reporting"
     }
     endpoints: {
-      hello: o({
+      messages: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
           return this.dbs['main'].getCollection('messages').find().toArray()
         }
       }),
-      goodbye: o({
+      dashboards: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
           return this.dbs['reporting'].getCollection('dashboards').find().toArray()
