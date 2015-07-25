@@ -26,9 +26,9 @@
     "mongodb-extended-json": "1.1.2",
     "swagger-ui" : "2.1.0-alpha.1",
     "bunyan": "1.3.5",
-    "atom": "git+ssh://git@github.com:carbon-io/atom.git#v0.1.0",
-    "bond": "git+ssh://git@github.com:carbon-io/bond.git#v0.1.0",
-    "fiber": "git+ssh://git@github.com:carbon-io/fiber.git#v0.1.0",
+    "atom": "git+ssh://git@github.com:carbon-io/atom.git",
+    "bond": "git+ssh://git@github.com:carbon-io/bond.git",
+    "fiber": "git+ssh://git@github.com:carbon-io/fiber.git",
     "leafnode": "git+ssh://git@github.com:objectlabs/leafnode.git#v2.1.6",
     "z-schema": "3.12.0"
   },
