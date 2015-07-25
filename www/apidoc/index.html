@@ -54,7 +54,7 @@
         log("key: " + key);
         if(key && key.trim() != "") {
           log("added key " + key);
-          window.authorizations.add("API_KEY", new ApiKeyAuthorization("API_KEY", key, "header"));
+          window.authorizations.add("Api-Key", new ApiKeyAuthorization("Api-Key", key, "header"));
         }
       }
       $('#input_apiKey').change(function() {
