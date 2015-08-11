@@ -30,7 +30,7 @@
     "bond": "git+ssh://git@github.com:carbon-io/bond.git#v0.1.1",
     "fiber": "git+ssh://git@github.com:carbon-io/fiber.git#v0.1.0",
     "leafnode": "git+ssh://git@github.com:objectlabs/leafnode.git#v2.1.6",
-    "z-schema": "3.9.2"
+    "z-schema": "3.12.0"
   },
   "preferGlobal": false
 }
