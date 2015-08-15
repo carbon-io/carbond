@@ -69,7 +69,7 @@ module.exports = o({
   authenticator: o({
     _type: carbon.carbond.security.MongoDBApiKeyAuthenticator,
     apiKeyParameterName: "API_KEY",
-    apiKeyIn: "header", // can be "header" or "query"
+    apiKeyLocation: "header", // can be "header" or "query"
     userCollection: "users",
     apiKeyUserField: "apiKey"
   }),
