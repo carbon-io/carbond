@@ -1,19 +1,40 @@
+For MongoHost agent
+   - have it present its server cert to private api and have privae
+   api validate key (client validation)
+
+o How do we do peer cert validation with ELB
+  o Use TCP?
+o restify and api versioning
+o look into rotate madmin key
+
+
+----
+
+
 Core 
 -------------------------
 
-o Abdul has case where getObject wants id to be string but does not
-want to specify _id in parent schema. In this case path param
-validator is not cool without quotes around the string. One solution
-would be to not only be forgiving when defined as string but when
-defined as any type?
-o Also, wanted to send ObjectId as string in path and could not
+o do we want body parser given we want to parse EJSON?
 
-o Do we want doStart to match doStop?
-  -- or maybe preListen and preShutdown?
+o fix private env and root problems
+
+o query schema apply to update and delete?
+
+MONGOLAB PRIVATE API
+  o env choose better variable prefix
+  o take out dev uri
+
+o redo atom inheritence tests
+
+o dataAcl should not be on ENdpoint should it?
+
+o Client Authentication vs User Authenication (authentication)
+   - how do we do ACL? 
+   - Oath?
+
+o ParameterParser class and unit tests
 
 o POST without JSON body (string in body) no client error
-
-o _super wrong. de-support and also test _type 
 
 o private env prefix should be different
 
@@ -24,11 +45,9 @@ o kill if (operation.service)
 o name collision with collections and :id
    - variable var name
 
-o tag for abdul
-o bond scopes
-  o env:
-
 o .json vs .send
+
+o static files dir
 
 o FACTORING IMPROVEMENTS
   * fix defineExpressRoute 
@@ -43,9 +62,17 @@ o Flesh out api for MongoDBCollections to be like current data api
 o Response obj and response schema? Do we want to validate objects 
 going out?
 
-AC
+Important unit tests
+-------------------------
+o private env
+o acl stuff
+o parameter parsing
+
+AC 
 -------------------------
 o Endpoint.sanitizesOutput
+
+o Deal with encryption in authenticators
 
 o make sure you cant change obj[ownerField]. Could be big hole
 o rm dynamic spec stuff from acl
@@ -106,18 +133,18 @@ o document logging in ObjectServer
 o document in atom how to pass constructor args, how they chain and _init 
 o sslOptions
 o json schema stuff
-o settle arrays ([1, 2, 3] vs a=1&a=2&a=3) 
-
+o mini-guides
+  - how to extend a MongoDBCollection
 
 ====================================================================================================
 -- MED
 o leafnode async
+o bust out parameter conversion in ObjectServer
 o fibrous
 o Views and Forms and Commands
 o property cmdArgs non boolean (name value) 
 o add dbUri and dbUris cmdArgs 
 o remember changing schema of acls that will be in people's data is hard....
-o Deal with encryption in authenticators
 o UserOwnedMDBCollection
 o Auth / AC per endpoint? Telemetry example is a good one
 o envelope format / _links
@@ -153,20 +180,8 @@ o client cmdline
 o CREATE method
 
 PUNTED?
-o start/stpo at cmdline? NO THIS SHOULD BE MANAGED BY PROCESS MANAGER
 o indexes. maybe allow def on OS and have flags for auto-create vs
 having to run command vs nothing
-
-
---------
-
-> a = { get foo() { return 7 }}
-{ foo: [Getter] }
-> a
-{ foo: [Getter] }
-> a.foo
-7
-http://stackoverflow.com/questions/14047809/js-defineproperty-and-prototype
 
 
 ------ main booty
@@ -309,3 +324,16 @@ http://thejackalofjavascript.com/re-architecting-a-firebase-app-in-node/
 
 PUT vs PATCH
   http://restful-api-design.readthedocs.org/en/latest/methods.html
+
+Hashing api keys
+  https://octopusdeploy.com/blog/hashing-api-keys
+
+---
+Proxy protocol
+http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/enable-proxy-protocol.html
+
+Coolness?
+http://assemble.io/
+
+api docs
+http://www.mattsilverman.com/2013/02/tools-to-generate-beautiful-api-documentation.html
