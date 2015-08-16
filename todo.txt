@@ -18,8 +18,6 @@ o do we want body parser given we want to parse EJSON?
 
 o acls inherit from parents where 'guardsChildren'
 
-o acls have env
-
 o debug mode can leak api keys
 
 o _o("http....") and add options
