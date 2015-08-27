@@ -27,3 +27,4 @@ node_modules
 # vim
 
 *.sw[po]
+vim.session
