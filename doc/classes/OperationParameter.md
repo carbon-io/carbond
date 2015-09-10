@@ -20,7 +20,7 @@ Configuration
   [description: <string>],
   [location: <string> ('query' | 'path' | 'body')],
   [schema: <object>] // JSON Schema object (http://json-schema.org/)
-  [required: <boolean]
+  [required: <boolean>]
 }
 ```
 
