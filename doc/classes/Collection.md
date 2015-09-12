@@ -7,7 +7,7 @@ resources. When you define a ```Collection``` you define the following methods:
 * ```find(query, options, reqCtx)```
 * ```update(query, obj, options, reqCtx)```
 * ```remove(query, reqCtx)```
-* ```getObject(id, reqCtx)```
+* ```findObject(id, reqCtx)```
 * ```updateObject(id, reqCtx)```
 * ```removeObject(id, reqCtx)```
 
@@ -18,7 +18,7 @@ Which results in the following tree of ```Endpoint```s and ```Operations```:
   * ```PUT``` which maps to ```update```
   * ```DELETE``` which maps to ```remove```
 * ```/<collection>/:id```
-  *  ```GET``` which maps to ```getObject```
+  *  ```GET``` which maps to ```findObject```
   *  ```PUT``` which maps to ```updateObject```
   *  ```DELETE``` which maps to ```removeObject```
 
@@ -37,7 +37,7 @@ Configuration
   [find: <function>],
   [update: <function>],
   [remove: <function>],
-  [getObject: <function>],
+  [findObject: <function>],
   [updateObject: <function>],
   [removeObject: <function>]
   
@@ -74,7 +74,7 @@ RESTFul interface
   * ```PUT``` which maps to ```update```
   * ```DELETE``` which maps to ```remove```
 * ```/<collection>/:id```
-  *  ```GET``` which maps to ```getObject```
+  *  ```GET``` which maps to ```findObject```
   *  ```PUT``` which maps to ```updateObject```
   *  ```DELETE``` which maps to ```removeObject```
 

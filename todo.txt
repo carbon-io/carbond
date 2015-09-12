@@ -14,8 +14,6 @@ o look into rotate madmin key
 Core 
 -------------------------
 
-o getObject -> findObject 
-
 o should be able to add parameters to a Collection (question is query
 vs update vs delete)
 
