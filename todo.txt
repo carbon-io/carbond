@@ -14,6 +14,8 @@ o look into rotate madmin key
 Core 
 -------------------------
 
+o patch and put seem to simply not work
+
 o acl -> endpointAcl
 
 o acls inherit from parents where 'guardsChildren; (no selfAndBelow)
