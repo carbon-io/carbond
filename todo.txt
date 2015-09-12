@@ -14,6 +14,10 @@ o look into rotate madmin key
 Core 
 -------------------------
 
+o acl -> endpointAcl
+
+o acls inherit from parents where 'guardsChildren; (no selfAndBelow)
+
 o should be able to add parameters to a Collection (question is query
 vs update vs delete)
 
@@ -23,8 +27,6 @@ o generate examples for schemas
 o document doStart() doStop() better
 
 o do we want body parser given we want to parse EJSON?
-
-o acls inherit from parents where 'guardsChildren; (no selfAndBelow)
 
 o debug mode can leak api keys
   - dont have it print env or private env
