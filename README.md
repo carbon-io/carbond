@@ -118,7 +118,7 @@ var __ = carbon.fiber.__(module, true)
 
 The ```o``` operatior is part of the Atom sub-project of Carbon.io and is what is used to define Carbon.io components. It is not crucial you understand this deeply at this point but you should eventually read the [Atom](https://github.com/carbon-io/atom) documentation to understand the Carbon.io component infrastructure as it is core to Carbon.io. 
 
-The ```___``` is used to run this application inside of a [Fiber](https://github.com/carbon-io/fiber) when this module is invoked as the main module from the command line. Carbon.io makes heavy use of [Node Fibers](https://github.com/laverdet/node-fibers) to allow for applications to be written in a synchronous (as well as asynchronous) style. More details can be found in the documentation for the [Carbon.io ```fiber``` package](https://github.com/carbon-io/fiber). 
+The ```__``` is used to run this application inside of a [Fiber](https://github.com/carbon-io/fiber) when this module is invoked as the main module from the command line. Carbon.io makes heavy use of [Node Fibers](https://github.com/laverdet/node-fibers) to allow for applications to be written in a synchronous (as well as asynchronous) style. More details can be found in the documentation for the [Carbon.io ```fiber``` package](https://github.com/carbon-io/fiber). 
 
 Finally, we define our top-level component and export it via ```module.exports```. While exporting the component we define is not strictly required if we only plan to use this service as a main module, it is useful to export it so that it can later be required as a library by other components or modules if desired.
 

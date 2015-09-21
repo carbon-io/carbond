@@ -14,21 +14,36 @@ o look into rotate madmin key
 Core 
 -------------------------
 
+o patch and put seem to simply not work
+
+o acl -> endpointAcl
+
+o acls inherit from parents where 'guardsChildren; (no selfAndBelow)
+
+o should be able to add parameters to a Collection (question is query
+vs update vs delete)
+
+o desc for Endpoint and Operation
+o generate examples for schemas
+
+o document doStart() doStop() better
+
 o do we want body parser given we want to parse EJSON?
 
-o acls inherit from parents where 'guardsChildren'
-
 o debug mode can leak api keys
+  - dont have it print env or private env
 
 o _o("http....") and add options
 
-o getObject -> findObject
+o fix update so you can have shorthand for $set
 
-o patch is update, put is save
+o update and save not really working
 
 o fix private env and root problems
 
 o query schema apply to update and delete?
+
+o required fields for ObjectServer (atom thing)
 
 MONGOLAB PRIVATE API
   o env choose better variable prefix
@@ -188,6 +203,7 @@ o socket.io
 o shell
 o client cmdline
 o CREATE method
+o api-hub (carbon.io/api-hub)
 
 PUNTED?
 o indexes. maybe allow def on OS and have flags for auto-create vs
