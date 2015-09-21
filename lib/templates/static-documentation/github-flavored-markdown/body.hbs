@@ -1,15 +1,29 @@
 {{#GHMDGeneratorHeading}}{{title}}{{/GHMDGeneratorHeading}}
 
+{{! ---------- description ---------- }}
+
 {{{description}}}
 
+{{! ---------- /description ---------- ~}}
+
+{{~! ---------- TOC ---------- }}
+
+
+
+{{! ---------- /TOC ---------- }}
+
+---
 
 {{! --- global parameters --- ~}}
 {{#ifnotempty parameters}}
-{{#GHMDGeneratorHeading level=3}}parameters{{/GHMDGeneratorHeading}}
+{{#GHMDGeneratorHeading level=2}}parameters{{/GHMDGeneratorHeading}}
 
 {{#each parameters}}
 {{#GHMDGeneratorBlockQuote}}
-{{#GHMDGeneratorHeading level=2}}{{@key}}{{/GHMDGeneratorHeading}}
+{{#if @first}}
+---
+{{/if}}
+{{#GHMDGeneratorHeading level=3}}{{@key}}{{/GHMDGeneratorHeading}}
 {{#each this}}
 {{#GHMDGeneratorParameterTable this}}{{/GHMDGeneratorParameterTable}}
 {{#if schema}}
@@ -17,8 +31,11 @@
 {{#GHMDGeneratorRenderSchema schema}}{{/GHMDGeneratorRenderSchema}}
 {{/GHMDGeneratorCodeBlock}}
 {{/if}}
+---
 {{/each}}
 {{/GHMDGeneratorBlockQuote}}
+
+
 {{/each}}
 {{/ifnotempty}}
 
@@ -37,16 +54,25 @@
 
 {{#GHMDGeneratorBlockQuote~}}
 
+{{#if @first}}
+---
+{{/if}}
+
 {{#GHMDGeneratorHeading level=3}}{{path}}{{/GHMDGeneratorHeading}}
 
 {{#if description~}}
 {{description}}
 {{~/if~}}
 
+{{! --- endpoint parameters --- ~}}
+
 {{#ifnotempty parameters~}}
 {{#GHMDGeneratorHeading level=4}}parameters{{/GHMDGeneratorHeading}}
 {{#each parameters}}
 {{#GHMDGeneratorBlockQuote}}
+{{#if @first}}
+---
+{{/if}}
 {{#GHMDGeneratorHeading level=4}}{{@key}}{{/GHMDGeneratorHeading}}
 {{#each this}}
 {{#GHMDGeneratorParameterTable this}}{{/GHMDGeneratorParameterTable}}
@@ -57,6 +83,7 @@
 {{/if}}
 {{/each}}
 {{/GHMDGeneratorBlockQuote}}
+---
 {{/each}}
 {{/ifnotempty}}
 
@@ -74,10 +101,15 @@
 {{description}}
 {{~/if}}
 
+{{! --- operation parameters --- ~}}
+
 {{#ifnotempty parameters~}}
 {{#GHMDGeneratorHeading level=4}}parameters{{/GHMDGeneratorHeading}}
 {{#each parameters}}
 {{#GHMDGeneratorBlockQuote}}
+{{#if @first}}
+---
+{{/if}}
 {{#GHMDGeneratorHeading level=4}}{{@key}}{{/GHMDGeneratorHeading}}
 {{#each this}}
 {{#GHMDGeneratorParameterTable this}}{{/GHMDGeneratorParameterTable}}
@@ -88,6 +120,7 @@
 {{/if}}
 {{/each}}
 {{/GHMDGeneratorBlockQuote}}
+---
 {{/each}}
 {{/ifnotempty}}
 
@@ -118,11 +151,13 @@
 
 {{~/each~}}
 
+---
+
 {{~/GHMDGeneratorBlockQuote~}}
 
 {{~/each~}}
 
-{{! --- operations --- }}
+{{! --- /operations --- }}
 
 {{~/GHMDGeneratorBlockQuote~}}
 
