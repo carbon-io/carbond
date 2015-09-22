@@ -6,135 +6,120 @@
 
 {{! ---------- /description ---------- ~}}
 
+---
+
 {{~! ---------- TOC ---------- }}
 
-
+{{#each endpoints~}}
+* [{{path}}](#{{#slugify}}{{path}}{{/slugify}})
+{{#each operations}}
+    * [{{method}}](#{{#slugify}}{{../../path}} {{method}}{{/slugify}})
+{{/each~}}
+{{~/each}}
 
 {{! ---------- /TOC ---------- }}
 
 ---
 
-{{! --- global parameters --- ~}}
-{{#ifnotempty parameters}}
-{{#GHMDGeneratorHeading level=2}}parameters{{/GHMDGeneratorHeading}}
-
-{{#each parameters}}
-{{#GHMDGeneratorBlockQuote}}
-{{#if @first}}
----
-{{/if}}
-{{#GHMDGeneratorHeading level=3}}{{@key}}{{/GHMDGeneratorHeading}}
-{{#each this}}
-{{#GHMDGeneratorParameterTable this}}{{/GHMDGeneratorParameterTable}}
-{{#if schema}}
-{{#GHMDGeneratorCodeBlock}}
-{{#GHMDGeneratorRenderSchema schema}}{{/GHMDGeneratorRenderSchema}}
-{{/GHMDGeneratorCodeBlock}}
-{{/if}}
----
-{{/each}}
-{{/GHMDGeneratorBlockQuote}}
-
-
-{{/each}}
-{{/ifnotempty}}
-
 {{! document special headers }}
 {{! document security model }}
 
-{{#GHMDGeneratorHeading level=2}}Endpoints{{/GHMDGeneratorHeading}}
-
-{{~! --- endpoints --- ~}}
+{{~! ---------- endpoints ---------- ~}}
 
 {{#each endpoints}}
 
-{{#unless @first}}
----
-{{/unless}}
-
-{{#GHMDGeneratorBlockQuote~}}
-
-{{#if @first}}
----
-{{/if}}
-
-{{#GHMDGeneratorHeading level=3}}{{path}}{{/GHMDGeneratorHeading}}
+{{#GHMDGeneratorHeading level=2}}<a name="{{#slugify}}{{path}}{{/slugify}}"></a>{{path}}{{/GHMDGeneratorHeading}}
 
 {{#if description~}}
 {{description}}
 {{~/if~}}
 
-{{! --- endpoint parameters --- ~}}
-
-{{#ifnotempty parameters~}}
-{{#GHMDGeneratorHeading level=4}}parameters{{/GHMDGeneratorHeading}}
-{{#each parameters}}
-{{#GHMDGeneratorBlockQuote}}
-{{#if @first}}
----
-{{/if}}
-{{#GHMDGeneratorHeading level=4}}{{@key}}{{/GHMDGeneratorHeading}}
-{{#each this}}
-{{#GHMDGeneratorParameterTable this}}{{/GHMDGeneratorParameterTable}}
-{{#if schema}}
-{{#GHMDGeneratorCodeBlock}}
-{{#GHMDGeneratorRenderSchema schema}}{{/GHMDGeneratorRenderSchema}}
-{{/GHMDGeneratorCodeBlock}}
-{{/if}}
-{{/each}}
-{{/GHMDGeneratorBlockQuote}}
----
-{{/each}}
-{{/ifnotempty}}
-
-{{! --- operations --- }}
-
-{{#GHMDGeneratorHeading level=4}}operations{{/GHMDGeneratorHeading}}
+{{! ---------- operations ---------- }}
 
 {{#each operations~}}
 
-{{~#GHMDGeneratorBlockQuote~}}
-
-{{#GHMDGeneratorHeading level=4}}{{method}}{{/GHMDGeneratorHeading}}
+{{#GHMDGeneratorHeading level=3}}<a name="{{#slugify}}{{../../../path}} {{method}}{{/slugify}}"></a>{{method}}{{/GHMDGeneratorHeading}}
 
 {{#if description~}}
 {{description}}
 {{~/if}}
 
-{{! --- operation parameters --- ~}}
+{{! ---------- operation parameters ---------- ~}}
 
 {{#ifnotempty parameters~}}
-{{#GHMDGeneratorHeading level=4}}parameters{{/GHMDGeneratorHeading}}
-{{#each parameters}}
-{{#GHMDGeneratorBlockQuote}}
-{{#if @first}}
+
+{{#GHMDGeneratorHeading level=3}}Parameters{{/GHMDGeneratorHeading}}
+
 ---
-{{/if}}
-{{#GHMDGeneratorHeading level=4}}{{@key}}{{/GHMDGeneratorHeading}}
+
+{{#each parameters}}
 {{#each this}}
-{{#GHMDGeneratorParameterTable this}}{{/GHMDGeneratorParameterTable}}
-{{#if schema}}
+
+{{#GHMDGeneratorHeading level=4}}{{name}}{{/GHMDGeneratorHeading}}
+
+{{#if description}}
+{{description}}
+{{/if}}
+
+* required: {{required}}
+* location: {{location}}
+{{#if default~}}
+{{#ifisobject default~}}
+* default
+
+{{#indent~}}
+{{#GHMDGeneratorCodeBlock}}
+{{#GHMDGeneratorRenderSchema default}}{{/GHMDGeneratorRenderSchema}}
+{{/GHMDGeneratorCodeBlock}}
+{{~/indent}}
+
+{{else}}
+* default: `{{default}}`      {{! XXX: this could be an object... }}
+{{/ifisobject}}
+{{/if}}
+{{#if schema~}}
+* schema
+
+{{#indent~}}
 {{#GHMDGeneratorCodeBlock}}
 {{#GHMDGeneratorRenderSchema schema}}{{/GHMDGeneratorRenderSchema}}
 {{/GHMDGeneratorCodeBlock}}
-{{/if}}
+{{~/indent}}
+
+{{~/if}}
+
 {{/each}}
-{{/GHMDGeneratorBlockQuote}}
----
+
 {{/each}}
+
 {{/ifnotempty}}
 
-{{! request schema }}
+{{! ---------- /operation parameters ---------- ~}}
+
+{{! ---------- request schema ---------- ~}}
+
+{{! XXX: request schema }}
+
+{{! ---------- /request schema ---------- ~}}
+
+{{! ---------- response schema ---------- ~}}
 
 {{#if responseSchema }}
-{{#GHMDGeneratorHeading level=4}}response schema{{/GHMDGeneratorHeading}}
+{{#GHMDGeneratorHeading level=3}}Response Schema{{/GHMDGeneratorHeading}}
+
+---
+
 {{#GHMDGeneratorCodeBlock}}
 {{#GHMDGeneratorRenderSchema responseSchema}}{{/GHMDGeneratorRenderSchema}}
 {{/GHMDGeneratorCodeBlock}}
 {{/if}}
 
+{{! ---------- /response schema ---------- ~}}
+
+{{! ---------- error responses ---------- ~}}
+
 {{#if errorResponses~}}
-{{#GHMDGeneratorHeading level=4}}error responses{{/GHMDGeneratorHeading}}
+{{#GHMDGeneratorHeading level=4}}Error Responses{{/GHMDGeneratorHeading}}
 
 {{~#each errorResponses}}
 * {{@key}}
@@ -142,26 +127,26 @@
 {{~/each~}}
 {{~/if~}}
 
+{{! ---------- /error responses ---------- ~}}
+
+{{! ---------- examples ---------- ~}}
+
 {{~#each example~}}
 
-{{! code blocks }}
-{{! description }}
-{{! example request }}
-{{! example response }}
+{{! XXX: code blocks }}
+{{! XXX: description }}
+{{! XXX: example request }}
+{{! XXX: example response }}
 
 {{~/each~}}
 
----
-
-{{~/GHMDGeneratorBlockQuote~}}
+{{! ---------- /examples ---------- ~}}
 
 {{~/each~}}
 
-{{! --- /operations --- }}
-
-{{~/GHMDGeneratorBlockQuote~}}
+{{! ---------- /operations ---------- }}
 
 {{~/each~}}
 
-{{~! --- /endpoints --- ~}}
+{{~! ---------- /endpoints ---------- ~}}
 
