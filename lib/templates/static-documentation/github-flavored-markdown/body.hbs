@@ -11,10 +11,13 @@
 {{~! ---------- TOC ---------- }}
 
 {{#each endpoints~}}
-* [{{path}}](#{{#slugify}}{{path}}{{/slugify}})
+* <a name="{{#slugify}}{{path}} toc{{/slugify}}"></a> [{{path}}](#{{#slugify}}{{path}}{{/slugify}})
+{{~#each operations}} [<a name="{{#slugify}}{{../../path}} {{method}} toc{{/slugify}}"></a>[{{method}}](#{{#slugify}}{{../../path}} {{method}}{{/slugify}})]{{/each}}
+{{!--
 {{#each operations}}
-    * [{{method}}](#{{#slugify}}{{../../path}} {{method}}{{/slugify}})
+    * <a name="{{#slugify}}{{../../path}} {{method}} toc{{/slugify}}"></a> [{{method}}](#{{#slugify}}{{../../path}} {{method}}{{/slugify}})
 {{/each~}}
+--}}
 {{~/each}}
 
 {{! ---------- /TOC ---------- }}
@@ -28,7 +31,7 @@
 
 {{#each endpoints}}
 
-{{#GHMDGeneratorHeading level=2}}<a name="{{#slugify}}{{path}}{{/slugify}}"></a>{{path}}{{/GHMDGeneratorHeading}}
+{{#GHMDGeneratorHeading level=2}}<a name="{{#slugify}}{{path}}{{/slugify}}"></a>{{path}}{{/GHMDGeneratorHeading}} [[&#x2191;](#{{#slugify}}{{path}} toc{{/slugify}})]
 
 {{#if description~}}
 {{description}}
@@ -38,7 +41,7 @@
 
 {{#each operations~}}
 
-{{#GHMDGeneratorHeading level=3}}<a name="{{#slugify}}{{../../../path}} {{method}}{{/slugify}}"></a>{{method}}{{/GHMDGeneratorHeading}}
+{{#GHMDGeneratorHeading level=3}}<a name="{{#slugify}}{{../../../path}} {{method}}{{/slugify}}"></a>`{{method}}`{{/GHMDGeneratorHeading}} [[&#x2191;](#{{#slugify}}{{../../path}} {{method}} toc{{/slugify}})]
 
 {{#if description~}}
 {{description}}
@@ -52,8 +55,82 @@
 
 ---
 
+<table>
+<tr>
+<th> name </th>
+<th> description </th>
+<th> required </th>
+<th> location </th>
+<th> default </th>
+<th> schema </th>
+</tr>
+
 {{#each parameters}}
 {{#each this}}
+
+{{!--
+
+{{#GHMDGeneratorHeading level=4}}{{name}}{{/GHMDGeneratorHeading}}
+
+{{#if description}}
+{{description}}
+{{/if}}
+
+<table>
+<tr>
+<th> required </th>
+<th> location </th>
+<th> default </th>
+<th> schema </th>
+</tr>
+<tr>
+<td> {{required}} </td>
+<td> {{location}} </td>
+<td> 
+{{#ifisobject default~}}
+`{{#GHMDGeneratorRenderSchema default}}{{/GHMDGeneratorRenderSchema}}`
+{{else}}
+{{#definedornull default}}{{/definedornull}}
+{{/ifisobject}}
+</td>
+<td>
+{{#if schema~}}
+<pre><code>
+{{~#GHMDGeneratorRenderSchema schema}}{{/GHMDGeneratorRenderSchema~}}
+</code></pre>
+{{else}}
+null
+{{~/if}}
+</td>
+</tr>
+</table>
+
+--}}
+
+<tr>
+<td> <code>{{name}}</code> </td>
+<td> {{description}} </td>
+<td> <code>{{required}}</code> </td>
+<td> <code>{{location}}</code> </td>
+<td> 
+{{#ifisobject default~}}
+<code>{{#GHMDGeneratorRenderSchema default}}{{/GHMDGeneratorRenderSchema}}</code>
+{{else}}
+<code>{{#definedornull default}}{{/definedornull}}</code>
+{{/ifisobject}}
+</td>
+<td>
+{{#if schema~}}
+<pre><code>
+{{~#GHMDGeneratorRenderSchema schema}}{{/GHMDGeneratorRenderSchema~}}
+</code></pre>
+{{else}}
+<code>null</code>
+{{~/if}}
+</td>
+</tr>
+
+{{!--
 
 {{#GHMDGeneratorHeading level=4}}{{name}}{{/GHMDGeneratorHeading}}
 
@@ -74,7 +151,7 @@
 {{~/indent}}
 
 {{else}}
-* default: `{{default}}`      {{! XXX: this could be an object... }}
+* default: `{{default}}`
 {{/ifisobject}}
 {{/if}}
 {{#if schema~}}
@@ -88,9 +165,14 @@
 
 {{~/if}}
 
+--}}
+
 {{/each}}
 
 {{/each}}
+
+</table>
+
 
 {{/ifnotempty}}
 
@@ -109,10 +191,15 @@
 
 ---
 
-{{#GHMDGeneratorCodeBlock}}
+{{!-- {{#GHMDGeneratorCodeBlock}}
 {{#GHMDGeneratorRenderSchema responseSchema}}{{/GHMDGeneratorRenderSchema}}
 {{/GHMDGeneratorCodeBlock}}
+--}}
+<pre><code>
+{{~#GHMDGeneratorRenderSchema responseSchema}}{{/GHMDGeneratorRenderSchema~}}
+</code></pre>
 {{/if}}
+
 
 {{! ---------- /response schema ---------- ~}}
 
