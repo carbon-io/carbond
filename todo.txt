@@ -7,18 +7,23 @@ o How do we do peer cert validation with ELB
 o restify and api versioning
 o look into rotate madmin key
 
-
 ----
 
 
 Core 
 -------------------------
 
+o log rotation
+
+o carbon logs in TZlocal?
+
 o patch and put seem to simply not work
 
 o acl -> endpointAcl
 
-o acls inherit from parents where 'guardsChildren; (no selfAndBelow)
+o acls inherit from parents where 'guardsChildren; (do selfAndBelow)
+
+o Endpoint.getOperation
 
 o should be able to add parameters to a Collection (question is query
 vs update vs delete)
@@ -36,8 +41,6 @@ o debug mode can leak api keys
 o _o("http....") and add options
 
 o fix update so you can have shorthand for $set
-
-o update and save not really working
 
 o fix private env and root problems
 
@@ -348,8 +351,14 @@ Firebase port to mongo todo app
 
 http://thejackalofjavascript.com/re-architecting-a-firebase-app-in-node/
 
+RFC
+   http://tools.ietf.org/html/rfc7231#page-26
+
 PUT vs PATCH
   http://restful-api-design.readthedocs.org/en/latest/methods.html
+ 
+Proper responses
+   http://stackoverflow.com/questions/797834/should-a-restful-put-operation-return-something
 
 Hashing api keys
   https://octopusdeploy.com/blog/hashing-api-keys
@@ -363,3 +372,4 @@ http://assemble.io/
 
 api docs
 http://www.mattsilverman.com/2013/02/tools-to-generate-beautiful-api-documentation.html
+
