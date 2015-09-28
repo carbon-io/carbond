@@ -41,7 +41,7 @@
 
 {{#each operations~}}
 
-{{#GHMDGeneratorHeading level=3}}<a name="{{#slugify}}{{../../../path}} {{method}}{{/slugify}}"></a>`{{method}}`{{/GHMDGeneratorHeading}} [[&#x2191;](#{{#slugify}}{{../../path}} {{method}} toc{{/slugify}})]
+{{#GHMDGeneratorHeading level=3}}<a name="{{#slugify}}{{../../../path}} {{method}}{{/slugify}}"></a>`{{method}}` -- {{../../path}} {{/GHMDGeneratorHeading}} [[&#x2191;](#{{#slugify}}{{../../path}} {{method}} toc{{/slugify}})]
 
 {{#if description~}}
 {{description}}
@@ -108,18 +108,18 @@ null
 --}}
 
 <tr>
-<td> <code>{{name}}</code> </td>
-<td> {{description}} </td>
-<td> <code>{{required}}</code> </td>
-<td> <code>{{location}}</code> </td>
-<td> 
+<td valign="top"> {{name}} </td>
+<td valign="top"> {{description}} </td>
+<td valign="top"> {{#if required}}yes{{else}}no{{/if}} </td>
+<td valign="top"> {{location}} </td>
+<td valign="top"> 
 {{#ifisobject default~}}
 <code>{{#GHMDGeneratorRenderSchema default}}{{/GHMDGeneratorRenderSchema}}</code>
 {{else}}
 <code>{{#definedornull default}}{{/definedornull}}</code>
 {{/ifisobject}}
 </td>
-<td>
+<td valign="top">
 {{#if schema~}}
 <pre><code>
 {{~#GHMDGeneratorRenderSchema schema}}{{/GHMDGeneratorRenderSchema~}}
