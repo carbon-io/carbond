@@ -23,7 +23,7 @@
     "body-parser" : "1.12.3",
     "basic-auth": "~1.0.0",
     "request" : "2.34.0",
-    "underscore" : "1.8.3",
+    "lodash" : "3.10.1",
     "mongodb": "1.4.x",
     "mongodb-extended-json": "1.1.2",
     "swagger-ui" : "2.1.0-alpha.1",
