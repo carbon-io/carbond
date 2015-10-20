@@ -7,7 +7,6 @@ module.exports = { // XXX should be able to automate this
   UserCollection: require('./lib/UserCollection'),
   IdGenerator: require('./lib/IdGenerator'),
   ObjectIdGenerator: require('./lib/ObjectIdGenerator'),
-  HttpErrors: require('./lib/HttpErrors'),
   security: {
     Authenticator: require('./lib/security/Authenticator'),
     HttpBasicAuthenticator: require('./lib/security/HttpBasicAuthenticator'),
