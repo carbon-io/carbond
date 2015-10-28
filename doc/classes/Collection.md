@@ -92,7 +92,7 @@ __(function() {
       feedback: o({
         _type: carbon.carbond.Collection,
         insert: function(obj) {
-          return this.db.getCollection('feedback').insert(obj)
+          return this.objectserver.db.getCollection('feedback').insert(obj)
         }
       })
     }
