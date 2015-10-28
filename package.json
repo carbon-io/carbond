@@ -17,7 +17,6 @@
   },
   "engines": { "node": "~0.8.6" },
   "dependencies": {
-    "fibers": "~1.0.7",
     "handlebars": "3.0.3",
     "express" : "4.12.3",
     "body-parser" : "1.12.3",
