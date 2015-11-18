@@ -1,0 +1,24 @@
+{{#GHMDGeneratorHeading}}{{title}}{{/GHMDGeneratorHeading}}
+
+{{! ---------- description ---------- }}
+
+{{{description}}}
+
+{{! ---------- /description ---------- ~}}
+
+---
+
+{{~! ---------- TOC ---------- }}
+
+{{#each endpoints~}}
+* <a name="{{#slugify}}{{path}} toc{{/slugify}}"></a> [{{path}}](#{{#slugify}}{{path}}{{/slugify}})
+{{~#each operations}} [<a name="{{#slugify}}{{../../path}} {{method}} toc{{/slugify}}"></a>[{{method}}](#{{#slugify}}{{../../path}} {{method}}{{/slugify}})]{{/each}}
+{{!--
+{{#each operations}}
+    * <a name="{{#slugify}}{{../../path}} {{method}} toc{{/slugify}}"></a> [{{method}}](#{{#slugify}}{{../../path}} {{method}}{{/slugify}})
+{{/each~}}
+--}}
+{{~/each}}
+
+{{! ---------- /TOC ---------- }}
+
