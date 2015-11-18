@@ -6,12 +6,12 @@
 
 {{! ---------- /description ---------- ~}}
 
----
-
 {{~! ---------- TOC ---------- }}
 
+{{#GHMDGeneratorHeading level=2}}Endpoints{{/GHMDGeneratorHeading}}
+
 {{#each endpoints}}
-* [{{path}}](/{{fsPath}}) {{#each operations}} [[{{method}}](/{{../fsPath}}#{{#slugify}}{{../../path}} {{method}}{{/slugify}})] {{/each}}
+* [{{path}}](/{{fsPath}}) {{!-- {{#each operations}} [[{{method}}](/{{../fsPath}}#{{#slugify}}{{../../path}} {{method}}{{/slugify}})] {{/each}} --}}
 {{/each}}
 
 {{! ---------- /TOC ---------- }}

@@ -1,4 +1,4 @@
-{{#GHMDGeneratorHeading level=2}}{{path}}{{/GHMDGeneratorHeading}}
+{{#GHMDGeneratorHeading level=2}}{{path}} [[ToC](/{{indexPath}})]{{/GHMDGeneratorHeading}}
 
 {{#if description~}}
 {{description}}
@@ -8,7 +8,7 @@
 
 {{#each operations~}}
 
-{{#GHMDGeneratorHeading level=3}}<a name="{{#slugify}}{{../../../path}} {{method}}{{/slugify}}"></a>`{{method}}` -- {{../../path}}{{/GHMDGeneratorHeading}}
+{{#GHMDGeneratorHeading level=3}}{{!-- <a name="{{#slugify}}{{../../../path}} {{method}}{{/slugify}}"></a> --}}`{{method}}`{{/GHMDGeneratorHeading}}
 
 {{#if description~}}
 {{description}}
