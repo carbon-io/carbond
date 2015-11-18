@@ -1,0 +1,18 @@
+{{#GHMDGeneratorHeading}}{{title}}{{/GHMDGeneratorHeading}}
+
+{{! ---------- description ---------- }}
+
+{{{description}}}
+
+{{! ---------- /description ---------- ~}}
+
+---
+
+{{~! ---------- TOC ---------- }}
+
+{{#each endpoints}}
+* [{{path}}](/{{fsPath}}) {{#each operations}} [[{{method}}](/{{../fsPath}}#{{#slugify}}{{../../path}} {{method}}{{/slugify}})] {{/each}}
+{{/each}}
+
+{{! ---------- /TOC ---------- }}
+

@@ -1,0 +1,122 @@
+{{#GHMDGeneratorHeading level=2}}{{path}}{{/GHMDGeneratorHeading}}
+
+{{#if description~}}
+{{description}}
+{{~/if~}}
+
+{{! ---------- operations ---------- }}
+
+{{#each operations~}}
+
+{{#GHMDGeneratorHeading level=3}}<a name="{{#slugify}}{{../../../path}} {{method}}{{/slugify}}"></a>`{{method}}` -- {{../../path}}{{/GHMDGeneratorHeading}}
+
+{{#if description~}}
+{{description}}
+{{~/if}}
+
+{{! ---------- operation parameters ---------- ~}}
+
+{{#ifnotempty parameters~}}
+
+{{#GHMDGeneratorHeading level=3}}Parameters{{/GHMDGeneratorHeading}}
+
+---
+
+<table>
+<tr>
+<th> name </th>
+<th> description </th>
+<th> required </th>
+<th> location </th>
+<th> default </th>
+<th> schema </th>
+</tr>
+
+{{#each parameters}}
+{{#each this}}
+
+
+<tr>
+<td valign="top"> {{name}} </td>
+<td valign="top"> {{description}} </td>
+<td valign="top"> {{#if required}}yes{{else}}no{{/if}} </td>
+<td valign="top"> {{location}} </td>
+<td valign="top"> 
+{{#ifisobject default~}}
+<code>{{#GHMDGeneratorRenderSchema default}}{{/GHMDGeneratorRenderSchema}}</code>
+{{else}}
+<code>{{#definedornull default}}{{/definedornull}}</code>
+{{/ifisobject}}
+</td>
+<td valign="top">
+{{#if schema~}}
+<pre><code>
+{{~#GHMDGeneratorRenderSchema schema}}{{/GHMDGeneratorRenderSchema~}}
+</code></pre>
+{{else}}
+<code>null</code>
+{{~/if}}
+</td>
+</tr>
+
+{{/each}}
+
+{{/each}}
+
+</table>
+
+
+{{/ifnotempty}}
+
+{{! ---------- /operation parameters ---------- ~}}
+
+{{! ---------- request schema ---------- ~}}
+
+{{! XXX: request schema }}
+
+{{! ---------- /request schema ---------- ~}}
+
+{{! ---------- response schema ---------- ~}}
+
+{{#if responseSchema }}
+{{#GHMDGeneratorHeading level=3}}Response Schema{{/GHMDGeneratorHeading}}
+
+---
+
+<pre><code>
+{{~#GHMDGeneratorRenderSchema responseSchema}}{{/GHMDGeneratorRenderSchema~}}
+</code></pre>
+{{/if}}
+
+
+{{! ---------- /response schema ---------- ~}}
+
+{{! ---------- error responses ---------- ~}}
+
+{{#if errorResponses~}}
+{{#GHMDGeneratorHeading level=4}}Error Responses{{/GHMDGeneratorHeading}}
+
+{{~#each errorResponses}}
+* {{@key}}
+    * {{description}}
+{{~/each~}}
+{{~/if~}}
+
+{{! ---------- /error responses ---------- ~}}
+
+{{! ---------- examples ---------- ~}}
+
+{{~#each example~}}
+
+{{! XXX: code blocks }}
+{{! XXX: description }}
+{{! XXX: example request }}
+{{! XXX: example response }}
+
+{{~/each~}}
+
+{{! ---------- /examples ---------- ~}}
+
+{{~/each~}}
+
+{{! ---------- /operations ---------- }}
