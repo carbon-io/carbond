@@ -399,7 +399,7 @@ __(function() {
 Collections
 ----------
 
-Carbond ```Collection```s provide a high-level abstraction for defining ```Endpoint```s that behave like a collection of resources. When you define a ```Collection``` you define the following methods:
+Carbond ```Collection```s provide a high-level abstraction for defining ```Endpoint```s that behave like a collection of resources. When you define a ```Collection``` you may define the following methods:
 * ```insert(obj, reqCtx)```
 * ```find(query, options, reqCtx)```
 * ```update(query, obj, options, reqCtx)```
@@ -420,7 +420,7 @@ Which results in the following tree of ```Endpoint```s and ```Operations```:
   *  ```DELETE``` which maps to ```removeObject```
     
 
-When defining a [```Collection```](doc/classes/Collection.md) one is not required to define all methods. For example, here is a collection that only defines the ```insert``` method:
+When defining a [```Collection```](doc/classes/Collection.md) one is not required to define all methods. Only defined methods will be enabled. For example, here is a collection that only defines the ```insert``` method:
 
 ```node
 __(function() {
