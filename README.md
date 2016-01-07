@@ -431,6 +431,7 @@ __(function() {
     endpoints: {
       feedback: o({
         _type: carbon.carbond.Collection,
+        // POST /feedback
         insert: function(obj) {
           return this.objectserver.db.getCollection('feedback').insert(obj)
         }
