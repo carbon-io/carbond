@@ -360,7 +360,7 @@ __(function() {
       hello: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
-          return this.db.getCollection('messages').find().toArray()
+          return this.objectserver.db.getCollection('messages').find().toArray()
         }
       })
     }
@@ -382,13 +382,13 @@ __(function() {
       messages: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
-          return this.dbs['main'].getCollection('messages').find().toArray()
+          return this.objectserver..dbs['main'].getCollection('messages').find().toArray()
         }
       }),
       dashboards: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
-          return this.dbs['reporting'].getCollection('dashboards').find().toArray()
+          return this.objectserver.dbs['reporting'].getCollection('dashboards').find().toArray()
         }
       })
     }
