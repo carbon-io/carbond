@@ -382,7 +382,7 @@ __(function() {
       messages: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
-          return this.objectserver..dbs['main'].getCollection('messages').find().toArray()
+          return this.objectserver.dbs['main'].getCollection('messages').find().toArray()
         }
       }),
       dashboards: o({
