@@ -1,0 +1,139 @@
+{{! ---------- metadata ---------- ~}}
+
+FORMAT: 1A
+{{#if host}}
+HOST: {{host}}
+{{/if}}
+
+{{~! ---------- /metadata ---------- }}
+
+{{! ---------- name + overview ---------- ~}}
+
+# {{title}}
+
+{{description}}
+
+{{~! ---------- /name + overview ---------- }}
+
+{{! ---------- groups ---------- ~}}
+
+{{#each groupedEndpoints}}
+
+{{#if_ne @key ''}}
+
+# Group {{@key}}
+
+{{/if_ne~}}
+
+{{! ---------- endpoints ---------- ~}}
+
+{{~#each this}}
+
+{{! XXX: if we add "name" properties to endpoints, we can use "## <identifier> [URI template]" here }}
+
+{{~#MDHeading level=(APIBPGroupedNesting this 1)}}{{{APIBPURLTemplate this}}}{{/MDHeading}}
+
+{{#if description~}}
+{{description}}
+{{/if}}
+
+{{! ---------- model ---------- ~}}
+{{~!
+    XXX: reserved for an "one exemplar representation of the resource"
+~}}
+{{~! ---------- /model ---------- ~}}
+
+{{~! ---------- actions ---------- ~}}
+
+{{~#each operations~}}
+
+{{~!
+    XXX: if we add "name" properties to operations, we can use "## <identifier> [HTTP request method]" here
+~}}
+
+{{~#MDHeading level=(APIBPGroupedNesting ../this 2)}}{{method}}{{/MDHeading}}
+
+{{#if description~}}
+{{description}}
+{{~/if}}
+
+{{! ---------- attributes ---------- ~}}
+
+{{~!
+    XXX: we do not have a way to describe these at the moment (need something richer than the schema)
+~}}
+
+{{~! ---------- /attributes ---------- ~}}
+
+{{~! ---------- parameters ---------- }}
+
+{{#APIBPURLParameters parameters}}
++ Parameters
+{{#each this}}
+{{! XXX: good way to add object schemas here? should probably just use description and choose the longer
+         form for parameters with object types}}
+    + {{name}} ({{#truthy schema}}{{schema.type}}, {{/truthy}}{{#if required}}required{{else}}optional{{/if}}){{#truthy description}} - {{description}}{{/truthy}}
+{{#if_eq schema.type "object"}}
+
+{{#indent spaces=8}}
+{{#MDCodeBlock}}
+{{{MDRenderSchema schema}}}
+{{/MDCodeBlock}}
+{{/indent}}
+{{~/if_eq}}
+{{#if default}}
+        + Default: `{{default}}`
+{{/if}}
+{{/each}}
+{{/APIBPURLParameters}}
+
+{{~! ---------- /parameters ---------- ~}}
+
+{{! ---------- payloads ---------- ~}}
+
+{{#if parameters.body.length}}
+{{! XXX: what if we can consume multiple media types? }}
++ Request ({{@root.consumes.[0]}})
+{{#if parameters.body.0.schema}}
+    + Schema:
+{{#indent spaces=8}}
+{{#MDCodeBlock}}
+{{{MDRenderSchema parameters.body.0.schema}}}
+{{/MDCodeBlock}}
+{{/indent~}}
+{{/if~}}
+{{/if}}
+
+{{#if responseSchema}}
+    {{~! XXX: what if we can produce multiple media types? ~}}
+    {{~! XXX: can't really determine what the response code would be here... assumeing 200 (201 for posts) ~}}
++ Response 200 ({{@root.consumes.[0]}})
+    + Schema:
+{{#indent spaces=8}}
+{{#MDCodeBlock}}
+{{{MDRenderSchema responseSchema}}}
+{{/MDCodeBlock~}}
+{{/indent~}}
+{{/if~}}
+
+{{~!-- XXX: no error responses yet
+{{#each errorResponses}}
+
+{{/each}}
+--~}}
+
+
+{{~! ---------- /payloads ---------- ~}}
+
+{{~/each~}}
+
+{{~! ---------- /actions ---------- ~}}
+
+{{~/each~}}
+
+{{~! ---------- /endpoints ---------- }}
+
+{{/each}}
+
+{{~! ---------- /groups ---------- }}
+
