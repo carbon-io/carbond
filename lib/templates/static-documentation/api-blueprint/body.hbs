@@ -72,7 +72,8 @@ HOST: {{host}}
 {{#each this}}
 {{! XXX: good way to add object schemas here? should probably just use description and choose the longer
          form for parameters with object types}}
-    + {{name}} ({{#truthy schema}}{{schema.type}}, {{/truthy}}{{#if required}}required{{else}}optional{{/if}}){{#truthy description}} - {{description}}{{/truthy}}
+    + {{name}} ({{#truthy schema}}{{schema.type}}, {{/truthy}}{{#if required}}required{{else}}optional{{/if}})
+      {{~#truthy description}} - {{APIBPSanitizeParameterDescription description}}{{/truthy}}
 {{#if_eq schema.type "object"}}
 
 {{#indent spaces=8}}
@@ -94,8 +95,9 @@ HOST: {{host}}
 {{#if parameters.body.length}}
 {{! XXX: what if we can consume multiple media types? }}
 + Request ({{@root.consumes.[0]}})
+
 {{#if parameters.body.0.schema}}
-    + Schema:
+    + Schema
 {{#indent spaces=8}}
 {{#MDCodeBlock}}
 {{{MDRenderSchema parameters.body.0.schema}}}
@@ -108,7 +110,7 @@ HOST: {{host}}
     {{~! XXX: what if we can produce multiple media types? ~}}
     {{~! XXX: can't really determine what the response code would be here... assumeing 200 (201 for posts) ~}}
 + Response 200 ({{@root.consumes.[0]}})
-    + Schema:
+    + Schema
 {{#indent spaces=8}}
 {{#MDCodeBlock}}
 {{{MDRenderSchema responseSchema}}}
