@@ -1,6 +1,6 @@
 [back to ToC](/{{indexPath}})
 
-{{#GHMDGeneratorHeading level=2}}{{path}}{{/GHMDGeneratorHeading}}
+{{#MDHeading level=2}}{{path}}{{/MDHeading}}
 
 {{#if description~}}
 {{description}}
@@ -10,7 +10,7 @@
 
 {{#each operations~}}
 
-{{#GHMDGeneratorHeading level=3}}{{!-- <a name="{{#slugify}}{{../../../path}} {{method}}{{/slugify}}"></a> --}}`{{method}}`{{/GHMDGeneratorHeading}}
+{{#MDHeading level=3}}{{!-- <a name="{{#slugify}}{{../../../path}} {{method}}{{/slugify}}"></a> --}}`{{method}}`{{/MDHeading}}
 
 {{#if description~}}
 {{description}}
@@ -20,7 +20,7 @@
 
 {{#ifnotempty parameters~}}
 
-{{#GHMDGeneratorHeading level=3}}Parameters{{/GHMDGeneratorHeading}}
+{{#MDHeading level=3}}Parameters{{/MDHeading}}
 
 ---
 
@@ -45,7 +45,7 @@
 <td valign="top"> {{location}} </td>
 <td valign="top"> 
 {{#ifisobject default~}}
-<code>{{#GHMDGeneratorRenderSchema default}}{{/GHMDGeneratorRenderSchema}}</code>
+<code>{{MDRenderSchema default}}</code>
 {{else}}
 <code>{{#definedornull default}}{{/definedornull}}</code>
 {{/ifisobject}}
@@ -53,7 +53,7 @@
 <td valign="top">
 {{#if schema~}}
 <pre><code>
-{{~#GHMDGeneratorRenderSchema schema}}{{/GHMDGeneratorRenderSchema~}}
+{{~MDRenderSchema schema}}
 </code></pre>
 {{else}}
 <code>null</code>
@@ -81,12 +81,12 @@
 {{! ---------- response schema ---------- ~}}
 
 {{#if responseSchema }}
-{{#GHMDGeneratorHeading level=3}}Response Schema{{/GHMDGeneratorHeading}}
+{{#MDHeading level=3}}Response Schema{{/MDHeading}}
 
 ---
 
 <pre><code>
-{{~#GHMDGeneratorRenderSchema responseSchema}}{{/GHMDGeneratorRenderSchema~}}
+{{~MDRenderSchema responseSchema}}
 </code></pre>
 {{/if}}
 
@@ -96,7 +96,7 @@
 {{! ---------- error responses ---------- ~}}
 
 {{#if errorResponses~}}
-{{#GHMDGeneratorHeading level=4}}Error Responses{{/GHMDGeneratorHeading}}
+{{#MDHeading level=4}}Error Responses{{/MDHeading}}
 
 {{~#each errorResponses}}
 * {{@key}}

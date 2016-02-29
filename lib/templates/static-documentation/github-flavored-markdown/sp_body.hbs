@@ -1,4 +1,4 @@
-{{#GHMDGeneratorHeading}}{{title}}{{/GHMDGeneratorHeading}}
+{{#MDHeading}}{{title}}{{/MDHeading}}
 
 {{! ---------- description ---------- }}
 
@@ -31,7 +31,7 @@
 
 {{#each endpoints}}
 
-{{#GHMDGeneratorHeading level=2}}<a name="{{#slugify}}{{path}}{{/slugify}}"></a>{{path}}{{/GHMDGeneratorHeading}} [[&#x2191;](#{{#slugify}}{{path}} toc{{/slugify}})]
+{{#MDHeading level=2}}<a name="{{#slugify}}{{path}}{{/slugify}}"></a>{{path}}{{/MDHeading}} [[&#x2191;](#{{#slugify}}{{path}} toc{{/slugify}})]
 
 {{#if description~}}
 {{description}}
@@ -41,7 +41,7 @@
 
 {{#each operations~}}
 
-{{#GHMDGeneratorHeading level=3}}<a name="{{#slugify}}{{../../../path}} {{method}}{{/slugify}}"></a>`{{method}}` -- {{../../path}} {{/GHMDGeneratorHeading}} [[&#x2191;](#{{#slugify}}{{../../path}} {{method}} toc{{/slugify}})]
+{{#MDHeading level=3}}<a name="{{#slugify}}{{../../../path}} {{method}}{{/slugify}}"></a>`{{method}}` -- {{../../path}} {{/MDHeading}} [[&#x2191;](#{{#slugify}}{{../../path}} {{method}} toc{{/slugify}})]
 
 {{#if description~}}
 {{description}}
@@ -51,7 +51,7 @@
 
 {{#ifnotempty parameters~}}
 
-{{#GHMDGeneratorHeading level=3}}Parameters{{/GHMDGeneratorHeading}}
+{{#MDHeading level=3}}Parameters{{/MDHeading}}
 
 ---
 
@@ -70,7 +70,7 @@
 
 {{!--
 
-{{#GHMDGeneratorHeading level=4}}{{name}}{{/GHMDGeneratorHeading}}
+{{#MDHeading level=4}}{{name}}{{/MDHeading}}
 
 {{#if description}}
 {{description}}
@@ -88,7 +88,7 @@
 <td> {{location}} </td>
 <td> 
 {{#ifisobject default~}}
-`{{#GHMDGeneratorRenderSchema default}}{{/GHMDGeneratorRenderSchema}}`
+`{{{MDRenderSchema default}}}`
 {{else}}
 {{#definedornull default}}{{/definedornull}}
 {{/ifisobject}}
@@ -96,7 +96,7 @@
 <td>
 {{#if schema~}}
 <pre><code>
-{{~#GHMDGeneratorRenderSchema schema}}{{/GHMDGeneratorRenderSchema~}}
+{{{~MDRenderSchema schema~}}}
 </code></pre>
 {{else}}
 null
@@ -114,7 +114,7 @@ null
 <td valign="top"> {{location}} </td>
 <td valign="top"> 
 {{#ifisobject default~}}
-<code>{{#GHMDGeneratorRenderSchema default}}{{/GHMDGeneratorRenderSchema}}</code>
+<code>{{{MDRenderSchema default}}}
 {{else}}
 <code>{{#definedornull default}}{{/definedornull}}</code>
 {{/ifisobject}}
@@ -122,7 +122,7 @@ null
 <td valign="top">
 {{#if schema~}}
 <pre><code>
-{{~#GHMDGeneratorRenderSchema schema}}{{/GHMDGeneratorRenderSchema~}}
+{{~MDRenderSchema schema~}}
 </code></pre>
 {{else}}
 <code>null</code>
@@ -132,7 +132,7 @@ null
 
 {{!--
 
-{{#GHMDGeneratorHeading level=4}}{{name}}{{/GHMDGeneratorHeading}}
+{{#MDHeading level=4}}{{name}}{{/MDHeading}}
 
 {{#if description}}
 {{description}}
@@ -145,9 +145,9 @@ null
 * default
 
 {{#indent~}}
-{{#GHMDGeneratorCodeBlock}}
-{{#GHMDGeneratorRenderSchema default}}{{/GHMDGeneratorRenderSchema}}
-{{/GHMDGeneratorCodeBlock}}
+{{#MDCodeBlock}}
+{{{MDRenderSchema default}}}
+{{/MDCodeBlock}}
 {{~/indent}}
 
 {{else}}
@@ -158,9 +158,9 @@ null
 * schema
 
 {{#indent~}}
-{{#GHMDGeneratorCodeBlock}}
-{{#GHMDGeneratorRenderSchema schema}}{{/GHMDGeneratorRenderSchema}}
-{{/GHMDGeneratorCodeBlock}}
+{{#MDCodeBlock}}
+{{{MDRenderSchema schema}}}
+{{/MDCodeBlock}}
 {{~/indent}}
 
 {{~/if}}
@@ -187,16 +187,16 @@ null
 {{! ---------- response schema ---------- ~}}
 
 {{#if responseSchema }}
-{{#GHMDGeneratorHeading level=3}}Response Schema{{/GHMDGeneratorHeading}}
+{{#MDHeading level=3}}Response Schema{{/MDHeading}}
 
 ---
 
-{{!-- {{#GHMDGeneratorCodeBlock}}
-{{#GHMDGeneratorRenderSchema responseSchema}}{{/GHMDGeneratorRenderSchema}}
-{{/GHMDGeneratorCodeBlock}}
+{{!-- {{#MDCodeBlock}}
+{{{MDRenderSchema responseSchema}}}
+{{/MDCodeBlock}}
 --}}
 <pre><code>
-{{~#GHMDGeneratorRenderSchema responseSchema}}{{/GHMDGeneratorRenderSchema~}}
+{{~MDRenderSchema responseSchema}}
 </code></pre>
 {{/if}}
 
@@ -206,7 +206,7 @@ null
 {{! ---------- error responses ---------- ~}}
 
 {{#if errorResponses~}}
-{{#GHMDGeneratorHeading level=4}}Error Responses{{/GHMDGeneratorHeading}}
+{{#MDHeading level=4}}Error Responses{{/MDHeading}}
 
 {{~#each errorResponses}}
 * {{@key}}
