@@ -92,14 +92,14 @@ HOST: {{host}}
 
 {{! ---------- payloads ---------- ~}}
 
-{{#if (or parameters.body.length parameters.headers.length)}}
+{{#if (or parameters.body.length parameters.header.length)}}
 {{! XXX: what if we can consume multiple media types? }}
 + Request ({{@root.consumes.[0]}})
-
-{{#if parameters.headers.length~}}
-+ Headers
-{{#each parameters.headers}}
-    {{@key}}: {{#if schema}}<{{schema.type}}>{{else}}<val>{{/if}}
+{{#if parameters.header.length}}
+{{~! XXX: not really sure what to do with headers values here. throwing in the type and description if they are defined}}
+    + Headers
+{{#each parameters.header}}
+        {{name}}: {{#if schema}}{ {{~schema.type~}} }{{#if description}} - {{/if}}{{/if}}{{#if description}}{{description}}{{/if}}
 {{~/each}}
 {{~/if}}
 
