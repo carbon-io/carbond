@@ -464,3 +464,36 @@ We dont believe req / resp converations between entities is async
 logically (physically go for it) 
 
 -------
+Unit testing
+
+{
+  req: { 
+    url: "/zipcodes"
+    method: "POST",
+    body: { 
+      _id: "94114",
+      "state": CA
+    }
+  },
+
+  res: {
+    status: 201
+    value: {
+    }
+  }
+  
+}
+
+===============
+Language ideas
+
+function(a, l) {
+  x: 1,
+  y: 1,
+
+  $foreach(elem, l): {
+    $if (x === 0): {
+       return: y
+    }
+  } 
+}
