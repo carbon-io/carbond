@@ -34,6 +34,7 @@ __(function() {
       res: {
         statusCode: 200,
         body: { 
+          _id: "000",
           op: "insert",
           obj: {
             msg: "hello"
@@ -56,13 +57,14 @@ __(function() {
       },
       res: {
         statusCode: 200,
-        body: {
+        body: [{
+          _id: "000",
           op: "find",
           query: {
             x: "hello",
             y: "goodbye"
           }
-        }
+        }]
       }
     },
 
@@ -80,11 +82,7 @@ __(function() {
       },
       res: {
         statusCode: 200,
-        body: {
-          op: "update",
-          query: { name: "bar" },
-          update: { name: "foo" }
-        }
+        body: { n: 1 }
       }
     },
 
@@ -99,10 +97,7 @@ __(function() {
       },
       res: {
         statusCode: 200,
-        body: {
-          op: "remove",
-          query: { name: "bar" },
-        }
+        body: { n: 1 }
       }
     },
 
@@ -134,8 +129,8 @@ __(function() {
       res: {
         statusCode: 200,
         body: {
+          _id: "foo",
           op: "findObject",
-          id: "foo"
         }
       }
     },
@@ -151,13 +146,7 @@ __(function() {
       },
       res: {
         statusCode: 200,
-        body: {
-          op: "updateObject",
-          id: "foo",
-          update: {
-            name: "Fooby"
-          }
-        }
+        body: undefined
       }
     },
 
@@ -167,13 +156,7 @@ __(function() {
         url: url + '/foo',
         method: "DELETE"
       },
-      res: {
-        statusCode: 200,
-        body: {
-          op: "removeObject",
-          id: "foo"
-        }
-      }
+      res: undefined
     }
   ]
 

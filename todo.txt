@@ -11,8 +11,6 @@ o change www to public
 
 Endpoint.getEndpoint()?
 
-o start() sync is all messed up
-
 In client when trying to PUT when that method is not supported
   Error: Cannot PUT /basic?query%5Bx%5D=hello&amp;query%5By%5D=goodbye
 
@@ -33,6 +31,8 @@ o ENV
 
 o make client._performOperation or something like it that is better
 for clients
+
+o test framework
 
 o Do we consider ObjectServer.start() to be blocking or no? i.e. when
 it returns are we listening?
@@ -60,11 +60,14 @@ o ObjectServer --> Service
 
 o Add runCommand to MongoDB collections (or have some way to do
 findAndMod and other goodies)
+  - command() aleeeady exists i think on db?
 
 o Think about how we enable / disable MongoDBCollection methods. 
  - Use enabled: 
  - Use  update: undefined, 
  - I think enabled: more obvious what is going on
+- enabled / disabled support at runtime
+o Do we want Collection.supportsX / enabled.foo to work at runtime?
 
 o leafnode runCommand
 
@@ -79,22 +82,13 @@ o Who makes _id a thing? Collections? Or MongoDBCollections?
 
 o Add testing idPathParameter to stuff in advanced-collection-tests
 
-o Do we want Collection.supportsX / enabled.foo to work at runtime?
-
 o middleware
 
 o Collection._assignInitialInstanceAcl -- kill that for now
 
 o Collection.insert 201
 
-o Change allow unauthenticated to boolean 
-
-o Collection should not bring in query skip limit. Do that
-in MDBC. Just make sure every CollectionOp can have parameters.
-
-o Add OpParameters. Issue I see is with doX vs service. Need 
-to now have enough context to call right method. AND if we do this
-should it be the same for Endpoint and have doGet?
+o Change allow unauthenticated to boolean ?
 
 o {ok:1} in firewall town
 
@@ -103,9 +97,6 @@ in original REST API. Maybe just dont support that here but in general
 what should rule be?
 
 o Deal with encryption / hashing in authenticators
-
-o Response obj and response schema? Do we want to validate objects 
-going out?
 
 o finish OP.resolver or not. what was the issue again? I think it 
 was not having a way to get at both the parameter and the raw value
@@ -144,11 +135,9 @@ Maybe toArray has no buffer limit
 toArray always exhausts?
   - most similar to driver
 
-o 404s for collection object methods
+o 404s for collection object methods (ADD TESTS)
 
 o deal with _id in schemas in collecions (insert vs other ...)
-
-o patch and put seem to simply not work
 
 o generate examples for schemas. first just allow static examples?
   https://www.npmjs.com/package/json-schema-faker
@@ -461,7 +450,7 @@ Could this be easier?
 
 __(function() {
   module.exports = o({
-    _type: carbon.carbond.ObjectServer
+    _type: carbon.carbond.ObjectServer,
     port: 8888,
     dbUri: "mongodb://will:will@ds049150.mongolab.com:49150/datanode-sandbox",
     endpoints : {

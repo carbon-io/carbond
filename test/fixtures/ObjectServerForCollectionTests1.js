@@ -24,30 +24,29 @@ __(function() {
 
         insert: function(obj) {
           return {
+            _id: "000",
             op: "insert",
             obj: obj
           }
         },
 
         find: function(query, reqCtx) {
-          return {
+          return [{
+            _id: "000",
             op: "find",
-            query: query,
-          }
+            query: query
+          }]
         },
 
         update: function(query, update) {
           return {
-            op: "update",
-            query: query,
-            update: update
+            n: 1
           }
         },
 
         remove: function(query) {
           return {
-            op: "remove",
-            query: query
+            n: 1 
           }
         },
 
@@ -60,24 +59,17 @@ __(function() {
 
         findObject: function(id) {
           return {
+            _id: id,
             op: "findObject",
-            id: id
           }
         },
         
-        updateObject: function(id, update) {
-          return {
-            op: "updateObject",
-            id: id, 
-            update: update
-          }
+        updateObject: function(id, update, reqCtx) {
+          reqCtx.res.end() // XXX sucks we have to do this. Very subtle bug results that is hard to find if you dont do this right
         },
 
         removeObject: function(id) {
-          return {
-            op: "removeObject",
-            id: id
-          }
+          return null
         }
 
       })
