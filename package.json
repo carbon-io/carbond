@@ -28,7 +28,7 @@
     "lodash" : "4.5.x",
     "mongodb": "1.4.x",
     "mongodb-extended-json": "1.6.3",
-    "swagger-ui" : "2.1.0-alpha.1",
+    "swagger-ui" : "2.1.4",
     "bunyan": "1.3.5",
     "mongodb-uri": "git+ssh://git@github.com:mongolab/mongodb-uri-node.git#v0.9.7",
     "atom": "git+ssh://git@github.com:carbon-io/atom.git",
