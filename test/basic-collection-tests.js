@@ -1,6 +1,6 @@
 var o = require('atom').o(module)
 var _o = require('bond')._o(module)
-var __ = require('fiber').__(module, true)
+var __ = require('fiber').__.main(module)
 var assert = require('assert')
 var BSON = require('leafnode').BSON
 var carbond = require('../')

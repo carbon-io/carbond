@@ -1,5 +1,5 @@
 var _o = require('bond')._o(module)
-var __ = require('fiber').__(module)
+var __ = require('fiber').__
 var fibrous = require('fibrous')
 var _ = require('lodash')
 var assert = require('assert')
