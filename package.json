@@ -19,6 +19,7 @@
     "mocha": "^2.4.0"
   },
   "dependencies": {
+    "aglio": "2.2.x",
     "handlebars": "4.0.x",
     "express" : "4.12.3",
     "body-parser" : "1.12.3",
@@ -39,7 +40,6 @@
     "z-schema": "3.17.0"
   },
   "scripts": {
-
   },
   "preferGlobal": false
 }
