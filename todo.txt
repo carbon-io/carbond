@@ -1,41 +1,64 @@
-For MongoHost agent
-   - have it present its server cert to private api and have privae
-   api validate key (client validation)
-
-o How do we do peer cert validation with ELB
-  o Use TCP?
-o restify and api versioning
-o look into rotate madmin key
-
-o change www to public 
-
-Endpoint.getEndpoint()?
-
-In client when trying to PUT when that method is not supported
-  Error: Cannot PUT /basic?query%5Bx%5D=hello&amp;query%5By%5D=goodbye
-
-o Service discovery should always also include version
-
-Core 
--------------------------
-
 o read: http://expressjs.com/en/advanced/best-practice-performance.html
- 
-o ENV
-  - Declare env variables in cmdOptions or top-level like cmdOptions
-  - Have Atom remove them from process.env and store somewhere else
-  (configurable whether they should be removed)
-  - Have env: go to that other place
 
+o what's up with deprecated options in Atom?
+
+o __() does not need to take mod
+
+o how do we protect against multiple _mains called in object graph of
+module.export?
+ -- like a nested object
+
+o _main(): Approaches:
+
+(1)
+  (a) .autostartOnMain = true by default on Components (ObjectServer
+  can make it false)
+  (b) __() calls main() if in require.main and X.autostartOnMain is
+  false
+
+(2) 
+  (a) atom only calls _main if X.hasOwnProperty 
+(3)
+-----------------------------------------
+  (a) Object.runMainInFiber (default to true?) probably least surprise
+  to default true. Should have atom add this property? Not to EVERY
+  object. Just ones that come in from main()
+  (b) var o = carbon.atom.o(module).main // only runs when req.module == main
+
+- Case1: Single module.exports in main file (intended as main at least sometimes)
+  - o = carbon.atom.o(module, true)
+  - If not called from require.main all good, no fiber 
+  - If called from main run in Fiber iff Object.runMainInFiber
+
+- Case2: module.exports in non-main (intended as main never)
+  - o = carbon.atom.o(module)
+  - main will not run
+  - no fiber
+
+- Case3: Used in script (intended as main script but dont want _main called)
+  - o = carbon.atom.o(module)
+  - must call _main directly or domain specific start()
+    -- domain specific start() if asyc may start fiber -- up to impl
+
+- Case4: o used in Main script where you want some to run _main
+  -- This should happen basically never
+  -- If it does people can require both versions of o
+
+- This means atom requires fiber
+- We should then remove __ require mod as arg, and mainOnlyContext
+   - Go back to line 337 in atom.js
+- Means that you no longer need to run __() for top-level
+-----------------------------------------
+
+o rename fiber -> fibers
+o include fibrous in fibers and have story around how to use it (and doc)
+
+o Contact list example
+ 
 ***** FLEET GATEWAY USES DATAACL ******************
 
 o make client._performOperation or something like it that is better
 for clients
-
-o test framework
-
-o Do we consider ObjectServer.start() to be blocking or no? i.e. when
-it returns are we listening?
 
 o Atom create _serviceName? or _componentName ? Might not be possible.
 
@@ -44,23 +67,8 @@ o Maybe have all 500 errors get logged (do this high up)
 o clean bottom of Endpount._initializeOperation
   - should I always set back?
 
-o In order to validate response when service(req, res)
-  we may need a response wrapper
-
-o remove lib path  thing in atom
-
 o leafnode: collection.drop throws exception if collection does not
 exist
-
-o should be able to return undefined from operation cant now (See
-MDBCollection.updateObject)
-  - maybe use our Undefined EJSON type?
-
-o ObjectServer --> Service
-
-o Add runCommand to MongoDB collections (or have some way to do
-findAndMod and other goodies)
-  - command() aleeeady exists i think on db?
 
 o Think about how we enable / disable MongoDBCollection methods. 
  - Use enabled: 
@@ -69,26 +77,7 @@ o Think about how we enable / disable MongoDBCollection methods.
 - enabled / disabled support at runtime
 o Do we want Collection.supportsX / enabled.foo to work at runtime?
 
-o leafnode runCommand
-
-o Who makes _id a thing? Collections? Or MongoDBCollections?
-  - Not sure it should be Collection
-  - But nice in collection. Maybe make _id special and 
-    make required when on responseSchemas and save but not insert?
-    And on save validate _id is path id
-  - This seems like a sane thing since Collection inherintly 
-    has concept of <c>/<id>....
-*** sometimes we want _id required on insert (like zipcodes)
-
-o Add testing idPathParameter to stuff in advanced-collection-tests
-
-o middleware
-
 o Collection._assignInitialInstanceAcl -- kill that for now
-
-o Collection.insert 201
-
-o Change allow unauthenticated to boolean ?
 
 o {ok:1} in firewall town
 
@@ -96,28 +85,10 @@ o null return from REST call. is that ok? case was query with fo=true
 in original REST API. Maybe just dont support that here but in general
 what should rule be?
 
-o Deal with encryption / hashing in authenticators
-
-o finish OP.resolver or not. what was the issue again? I think it 
-was not having a way to get at both the parameter and the raw value
-
-o should be able to add parameters to a Collection (question is query 
-vs update vs delete)
-
-o query schema apply to update and delete?
-
-o Endpoint.getOperation 
-
-o desc for Endpoint and Operation 
-
 o clean up db vs dbUri vs _db in MongoDBCollection (vs
 db). Confusing. Docs also wrong.
 
-o client.Collection.getFullUrl
-
-o errors nest in client responses
-
-o log rotation (in upstart?)
+o client.Collection.getFullUrl (why not with Endpoint?) Why?
 
 o client toArray() needs { exhaust: true } or just exhaust param which
 defaults to false. Right now toArray rips through / exhausts by
@@ -135,71 +106,17 @@ Maybe toArray has no buffer limit
 toArray always exhausts?
   - most similar to driver
 
-o 404s for collection object methods (ADD TESTS)
-
-o deal with _id in schemas in collecions (insert vs other ...)
-
-o generate examples for schemas. first just allow static examples?
-  https://www.npmjs.com/package/json-schema-faker
-
-o do we want body parser given we want to parse EJSON?
-
-o bump express body size max
-
 o debug mode can leak api keys
   - dont have it print env or private env
 
-o required fields for ObjectServer (atom thing)
-
-MONGOLAB PRIVATE API
-  o env choose better variable prefix
-  o take out dev uri
-
-o redo atom inheritence tests
-
-o dataAcl should not be on ENdpoint should it?
-
-PARAMETER PARSING
-===================================================
-o parameter parser not parsing numbers properly (or booleans) 
-
-o request qs and querystring cause JSON query params to come out very  
-strange (to me :)  
-   - http://blog.websecurify.com/2014/08/hacking-nodejs-and-mongodb.html  
-    qs: _.mapValues(options.params, function(param) { return JSON.stringify(param) }),
-o desupport a=1, a=2
-o ParameterParser class and unit tests. 
-  - Whole section of docs on how we do parameter parseing vs qs. What
-  we support -- what is configurable. Right now I think if we stringfy
-  json on carbon client the server can support our style and
-  qs. Unclear if we want to make sq configurable. 
-
-o POST without JSON body (string in body) no client error
-
-o private env prefix should be different
-
-o JSON injection
-  o carbon only accept application/json (or make default?)
-  o query params with array love is evil. can make things objects
-
-o watch for method spoofing as way to invoke methods in code 
-
-o better examples of using _init in class in Atom docs
-
-o Deal with encryption / hashing in authenticators
-
 o kill if (operation.service)
-
-o .json vs .send
 
 o is console logging async?
    https://groups.google.com/forum/#!topic/nodejs/jIXC2uGh9YU
+   https://o2js.com/a-little-known-secret-of-the-console
 
-o Do we really want idGenerator when we have upsert? 
 o Also (related) do we check if insert is bulk or not? Maybe not
 support in Collection....
-
-o static files dir
 
 o FACTORING IMPROVEMENTS
   * fix defineExpressRoute 
@@ -221,14 +138,6 @@ o ObjectServer must be run in fiber now. That needed?
 o write up something explaining how you should not have fields defined
 with oo 
 
-o http://json5.org/
-
-Important unit tests
--------------------------
-o private env
-o acl stuff
-o parameter parsing
-
 AC 
 -------------------------
 o Endpoint.sanitizesOutput
@@ -243,8 +152,6 @@ o Clean up 'options' in acl (not needed)
   --
   http://iankent.uk/2014/02/11/globally-handling-options-requests-in-play-framework/
 
-o decide on /lib/ shorcut in atom
-
 o finish root user impl 
   - have sep header for root auth 
   - maybe what we do is take secret-key and the up to configurer 
@@ -253,56 +160,22 @@ o finish root user impl
   don't want to use root-access-key root-secret-key becomes a single 
   value api key?
 
--- SWAGGER
-
-o Swagger Issues
-  - in swagger ui if you do an obj get with no id the request url is 
-    odd. Think this is swagger bug (http://Wills-MacBook-Pro.local:8888/zipcodes/{id})
-  - What's up with swagger and :id? vs :id
-o Swagger ui and auth 
-  - root auth
-  - drive client auth from this (if possible) 
-    https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md#securityDefinitionsObject
-
-
--- BUGS
-o BUGS 
-o if you send non escaped params in query string server freaks 
-  [15-04-26|14:03:56]% curl 'localhost:8888/hello?message="Nice "' 
-  curl: (52) Empty reply from server 
-    http://stackoverflow.com/questions/18157117/node-js-curl-52-empty-reply-from-server-with-space-in-request-not-encoded
-
-o invalid json sent in body fails body parser in non-friendly way 
-(should be able to get out to client...) 
-SyntaxError: Unexpected string 
-    at Object.parse (native) 
-    at parse (/Users/will/src/github/carbon-io/carbond/node_modules/body-parser/lib/types/json.js:84:17) 
-    at /Users/will/src/github/carbon-io/carbond/node_modules/body-parser/lib/read.js:102:18 
-    at IncomingMessage.onEnd (/Users/will/src/github/carbon-io/carbond/node_modules/body-parser/node_modules/raw-body/index.js:149:7) 
-    at IncomingMessage.g (events.js:180:16) 
-    at IncomingMessage.EventEmitter.emit (events.js:92:17) 
-    at _stream_readable.js:920:16 
-    at process._tickCallback (node.js:415:13) 
-
-
--- DOC
-o document logging in ObjectServer
-o document in atom how to pass constructor args, how they chain and _init 
-o sslOptions
-o json schema stuff
-o mini-guides
-  - how to extend a MongoDBCollection
-
 ====================================================================================================
 -- MED
 
+o mini-guides 
+  - how to extend a MongoDBCollection
+
 o UserCollection 
   o creating new user 
+
+o log rotation (in upstart?)
 
 o _o("template:") 
 
 o _o("service:") (to use Service Discovery) 
 
+o Service discovery should always also include version
 o leafnode async
 o fibrous
 o Views and Forms and Commands
@@ -317,13 +190,8 @@ o Client Authentication vs User Authenication (authentication)
 o envelope format / _links
 o we took initDBs out of init. Hels with help. Is this ok? Composite 
 object servers?
-o Responds with stuff in swagger spec (for errors etc...) 
-o client 
 o Make sure you cant, as a client, use HTTP Method foo and end up
 calling endpoint.foo (security)
-o Clean up response codes (201 for posts?) 
-  http://blog.ploeh.dk/2013/04/30/rest-lesson-learned-avoid-204-responses/
-o 201 location: on insert?
 o 405 Method Not Allowed
   - not sure we can do this since there is no route registered with
   express if no method. 
@@ -332,7 +200,6 @@ o MongoDBDatabase endpoint
   are lazy to create them, but might choose to impl not lazy collction creation?
 o CORS security review
   - http://docs.strongloop.com/display/public/LB/Security+considerations
-o verify X-Powered-By is not express and make Carbon  
 
 -- LATER
 o Lattice
