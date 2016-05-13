@@ -12,13 +12,15 @@ var assertRequests = require('./test-helper').assertRequests
 __(function() {
 
   syncTest()
-  asyncTest1(function() {
-    asyncTest2(function() {
-      asyncTest3(function() {
+  asyncTest1(function(err1) {
+    if (err1) { console.log(err1) }
+    asyncTest2(function(err2) {
+    if (err2) { console.log(err2) }
+      asyncTest3(function(err3) {
+        if (err3) { console.log(err3) }
       })
     })
   })
-
 })
 
 /*******************************************************************************
@@ -71,6 +73,7 @@ function asyncTest1(cb) {
   })
 
   objectServer.start({}, function(err) {
+    if (err) console.log(err)
     assert(objectServer._started)
     objectServer.stop()
     assert(!objectServer._started)
@@ -81,24 +84,28 @@ function asyncTest1(cb) {
 /*******************************************************************************
  * asyncTest2
  */
-function asyncTest2(cb) {
+function asyncTest2(done) {
   var objectServer = o({
     _type: carbond.ObjectServer,
     
-    doStart: function() {
+    doStart: function(options, cb) {
       this._started = true
+      cb()
     },
     
-    doStop: function() {
+    doStop: function(cb) {
       this._started = false
+      cb()
     }
   })
 
   objectServer.start({}, function(err) {
+    if (err) { console.log(err) }
     assert(objectServer._started)
     objectServer.stop(function(err) {
+      if (err) { console.log(err) }
       assert(!objectServer._started)
-      cb(err)
+      done(err)
     })
   })
 }
