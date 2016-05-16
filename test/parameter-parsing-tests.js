@@ -2,6 +2,7 @@ var o = require('atom').o(module)
 var _o = require('bond')._o(module)
 var __ = require('fiber').__.main(module)
 var assert = require('assert')
+var ObjectId = require('leafnode').mongodb.ObjectId
 var BSON = require('leafnode').BSON
 var EJSON = require('mongodb-extended-json')
 var carbond = require('../')
@@ -151,6 +152,24 @@ var tests = [
       schema: { type: 'Date'} 
     },
     result: new Date(0)
+  },
+
+  {
+    datum: '{ "$oid": "57394f46d1236fa5367749e9" }',
+    definition: {
+      name: 'x',
+      schema: { type: 'ObjectId'} 
+    },
+    result: new ObjectId("57394f46d1236fa5367749e9")
+  },
+
+  {
+    datum: '57394f46d1236fa5367749e9',
+    definition: {
+      name: 'x',
+      schema: { type: 'ObjectId'} 
+    },
+    result: new ObjectId("57394f46d1236fa5367749e9")
   },
 
 ]
