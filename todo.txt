@@ -2,11 +2,15 @@ o read: http://expressjs.com/en/advanced/best-practice-performance.html
 
 o what's up with deprecated options in Atom?
 
-o __() does not need to take mod
+o better async testing
 
+o https://mixmax.com/blog/node-fibers-using-synchronize-js
+    
 o how do we protect against multiple _mains called in object graph of
 module.export?
  -- like a nested object
+
+-- still dont properly allow for account for async doStart and doStop
 
 o _main(): Approaches:
 

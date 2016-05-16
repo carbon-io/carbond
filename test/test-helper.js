@@ -4,6 +4,7 @@ var fibrous = require('fibrous')
 var _ = require('lodash')
 var assert = require('assert')
 var BSON = require('leafnode').BSON
+var EJSON = require('mongodb-extended-json')
 var carbond = require('../')
 
 /*******************************************************************************
@@ -14,7 +15,7 @@ var carbond = require('../')
 /*******************************************************************************
  * assertRequest
  */
-function assertRequestHelper(req, res, cb) {
+function assertRequestHelper(req, res, message, cb) {
   if (!req.url) {
     throw new Error("Request spec must provide a url")
   }
@@ -40,9 +41,9 @@ function assertRequestHelper(req, res, cb) {
       if (typeof(valueSpec) === 'Function') {
         assert.equal(valueSpec(value), true, 
                      "Assertion failed for field '" 
-                     + fieldName + " with value '" + value)
+                     + fieldName + " with value '" + value, message)
       } else {
-        assert.deepStrictEqual(valueSpec, value)      
+        assert.deepStrictEqual(valueSpec, value, message)      
       }
     })
 
@@ -58,7 +59,7 @@ var assertRequest = assertRequestHelper.sync
 function assertRequests(tests) {
   if (tests) {
     tests.forEach(function(test) {
-      assertRequest(test.req, test.res)
+      assertRequest(test.req, test.res, EJSON.stringify(test))
     })
   }
 }

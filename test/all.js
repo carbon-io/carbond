@@ -4,6 +4,7 @@ __(function() {
   require('./acl-tests')
   require('./json-schema-tests')
   require('./id-generator-tests')
+  require('./parameter-parsing-tests')
   require('./basic-endpoint-tests')
   require('./basic-collection-tests')
   require('./mongodb-collection-tests')
