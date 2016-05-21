@@ -208,7 +208,7 @@ function configurationTests(service) {
                                                                     schema: schema,
                                                                     location: "body", 
                                                                     required: true, 
-                                                                    default: null }})
+                                                                    default: undefined }})
  
   // find
   assert.deepStrictEqual(ce.getOperation('get').responseSchema,
@@ -224,7 +224,15 @@ function configurationTests(service) {
                        location: 'query',
                        schema:  querySchema,
                        required: false,
-                       default: null
+                       default: undefined
+                     },
+                     view: {
+                       name: 'view',
+                       description: "View",
+                       schema: { type: 'string' },
+                       location: 'query',
+                       required: false,
+                       default: undefined
                      },
                      sort : {
                        name: 'sort',
@@ -232,7 +240,7 @@ function configurationTests(service) {
                        location: "query", 
                        schema: { type: "object"}, 
                        required: false,
-                       default: null
+                       default: undefined
                      },
                      fields : {
                        name: 'fields',
@@ -240,7 +248,7 @@ function configurationTests(service) {
                        location: "query", 
                        schema: { type: "object" }, 
                        required: false,
-                       default: null
+                       default: undefined
                      },
                      skip: {
                        name: 'skip',
@@ -248,7 +256,7 @@ function configurationTests(service) {
                        location: "query", 
                        schema: { type: "integer" },
                        required: false,
-                       default: null
+                       default: undefined
                      },
                      limit: {
                        name: 'limit',
@@ -256,7 +264,7 @@ function configurationTests(service) {
                        location: "query", 
                        schema: { type: "integer" },
                        required: false,
-                       default: null
+                       default: undefined
                      }
                    })
   
@@ -280,7 +288,7 @@ function configurationTests(service) {
                        schema: querySchema,
                        location: 'query',
                        required: false,
-                       default: null
+                       default: undefined
                      },
                      body: { 
                        name: "body",
@@ -288,7 +296,7 @@ function configurationTests(service) {
                        description: "Update spec (JSON). Update operator (e.g {'$inc': {'n': 1}})",
                        schema: updateSchema,
                        required: true,
-                       default: null
+                       default: undefined
                      }
                    })
   assert.deepStrictEqual(ce.getOperation('patch').errorResponses, undefined)
@@ -311,7 +319,7 @@ function configurationTests(service) {
                        schema: querySchema,
                        location: 'query',
                        required: false,
-                       default: null
+                       default: undefined
                      }
                    })
   assert.deepStrictEqual(ce.getOperation('delete').errorResponses, undefined)
@@ -326,14 +334,23 @@ function configurationTests(service) {
                        schema:  schema,
                        location: 'body',
                        required: true,
-                       default: null
+                       default: undefined
                      }
                    })
   assert.deepStrictEqual(oe.getOperation('put').errorResponses, undefined)
 
   // findObject
   assert.deepStrictEqual(oe.getOperation('get').responseSchema, schema)
-  assert.deepEqual(oe.getOperation('get').parameters, {})
+  assert.deepEqual(oe.getOperation('get').parameters, {
+    view: {
+      name: 'view',
+      description: "View",
+      schema: { type: 'string' },
+      location: 'query',
+      required: false,
+      default: undefined
+    }
+  })
   assert.deepStrictEqual(oe.getOperation('get').errorResponses, undefined)
 
   // updateObject
@@ -346,7 +363,7 @@ function configurationTests(service) {
                        schema:  updateSchema,
                        location: 'body',
                        required: true,
-                       default: null
+                       default: undefined
                      }
                    })
   assert.deepStrictEqual(oe.getOperation('patch').errorResponses, undefined)

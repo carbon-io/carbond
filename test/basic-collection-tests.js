@@ -216,6 +216,14 @@ function configurationTests(service) {
                        schema:  { type: 'object' },
                        required: false,
                        default: null
+                     },
+                     view: {
+                       name: 'view',
+                       description: "View",
+                       schema: { type: 'string' },
+                       location: 'query',
+                       required: false,
+                       default: undefined
                      }
                    })
 
@@ -292,7 +300,16 @@ function configurationTests(service) {
 
   // findObject
   assert.deepStrictEqual(oe.getOperation('get').responseSchema, defaultObjectSchema)
-  assert.deepEqual(oe.getOperation('get').parameters, {})
+  assert.deepEqual(oe.getOperation('get').parameters, {
+    view: {
+      name: 'view',
+      description: "View",
+      schema: { type: 'string' },
+      location: 'query',
+      required: false,
+    default: undefined
+    }
+  })
   assert.deepStrictEqual(oe.getOperation('get').errorResponses, undefined)
 
   // updateObject

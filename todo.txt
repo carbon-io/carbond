@@ -1,10 +1,25 @@
+These guys:
+  -- http://jsonsh.com/
+
+o https://github.com/json-schema/json-schema/wiki
+
 o read: http://expressjs.com/en/advanced/best-practice-performance.html
+
+o What if you need a fiber before _main is called?....
+
+o Collection.views
+
+o _type: undefined (where for example carbon.carbond.Foo is not real)
+causes very subtle bugs. Should we not allow undefined? Must say Object?
 
 o what's up with deprecated options in Atom?
 
 o better async testing
+o dont use _endpoint.performOperation in HttpTest
 
 o https://mixmax.com/blog/node-fibers-using-synchronize-js
+
+o count for tests to make sure they all finish
     
 o how do we protect against multiple _mains called in object graph of
 module.export?
@@ -13,6 +28,7 @@ module.export?
 -- still dont properly allow for account for async doStart and doStop
 
 o _main(): Approaches:
+
 
 (1)
   (a) .autostartOnMain = true by default on Components (ObjectServer
@@ -528,5 +544,30 @@ var result = testOp({ url: "http://localhost:8080",
 }                    
 
 
+Test
+  :name
+  :desc
+  run(done) 
+
+TestSuite <- Test
+   (name)
+   (desc)
+   tests: []
+   run(done) --> tests.foreach((test) -> test.run(done))
+
+MyTest
+  run(done) {...}
 
 
+
+var mockLabServer = o({
+  _type: ObjectServer,
+  port: 8888,
+  endpoints: [
+    status: {
+       get: function(req) {
+          return { ... }
+       }
+    }
+  ]
+})
