@@ -70,7 +70,7 @@ function syncSelfTestTest() {
     
     selfTest: o({
       _type: test.Test,
-      name: 'Self Test Test',
+      name: 'Sync self Test Test',
       doTest() {
         objectServer._tested = true
       }
@@ -176,7 +176,7 @@ function asyncSelfTestTest(cb) {
     
     selfTest: o({
       _type: test.Test,
-      name: 'Self Test Test',
+      name: 'Async self Test Test',
       doTest() {
         objectServer._tested = true
       }

@@ -33,7 +33,7 @@ __(function() {
         },
       },
       res: {
-        statusCode: 200,
+        statusCode: 201,
         body: { _id: "94114", state: "CA" }
       }
     },

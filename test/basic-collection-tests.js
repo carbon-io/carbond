@@ -32,7 +32,7 @@ __(function() {
         },
       },
       res: {
-        statusCode: 200,
+        statusCode: 201,
         body: { 
           _id: "000",
           op: "insert",
