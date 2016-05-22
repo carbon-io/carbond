@@ -32,6 +32,7 @@
     "mongodb-uri": "git+ssh://git@github.com:mongolab/mongodb-uri-node.git#v0.9.7",
     "atom": "git+ssh://git@github.com:carbon-io/atom.git",
     "bond": "git+ssh://git@github.com:carbon-io/bond.git",
+    "test-tube": "git+ssh://git@github.com:carbon-io/test-tube.git",
     "fiber": "git+ssh://git@github.com:carbon-io/fiber.git",
     "fibrous": "git+ssh://git@github.com:carbon-io/fibrous.git#v0.4.1-ml", 
     "leafnode": "git+ssh://git@github.com:objectlabs/leafnode.git#v3.2.0",

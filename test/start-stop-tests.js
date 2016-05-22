@@ -5,6 +5,7 @@ var assert = require('assert')
 var BSON = require('leafnode').BSON
 var carbond = require('../')
 var assertRequests = require('./test-helper').assertRequests
+var test = require('test-tube')
 
 /*******************************************************************************
  * Start / stop tests
@@ -12,19 +13,23 @@ var assertRequests = require('./test-helper').assertRequests
 __(function() {
 
   syncTest()
+  syncSelfTestTest()
   asyncTest1(function(err1) {
     if (err1) { console.log(err1) }
     asyncTest2(function(err2) {
     if (err2) { console.log(err2) }
       asyncTest3(function(err3) {
         if (err3) { console.log(err3) }
+        asyncSelfTestTest(function(err4) {
+          if (err4) { console.log(err4) }
+        })
       })
     })
   })
 })
 
 /*******************************************************************************
- * sync
+ * syncTest
  */
 function syncTest() {
   var objectServer = o({
@@ -54,6 +59,34 @@ function syncTest() {
     objectServer.stop()
   }
   
+}
+
+/*******************************************************************************
+ * syncSelfTestTest
+ */
+function syncSelfTestTest() {
+  var objectServer = o({
+    _type: carbond.ObjectServer,
+    
+    selfTest: o({
+      _type: test.Test,
+      name: 'Self Test Test',
+      doTest() {
+        objectServer._tested = true
+      }
+    })
+  })
+
+  try {
+    // Start the server
+    objectServer.start()
+    objectServer.runSelfTest()
+    assert(objectServer._tested)
+  } catch (e) {
+    console.log(e.message)
+    console.log(e.stack)
+  }
+  objectServer.stop()  
 }
 
 /*******************************************************************************
@@ -132,5 +165,31 @@ function asyncTest3(cb) {
     assert(!objectServer._started)
     cb(err)
   })
+}
+
+/*******************************************************************************
+ * asyncSelfTestTest
+ */
+function asyncSelfTestTest(cb) {
+  var objectServer = o({
+    _type: carbond.ObjectServer,
+    
+    selfTest: o({
+      _type: test.Test,
+      name: 'Self Test Test',
+      doTest() {
+        objectServer._tested = true
+      }
+    })
+  })
+
+  objectServer.start()
+  objectServer.runSelfTest(function(err) {
+    if (err) {
+      console.log(err)
+    }
+    assert(objectServer._tested)
+  })
+  objectServer.stop()
 }
 

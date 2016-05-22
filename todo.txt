@@ -8,6 +8,7 @@ o read: http://expressjs.com/en/advanced/best-practice-performance.html
 o What if you need a fiber before _main is called?....
 
 o Collection.views
+  - Should views be in Operation?
 
 o _type: undefined (where for example carbon.carbond.Foo is not real)
 causes very subtle bugs. Should we not allow undefined? Must say Object?
