@@ -10,9 +10,17 @@ var assertRequests = require('./test-helper').assertRequests
  * endpoint tests
  */
 
+var middlewareCalled = false
+
 __(function() {
 
   var objectServer1 = _o('./fixtures/ObjectServer1')
+  objectServer1.middleware = [
+    function(req, res, next) {
+      middlewareCalled = true
+      next()
+    }
+  ]
 
   var url = "http://localhost:8888/e1"
   var tests = [
@@ -127,6 +135,7 @@ __(function() {
   // Run the tests
   objectServer1.start()
   assertRequests(tests)
+  assert(middlewareCalled)
   objectServer1.stop()
 })
 
