@@ -34,6 +34,7 @@ __(function() {
       },
       res: {
         statusCode: 201,
+        headers: function(headers) { return headers.location === "/zipcodes/94114" },
         body: { _id: "94114", state: "CA" }
       }
     },

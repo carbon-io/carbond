@@ -38,10 +38,11 @@ function assertRequestHelper(req, res, message, cb) {
     }
     _.forEach(res, function(valueSpec, fieldName) {
       var value = response[fieldName]
-      if (typeof(valueSpec) === 'Function') {
+      if (typeof(valueSpec) === 'function') {
         assert.equal(valueSpec(value), true, 
                      "Assertion failed for field '" 
-                     + fieldName + " with value '" + value, message)
+                     + fieldName + "' with value: " + 
+                     EJSON.stringify(value), message)
       } else {
         assert.deepStrictEqual(valueSpec, value, message)      
       }

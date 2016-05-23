@@ -33,6 +33,7 @@ __(function() {
       },
       res: {
         statusCode: 201,
+        headers: function(headers) { return headers.location === "/basic/000" },
         body: { 
           _id: "000",
           op: "insert",
@@ -183,7 +184,7 @@ __(function() {
 function configurationTests(service) {
   var ce = service.endpoints['basic']
   var oe = ce.endpoints[':id']
-  
+
   var defaultObjectSchema = {
     type: 'object',
     properties: {
