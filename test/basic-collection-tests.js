@@ -157,7 +157,10 @@ __(function() {
         url: url + '/foo',
         method: "DELETE"
       },
-      res: undefined
+      res: {
+        statusCode: 200,
+        body: undefined
+      }
     }
   ]
 
