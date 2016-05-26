@@ -92,6 +92,15 @@ var tests = [
   },
 
   {
+    datum: '3',
+    definition: {
+      name: 'x',
+      schema: undefined
+    },
+    result: '3' // if no schema we do not do any conversions
+  },
+
+  {
     datum: '"3"',
     definition: {
       name: 'x',
@@ -192,6 +201,7 @@ function runTests() {
         throw new Error("Error during test " + EJSON.stringify(test) + ". " + e)
       }
       assert.deepEqual(test.result, value, EJSON.stringify(test))
+      assert.deepEqual(typeof(test.result), typeof(value), EJSON.stringify(test))
     }
   })
 }

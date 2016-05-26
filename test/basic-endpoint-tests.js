@@ -114,8 +114,8 @@ __(function() {
         url: "http://localhost:8888/e1",
         method: "DELETE",
         parameters: {
-//          n: 3,
-  //        m: { x: [1, 2] }
+          n: 3,
+          m: { x: "hello" }
         }
       },
       res: {
@@ -123,8 +123,8 @@ __(function() {
         body: {
           methodCalled: "delete",
           reqParams: {
-  //          n: 3, // XXX not working
-//            m: { x: [1, 2] }
+            n: 3, 
+            m: { x: "hello" }
           }
         }
       }

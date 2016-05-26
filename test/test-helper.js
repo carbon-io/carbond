@@ -44,7 +44,8 @@ function assertRequestHelper(req, res, message, cb) {
                      + fieldName + "' with value: " + 
                      EJSON.stringify(value), message)
       } else {
-        assert.deepStrictEqual(valueSpec, value, message)      
+        assert.deepStrictEqual(valueSpec, value, message + " Value: " + 
+                               EJSON.stringify(value))
       }
     })
 
