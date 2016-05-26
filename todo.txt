@@ -148,14 +148,6 @@ o COLLECTION
 o Flesh out api for MongoDBCollections to be like current data api
 (with AC)
 
-o ObjectServer must be run in fiber now. That needed?
-  - a little more subtle. it is more that now ObjectServer if in main
-  test as variable calls main. This is confusing. Maybe only when
-  module.exports is equal to the object? Is there race there? Yea I
-  think so -- I think main is called before o() returns. 
- * Related: maybe make OS.start() idempotent at least
- * maybe var o = carbon.atom.o(module).main
-
 o write up something explaining how you should not have fields defined
 with oo 
 

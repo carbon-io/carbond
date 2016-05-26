@@ -64,7 +64,7 @@ module.exports = o({
       },
         
       updateObject: function(id, update, reqCtx) {
-        reqCtx.res.end() // XXX sucks we have to do this. Very subtle bug results that is hard to find if you dont do this right
+        reqCtx.res.end() // More convenient to just return null but want to test that this works too.
       },
 
       removeObject: function(id) {
