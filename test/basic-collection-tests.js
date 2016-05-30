@@ -136,6 +136,16 @@ __(function() {
       }
     },
 
+    {
+      req: {
+        url: url + '/doesnotexist',
+        method: "GET",
+      },
+      res: {
+        statusCode: 404,
+      }
+    },
+
     // Test updateObject
     {
       req: {

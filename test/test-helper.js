@@ -33,6 +33,9 @@ function assertRequestHelper(req, res, message, cb) {
     strictSSL: req.strictSSL
   }, function(err, response) {
     if (err) {
+      if (res.statusCode >= 400) { // we expect an error
+        return cb(null, response)
+      }
       cb(err, null)
       return
     }

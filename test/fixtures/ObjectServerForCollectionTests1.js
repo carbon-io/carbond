@@ -57,6 +57,9 @@ module.exports = o({
       },
 
       findObject: function(id) {
+        if (id === "doesnotexist") {
+          return null
+        }
         return {
           _id: id,
           op: "findObject",
