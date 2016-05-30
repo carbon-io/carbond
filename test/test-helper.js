@@ -6,6 +6,7 @@ var assert = require('assert')
 var BSON = require('leafnode').BSON
 var EJSON = require('mongodb-extended-json')
 var carbond = require('../')
+var HttpError = require('http-errors').HttpError
 
 /*******************************************************************************
  * helpers (EXPERIMENTAL)
@@ -32,10 +33,7 @@ function assertRequestHelper(req, res, message, cb) {
     json: req.json,
     strictSSL: req.strictSSL
   }, function(err, response) {
-    if (err) {
-      if (res.statusCode >= 400) { // we expect an error
-        return cb(null, response)
-      }
+    if (err && !(err instanceof HttpError)) {
       cb(err, null)
       return
     }
