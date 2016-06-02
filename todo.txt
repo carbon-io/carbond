@@ -1,9 +1,17 @@
 These guys:
   -- http://jsonsh.com/
 
+o apidoc does not render and we cant ctrl-c once we try
+
+o What is atom error when _type is wrong?
+
 o https://github.com/json-schema/json-schema/wiki
 
 o read: http://expressjs.com/en/advanced/best-practice-performance.html
+
+o fix BSON in carbon-io.js
+
+o add flag to Endpoint to control whether validate responses?
 
 o What if you need a fiber before _main is called?....
 
@@ -28,47 +36,12 @@ module.export?
 
 -- still dont properly allow for account for async doStart and doStop
 
-o _main(): Approaches:
+o how do you do a count on a collection (mongodb collection)
 
-
-(1)
-  (a) .autostartOnMain = true by default on Components (ObjectServer
-  can make it false)
-  (b) __() calls main() if in require.main and X.autostartOnMain is
-  false
-
-(2) 
-  (a) atom only calls _main if X.hasOwnProperty 
-(3)
------------------------------------------
-  (a) Object.runMainInFiber (default to true?) probably least surprise
-  to default true. Should have atom add this property? Not to EVERY
-  object. Just ones that come in from main()
-  (b) var o = carbon.atom.o(module).main // only runs when req.module == main
-
-- Case1: Single module.exports in main file (intended as main at least sometimes)
-  - o = carbon.atom.o(module, true)
-  - If not called from require.main all good, no fiber 
-  - If called from main run in Fiber iff Object.runMainInFiber
-
-- Case2: module.exports in non-main (intended as main never)
-  - o = carbon.atom.o(module)
-  - main will not run
-  - no fiber
-
-- Case3: Used in script (intended as main script but dont want _main called)
-  - o = carbon.atom.o(module)
-  - must call _main directly or domain specific start()
-    -- domain specific start() if asyc may start fiber -- up to impl
-
-- Case4: o used in Main script where you want some to run _main
-  -- This should happen basically never
-  -- If it does people can require both versions of o
-
-- This means atom requires fiber
 - We should then remove __ require mod as arg, and mainOnlyContext
    - Go back to line 337 in atom.js
 - Means that you no longer need to run __() for top-level
+
 -----------------------------------------
 
 o rename fiber -> fibers
