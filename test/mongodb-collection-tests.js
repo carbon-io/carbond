@@ -45,9 +45,7 @@ __(function() {
         url: url,
         method: "GET",
         parameters: {
-          query: {
-            _id: "94114"
-          }
+          query: { _id: "94114" },
         },
       },
       res: {
@@ -55,6 +53,37 @@ __(function() {
         body: [{ _id: "94114", state: "CA" }]
       }
     },
+/*
+    // Insert another and test find again
+    {
+      req: {
+        url: url,
+        method: "POST",
+        body: {
+          _id: "94110",
+          state: "CA"
+        },
+      },
+      res: {
+        statusCode: 201,
+      }
+    },
+    {
+      req: {
+        url: url,
+        method: "GET",
+        parameters: {
+          query: { _id: "94110" },
+          sort: { '_id': 1 },
+          limit: 1
+        },
+      },
+      res: {
+        statusCode: 200,
+        body: [{ _id: "94110", state: "CA" }]
+      }
+    },
+*/    
 
     // Test update
     {
