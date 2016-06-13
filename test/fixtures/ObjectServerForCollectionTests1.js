@@ -49,11 +49,9 @@ module.exports = o({
         }
       },
 
-      saveObject: function(obj) {
-        return {
-          op: "saveObject",
-          obj: obj
-        }
+      saveObject: function(obj, reqCtx) {
+        reqCtx.res.status(201)
+        return obj
       },
 
       findObject: function(id) {

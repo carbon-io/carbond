@@ -120,8 +120,19 @@ __(function() {
         body: { _id: "94114", state: "CA", }
       },
       res: {
+        statusCode: 201,
+        body: { _id: "94114", state: "CA", }
+      }
+    },
+    {
+      req: {
+        url: url + '/94114',
+        method: "PUT",
+        body: { _id: "94114", state: "CA", }
+      },
+      res: {
         statusCode: 200,
-        body: { nUpdated: 0, nUpserted: 1 }
+        body: undefined
       }
     },
 
@@ -231,8 +242,59 @@ function configurationTests(service) {
     additionalProperties: false
   }
 
+  var defaultErrorSchema = {
+    type: 'object',
+    properties: {
+      code: { type: 'integer' },
+      description: { type: 'string' },
+      message: { type: 'string' },
+    },
+    required: ['code', 'description', 'message']
+  }
+
+  var NotFoundResponse = {
+    statusCode: 404,
+    description: "Collection resource cannot be found by the supplied _id.",
+    schema: defaultErrorSchema,
+    headers: []
+  }
+  
+  var BadRequestResponse = {
+    statusCode: 400,
+    description: "Request is malformed (i.e. invalid parameters).",
+    schema: defaultErrorSchema,
+    headers: []
+  }
+      
+  var ForbiddenResponse = {
+    statusCode: 403,
+    description: "User is not authorized to run this operation.",
+    schema: defaultErrorSchema,
+    headers: []
+  }
+
+  var InternalServerErrorResponse = {
+    statusCode: 500,
+    description: "There was an unexpected internal error processing this request.",
+    schema: defaultErrorSchema,
+    headers: []
+  }
+
   // insert
-  assert.deepStrictEqual(ce.getOperation('post').responseSchema, schema)
+  assert.deepEqual(ce.getOperation('post').responses, 
+                   [
+                     {
+                       statusCode: 201,
+                       description: 
+                       "Returns the object inserted, along with the URL of the newly inserted object " +
+                         "in the Location header of the response.",
+                       schema: schema,
+                       headers: ['Location']
+                     },
+                     BadRequestResponse,
+                     ForbiddenResponse,
+                     InternalServerErrorResponse
+                   ]),
   assert.deepEqual(ce.getOperation('post').parameters, { "body" : { description: "Object to insert",
                                                                     name: "body",
                                                                     schema: schema,
@@ -241,11 +303,22 @@ function configurationTests(service) {
                                                                     default: undefined }})
  
   // find
-  assert.deepStrictEqual(ce.getOperation('get').responseSchema,
-                         { 
-                           type: 'array',
-                           items: schema
-                         })
+  assert.deepEqual(ce.getOperation('get').responses,
+                   [
+                     {
+                       statusCode: 200,
+                       description: 
+                       "Returns an array of objects. Each object has an _id and possible additional properties.",
+                       schema: {
+                         type: 'array',
+                         items: schema
+                       },
+                       headers: []
+                     },
+                     BadRequestResponse,
+                     ForbiddenResponse,
+                     InternalServerErrorResponse
+                   ])
   assert.deepEqual(ce.getOperation('get').parameters,
                    { 
                      query: {
@@ -297,19 +370,27 @@ function configurationTests(service) {
                        default: undefined
                      }
                    })
-  
-  assert.deepStrictEqual(ce.getOperation('get').errorResponses, undefined)                         
 
   // update
-  assert.deepStrictEqual(ce.getOperation('patch').responseSchema,
-                         { 
-                           type: 'object',
-                           properties: {
-                             n: { type: 'integer' } 
-                           },
-                           required: [ 'n' ],
-                           additionalProperties: false
-                         }), 
+  assert.deepEqual(ce.getOperation('patch').responses, 
+                   [
+                     {
+                       statusCode: 200,
+                       description: "Returns an update result specifying the number of documents updated.",
+                       schema:  { 
+                         type: 'object',
+                         properties: {
+                           n: { type: 'integer' }
+                         },
+                         required: [ 'n' ],
+                         additionalProperties: false
+                       },
+                       headers: []
+                     },
+                     BadRequestResponse,
+                     ForbiddenResponse,
+                     InternalServerErrorResponse
+                   ]),
   assert.deepEqual(ce.getOperation('patch').parameters,
                    {
                      query: {
@@ -329,18 +410,27 @@ function configurationTests(service) {
                        default: undefined
                      }
                    })
-  assert.deepStrictEqual(ce.getOperation('patch').errorResponses, undefined)
 
   // remove
-  assert.deepStrictEqual(ce.getOperation('delete').responseSchema,
-                         { 
-                           type: 'object',
-                           properties: {
-                             n: { type: 'integer' } 
-                           },
-                           required: [ 'n' ],
-                           additionalProperties: false
-                         }), 
+  assert.deepEqual(ce.getOperation('delete').responses,
+                   [
+                     {
+                       statusCode: 200,
+                       description: "Returns a remove result specifying the number of documents removed.",
+                       schema:  { 
+                         type: 'object',
+                         properties: {
+                           n: { type: 'integer' } // Respond with the number of items updated
+                         },
+                         required: [ 'n' ],
+                         additionalProperties: false
+                       },
+                       headers: []
+                     },
+                     BadRequestResponse,
+                     ForbiddenResponse,
+                     InternalServerErrorResponse
+                   ]),
   assert.deepEqual(ce.getOperation('delete').parameters,
                    {
                      query: {
@@ -352,10 +442,28 @@ function configurationTests(service) {
                        default: undefined
                      }
                    })
-  assert.deepStrictEqual(ce.getOperation('delete').errorResponses, undefined)
 
   // saveObject
-  assert.deepStrictEqual(oe.getOperation('put').responseSchema, undefined)
+ assert.deepEqual(oe.getOperation('put').responses,
+                  [
+                    {
+                      statusCode: 201,
+                      description: 
+                       "Returns the object inserted, along with the URL of the newly inserted object " +
+                        "in the Location header of the response.",
+                      schema: schema,
+                      headers: ['Location']
+                    },
+                    {
+                      statusCode: 200,
+                      description: "Returns no content.",
+                      schema: { type: "Undefined" }, 
+                      headers: []
+                    },
+                    BadRequestResponse,
+                    ForbiddenResponse,
+                    InternalServerErrorResponse
+                  ])
   assert.deepEqual(oe.getOperation('put').parameters,
                    {
                      body: {
@@ -367,10 +475,21 @@ function configurationTests(service) {
                        default: undefined
                      }
                    })
-  assert.deepStrictEqual(oe.getOperation('put').errorResponses, undefined)
 
   // findObject
-  assert.deepStrictEqual(oe.getOperation('get').responseSchema, schema)
+  assert.deepEqual(oe.getOperation('get').responses,
+                   [
+                     {
+                       statusCode: 200,
+                       description: "Returns the object resource found at this URL specified by id.",
+                       schema: schema,
+                       headers: []
+                     },
+                     NotFoundResponse,
+                     BadRequestResponse,
+                     ForbiddenResponse,
+                     InternalServerErrorResponse
+                   ])
   assert.deepEqual(oe.getOperation('get').parameters, {
     view: {
       name: 'view',
@@ -381,10 +500,21 @@ function configurationTests(service) {
       default: undefined
     }
   })
-  assert.deepStrictEqual(oe.getOperation('get').errorResponses, undefined)
 
   // updateObject
-  assert.deepStrictEqual(oe.getOperation('patch').responseSchema, { type: "Undefined" })
+  assert.deepEqual(oe.getOperation('patch').responses,
+                   [
+                     {
+                       statusCode: 200,
+                       description: "Returns no content.",
+                       schema: { type: "Undefined" }, 
+                       headers: []
+                     },
+                     NotFoundResponse,
+                     BadRequestResponse,
+                     ForbiddenResponse,
+                     InternalServerErrorResponse
+                   ])
   assert.deepEqual(oe.getOperation('patch').parameters,
                    {
                      body: {
@@ -396,11 +526,20 @@ function configurationTests(service) {
                        default: undefined
                      }
                    })
-  assert.deepStrictEqual(oe.getOperation('patch').errorResponses, undefined)
 
   // removeObject
-  assert.deepStrictEqual(oe.getOperation('delete').responseSchema, { type: "Undefined" })
+  assert.deepEqual(oe.getOperation('delete').responses,
+                   [
+                     {
+                       statusCode: 200,
+                       description: "Returns no content.",
+                       schema: { type: "Undefined" }, 
+                       headers: []
+                     },
+                     NotFoundResponse,
+                     ForbiddenResponse,
+                     InternalServerErrorResponse
+                   ])
   assert.deepEqual(oe.getOperation('delete').parameters, {})
-  assert.deepStrictEqual(oe.getOperation('delete').errorResponses, undefined)
 
 }
