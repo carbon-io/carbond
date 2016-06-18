@@ -553,5 +553,6 @@ reposnses: [
 --------------------------
 
 publicDirectories: {
-  images: "/                   
+  images: "imgs",
+  
 }

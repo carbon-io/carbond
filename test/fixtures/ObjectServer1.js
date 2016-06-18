@@ -16,6 +16,7 @@ module.exports = o({
   
   port: 8888,
   verbosity: 'info',
+  apiRoot: '/api',
   
   endpoints: {
     // Simple endpoint with operations defined as functions

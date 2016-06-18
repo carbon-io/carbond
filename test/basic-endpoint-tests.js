@@ -22,7 +22,7 @@ __(function() {
     }
   ]
 
-  var url = "http://localhost:8888/e1"
+  var url = "http://localhost:8888/api/e1"
   var tests = [
     // Test GET
     {
@@ -42,7 +42,7 @@ __(function() {
     // Test POST
     {
       req: {
-        url: "http://localhost:8888/e1",
+        url: "http://localhost:8888/api/e1",
         method: "POST",
         body: {
           x: 1,
@@ -65,7 +65,7 @@ __(function() {
     // Test PUT
     {
       req: {
-        url: "http://localhost:8888/e1",
+        url: "http://localhost:8888/api/e1",
         method: "PUT",
         body: {
           x: [1],
@@ -88,7 +88,7 @@ __(function() {
     // Test PATCH
     {
       req: {
-        url: "http://localhost:8888/e1",
+        url: "http://localhost:8888/api/e1",
         method: "PATCH",
         body: {
           x: { a: 1 },
@@ -111,7 +111,7 @@ __(function() {
     // Test DELETE
     {
       req: {
-        url: "http://localhost:8888/e1",
+        url: "http://localhost:8888/api/e1",
         method: "DELETE",
         parameters: {
           n: 3,
