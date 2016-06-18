@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Swagger UI</title>
+  <link href='//fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'/>
+  <link href='/service-admin/swagger/client-resources/css/reset.css' media='screen' rel='stylesheet' type='text/css'/>
+  <link href='/service-admin/swagger/client-resources/css/screen.css' media='screen' rel='stylesheet' type='text/css'/>
+  <link href='/service-admin/swagger/client-resources/css/reset.css' media='print' rel='stylesheet' type='text/css'/>
+  <link href='/service-admin/swagger/client-resources/css/screen.css' media='print' rel='stylesheet' type='text/css'/>
+  <script src="/service-admin/swagger/client-resources/lib/shred.bundle.js" type='text/javascript'></script>
+  <script src='/service-admin/swagger/client-resources/lib/jquery-1.8.0.min.js' type='text/javascript'></script>
+  <script src='/service-admin/swagger/client-resources/lib/jquery.slideto.min.js' type='text/javascript'></script>
+  <script src='/service-admin/swagger/client-resources/lib/jquery.wiggle.min.js' type='text/javascript'></script>
+  <script src='/service-admin/swagger/client-resources/lib/jquery.ba-bbq.min.js' type='text/javascript'></script>
+  <script src='/service-admin/swagger/client-resources/lib/handlebars-1.0.0.js' type='text/javascript'></script>
+  <script src='/service-admin/swagger/client-resources/lib/underscore-min.js' type='text/javascript'></script>
+  <script src='/service-admin/swagger/client-resources/lib/backbone-min.js' type='text/javascript'></script>
+  <script src='/service-admin/swagger/client-resources/lib/swagger.js' type='text/javascript'></script>
+  <script src='/service-admin/swagger/client-resources/lib/swagger-client.js' type='text/javascript'></script>
+  <script src='/service-admin/swagger/client-resources/lib/swagger-ui.js' type='text/javascript'></script>
+  <script src='/service-admin/swagger/client-resources/lib/highlight.7.3.pack.js' type='text/javascript'></script>
+
+  <!-- enabling this will enable oauth2 implicit scope support -->
+  <script type="text/javascript">
+    $(function () {
+      var url = "/service-admin/swagger/service-spec";
+      window.swaggerUi = new SwaggerUi({
+        url: url,
+        dom_id: "swagger-ui-container",
+        supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
+        docExpansion: "full",
+        onComplete: function(swaggerApi, swaggerUi) {
+          log("Loaded SwaggerUI");
+          log(swaggerApi)
+          if(typeof initOAuth == "function") {
+            /*
+            initOAuth({
+              clientId: "your-client-id",
+              realm: "your-realms",
+              appName: "your-app-name"
+            });
+            */
+          }
+        },
+        onFailure: function(data) {
+          log("Unable to Load SwaggerUI");
+        },
+        docExpansion: "none",
+        sorter : "alpha"
+      });
+
+      function addApiKeyAuthorization() {
+        var key = $('#input_apiKey')[0].value;
+        log("key: " + key);
+        if(key && key.trim() != "") {
+          log("added key " + key);
+          window.authorizations.add("Api-Key", new ApiKeyAuthorization("Api-Key", key, "header"));
+        }
+      }
+      $('#input_apiKey').change(function() {
+        addApiKeyAuthorization();
+      });
+
+      window.swaggerUi.load();
+  });
+  </script>
+</head>
+
+<body class="swagger-section">
+<div id='header'>
+  <form id='api_selector'>
+  <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
+  </form>
+  <br><br>
+</div>
+<br>
+
+<div id="swagger-ui-container" class="swagger-ui-wrap"></div>
+</body>
+</html>
