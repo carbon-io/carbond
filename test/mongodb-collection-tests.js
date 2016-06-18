@@ -53,6 +53,7 @@ __(function() {
         body: [{ _id: "94114", state: "CA" }]
       }
     },
+
 /*
     // Insert another and test find again
     {
@@ -145,6 +146,15 @@ __(function() {
       res: {
         statusCode: 200,
         body: { _id: "94114", state: "CA", }
+      }
+    },
+    {
+      req: {
+        url: url + '/94119',
+        method: "GET"
+      },
+      res: {
+        statusCode: 404,
       }
     },
 

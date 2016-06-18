@@ -549,3 +549,9 @@ reposnses: [
   },
   
 ]
+
+--------------------------
+
+publicDirectories: {
+  images: "/                   
+}
