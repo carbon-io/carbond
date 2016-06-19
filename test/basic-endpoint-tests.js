@@ -14,8 +14,8 @@ var middlewareCalled = false
 
 __(function() {
 
-  var objectServer1 = _o('./fixtures/ObjectServer1')
-  objectServer1.middleware = [
+  var service = _o('./fixtures/Service1')
+  service.middleware = [
     function(req, res, next) {
       middlewareCalled = true
       next()
@@ -133,10 +133,10 @@ __(function() {
 
 
   // Run the tests
-  objectServer1.start()
+  service.start()
   assertRequests(tests)
   assert(middlewareCalled)
-  objectServer1.stop()
+  service.stop()
 })
 
 

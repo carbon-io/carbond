@@ -6,10 +6,10 @@ var BSON = require('leafnode').BSON
 var carbond = require('../../')
 
 /*******************************************************************************
- * ObjectServerForMongoDBCollectionTests
+ * ServiceForMongoDBCollectionTests
  */
 module.exports = o({
-  _type: carbond.ObjectServer,
+  _type: carbond.Service,
   
   port: 8888,
   verbosity: 'info',

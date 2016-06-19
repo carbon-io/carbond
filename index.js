@@ -1,5 +1,5 @@
 module.exports = { 
-  ObjectServer: require('./lib/ObjectServer'),
+  Service: require('./lib/Service'),
   Endpoint: require('./lib/Endpoint'),
   Operation: require('./lib/Operation'),
   IdGenerator: require('./lib/IdGenerator'),

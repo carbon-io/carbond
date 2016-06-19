@@ -12,7 +12,7 @@ var assertRequests = require('./test-helper').assertRequests
 
 __(function() {
 
-  var objectServer1 = _o('./fixtures/ObjectServerForCollectionTests1')
+  var service = _o('./fixtures/ServiceForCollectionTests1')
 
   // Meta tests (make sure endpoints look like they should)
 
@@ -174,21 +174,21 @@ __(function() {
 
   try {
     // Start the server
-    objectServer1.start()
+    service.start()
 
     // Run the configuration tests
-    configurationTests(objectServer1)
+    configurationTests(service)
 
     // Run the HTTP tests
     assertRequests(tests)
 
     // Stop the server
-    objectServer1.stop()
+    service.stop()
 
   } catch (e) {
     console.log(e.message)
     console.log(e.stack)
-    objectServer1.stop()
+    service.stop()
   }
 })
 

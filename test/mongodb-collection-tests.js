@@ -12,7 +12,7 @@ var assertRequests = require('./test-helper').assertRequests
 
 __(function() {
 
-  var objectServer = _o('./fixtures/ObjectServerForMongoDBCollectionTests')
+  var service = _o('./fixtures/ServiceForMongoDBCollectionTests')
 
   // Meta tests (make sure endpoints look like they should)
 
@@ -187,27 +187,27 @@ __(function() {
 
   try {
     // Start the server
-    objectServer.start()
+    service.start()
 
     // Clear the database
-    clearDatabase(objectServer.db)
+    clearDatabase(service.db)
 
     // Run the configuration tests
-    configurationTests(objectServer)
+    configurationTests(service)
 
     // Run the HTTP tests
     assertRequests(tests)
 
     // Clear the database again
-    clearDatabase(objectServer.db)
+    clearDatabase(service.db)
 
     // Stop the server
-    objectServer.stop()
+    service.stop()
 
   } catch (e) {
     console.log(e.message)
     console.log(e.stack)
-    objectServer.stop()
+    service.stop()
   }
 })
 

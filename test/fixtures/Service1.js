@@ -6,13 +6,13 @@ var BSON = require('leafnode').BSON
 var carbond = require('../../')
 
 /*******************************************************************************
- * ObjectServer1
+ * Service1
  * 
- * This is a very simple ObjectServer. This is meant for testing sync 
+ * This is a very simple Service. This is meant for testing sync 
  * operations defined as simple functions. 
  */
 module.exports = o({
-  _type: carbond.ObjectServer,
+  _type: carbond.Service,
   
   port: 8888,
   verbosity: 'info',

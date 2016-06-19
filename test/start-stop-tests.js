@@ -32,8 +32,8 @@ __(function() {
  * syncTest
  */
 function syncTest() {
-  var objectServer = o({
-    _type: carbond.ObjectServer,
+  var service = o({
+    _type: carbond.Service,
     
     doStart: function() {
       this._started = true
@@ -47,16 +47,16 @@ function syncTest() {
 
   try {
     // Start the server
-    objectServer.start()
-    assert(objectServer._started)
+    service.start()
+    assert(service._started)
 
     // Stop the server
-    objectServer.stop()
-    assert(!objectServer._started)
+    service.stop()
+    assert(!service._started)
   } catch (e) {
     console.log(e.message)
     console.log(e.stack)
-    objectServer.stop()
+    service.stop()
   }
   
 }
@@ -65,36 +65,36 @@ function syncTest() {
  * syncSelfTestTest
  */
 function syncSelfTestTest() {
-  var objectServer = o({
-    _type: carbond.ObjectServer,
+  var service = o({
+    _type: carbond.Service,
     
     selfTest: o({
       _type: test.Test,
       name: 'Sync self Test Test',
       doTest() {
-        objectServer._tested = true
+        service._tested = true
       }
     })
   })
 
   try {
     // Start the server
-    objectServer.start()
-    objectServer.runSelfTest()
-    assert(objectServer._tested)
+    service.start()
+    service.runSelfTest()
+    assert(service._tested)
   } catch (e) {
     console.log(e.message)
     console.log(e.stack)
   }
-  objectServer.stop()  
+  service.stop()  
 }
 
 /*******************************************************************************
  * asyncTest1
  */
 function asyncTest1(cb) {
-  var objectServer = o({
-    _type: carbond.ObjectServer,
+  var service = o({
+    _type: carbond.Service,
     
     doStart: function() {
       this._started = true
@@ -105,11 +105,11 @@ function asyncTest1(cb) {
     }
   })
 
-  objectServer.start({}, function(err) {
+  service.start({}, function(err) {
     if (err) console.log(err)
-    assert(objectServer._started)
-    objectServer.stop()
-    assert(!objectServer._started)
+    assert(service._started)
+    service.stop()
+    assert(!service._started)
     cb(err)
   })
 }
@@ -118,8 +118,8 @@ function asyncTest1(cb) {
  * asyncTest2
  */
 function asyncTest2(done) {
-  var objectServer = o({
-    _type: carbond.ObjectServer,
+  var service = o({
+    _type: carbond.Service,
     
     doStart: function(options, cb) {
       this._started = true
@@ -132,12 +132,12 @@ function asyncTest2(done) {
     }
   })
 
-  objectServer.start({}, function(err) {
+  service.start({}, function(err) {
     if (err) { console.log(err) }
-    assert(objectServer._started)
-    objectServer.stop(function(err) {
+    assert(service._started)
+    service.stop(function(err) {
       if (err) { console.log(err) }
-      assert(!objectServer._started)
+      assert(!service._started)
       done(err)
     })
   })
@@ -147,8 +147,8 @@ function asyncTest2(done) {
  * asyncTest3
  */
 function asyncTest3(cb) {
-  var objectServer = o({
-    _type: carbond.ObjectServer,
+  var service = o({
+    _type: carbond.Service,
     
     doStart: function() {
       this._started = true
@@ -159,10 +159,10 @@ function asyncTest3(cb) {
     }
   })
 
-  objectServer.start()
-  assert(objectServer._started)
-  objectServer.stop(function(err) {
-    assert(!objectServer._started)
+  service.start()
+  assert(service._started)
+  service.stop(function(err) {
+    assert(!service._started)
     cb(err)
   })
 }
@@ -171,25 +171,25 @@ function asyncTest3(cb) {
  * asyncSelfTestTest
  */
 function asyncSelfTestTest(cb) {
-  var objectServer = o({
-    _type: carbond.ObjectServer,
+  var service = o({
+    _type: carbond.Service,
     
     selfTest: o({
       _type: test.Test,
       name: 'Async self Test Test',
       doTest() {
-        objectServer._tested = true
+        service._tested = true
       }
     })
   })
 
-  objectServer.start()
-  objectServer.runSelfTest(function(err) {
+  service.start()
+  service.runSelfTest(function(err) {
     if (err) {
       console.log(err)
     }
-    assert(objectServer._tested)
+    assert(service._tested)
   })
-  objectServer.stop()
+  service.stop()
 }
 
