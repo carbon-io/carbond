@@ -1,6 +1,8 @@
 These guys:
   -- http://jsonsh.com/
 
+o https://github.com/nodejs/node/issues/3784 (error info from require)
+
 o apidoc does not render and we cant ctrl-c once we try
 
 o What is atom error when _type is wrong?

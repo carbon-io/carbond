@@ -222,7 +222,7 @@ function clearDatabase(db) {
 
 function configurationTests(service) {
   var ce = service.endpoints['zipcodes']
-  var oe = ce.endpoints[':id']
+  var oe = ce.endpoints[':_id']
 
   var schema = {
     type: 'object',

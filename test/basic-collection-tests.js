@@ -194,7 +194,7 @@ __(function() {
 
 function configurationTests(service) {
   var ce = service.endpoints['basic']
-  var oe = ce.endpoints[':id']
+  var oe = ce.endpoints[':_id']
 
   var defaultObjectSchema = {
     type: 'object',
