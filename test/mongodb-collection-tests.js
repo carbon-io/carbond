@@ -54,8 +54,8 @@ __(function() {
       }
     },
 
-/*
     // Insert another and test find again
+/*
     {
       req: {
         url: url,
@@ -69,6 +69,7 @@ __(function() {
         statusCode: 201,
       }
     },
+
     {
       req: {
         url: url,
@@ -84,7 +85,7 @@ __(function() {
         body: [{ _id: "94110", state: "CA" }]
       }
     },
-*/    
+*/
 
     // Test update
     {
