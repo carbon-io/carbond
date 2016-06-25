@@ -57,7 +57,7 @@ module.exports = o({
         return {
           methodCalled: "delete",
           reqParams: {
-            n: JSON.parse(req.query.n),
+            n: req.query.n,
             m: req.query.m
           }
         }

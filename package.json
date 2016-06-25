@@ -26,7 +26,6 @@
     "request" : "2.34.0",
     "lodash" : "4.5.x",
     "mongodb": "1.4.x",
-    "mongodb-extended-json": "1.6.3",
     "swagger-ui" : "2.1.4",
     "bunyan": "1.3.5",
     "mongodb-uri": "git+ssh://git@github.com:mongolab/mongodb-uri-node.git#v0.9.7",
@@ -36,6 +35,7 @@
     "fiber": "git+ssh://git@github.com:carbon-io/fiber.git",
     "fibrous": "git+ssh://git@github.com:carbon-io/fibrous.git#v0.4.1-ml", 
     "leafnode": "git+ssh://git@github.com:objectlabs/leafnode.git#v3.2.0",
+    "ejson": "git+ssh://git@github.com:carbon-io/ejson.git",
     "http-errors": "git+ssh://git@github.com:carbon-io/http-errors.git",
     "z-schema": "3.17.0"
   },

@@ -1,6 +1,8 @@
 These guys:
   -- http://jsonsh.com/
 
+o Security and qs
+
 o https://github.com/nodejs/node/issues/3784 (error info from require)
 
 o apidoc does not render and we cant ctrl-c once we try
@@ -14,6 +16,8 @@ o read: http://expressjs.com/en/advanced/best-practice-performance.html
 o fix BSON in carbon-io.js
 
 o add flag to Endpoint to control whether validate responses?
+
+o https://derickbailey.com/2016/03/09/creating-a-true-singleton-in-node-js-with-es6-symbols/
 
 o What if you need a fiber before _main is called?....
 

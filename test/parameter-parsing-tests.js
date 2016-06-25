@@ -2,9 +2,8 @@ var o = require('atom').o(module)
 var _o = require('bond')._o(module)
 var __ = require('fiber').__.main(module)
 var assert = require('assert')
-var ObjectId = require('leafnode').mongodb.ObjectId
-var BSON = require('leafnode').BSON
-var EJSON = require('mongodb-extended-json')
+var EJSON = require('ejson')
+var ObjectId = EJSON.ObjectId
 var carbond = require('../')
 var assertRequests = require('./test-helper').assertRequests
 
