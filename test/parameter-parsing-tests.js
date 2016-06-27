@@ -3,7 +3,8 @@ var _o = require('bond')._o(module)
 var __ = require('fiber').__.main(module)
 var assert = require('assert')
 var EJSON = require('ejson')
-var ObjectId = EJSON.ObjectId
+var ObjectId = EJSON.types.ObjectId
+var Timestamp = EJSON.types.Timestamp
 var carbond = require('../')
 var assertRequests = require('./test-helper').assertRequests
 
@@ -251,7 +252,7 @@ var tests = [
         }
       }
     },
-    result: { a: new EJSON.Timestamp()  }
+    result: { a: new Timestamp()  }
   },
 
 ]
