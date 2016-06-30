@@ -4,7 +4,7 @@ var fibrous = require('fibrous')
 var _ = require('lodash')
 var assert = require('assert')
 var BSON = require('leafnode').BSON
-var EJSON = require('mongodb-extended-json')
+var EJSON = require('ejson')
 var carbond = require('../')
 var HttpError = require('http-errors').HttpError
 

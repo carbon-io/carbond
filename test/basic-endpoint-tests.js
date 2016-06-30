@@ -123,8 +123,8 @@ __(function() {
         body: {
           methodCalled: "delete",
           reqParams: {
-            n: 3, 
-            m: { x: "hello" }
+            n: '3', 
+            m: '{"x":"hello"}'
           }
         }
       }
