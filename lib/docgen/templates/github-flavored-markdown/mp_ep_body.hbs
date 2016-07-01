@@ -44,11 +44,11 @@
 <td valign="top"> {{#if required}}yes{{else}}no{{/if}} </td>
 <td valign="top"> {{location}} </td>
 <td valign="top"> 
-{{#ifisobject default~}}
-<code>{{MDRenderSchema default}}</code>
-{{else}}
-<code>{{#definedornull default}}{{/definedornull}}</code>
-{{/ifisobject}}
+<code>
+{{~#definedornull default}}
+{{MDRenderSchema default}}
+{{~/definedornull~}}
+</code>
 </td>
 <td valign="top">
 {{#if schema~}}
