@@ -2,9 +2,9 @@ var o = require('atom').o(module)
 var _o = require('bond')._o(module)
 var __ = require('fiber').__.main(module)
 var assert = require('assert')
-var ObjectId = require('leafnode').mongodb.ObjectId
-var BSON = require('leafnode').BSON
-var EJSON = require('mongodb-extended-json')
+var EJSON = require('ejson')
+var ObjectId = EJSON.types.ObjectId
+var Timestamp = EJSON.types.Timestamp
 var carbond = require('../')
 var assertRequests = require('./test-helper').assertRequests
 
@@ -179,6 +179,80 @@ var tests = [
       schema: { type: 'ObjectId'} 
     },
     result: new ObjectId("57394f46d1236fa5367749e9")
+  },
+
+  {
+    datum: { a: '1' },
+    definition: {
+      name: 'x',
+      schema: { 
+        type: 'object',
+        properties: {
+          a: { type: 'integer' }
+        }
+      }
+    },
+    result: { a: 1 }
+  },
+
+  {
+    datum: { a: '1' },
+    definition: {
+      name: 'x',
+      location: "body",
+      schema: { 
+        type: 'object',
+        properties: {
+          a: { type: 'integer' }
+        }
+      }
+    },
+    error: true // Will fail validation -- not coerced since in body
+  },
+
+  {
+    datum: { a: 'true' },
+    definition: {
+      name: 'x',
+      schema: { 
+        type: 'object',
+        properties: {
+          a: { type: 'boolean' }
+        }
+      }
+    },
+    result: { a: true }
+  },
+
+  {
+    datum: { a: ['true'] },
+    definition: {
+      name: 'x',
+      schema: { 
+        type: 'object', 
+        properties: {
+          a: { 
+            type: 'array',
+            items: { type: 'boolean' }
+          }
+        }
+      }
+    },
+    result: { a: [true] }
+  },
+
+  {
+    datum: { a: { $timestamp: { t: "0", i: "0" }}},
+    definition: {
+      name: 'x',
+      schema: { 
+        type: 'object', 
+        properties: {
+          a: { type: 'Timestamp' }
+        }
+      }
+    },
+    result: { a: new Timestamp()  }
   },
 
 ]
