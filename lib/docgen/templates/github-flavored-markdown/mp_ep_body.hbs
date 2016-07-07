@@ -66,8 +66,6 @@
 {{/each}}
 
 </table>
-
-
 {{/ifnotempty}}
 
 {{! ---------- /operation parameters ---------- ~}}
@@ -80,31 +78,9 @@
 
 {{! ---------- response schema ---------- ~}}
 
-{{#if responseSchema }}
-{{#MDHeading level=3}}Response Schema{{/MDHeading}}
-
----
-
-<pre><code>
-{{~MDRenderSchema responseSchema}}
-</code></pre>
-{{/if}}
-
+{{> GHMDResponses }}
 
 {{! ---------- /response schema ---------- ~}}
-
-{{! ---------- error responses ---------- ~}}
-
-{{#if errorResponses~}}
-{{#MDHeading level=4}}Error Responses{{/MDHeading}}
-
-{{~#each errorResponses}}
-* {{@key}}
-    * {{description}}
-{{~/each~}}
-{{~/if~}}
-
-{{! ---------- /error responses ---------- ~}}
 
 {{! ---------- examples ---------- ~}}
 

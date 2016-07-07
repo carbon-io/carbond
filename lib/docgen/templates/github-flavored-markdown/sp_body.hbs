@@ -4,6 +4,8 @@
 
 {{{description}}}
 
+{{> ServiceHelp }}
+
 {{! ---------- /description ---------- ~}}
 
 ---
@@ -12,13 +14,10 @@
 
 {{#each endpoints~}}
 * <a name="{{#slugify}}{{path}} toc{{/slugify}}"></a> [{{path}}](#{{#slugify}}{{path}}{{/slugify}})
-{{~#each operations}} [<a name="{{#slugify}}{{../../path}} {{method}} toc{{/slugify}}"></a>[{{method}}](#{{#slugify}}{{../../path}} {{method}}{{/slugify}})]{{/each}}
-{{!--
 {{#each operations}}
-    * <a name="{{#slugify}}{{../../path}} {{method}} toc{{/slugify}}"></a> [{{method}}](#{{#slugify}}{{../../path}} {{method}}{{/slugify}})
+    * <a name="{{#slugify}}{{../path}} {{method}} toc{{/slugify}}"></a> [`{{method}}`](#{{#slugify}}{{../path}} {{method}}{{/slugify}})
 {{/each~}}
---}}
-{{~/each}}
+{{/each}}
 
 {{! ---------- /TOC ---------- }}
 
@@ -41,7 +40,7 @@
 
 {{#each operations~}}
 
-{{#MDHeading level=3}}<a name="{{#slugify}}{{../../../path}} {{method}}{{/slugify}}"></a>`{{method}}` -- {{../../path}} {{/MDHeading}} [[&#x2191;](#{{#slugify}}{{../../path}} {{method}} toc{{/slugify}})]
+{{#MDHeading level=3}}<a name="{{#slugify}}{{../path}} {{method}}{{/slugify}}"></a>`{{method}}` -- {{../path}} {{/MDHeading}} [[&#x2191;](#{{#slugify}}{{../path}} {{method}} toc{{/slugify}})]
 
 {{#if description~}}
 {{description}}
@@ -68,56 +67,17 @@
 {{#each parameters}}
 {{#each this}}
 
-{{!--
-
-{{#MDHeading level=4}}{{name}}{{/MDHeading}}
-
-{{#if description}}
-{{description}}
-{{/if}}
-
-<table>
-<tr>
-<th> required </th>
-<th> location </th>
-<th> default </th>
-<th> schema </th>
-</tr>
-<tr>
-<td> {{required}} </td>
-<td> {{location}} </td>
-<td> 
-{{#ifisobject default~}}
-`{{{MDRenderSchema default}}}`
-{{else}}
-{{#definedornull default}}{{/definedornull}}
-{{/ifisobject}}
-</td>
-<td>
-{{#if schema~}}
-<pre><code>
-{{{~MDRenderSchema schema~}}}
-</code></pre>
-{{else}}
-null
-{{~/if}}
-</td>
-</tr>
-</table>
-
---}}
-
 <tr>
 <td valign="top"> {{name}} </td>
 <td valign="top"> {{description}} </td>
 <td valign="top"> {{#if required}}yes{{else}}no{{/if}} </td>
 <td valign="top"> {{location}} </td>
-<td valign="top"> 
-{{#ifisobject default~}}
-<code>{{{MDRenderSchema default}}}
-{{else}}
-<code>{{#definedornull default}}{{/definedornull}}</code>
-{{/ifisobject}}
+<td valign="top">
+<code>
+{{~#definedornull default}}
+{{MDRenderSchema default}}
+{{~/definedornull~}}
+</code>
 </td>
 <td valign="top">
 {{#if schema~}}
@@ -129,43 +89,6 @@ null
 {{~/if}}
 </td>
 </tr>
-
-{{!--
-
-{{#MDHeading level=4}}{{name}}{{/MDHeading}}
-
-{{#if description}}
-{{description}}
-{{/if}}
-
-* required: {{required}}
-* location: {{location}}
-{{#if default~}}
-{{#ifisobject default~}}
-* default
-
-{{#indent~}}
-{{#MDCodeBlock}}
-{{{MDRenderSchema default}}}
-{{/MDCodeBlock}}
-{{~/indent}}
-
-{{else}}
-* default: `{{default}}`
-{{/ifisobject}}
-{{/if}}
-{{#if schema~}}
-* schema
-
-{{#indent~}}
-{{#MDCodeBlock}}
-{{{MDRenderSchema schema}}}
-{{/MDCodeBlock}}
-{{~/indent}}
-
-{{~/if}}
-
---}}
 
 {{/each}}
 
@@ -186,35 +109,9 @@ null
 
 {{! ---------- response schema ---------- ~}}
 
-{{#if responseSchema }}
-{{#MDHeading level=3}}Response Schema{{/MDHeading}}
-
----
-
-{{!-- {{#MDCodeBlock}}
-{{{MDRenderSchema responseSchema}}}
-{{/MDCodeBlock}}
---}}
-<pre><code>
-{{~MDRenderSchema responseSchema}}
-</code></pre>
-{{/if}}
-
+{{> GHMDResponses }}
 
 {{! ---------- /response schema ---------- ~}}
-
-{{! ---------- error responses ---------- ~}}
-
-{{#if errorResponses~}}
-{{#MDHeading level=4}}Error Responses{{/MDHeading}}
-
-{{~#each errorResponses}}
-* {{@key}}
-    * {{description}}
-{{~/each~}}
-{{~/if~}}
-
-{{! ---------- /error responses ---------- ~}}
 
 {{! ---------- examples ---------- ~}}
 
