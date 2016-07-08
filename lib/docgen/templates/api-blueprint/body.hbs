@@ -39,7 +39,7 @@ HOST: {{host}}
 
 {{! ---------- model ---------- ~}}
 {{~!
-    XXX: reserved for an "one exemplar representation of the resource"
+    XXX: reserved for "one exemplar representation of the resource"
 ~}}
 {{~! ---------- /model ---------- ~}}
 
@@ -80,7 +80,7 @@ HOST: {{host}}
 {{#MDCodeBlock}}
 {{{MDRenderSchema schema}}}
 {{/MDCodeBlock}}
-{{/indent}}
+{{~/indent}}
 {{~/if_eq}}
 {{#if default}}
         + Default: `{{default}}`
@@ -113,24 +113,23 @@ HOST: {{host}}
 {{/if~}}
 {{/if}}
 
-{{#if responseSchema}}
-    {{~! XXX: what if we can produce multiple media types? ~}}
-    {{~! XXX: can't really determine what the response code would be here... assumeing 200 (201 for posts) ~}}
-+ Response 200 ({{@root.consumes.[0]}})
+{{#ifnotempty responses}}
+{{#each responses}}
++ Response {{statusCode}} ({{@root.consumes.[0]}})
+{{#ifnotempty headers}}
+    + Headers
+{{#each headers}}
+        {{name}}: {{#if schema}}{ {{~schema.type~}} }{{#if description}} - {{/if}}{{/if}}{{#if description}}{{description}}{{/if}}
+{{/each~}}
+{{~/ifnotempty}}
     + Schema
 {{#indent spaces=8}}
 {{#MDCodeBlock}}
-{{{MDRenderSchema responseSchema}}}
+{{{MDRenderSchema schema}}}
 {{/MDCodeBlock~}}
 {{/indent~}}
-{{/if~}}
-
-{{~!-- XXX: no error responses yet
-{{#each errorResponses}}
-
 {{/each}}
---~}}
-
+{{/ifnotempty~}}
 
 {{~! ---------- /payloads ---------- ~}}
 
