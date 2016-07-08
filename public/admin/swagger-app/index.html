@@ -79,12 +79,25 @@
         showRequestHeaders: false
       });
 
+      // XXX: add basic auth (PasswordAuthorization)
+
       function addApiKeyAuthorization(){
         var key = encodeURIComponent($('#input_apiKey')[0].value);
         if(key && key.trim() != "") {
-            var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, "query");
+          var defs = window.swaggerUi.api.swaggerObject.securityDefinitions
+          // this should accommodate header and query locations
+          // XXX: need to incorporate basic auth (SwaggerClient.PasswordAuthorization)
+          //      *NOTE* swagger descriptor generator should support "basic" and "api_key" at the moment
+          if (typeof defs.api_key !== 'undefined') {
+            var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization(defs.api_key.name, key, defs.api_key.in);
             window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
             log("added key " + key);
+          }
+          /*
+          var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, "query");
+          window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
+          log("added key " + key);
+          */
         }
       }
 
