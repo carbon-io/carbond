@@ -205,6 +205,13 @@ function configurationTests(service) {
     required: ['_id']
   }
 
+  var insertSchema = {
+    type: 'object',
+    properties: {
+      _id: { type: 'string' }
+    }
+  }
+  
   var defaultErrorSchema = {
     type: 'object',
     properties: {
@@ -258,9 +265,9 @@ function configurationTests(service) {
                      ForbiddenResponse,
                      InternalServerErrorResponse
                    ]),
-  assert.deepEqual(ce.getOperation('post').parameters, { "body" : { description: "Object to insert",
+   assert.deepEqual(ce.getOperation('post').parameters, { "body" : { description: "Object to insert",
                                                                     name: "body",
-                                                                    schema: { type: "object" },
+                                                                    schema: insertSchema,
                                                                     location: "body", 
                                                                     required: true, 
                                                                     default: null }})
