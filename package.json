@@ -28,7 +28,7 @@
     "lodash" : "4.5.x",
     "request" : "2.34.0",
     "z-schema": "3.17.0",
-    "atom": "git+ssh://git@github.com:carbon-io/atom.git#v0.1.7",
+    "atom": "git+ssh://git@github.com:carbon-io/atom.git#v0.1.8",
     "bond": "git+ssh://git@github.com:carbon-io/bond.git#v0.1.7",
     "fiber": "git+ssh://git@github.com:carbon-io/fiber.git#v0.2.0",
     "fibrous": "git+ssh://git@github.com:carbon-io/fibrous.git#v0.4.1-ml", 
