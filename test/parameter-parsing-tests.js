@@ -164,21 +164,21 @@ var tests = [
   },
 
   {
-    datum: '{ "$oid": "57394f46d1236fa5367749e9" }',
+    datum: '{ "$oid": "c2c48257aa5a56df131db1e4" }',
     definition: {
       name: 'x',
       schema: { type: 'ObjectId'} 
     },
-    result: new ObjectId("57394f46d1236fa5367749e9")
+    result: new ObjectId("c2c48257aa5a56df131db1e4")
   },
 
   {
-    datum: '57394f46d1236fa5367749e9',
+    datum: 'c2c48257aa5a56df131db1e4',
     definition: {
       name: 'x',
       schema: { type: 'ObjectId'} 
     },
-    result: new ObjectId("57394f46d1236fa5367749e9")
+    result: new ObjectId("c2c48257aa5a56df131db1e4")
   },
 
   {

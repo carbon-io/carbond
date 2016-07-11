@@ -453,7 +453,7 @@ How does one create an Admin user?
 - enablePersistentDataAcls 
 - persistentDataAclTemplate or initialDataAcl
 
-- acl:
+- acl:)
 - dataAcl:
 - enableInstanceAcls 
 - initialInstanceAcl
@@ -496,4 +496,75 @@ function(a, l) {
        return: y
     }
   } 
+}
+
+===============
+
+Lattice
+
+** Notes
+  - A system should never be rolled out in part. If we do allow many
+  systems to an environment, those systems should not be allowed to
+  talk to each other (is this too restrictive?)
+
+o Lattice Service 
+  - REST API for controlling lattice
+
+o cmdline (talks to REST interface)
+  - lattice list-systems
+  - lattice add-system <id> <path-or-url-to-system-def>
+  - lattice rm-system <id>
+  - lattice show-system [--version <version>] <id>
+  - lattice initialize-system <id> // maybe handles setup of VPC
+  etc...
+  - lattice rollout-system <id> [<version>]  // can list plan with --dry-run
+  - lattice rollback-system <id> // can list plan with --dry-run
+  - lattice diff-systems
+
+o Lattice can maintain system parameters which are top-level variables
+encrypted in the lattice db which get passed into system when template
+is evaluated.
+
+$ lattice define-system-parameter s-2349123 AWS_SECRET_KEY rainbow
+
+{
+
+  $parameters: { 
+    AWS_SECRET_KEY: "The secret key",
+  }, 
+
+  environment: {
+    provider: "AWS",
+    region: "us-east-1a",
+    vpc: "vpc-3d98eff2a",
+    account: "mlab-production",
+    secretKey: "${AWS_SECRET_KEY}",
+  },
+  
+  services: [
+    {
+      type: Service, // WebService? vs Worker?
+
+      address: "api.acme.com", // can be array
+      public: true, // put in a "public" subnet (or is that just the ELB?)
+      loadBalanced: true,
+      numInstances: 3,
+      
+      repository: "git://acme/myapi",
+      processEnvironment: {
+         SSL_CERT_PATH: "/certs/foo",
+         PROCESS_USER: "admin",
+         DB_URI: "mongodb://${DB_USER}:${DB_PASS}@localhost:26017/mydb",
+      },
+
+      resources: {
+        cpus: 1,
+        memory: 1000 // 1GB
+        instanceType: "m1.small"
+        // can we drop down to do volume config etc? Is there any
+        // reason this is needed? 
+      }     
+    }
+  ]               
+
 }
