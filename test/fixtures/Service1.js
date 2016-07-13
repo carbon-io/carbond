@@ -11,12 +11,22 @@ var carbond = require('../../')
  * This is a very simple Service. This is meant for testing sync 
  * operations defined as simple functions. 
  */
+var middlewareCalled = false
+
 module.exports = o({
   _type: carbond.Service,
   
   port: 8888,
   verbosity: 'info',
   apiRoot: '/api',
+
+  middlewareCalled: false,
+  middleware: [
+    function(req, res, next) {
+      middlewareCalled = true
+      next()
+    }
+  ],
   
   endpoints: {
     // Simple endpoint with operations defined as functions
@@ -59,7 +69,8 @@ module.exports = o({
           reqParams: {
             n: req.query.n,
             m: req.query.m
-          }
+          },
+          middlewareCalled: middlewareCalled
         }
       }
       

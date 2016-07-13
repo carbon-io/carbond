@@ -1,31 +1,48 @@
-var o = require('atom').o(module)
+var o  = require('atom').o(module)
+var oo  = require('atom').oo(module)
 var _o = require('bond')._o(module)
-var __ = require('fiber').__.main(module)
+var __ = require('fiber').__
+var tt = require('test-tube')
 var assert = require('assert')
-var BSON = require('leafnode').BSON
+var ObjectId = require('ejson').types.ObjectId
 var carbond = require('../')
-var assertRequests = require('./test-helper').assertRequests
-var test = require('test-tube')
 
-/*******************************************************************************
- * Start / stop tests
+/**************************************************************************
+ * StartStopTests
  */
-__(function() {
+module.exports = o.main({
 
-  syncTest()
-  syncSelfTestTest()
-  asyncTest1(function(err1) {
-    if (err1) { console.log(err1) }
-    asyncTest2(function(err2) {
-    if (err2) { console.log(err2) }
-      asyncTest3(function(err3) {
-        if (err3) { console.log(err3) }
-        asyncSelfTestTest(function(err4) {
-          if (err4) { console.log(err4) }
+  /**********************************************************************
+   * _type
+   */
+  _type: tt.Test,
+
+  /**********************************************************************
+   * name
+   */
+  name: "StartStopTests",
+
+  /**********************************************************************
+   * doTest
+   */
+  doTest: function(done) {
+    syncTest()
+    syncSelfTestTest()
+    asyncTest1(function(err1) {
+      if (err1) { console.log(err1) }
+      asyncTest2(function(err2) {
+        if (err2) { console.log(err2) }
+        asyncTest3(function(err3) {
+          if (err3) { console.log(err3) }
+          asyncSelfTestTest(function(err4) {
+            if (err4) { return console.log(err4) }
+            done()
+          })
         })
       })
     })
-  })
+  }
+
 })
 
 /*******************************************************************************
@@ -69,7 +86,7 @@ function syncSelfTestTest() {
     _type: carbond.Service,
     
     selfTest: o({
-      _type: test.Test,
+      _type: tt.Test,
       name: 'Sync self Test Test',
       doTest() {
         service._tested = true
@@ -92,7 +109,7 @@ function syncSelfTestTest() {
 /*******************************************************************************
  * asyncTest1
  */
-function asyncTest1(cb) {
+function asyncTest1(done) {
   var service = o({
     _type: carbond.Service,
     
@@ -110,7 +127,7 @@ function asyncTest1(cb) {
     assert(service._started)
     service.stop()
     assert(!service._started)
-    cb(err)
+    done(err)
   })
 }
 
@@ -170,26 +187,27 @@ function asyncTest3(cb) {
 /*******************************************************************************
  * asyncSelfTestTest
  */
-function asyncSelfTestTest(cb) {
+function asyncSelfTestTest(done) {
   var service = o({
     _type: carbond.Service,
     
     selfTest: o({
-      _type: test.Test,
+      _type: tt.Test,
       name: 'Async self Test Test',
       doTest() {
         service._tested = true
       }
     })
   })
-
   service.start()
   service.runSelfTest(function(err) {
     if (err) {
       console.log(err)
+      return done(err)
     }
     assert(service._tested)
+    service.stop()
+    done()
   })
-  service.stop()
-}
 
+}

@@ -22,4 +22,7 @@ module.exports = {
     CollectionAcl: require('./lib/security/CollectionAcl'),
     ObjectAcl: require('./lib/security/ObjectAcl')
   },
+  test: {
+    ServiceTest: require('./lib/test/ServiceTest')
+  }
 }

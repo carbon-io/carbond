@@ -1,36 +1,43 @@
-var o = require('atom').o(module)
+var o  = require('atom').o(module).main
+var oo  = require('atom').oo(module)
 var _o = require('bond')._o(module)
-var __ = require('fiber').__.main(module)
+var __ = require('fiber').__
+var testtube = require('test-tube')
 var assert = require('assert')
-var BSON = require('leafnode').BSON
-var carbond = require('../')
-var assertRequests = require('./test-helper').assertRequests
+var ObjectId = require('ejson').types.ObjectId
+var carbond = require('..')
 
-/*******************************************************************************
- * endpoint tests
+/**************************************************************************
+ * BasicEndpointTests
  */
+module.exports = o({
 
-var middlewareCalled = false
+  /**********************************************************************
+   * _type
+   */
+  _type: carbond.test.ServiceTest,
 
-__(function() {
+  /**********************************************************************
+   * name
+   */
+  name: "BasicEndpointTests",
 
-  var service = _o('./fixtures/Service1')
-  service.middleware = [
-    function(req, res, next) {
-      middlewareCalled = true
-      next()
-    }
-  ]
-
-  var url = "http://localhost:8888/api/e1"
-  var tests = [
+  /**********************************************************************
+   * service
+   */
+  service: _o('./fixtures/Service1'),
+  
+  /**********************************************************************
+   * tests
+   */
+  tests: [
     // Test GET
     {
-      req: {
-        url: url,
+      reqSpec: {
+        url: '/api/e1',
         method: "GET"
       },
-      res: {
+      resSpec: {
         statusCode: 200,
         body: {
           methodCalled: "get",
@@ -38,18 +45,18 @@ __(function() {
         }
       }
     },
-
+    
     // Test POST
     {
-      req: {
-        url: "http://localhost:8888/api/e1",
+      reqSpec: {
+        url: '/api/e1',
         method: "POST",
         body: {
           x: 1,
           y: 2
         }
       },
-      res: {
+      resSpec: {
         statusCode: 200,
         body: {
           methodCalled: "post",
@@ -61,18 +68,18 @@ __(function() {
         }
       }
     },
-
+    
     // Test PUT
     {
-      req: {
-        url: "http://localhost:8888/api/e1",
+      reqSpec: {
+        url: '/api/e1',
         method: "PUT",
         body: {
           x: [1],
           y: 2
         }
       },
-      res: {
+      resSpec: {
         statusCode: 200,
         body: {
           methodCalled: "put",
@@ -87,15 +94,15 @@ __(function() {
 
     // Test PATCH
     {
-      req: {
-        url: "http://localhost:8888/api/e1",
+      reqSpec: {
+        url: '/api/e1',
         method: "PATCH",
         body: {
           x: { a: 1 },
           y: 2
         }
       },
-      res: {
+      resSpec: {
         statusCode: 200,
         body: {
           methodCalled: "patch",
@@ -110,34 +117,27 @@ __(function() {
 
     // Test DELETE
     {
-      req: {
-        url: "http://localhost:8888/api/e1",
+      reqSpec: {
+        url: '/api/e1',
         method: "DELETE",
         parameters: {
           n: 3,
           m: { x: "hello" }
         }
       },
-      res: {
+      resSpec: {
         statusCode: 200,
         body: {
           methodCalled: "delete",
           reqParams: {
             n: '3', 
             m: '{"x":"hello"}'
-          }
+          },
+          middlewareCalled: true
         }
       }
     },
   ]
-
-
-  // Run the tests
-  service.start()
-  assertRequests(tests)
-  assert(middlewareCalled)
-  service.stop()
+  
+  
 })
-
-
-            
