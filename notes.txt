@@ -525,7 +525,7 @@ o Lattice can maintain system parameters which are top-level variables
 encrypted in the lattice db which get passed into system when template
 is evaluated.
 
-$ lattice define-system-parameter s-2349123 AWS_SECRET_KEY rainbow
+$ lattice define-system-parameter sys-2349123 AWS_SECRET_KEY rainbow
 
 {
 
@@ -543,7 +543,7 @@ $ lattice define-system-parameter s-2349123 AWS_SECRET_KEY rainbow
   
   services: [
     {
-      type: Service, // WebService? vs Worker?
+      type: Service, // ServiceCluster? WebService? vs Worker?
 
       address: "api.acme.com", // can be array
       public: true, // put in a "public" subnet (or is that just the ELB?)
@@ -565,6 +565,69 @@ $ lattice define-system-parameter s-2349123 AWS_SECRET_KEY rainbow
         // reason this is needed? 
       }     
     }
-  ]               
+  ]       
+
+}
+----------------------------------------------
+Panama.json
+
+{
+  $parameters: { 
+    numFrontendServices: {
+    }
+    numBackendWorkers: {
+    }
+  }, 
+
+  services: [
+    // front end
+    {
+      type: ServiceCluster,
+      name: "FrontEnd",
+      address: "panama.internal.acme.com",
+      public: true, 
+      loadBalanced: true,
+      numInstances: ${numFrontendServices}",
+      
+      repository: "git://acme/myapi",
+      processEnvironment: {
+         SSL_CERT_PATH: "/certs/foo",
+         PROCESS_USER: "admin",
+         DB_URI: "mongodb://${DB_USER}:${DB_PASS}@localhost:26017/mydb",
+      },
+      // start via npm start or do we have definition? Actually,
+      // interface is docker container.
+      resources: {
+        cpus: 1,
+        memory: 1000 // 1GB
+        instanceType: "m1.small"
+        // can we drop down to do volume config etc? Is there any
+        // reason this is needed? 
+      }     
+    },
+
+    // back end
+    {       
+      type: WorkerCluster, (same as service cluster or no?)
+      name: "DeliveryWorkers", 
+      address: "panama-worker-n.internal.acme.com",
+      public: false, 
+      loadBalanced: false,
+      numInstances: "${numBackendWorkers}",
+      
+      repository: "git://acme/panama-worker-master",
+      processEnvironment: {
+         SSL_CERT_PATH: "/certs/foo",
+         PROCESS_USER: "admin",
+         DB_URI: "mongodb://${DB_USER}:${DB_PASS}@localhost:26017/mydb",
+      },
+
+      resources: {
+        cpus: 8,
+        memory: 16000 // 1GB
+        instanceType: "m1.small"
+      }     
+    },
+  ]       
 
 }
