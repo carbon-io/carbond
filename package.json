@@ -1,5 +1,5 @@
 {
-  "name": "carbond",
+  "name": "@carbon-io/carbond",
   "version": "0.1.8",
   "description": "Carbond",
   "keywords": ["carbond", "carbon.io"],
