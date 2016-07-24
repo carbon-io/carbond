@@ -1,7 +1,7 @@
 var o  = require('atom').o(module).main
 var oo  = require('atom').oo(module)
 var _o = require('bond')._o(module)
-var __ = require('fiber').__
+var __ = require('@carbon-io/fibers').__(module)
 var testtube = require('test-tube')
 var assert = require('assert')
 
