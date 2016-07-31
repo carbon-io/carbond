@@ -65,11 +65,11 @@ module.exports = o({
       },
         
       updateObject: function(id, update, reqCtx) {
-        reqCtx.res.end() // More convenient to just return null but want to test that this works too.
+        return true
       },
 
       removeObject: function(id) {
-        return null
+        return true
       }
 
     })

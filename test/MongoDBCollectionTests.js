@@ -528,7 +528,7 @@ module.exports = o({
                        {
                          statusCode: 200,
                          description: "Returns no content.",
-                         schema: { type: "Undefined" }, 
+                         schema: { type: "Undefined" },
                          headers: []
                        },
                        NotFoundResponse,
