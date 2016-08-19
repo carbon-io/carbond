@@ -1,7 +1,7 @@
 var o  = require('atom').o(module).main
 var oo  = require('atom').oo(module)
 var _o = require('bond')._o(module)
-var __ = require('fiber').__
+var __ = require('@carbon-io/fibers').__(module)
 var tt = require('test-tube')
 var assert = require('assert')
 var ObjectId = require('ejson').types.ObjectId
@@ -470,7 +470,7 @@ module.exports = o({
                        {
                          statusCode: 200,
                          description: "Returns no content.",
-                         schema: { type: "Undefined" }, 
+                         schema: { type: "Undefined" },
                          headers: []
                        },
                        NotFoundResponse,

@@ -1,7 +1,7 @@
 var o  = require('atom').o(module)
 var oo  = require('atom').oo(module)
 var _o = require('bond')._o(module)
-var __ = require('fiber').__
+var __ = require('@carbon-io/fibers').__(module)
 var tt = require('test-tube')
 var assert = require('assert')
 var ObjectId = require('ejson').types.ObjectId
@@ -27,22 +27,17 @@ module.exports = o.main({
    */
   doTest: function(done) {
     syncTest()
-    syncSelfTestTest()
     asyncTest1(function(err1) {
       if (err1) { console.log(err1) }
       asyncTest2(function(err2) {
         if (err2) { console.log(err2) }
         asyncTest3(function(err3) {
           if (err3) { console.log(err3) }
-          asyncSelfTestTest(function(err4) {
-            if (err4) { return console.log(err4) }
-            done()
-          })
+          done()
         })
       })
     })
   }
-
 })
 
 /*******************************************************************************
@@ -76,34 +71,6 @@ function syncTest() {
     service.stop()
   }
   
-}
-
-/*******************************************************************************
- * syncSelfTestTest
- */
-function syncSelfTestTest() {
-  var service = o({
-    _type: carbond.Service,
-    
-    selfTest: o({
-      _type: tt.Test,
-      name: 'Sync self Test Test',
-      doTest() {
-        service._tested = true
-      }
-    })
-  })
-
-  try {
-    // Start the server
-    service.start()
-    service.runSelfTest()
-    assert(service._tested)
-  } catch (e) {
-    console.log(e.message)
-    console.log(e.stack)
-  }
-  service.stop()  
 }
 
 /*******************************************************************************
@@ -184,30 +151,3 @@ function asyncTest3(cb) {
   })
 }
 
-/*******************************************************************************
- * asyncSelfTestTest
- */
-function asyncSelfTestTest(done) {
-  var service = o({
-    _type: carbond.Service,
-    
-    selfTest: o({
-      _type: tt.Test,
-      name: 'Async self Test Test',
-      doTest() {
-        service._tested = true
-      }
-    })
-  })
-  service.start()
-  service.runSelfTest(function(err) {
-    if (err) {
-      console.log(err)
-      return done(err)
-    }
-    assert(service._tested)
-    service.stop()
-    done()
-  })
-
-}

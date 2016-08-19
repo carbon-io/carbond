@@ -1,6 +1,6 @@
 var o = require('atom').o(module).main
 var _o = require('bond')._o(module)
-var __ = require('fiber').__
+var __ = require('@carbon-io/fibers').__(module)
 var assert = require('assert')
 var BSON = require('leafnode').BSON
 var carbond = require('../../')
@@ -65,11 +65,11 @@ module.exports = o({
       },
         
       updateObject: function(id, update, reqCtx) {
-        reqCtx.res.end() // More convenient to just return null but want to test that this works too.
+        return true
       },
 
       removeObject: function(id) {
-        return null
+        return true
       }
 
     })

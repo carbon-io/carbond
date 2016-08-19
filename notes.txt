@@ -511,9 +511,16 @@ o Lattice Service
   - REST API for controlling lattice
 
 o cmdline (talks to REST interface)
-  - lattice list-systems
-  - lattice add-system <id> <path-or-url-to-system-def>
-  - lattice rm-system <id>
+  - lattice list-environments
+  - lattice define-environment <name|desc> <provider> <region> --> gensym id
+  - lattice show-environment <id> -n name
+  - lattice remove-environment <id>
+
+
+  - lattice list-systems <env>
+  - lattice define-system <env> <name> <path-or-url-to-system-def> -->gensym id
+  - lattice remove-system <id>
+  - lattice list-system-versions <id>
   - lattice show-system [--version <version>] <id>
   - lattice initialize-system <id> // maybe handles setup of VPC
   etc...
@@ -534,27 +541,41 @@ $ lattice define-system-parameter sys-2349123 AWS_SECRET_KEY rainbow
   }, 
 
   environment: {
-    provider: "AWS",
-    region: "us-east-1a",
-    vpc: "vpc-3d98eff2a",
-    account: "mlab-production",
-    secretKey: "${AWS_SECRET_KEY}",
+    provider: "AWS", 
+    region: "us-east-1a", // $REGION
+    vpc: "vpc-3d98eff2a", // $VPC
+    account: "mlab-production", // $ACCOUNT
+    secretKey: "${AWS_SECRET_KEY}", 
   },
   
   services: [
+    { $ref: "./PublicAPICluster" }
+    { $include: "./PublicAPICluster" }
+    { 
+      $include: "./PublicAPICluster" 
+      $params: {
+        MONGODB_URI: "${MONGODB_URI}"
+      }     
+    }
+    { 
+      $ref: "./PublicAPICluster" 
+      $params: {
+        MONGODB_URI: "${MONGODB_URI}"
+      }     
+    }
     {
-      type: Service, // ServiceCluster? WebService? vs Worker?
+      type: ServiceCluster, // ServiceCluster? WebService? vs Worker?
 
       address: "api.acme.com", // can be array
       public: true, // put in a "public" subnet (or is that just the ELB?)
-      loadBalanced: true,
-      numInstances: 3,
+      loadBalanced: true, 
+      numInstances: 3, // <int> -1 is autoscale
       
       repository: "git://acme/myapi",
       processEnvironment: {
-         SSL_CERT_PATH: "/certs/foo",
-         PROCESS_USER: "admin",
-         DB_URI: "mongodb://${DB_USER}:${DB_PASS}@localhost:26017/mydb",
+         SSL_CERT_PATH: "/certs/foo", 
+         PROCESS_USER: "admin", 
+         DB_URI: "mongodb://${DB_USER}:${DB_PASS}@localhost:26017/mydb", // $MONGODB_URI
       },
 
       resources: {
