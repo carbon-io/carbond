@@ -5,6 +5,8 @@ var assert = require('assert')
 var BSON = require('leafnode').BSON
 var carbond = require('../../')
 
+var config = require('../Config')
+
 /*******************************************************************************
  * ServiceForMongoDBCollectionTests
  */
@@ -14,7 +16,7 @@ module.exports = o({
   port: 8888,
   verbosity: 'info',
 
-  dbUri: "mongodb://localhost:27017/mongodb-collection-tests",
+  dbUri: config.MONGODB_URI,
     
   endpoints: {
     // Simple endpoint with Collection operations defined as functions
