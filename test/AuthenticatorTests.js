@@ -223,6 +223,44 @@ module.exports = o({
         assert.equal(result.username, this.username)
       }
     }),
+    o({
+      _type: testtube.Test,
+      name: 'TestHttpBasicAuthenticatorPasswordHashFnInitialization',
+      description: 'Test password hash function initialization',
+      authenticator: {
+        _type: _o('../lib/security/HttpBasicAuthenticator'),
+        usernameField: 'username',
+        passwordField: 'password'
+      },
+      username: 'foo',
+      password: 'bar',
+      doTest: function() {
+        var self = this
+        var BarHasher = oo({
+          _type: _o('../lib/security/Hasher'),
+          hash: function(data) {
+            return 'bar'
+          }
+        })
+        var check = function() {
+          var authenticator = o(self.authenticator)
+          authenticator.initialize(mockService())
+          var findUserStub = sinon.stub(authenticator, 'findUser')
+          findUserStub.returns({'username': 'foo', 'password': 'bar'})
+          var req = mockHttpBasicAuthRequest(self.username, self.password)
+          var result = authenticator.authenticate(req)
+          assert.equal(result.username, self.username)
+        }
+        this.authenticator.passwordHashFn = BarHasher
+        check()
+        this.authenticator.passwordHashFn = o({_type: BarHasher})
+        check()
+        this.authenticator.passwordHashFn = {}
+        assert.throws(function() {
+          var authenticator = o(self.authenticator)
+        }, TypeError)
+      }
+    }),
 
     //
     // mongodb http basic
