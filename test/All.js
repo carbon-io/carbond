@@ -25,11 +25,12 @@ module.exports = o({
   tests: [
     _o('./AclTests'),
     _o('./AuthenticatorTests'),
-    _o('./IdGeneratorTests'),
-    _o('./StartStopTests'),
-    _o('./ParameterParsingTests'),
-    _o('./BasicEndpointTests'),
     _o('./BasicCollectionTests'),
+    _o('./BasicEndpointTests'),
+    _o('./HasherTests'),
+    _o('./IdGeneratorTests'),
     _o('./MongoDBCollectionTests'),
+    _o('./ParameterParsingTests'),
+    _o('./StartStopTests'),
   ],
 })

@@ -144,7 +144,8 @@ module.exports = o({
 
     o({
       _type: testtube.Test,
-      description: 'test unsupported hash function',
+      name: 'TestHttpBasicAuthenticatorUnsupportedHashFunction',
+      description: 'Test unsupported hash function',
       authenticator: {
         _type: _o('../lib/security/HttpBasicAuthenticator'),
         usernameField: 'username',
@@ -162,7 +163,8 @@ module.exports = o({
     }),
     o({
       _type: testtube.Test,
-      description: 'test authenticate with unspecified fields',
+      name: 'TestHttpBasicAuthenticatorUnspecifiedRequiredFields',
+      description: 'Test with unspecified required fields',
       authenticator: {
         _type: _o('../lib/security/HttpBasicAuthenticator'),
         usernameField: 'username'
@@ -180,7 +182,8 @@ module.exports = o({
     }),
     o({
       _type: testtube.Test,
-      description: 'test authenticate wrong credentials',
+      name: 'TestHttpBasicAuthenticatorWrongCredentials',
+      description: 'Test wrong credentials',
       authenticator: {
         _type: _o('../lib/security/HttpBasicAuthenticator'),
         usernameField: 'username',
@@ -201,7 +204,8 @@ module.exports = o({
     }),
     o({
       _type: testtube.Test,
-      description: 'test authenticate using default hashing (none)',
+      name: 'TestHttpBasicAuthenticatorSuccess',
+      description: 'Test successful authentication',
       authenticator: {
         _type: _o('../lib/security/HttpBasicAuthenticator'),
         usernameField: 'username',
@@ -219,48 +223,6 @@ module.exports = o({
         assert.equal(result.username, this.username)
       }
     }),
-    o({
-      _type: testtube.Test,
-      description: 'test authenticate using sha256',
-      authenticator: {
-        _type: _o('../lib/security/HttpBasicAuthenticator'),
-        passwordHashFn: 'sha256',
-        usernameField: 'username',
-        passwordField: 'password'
-      },
-      username: 'foo',
-      password: 'bar',
-      doTest: function() {
-        var authenticator = o(this.authenticator)
-        authenticator.initialize(mockService())
-        var findUserStub = sinon.stub(authenticator, 'findUser')
-        findUserStub.returns({'username': 'foo', 'password': crypto.createHash('sha256').update('bar').digest('hex')})
-        var req = mockHttpBasicAuthRequest(this.username, this.password)
-        var result = authenticator.authenticate(req)
-        assert.equal(result.username, this.username)
-      }
-    }),
-    o({
-      _type: testtube.Test,
-      description: 'test authenticate using bcrypt',
-      authenticator: {
-        _type: _o('../lib/security/HttpBasicAuthenticator'),
-        passwordHashFn: 'bcrypt',
-        usernameField: 'username',
-        passwordField: 'password'
-      },
-      username: 'foo',
-      password: 'bar',
-      doTest: function() {
-        var authenticator = o(this.authenticator)
-        authenticator.initialize(mockService())
-        var findUserStub = sinon.stub(authenticator, 'findUser')
-        findUserStub.returns({'username': 'foo', 'password': bcrypt.hashSync('bar')})
-        var req = mockHttpBasicAuthRequest(this.username, this.password)
-        var result = authenticator.authenticate(req)
-        assert.equal(result.username, this.username)
-      }
-    }),
 
     //
     // mongodb http basic
@@ -268,7 +230,8 @@ module.exports = o({
 
     o({
       _type: MongoDBAuthenticatorTest,
-      description: 'test authenticate with unspecified fields (superclass)',
+      name: 'TestMongoDBHttpBasicAuthenticatorUnspecifiedRequiredFields',
+      description: 'Test with unspecified required fields (superclass)',
       authenticator: {
         _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
         usernameField: 'username',
@@ -285,7 +248,8 @@ module.exports = o({
     }),
     o({
       _type: MongoDBAuthenticatorTest,
-      description: 'test authenticate with unspecified fields',
+      name: 'TestMongoDBHttpBasicAuthenticatorUnspecifiedRequiredFields',
+      description: 'Test with unspecified required fields',
       authenticator: {
         _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
         usernameField: 'username',
@@ -303,7 +267,8 @@ module.exports = o({
     }),
     o({
       _type: MongoDBAuthenticatorTest,
-      description: 'test user does not exist',
+      name: 'TestMongoDBHttpAuthenticatorUserDoesNotExist',
+      description: 'Test user does not exist',
       authenticator: {
         _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
         usernameField: 'username',
@@ -326,7 +291,8 @@ module.exports = o({
     }),
     o({
       _type: MongoDBAuthenticatorTest,
-      description: 'test wrong password',
+      name: 'TestMongoDBHttpAuthenticatorWrongPassword',
+      description: 'Test wrong password',
       authenticator: {
         _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
         usernameField: 'username',
@@ -349,7 +315,8 @@ module.exports = o({
     }),
     o({
       _type: MongoDBAuthenticatorTest,
-      description: 'test success',
+      name: 'TestMongoDBHttpBasicAuthenticatorSuccess',
+      description: 'Test successful authentication',
       authenticator: {
         _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
         usernameField: 'username',
