@@ -340,9 +340,9 @@ module.exports = o({
                          required: false,
                          default: undefined
                        },
-                       fields : {
-                         name: 'fields',
-                         description: "Fields spec (JSON)",
+                       projection : {
+                         name: 'projection',
+                         description: "Projection spec (JSON)",
                          location: "query", 
                          schema: { type: "object" }, 
                          required: false,
