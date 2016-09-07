@@ -30,5 +30,6 @@ module.exports = o({
     _o('./BasicEndpointTests'),
     _o('./BasicCollectionTests'),
     _o('./MongoDBCollectionTests'),
+    _o('./LimiterTests'),
   ],
 })
