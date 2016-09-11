@@ -12,7 +12,7 @@ module.exports = o({
   /**********************************************************************
    * _type
    */
-  _type: testtube.TestSuite,
+  _type: testtube.Test,
 
   /**********************************************************************
    * name
@@ -29,6 +29,6 @@ module.exports = o({
     _o('./ParameterParsingTests'),
     _o('./BasicEndpointTests'),
     _o('./BasicCollectionTests'),
-    _o('./MongoDBCollectionTests'),
+//    _o('./MongoDBCollectionTests'),
   ],
 })

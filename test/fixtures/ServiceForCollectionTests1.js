@@ -14,7 +14,7 @@ module.exports = o({
   _type: carbond.Service,
   
   port: 8888,
-  verbosity: 'info',
+  verbosity: 'warn',
   
   endpoints: {
     // Simple endpoint with Collection operations defined as functions

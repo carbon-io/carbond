@@ -33,7 +33,6 @@ module.exports = o({
   doTest: function() {
     this.clearDatabase(this.service.db) // ensure clean database just in case
     this.testConfiguration()
-    tt.HttpTest.prototype.doTest.call(this) // super.doTest
     this.clearDatabase(this.service.db) // clean database (good hygiene)
   },
   

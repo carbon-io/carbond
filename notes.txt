@@ -514,8 +514,8 @@ o cmdline (talks to REST interface)
   - lattice list-environments
   - lattice define-environment <name|desc> <provider> <region> --> gensym id
   - lattice show-environment <id> -n name
+  - lattice assess-environment <id> -n name
   - lattice remove-environment <id>
-
 
   - lattice list-systems <env>
   - lattice define-system <env> <name> <path-or-url-to-system-def> -->gensym id
@@ -527,6 +527,19 @@ o cmdline (talks to REST interface)
   - lattice rollout-system <id> [<version>]  // can list plan with --dry-run
   - lattice rollback-system <id> // can list plan with --dry-run
   - lattice diff-systems
+
+  - honeycomb define-system-parameter 
+  - honeycomb list-system-parameters 
+  - honeycomb show-system-parameter (shows meta data about who when as well?) 
+  - honeycomb get-system-parameter (shows meta data about who when as well?) 
+  - honeycomb set-system-parameter 
+
+  - mlab list-environments
+  - mlab define-environment
+  - mlab ...
+
+  - mlab rollout-system ID [VERSION]
+
 
 o Lattice can maintain system parameters which are top-level variables
 encrypted in the lattice db which get passed into system when template
@@ -652,3 +665,4 @@ Panama.json
   ]       
 
 }
+

@@ -47,6 +47,8 @@ function syncTest() {
   var service = o({
     _type: carbond.Service,
     
+    verbosity: 'warn',
+
     doStart: function() {
       this._started = true
     },
@@ -80,6 +82,8 @@ function asyncTest1(done) {
   var service = o({
     _type: carbond.Service,
     
+    verbosity: 'warn',
+
     doStart: function() {
       this._started = true
     },
@@ -104,6 +108,8 @@ function asyncTest1(done) {
 function asyncTest2(done) {
   var service = o({
     _type: carbond.Service,
+
+    verbosity: 'warn',
     
     doStart: function(options, cb) {
       this._started = true
@@ -133,6 +139,8 @@ function asyncTest2(done) {
 function asyncTest3(cb) {
   var service = o({
     _type: carbond.Service,
+
+    verbosity: 'warn',
     
     doStart: function() {
       this._started = true

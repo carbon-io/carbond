@@ -32,7 +32,6 @@ module.exports = o({
    */
   doTest: function() {
     this.testConfiguration()
-    tt.HttpTest.prototype.doTest.call(this)
   },
   
   /**********************************************************************
