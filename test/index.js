@@ -5,7 +5,7 @@ var __ = require('@carbon-io/fibers').__(module)
 var testtube = require('test-tube')
 
 /**************************************************************************
- * All
+ * All tests
  */
 module.exports = o({
 
@@ -29,6 +29,6 @@ module.exports = o({
     _o('./ParameterParsingTests'),
     _o('./BasicEndpointTests'),
     _o('./BasicCollectionTests'),
-//    _o('./MongoDBCollectionTests'),
+    _o('./MongoDBCollectionTests'),
   ],
 })
