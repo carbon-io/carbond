@@ -17,7 +17,7 @@ var Operation = require('../lib/Operation')
 var Service = require('../lib/Service')
 
 module.exports = o({
-  _type: testtube.TestSuite,
+  _type: testtube.Test,
   name: 'LimiterFrameworkTests',
   description: 'Limiter framework tests',
   setup: function() { },
@@ -27,7 +27,7 @@ module.exports = o({
     // Limiter tests
     //
     o({
-      _type: testtube.TestSuite,
+      _type: testtube.Test,
       name: 'LimiterInterfaceTests',
       description: 'Limiter interface tests',
       tests: [
@@ -71,7 +71,7 @@ module.exports = o({
     //
 
     o({
-      _type: testtube.TestSuite,
+      _type: testtube.Test,
       name: 'LimiterSelectorInterfaceTests',
       description: 'Limiter selector interface tests',
       tests: [
@@ -93,7 +93,7 @@ module.exports = o({
     //
 
     o({
-      _type: testtube.TestSuite,
+      _type: testtube.Test,
       name: 'StaticKeyLimiterSelectorTests',
       description: 'StaticKeyLimiterSelector tests',
       setup: function() { },
@@ -142,7 +142,7 @@ module.exports = o({
     //
 
     o({
-      _type: testtube.TestSuite,
+      _type: testtube.Test,
       name: 'ReqPropertyLimiterSelectorTests',
       description: 'ReqPropertyLimiterSelector tests',
       tests: [
@@ -253,7 +253,7 @@ module.exports = o({
     //
 
     o({
-      _type: testtube.TestSuite,
+      _type: testtube.Test,
       name: 'FunctionLimiterTests',
       description: 'FunctionLimitertests',
       setup: function() { },
@@ -375,7 +375,7 @@ module.exports = o({
     //
 
     o({
-      _type: testtube.TestSuite,
+      _type: testtube.Test,
       name: 'LimiterPolicyStateTests',
       description: 'LimiterPolicyState tests',
       setup: function() { },
@@ -505,7 +505,7 @@ module.exports = o({
     //
 
     o({
-      _type: testtube.TestSuite,
+      _type: testtube.Test,
       name: 'LimiterPolicyTests',
       description: 'LimiterPolicy tests',
       LimiterPolicy_: oo({
@@ -626,7 +626,7 @@ module.exports = o({
     //
 
     o({
-      _type: testtube.TestSuite,
+      _type: testtube.Test,
       name: 'WindowLimiterPolicyTests',
       description: 'WindowLimiterPolicy tests',
       tests: [
@@ -704,7 +704,7 @@ module.exports = o({
     //
 
     o({
-      _type: testtube.TestSuite,
+      _type: testtube.Test,
       name: 'PolicyLimiterTests',
       description: 'PolicyLimiter tests',
       setup: function() {
@@ -864,7 +864,7 @@ module.exports = o({
     //
 
     o({
-      _type: testtube.TestSuite,
+      _type: testtube.Test,
       name: 'LimiterChainTests',
       description: 'LimiterChain tests',
       setup: function() {
