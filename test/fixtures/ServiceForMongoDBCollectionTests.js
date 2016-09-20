@@ -12,7 +12,7 @@ module.exports = o({
   _type: carbond.Service,
   
   port: 8888,
-  verbosity: 'info',
+  verbosity: 'warn',
 
   dbUri: "mongodb://localhost:27017/mongodb-collection-tests",
     

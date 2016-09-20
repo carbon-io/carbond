@@ -5,14 +5,14 @@ var __ = require('@carbon-io/fibers').__(module)
 var testtube = require('test-tube')
 
 /**************************************************************************
- * All
+ * All tests
  */
 module.exports = o({
 
   /**********************************************************************
    * _type
    */
-  _type: testtube.TestSuite,
+  _type: testtube.Test,
 
   /**********************************************************************
    * name

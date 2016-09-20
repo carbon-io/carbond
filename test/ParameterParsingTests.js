@@ -31,7 +31,7 @@ module.exports = o({
 
     var value
     var definition
-    self.tests.forEach(function(test) {
+    self.parsingTests.forEach(function(test) {
       value = undefined
       definition = undefined
       definition = o(test.definition, '../lib/OperationParameter')
@@ -61,7 +61,7 @@ module.exports = o({
   /**********************************************************************
    * tests
    */
-  tests: [
+  parsingTests: [
     {
       datum: undefined, 
       definition: {
