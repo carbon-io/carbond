@@ -28,13 +28,13 @@ module.exports = o({
     //
     o({
       _type: testtube.Test,
-      name: 'LimiterInterfaceTests',
+      name: 'LimiterTests',
       description: 'Limiter interface tests',
       tests: [
         o({
           _type: testtube.Test,
-          name: 'TestLimiterInstantiateInterface',
-          description: 'Test Limiter instantiate fails',
+          name: 'TestInstantiate',
+          description: 'Test instantiate',
           doTest: function () {
             assert.throws(function() {
               var limiter = o({_type: limiters.Limiter})
@@ -43,8 +43,8 @@ module.exports = o({
         }),
         o({
           _type: testtube.Test,
-          name: 'TestLimiterSendUnavailableInterface',
-          description: 'Test Limiter `sendUnavailable`',
+          name: 'TestSendUnavailable',
+          description: 'Test `sendUnavailable`',
           setup: function () {
             sinon.stub(limiters.Limiter.prototype, '_C', function() {})
           },
@@ -52,15 +52,18 @@ module.exports = o({
             limiters.Limiter.prototype._C.restore()
           },
           doTest: function () {
-              var _handleErrorSpy = sinon.spy()
-              var resSpy = sinon.spy()
-              var limiter = o({_type: limiters.Limiter})
-              limiter.initialize({_handleError: _handleErrorSpy}, undefined)
-              limiter.sendUnavailable(resSpy)
-              assert(_handleErrorSpy.called)
-              assert.equal(_handleErrorSpy.args[0].length, 2)
-              assert(_handleErrorSpy.args[0][0] instanceof HttpErrors.ServiceUnavailable)
-              assert(_handleErrorSpy.args[0][1] === resSpy)
+            var _handleErrorSpy = sinon.spy()
+            var resSpy = sinon.spy()
+            resSpy.append = sinon.spy()
+            var limiter = o({_type: limiters.Limiter})
+            limiter.initialize({_handleError: _handleErrorSpy}, undefined)
+            limiter.sendUnavailable(resSpy, 60)
+            assert(_handleErrorSpy.called)
+            assert.equal(_handleErrorSpy.args[0].length, 2)
+            assert(_handleErrorSpy.args[0][0] instanceof HttpErrors.ServiceUnavailable)
+            assert(_handleErrorSpy.args[0][1] === resSpy)
+            assert(resSpy.append.args[0][0] === 'Retry-After')
+            assert(resSpy.append.args[0][1] === '60')
           }
         }),
       ]
@@ -72,13 +75,13 @@ module.exports = o({
 
     o({
       _type: testtube.Test,
-      name: 'LimiterSelectorInterfaceTests',
-      description: 'Limiter selector interface tests',
+      name: 'LimiterSelectorTests',
+      description: 'LimiterSelector interface tests',
       tests: [
         o({
           _type: testtube.Test,
-          name: 'TestLimiterSelectorInstantiateInterface',
-          description: 'Test LimiterSelector instantiation fails',
+          name: 'TestInstantiate',
+          description: 'Test instantiation fails',
           doTest: function() {
             assert.throws(function() {
               var limiterSelector = o({_type: limiters.LimiterSelector})
@@ -101,8 +104,8 @@ module.exports = o({
       tests: [
         o({
           _type: testtube.Test,
-          name: 'TestStaticKeyLimiterSelectorStaticKeyValidation',
-          description: 'Test StaticKeyLimiterSelector staticKey property validation',
+          name: 'TestStaticKeyValidation',
+          description: 'Test staticKey property validation',
           doTest: function() {
             [null, undefined, {foo: 'bar'}, function () {var foo = 'bar'}].forEach(function(val) {
               assert.throws(function() {
@@ -113,8 +116,8 @@ module.exports = o({
         }),
         o({
           _type: testtube.Test,
-          name: 'TestStaticKeyLimiterSelectorHash',
-          description: 'Test StaticKeyLimiterSelector hash',
+          name: 'TestHash',
+          description: 'Test hash',
           doTest: function() {
             var s1 = o({_type: limiterSelectors.StaticKeyLimiterSelector, staticKey: 'foo'})
             var s2 = o({_type: limiterSelectors.StaticKeyLimiterSelector, staticKey: 'bar'})
@@ -125,8 +128,8 @@ module.exports = o({
         }),
         o({
           _type: testtube.Test,
-          name: 'TestStaticKeyLimiterSelectorKeyFn',
-          description: 'Test StaticKeyLimiterSelector key function',
+          name: 'TestKeyFn',
+          description: 'Test key function',
           doTest: function () {
             var s1 = o({_type: limiterSelectors.StaticKeyLimiterSelector, staticKey: 'foo'})
             var s2 = o({_type: limiterSelectors.StaticKeyLimiterSelector, staticKey: 'bar'})
@@ -148,8 +151,8 @@ module.exports = o({
       tests: [
         o({
           _type: testtube.Test,
-          name: 'TestReqPropertyLimiterSelectorPropertyPathValidation',
-          description: 'TestReqPropertyLimiterSelector property path validation',
+          name: 'TestPropertyPathValidation',
+          description: 'Test property path validation',
           doTest: function() {
             var s = undefined
             var vals = [null, undefined, '', {foo: 'bar'}, function () {var foo = 'bar'}]
@@ -166,8 +169,8 @@ module.exports = o({
         }),
         o({
           _type: testtube.Test,
-          name: 'TestReqPropertyLimiterSelectorTransformValidation',
-          description: 'TestReqPropertyLimiterSelector transform validation',
+          name: 'TestTransformValidation',
+          description: 'Test transform validation',
           doTest: function() {
             var s = undefined
             var vals = [null, {foo: 'bar'}]
@@ -193,8 +196,8 @@ module.exports = o({
         }),
         o({
           _type: testtube.Test,
-          name: 'TestReqPropertyLimiterSelectorKeyFn',
-          description: 'TestReqPropertyLimiterSelector key function',
+          name: 'TestKeyFn',
+          description: 'Test key function',
           doTest: function() {
             var req = {
               foo: {
@@ -232,8 +235,8 @@ module.exports = o({
         }),
         o({
           _type: testtube.Test,
-          name: 'TestReqPropertyLimiterSelectorTransform',
-          description: 'TestReqPropertyLimiterSelector transform',
+          name: 'TestTransform',
+          description: 'Test transform',
           doTest: function() {
             var s = o({
               _type: limiterSelectors.ReqPropertyLimiterSelector,
@@ -261,8 +264,8 @@ module.exports = o({
       tests: [
         o({
           _type: testtube.Test,
-          name: 'TestFunctionLimiterFnPropertyValidation',
-          description: 'Test FunctionLimiter fn property validation',
+          name: 'TestFnPropertyValidation',
+          description: 'Test fn property validation',
           doTest: function() {
             assert.throws(function() {
               o({
@@ -298,6 +301,7 @@ module.exports = o({
             var _handleErrorSpy = sinon.spy()
             var nextSpy = sinon.spy()
             var resSpy = sinon.spy()
+            resSpy.append = sinon.spy()
             var limiters_ = [
               o({
                 _type: limiters.FunctionLimiter,
@@ -383,8 +387,8 @@ module.exports = o({
       tests: [
         o({
           _type: testtube.Test,
-          name: 'TestLimiterPolicyStateVisit',
-          description: 'Test LimiterPolicyState visit method',
+          name: 'TestVisit',
+          description: 'Test visit method',
           setup: function() { },
           teardown: function() { },
           doTest: function() {
@@ -427,8 +431,8 @@ module.exports = o({
         }),
         o({
           _type: testtube.Test,
-          name: 'TestLimiterPolicyStateVisits',
-          description: 'Test LimiterPolicyState visits method',
+          name: 'TestVisits',
+          description: 'Test visits method',
           doTest: function() {
             var state = o({_type: limiterPolicies.LimiterPolicyState})
             var timestamps = [0, 1, 2, 3, 4, 5]
@@ -446,8 +450,8 @@ module.exports = o({
         }),
         o({
           _type: testtube.Test,
-          name: 'TestLimiterPolicyStatePurge',
-          description: 'Test LimiterPolicyState purge method',
+          name: 'TestPurge',
+          description: 'Test purge method',
           doTest: function() {
             var state = o({_type: limiterPolicies.LimiterPolicyState})
             var timestamps = [0, 1, 2, 3, 4, 5]
@@ -486,8 +490,8 @@ module.exports = o({
         }),
         o({
           _type: testtube.Test,
-          name: 'TestLimiterPolicyStateReset',
-          description: 'Test LimiterPolicyState reset method',
+          name: 'TestReset',
+          description: 'Test reset method',
           doTest: function() {
             var state = o({_type: limiterPolicies.LimiterPolicyState})
             state.visit({}, 'foo', 1)
@@ -536,8 +540,8 @@ module.exports = o({
       tests: [
         o({
           _type: testtube.Test,
-          name: 'TestLimiterPolicyInstantiation',
-          description: 'Test LimiterPolicy instantiation',
+          name: 'TestInstantiation',
+          description: 'Test instantiation',
           doTest: function() {
             assert.throws(function() {
               var limiterPolicy = o({
@@ -548,8 +552,8 @@ module.exports = o({
         }),
         o({
           _type: testtube.Test,
-          name: 'TestLimiterPolicyStateKey',
-          description: 'Test LimiterPolicy stateKey property',
+          name: 'TestStateKey',
+          description: 'Test stateKey property',
           doTest: function() {
             // shared state
 
@@ -595,8 +599,8 @@ module.exports = o({
         }),
         o({
           _type: testtube.Test,
-          name: 'TestLimiterPolicyStateKey',
-          description: 'Test LimiterPolicy initializeState',
+          name: 'TestStateKey',
+          description: 'Test initializeState',
           doTest: function() {
             var node = o({_type: Service})
             var policy = this.parent.Policy(node)
@@ -632,8 +636,8 @@ module.exports = o({
       tests: [
         o({
           _type: testtube.Test,
-          name: 'TestWindowLimiterPolicyValidation',
-          description: 'Test LimiterPolicyWindow validation',
+          name: 'TestValidation',
+          description: 'Test validation',
           doTest: function() {
             var vals = ['foo', -1, {}]
             vals.forEach(function(val) {
@@ -663,8 +667,8 @@ module.exports = o({
         }),
         o({
           _type: testtube.Test,
-          name: 'TestWindowLimiterPolicyValidation',
-          description: 'Test LimiterPolicyWindow validation',
+          name: 'TestValidation',
+          description: 'Test validation',
           setup: function() {
             var results = [
               0,    // allow
@@ -720,8 +724,8 @@ module.exports = o({
       tests: [
         o({
           _type: testtube.Test,
-          name: 'TestPolicyLimiterValidation',
-          description: 'Test PolicyLimiter validation',
+          name: 'TestValidation',
+          description: 'Test validation',
           doTest: function() {
             var selectors = ['a', 1, {}]
             selectors.forEach(function(selector) {
@@ -747,8 +751,8 @@ module.exports = o({
         }),
         o({
           _type: testtube.Test,
-          name: 'TestPolicyLimiterInitialize',
-          description: 'Test PolicyLimiter initialize method',
+          name: 'TestInitialize',
+          description: 'Test initialize method',
           doTest: function() {
             var service = o({_type: Service})
             var limiter = o({
@@ -818,7 +822,7 @@ module.exports = o({
         o({
           _type: testtube.Test,
           name: 'TestPolicyLimiter',
-          description: 'Test PolicyLimiter validation',
+          description: 'Test PolicyLimiter',
           setup: function() {
             var results = [
               0,    // allow
@@ -860,13 +864,13 @@ module.exports = o({
     }),
 
     //
-    // LimiterChain tests
+    // ChainLimiter tests
     //
 
     o({
       _type: testtube.Test,
-      name: 'LimiterChainTests',
-      description: 'LimiterChain tests',
+      name: 'ChainLimiterTests',
+      description: 'ChainLimiter tests',
       setup: function() {
         var self = this
         this.tests.forEach(function(test) {
@@ -898,8 +902,8 @@ module.exports = o({
       tests: [
         o({
           _type: testtube.Test,
-          name: 'TestLimiterChainInitialize',
-          description: 'Test LimiterChain initialize method',
+          name: 'TestInitialize',
+          description: 'Test initialize method',
           doTest: function() {
             var self = this
             var limiters_ = [
@@ -911,7 +915,7 @@ module.exports = o({
               sinon.spy(limiter, 'initialize')
             })
             var limiterChain = o({
-              _type: limiters.LimiterChain,
+              _type: limiters.ChainLimiter,
               limiters: limiters_
             })
             limiterChain.initialize(this.parent.service, this.parent.service)
@@ -924,8 +928,8 @@ module.exports = o({
         }),
         o({
           _type: testtube.Test,
-          name: 'TestLimiterChainInitialize',
-          description: 'Test LimiterChain initialize method',
+          name: 'TestChainLimiter',
+          description: 'Test ChainLimiter',
           doTest: function() {
             var self = this
             var limiters_ = [
@@ -937,7 +941,7 @@ module.exports = o({
               sinon.stub(limiter, 'sendUnavailable', function() { })
             })
             var limiterChain = o({
-              _type: limiters.LimiterChain,
+              _type: limiters.ChainLimiter,
               limiters: limiters_
             })
             limiterChain.initialize(this.parent.service, this.parent.service)
