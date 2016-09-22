@@ -120,7 +120,7 @@ var TestService = {
           _type: CountDownLimiter,
           preAuth: true,
           maxVisits: 2,
-          name: '/foo::get::OperationLimiter'
+          name: '/bar::get::OperationLimiter'
         })
       }),
       post: o({
@@ -129,7 +129,7 @@ var TestService = {
           _type: CountDownLimiter,
           preAuth: false,
           maxVisits: 2,
-          name: '/foo::post::OperationLimiter'
+          name: '/bar::post::OperationLimiter'
         })
       }),
       endpoints: {
@@ -217,7 +217,9 @@ module.exports = o({
     // /bar/foo
     this.service.endpoints.bar.endpoints.foo.limiter.process.restore()
   },
+  // @todo check auth bits in limiter spies!
   tests: [
+    // /foo/bar
     {
       reqSpec: {
         url: 'http://127.0.0.1:8888/foo',
@@ -260,6 +262,185 @@ module.exports = o({
           message: '/foo::get::OperationLimiter'
         }
       }
-    }
+    },
+    {
+      reqSpec: {
+        url: 'http://127.0.0.1:8888/foo',
+        method: 'post',
+        headers: {
+          'Api-Key': 'foo'
+        }
+      },
+      resSpec: {
+        statusCode: 200,
+        body: '/foo::post'
+      }
+    },
+    {
+      reqSpec: {
+        url: 'http://127.0.0.1:8888/foo',
+        method: 'post',
+        headers: {
+          'Api-Key': 'foo'
+        }
+      },
+      resSpec: {
+        statusCode: 503,
+        body: {
+          code: 503,
+          description: 'Service Unavailable',
+          message: '/foo::EndpointLimiter'
+        }
+      }
+    },
+    {
+      reqSpec: {
+        url: 'http://127.0.0.1:8888/foo/bar',
+        method: 'get',
+        headers: {
+          'Api-Key': 'foo'
+        }
+      },
+      resSpec: {
+        statusCode: 200,
+        body: '/foo/bar::get'
+      }
+    },
+    {
+      reqSpec: {
+        url: 'http://127.0.0.1:8888/foo/bar',
+        method: 'get',
+        headers: {
+          'Api-Key': 'foo'
+        }
+      },
+      resSpec: {
+        statusCode: 503,
+        body: {
+          code: 503,
+          description: 'Service Unavailable',
+          message: '/foo/bar::EndpointLimiter'
+        }
+      }
+    },
+    // /bar/foo
+    {
+      reqSpec: {
+        url: 'http://127.0.0.1:8888/bar',
+        method: 'get',
+        headers: {
+          'Api-Key': 'bar'
+        }
+      },
+      resSpec: {
+        statusCode: 200,
+        body: '/bar::get'
+      }
+    },
+    {
+      reqSpec: {
+        url: 'http://127.0.0.1:8888/bar',
+        method: 'get',
+        headers: {
+          'Api-Key': 'bar'
+        }
+      },
+      resSpec: {
+        statusCode: 200,
+        body: '/bar::get'
+      }
+    },
+    {
+      reqSpec: {
+        url: 'http://127.0.0.1:8888/bar',
+        method: 'get',
+        headers: {
+          'Api-Key': 'bar'
+        }
+      },
+      resSpec: {
+        statusCode: 503,
+        body: {
+          code: 503,
+          description: 'Service Unavailable',
+          message: '/bar::get::OperationLimiter'
+        }
+      }
+    },
+    {
+      reqSpec: {
+        url: 'http://127.0.0.1:8888/bar',
+        method: 'post',
+        headers: {
+          'Api-Key': 'bar'
+        }
+      },
+      resSpec: {
+        statusCode: 200,
+        body: '/bar::post'
+      }
+    },
+    {
+      reqSpec: {
+        url: 'http://127.0.0.1:8888/bar',
+        method: 'post',
+        headers: {
+          'Api-Key': 'bar'
+        }
+      },
+      resSpec: {
+        statusCode: 200,
+        body: '/bar::post'
+      }
+    },
+    // NOTE: because of the preAuth/postAuth ordering, one more request is
+    //       allowed to get through before the endpoint limiter kicks in
+    {
+      reqSpec: {
+        url: 'http://127.0.0.1:8888/bar',
+        method: 'post',
+        headers: {
+          'Api-Key': 'bar'
+        }
+      },
+      resSpec: {
+        statusCode: 503,
+        body: {
+          code: 503,
+          description: 'Service Unavailable',
+          message: '/bar::EndpointLimiter'
+        }
+      }
+    },
+    {
+      reqSpec: {
+        url: 'http://127.0.0.1:8888/bar/foo',
+        method: 'get',
+        headers: {
+          'Api-Key': 'foo'
+        }
+      },
+      resSpec: {
+        statusCode: 200,
+        body: '/bar/foo::get'
+      }
+    },
+    {
+      reqSpec: {
+        url: 'http://127.0.0.1:8888/bar/foo',
+        method: 'get',
+        headers: {
+          'Api-Key': 'foo'
+        }
+      },
+      resSpec: {
+        statusCode: 503,
+        body: {
+          code: 503,
+          description: 'Service Unavailable',
+          message: '/bar/foo::EndpointLimiter'
+        }
+      }
+    },
   ]
 })
