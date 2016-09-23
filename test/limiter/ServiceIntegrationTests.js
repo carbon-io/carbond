@@ -154,6 +154,7 @@ module.exports = o({
   name: 'ServiceIntegrationTests',
   description: 'Service integration tests',
   service: o(TestService),
+  baseUrl: 'http://127.0.0.1:8888',
   _init: function() {
     ServiceTest.prototype._init.call(this)
   },
@@ -222,7 +223,7 @@ module.exports = o({
     // /foo/bar
     {
       reqSpec: {
-        url: 'http://127.0.0.1:8888/foo',
+        url: '/foo',
         method: 'get',
         headers: {
           'Api-Key': 'foo'
@@ -235,7 +236,7 @@ module.exports = o({
     },
     {
       reqSpec: {
-        url: 'http://127.0.0.1:8888/foo',
+        url: '/foo',
         method: 'get',
         headers: {
           'Api-Key': 'foo'
@@ -248,7 +249,7 @@ module.exports = o({
     },
     {
       reqSpec: {
-        url: 'http://127.0.0.1:8888/foo',
+        url: '/foo',
         method: 'get',
         headers: {
           'Api-Key': 'foo'
@@ -265,7 +266,7 @@ module.exports = o({
     },
     {
       reqSpec: {
-        url: 'http://127.0.0.1:8888/foo',
+        url: '/foo',
         method: 'post',
         headers: {
           'Api-Key': 'foo'
@@ -278,7 +279,7 @@ module.exports = o({
     },
     {
       reqSpec: {
-        url: 'http://127.0.0.1:8888/foo',
+        url: '/foo',
         method: 'post',
         headers: {
           'Api-Key': 'foo'
@@ -295,7 +296,7 @@ module.exports = o({
     },
     {
       reqSpec: {
-        url: 'http://127.0.0.1:8888/foo/bar',
+        url: '/foo/bar',
         method: 'get',
         headers: {
           'Api-Key': 'foo'
@@ -308,7 +309,7 @@ module.exports = o({
     },
     {
       reqSpec: {
-        url: 'http://127.0.0.1:8888/foo/bar',
+        url: '/foo/bar',
         method: 'get',
         headers: {
           'Api-Key': 'foo'
@@ -326,7 +327,7 @@ module.exports = o({
     // /bar/foo
     {
       reqSpec: {
-        url: 'http://127.0.0.1:8888/bar',
+        url: '/bar',
         method: 'get',
         headers: {
           'Api-Key': 'bar'
@@ -339,7 +340,7 @@ module.exports = o({
     },
     {
       reqSpec: {
-        url: 'http://127.0.0.1:8888/bar',
+        url: '/bar',
         method: 'get',
         headers: {
           'Api-Key': 'bar'
@@ -352,7 +353,7 @@ module.exports = o({
     },
     {
       reqSpec: {
-        url: 'http://127.0.0.1:8888/bar',
+        url: '/bar',
         method: 'get',
         headers: {
           'Api-Key': 'bar'
@@ -369,7 +370,7 @@ module.exports = o({
     },
     {
       reqSpec: {
-        url: 'http://127.0.0.1:8888/bar',
+        url: '/bar',
         method: 'post',
         headers: {
           'Api-Key': 'bar'
@@ -382,7 +383,7 @@ module.exports = o({
     },
     {
       reqSpec: {
-        url: 'http://127.0.0.1:8888/bar',
+        url: '/bar',
         method: 'post',
         headers: {
           'Api-Key': 'bar'
@@ -397,7 +398,7 @@ module.exports = o({
     //       allowed to get through before the endpoint limiter kicks in
     {
       reqSpec: {
-        url: 'http://127.0.0.1:8888/bar',
+        url: '/bar',
         method: 'post',
         headers: {
           'Api-Key': 'bar'
@@ -414,7 +415,7 @@ module.exports = o({
     },
     {
       reqSpec: {
-        url: 'http://127.0.0.1:8888/bar/foo',
+        url: '/bar/foo',
         method: 'get',
         headers: {
           'Api-Key': 'foo'
@@ -427,7 +428,7 @@ module.exports = o({
     },
     {
       reqSpec: {
-        url: 'http://127.0.0.1:8888/bar/foo',
+        url: '/bar/foo',
         method: 'get',
         headers: {
           'Api-Key': 'foo'

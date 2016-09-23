@@ -19,7 +19,8 @@ module.exports = o({
     _o('./WindowLimiterPolicyTests'),
     _o('./PolicyLimiterTests'),
     _o('./ChainLimiterTests'),
-    _o('./ServiceIntegrationTests')
+    _o('./ServiceIntegrationTests'),
+    _o('./TooBusyLimiterTests')
   ]
 })
 
