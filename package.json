@@ -28,7 +28,7 @@
     "handlebars": "4.0.x",
     "lodash" : "4.5.x",
     "request" : "2.34.0",
-    "z-schema": "3.17.0",0
+    "z-schema": "3.17.0",
     "atom": "carbon-io/atom.git#v0.2.15",
     "bond": "carbon-io/bond.git#v0.1.15",
     "@carbon-io/fibers": "carbon-io/fibers.git#v0.3.2",
