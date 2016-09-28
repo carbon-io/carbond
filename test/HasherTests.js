@@ -99,59 +99,6 @@ module.exports = o({
     }),
     o({
       _type: testtube.Test,
-      name: 'DataProperty',
-      description: '',
-      setup: function() {
-        sinon.stub(Hasher.prototype, '_C')
-      },
-      teardown: function() {
-        Hasher.prototype._C.restore()
-      },
-      doTest: function() {
-        var hasher = o({_type: Hasher})
-        // uninitialized `data` property should be undefined
-        assert(_.isUndefined(hasher.data))
-        hasher._digest = 'bar'
-        // assigning to the `data` property should reset the `digest` property
-        hasher.data = 'foo'
-        assert(_.isUndefined(hasher._digest))
-      }
-    }),
-    o({
-      _type: testtube.Test,
-      name: 'DigestProperty',
-      description: '',
-      setup: function() {
-        sinon.stub(Hasher.prototype, '_C')
-      },
-      teardown: function() {
-        Hasher.prototype._C.restore()
-      },
-      doTest: function() {
-        var hasher = o({_type: Hasher})
-        // if `_data` and `_digest` are uninitialized, `digest` should be undefined
-        assert(_.isUndefined(hasher.data))
-        hasher.data = 'foo'
-        hasher.digest = 'bar'
-        // setting `digest` directly should reset `data`
-        assert(_.isUndefined(hasher.data))
-        hasher.data = 'foo'
-        hasher._digest = undefined
-        // accessing `digest` should invoke `hash` if `data` has been initialized and
-        // `digest` is undefined
-        try {
-          var mock = sinon.mock(hasher)
-          mock.expects('hash').returns('bar').once()
-          assert.equal(hasher.digest, 'bar')
-          mock.verify()
-        } finally {
-          mock.restore()
-        }
-      }
-    }),
-
-    o({
-      _type: testtube.Test,
       name: 'Eq',
       description: '',
       setup: function() {
@@ -164,18 +111,9 @@ module.exports = o({
         var hasher = o({_type: Hasher})
         try {
           var mock = sinon.mock(hasher)
-          mock.expects('hash').returns('bar').exactly(4)
-          hasher.digest = 'bar'
-          // 1 call to hash
-          assert(hasher.eq('foo'))
-          hasher.data = 'bar'
-          // 2 calls to hash
-          assert(hasher.eq('foo'))
-          hasher.digest = undefined
+          mock.expects('hash').returns('bar').exactly(1)
           // 1 call to hash
           assert(hasher.eq('foo', 'bar'))
-          assert(_.isUndefined(hasher.digest))
-          assert(_.isUndefined(hasher.data))
           mock.verify()
         } finally {
           mock.restore()
@@ -194,8 +132,6 @@ module.exports = o({
       doTest: function() {
         var hasher = o({_type: NoopHasher})
         assert.equal(hasher.hash('foo'), 'foo')
-        hasher.data = 'foo'
-        assert.equal(hasher.digest, 'foo')
       }
     }),
 
@@ -211,8 +147,6 @@ module.exports = o({
         var hasher = o({_type: Sha256Hasher})
         var digest = crypto.createHash('sha256').update('foo').digest('hex')
         hasher.eq(hasher.hash('foo'), digest)
-        hasher.data = 'foo'
-        assert.equal(hasher.digest, digest)
       }
     }),
 
@@ -244,18 +178,9 @@ module.exports = o({
 
         try {
           sinon.spy(hasher, 'hash')
-          hasher.digest = digest
-          // hash not called (bcrypt.compare)
-          assert(hasher.eq('foo'))
-          hasher.data = 'foo'
-          // 1 call to hash
-          assert(hasher.eq('foo'))
-          hasher.digest = undefined
           // hash not called (bcrypt.compare)
           assert(hasher.eq('foo', digest))
-          assert(_.isUndefined(hasher.digest))
-          assert(_.isUndefined(hasher.data))
-          assert(hasher.hash.calledOnce)
+          assert(!hasher.hash.called)
         } finally {
           hasher.hash.restore()
         }
