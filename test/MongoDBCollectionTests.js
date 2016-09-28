@@ -33,7 +33,6 @@ module.exports = o({
   doTest: function() {
     this.clearDatabase(this.service.db) // ensure clean database just in case
     this.testConfiguration()
-    tt.HttpTest.prototype.doTest.call(this) // super.doTest
     this.clearDatabase(this.service.db) // clean database (good hygiene)
   },
   
@@ -340,9 +339,9 @@ module.exports = o({
                          required: false,
                          default: undefined
                        },
-                       fields : {
-                         name: 'fields',
-                         description: "Fields spec (JSON)",
+                       projection : {
+                         name: 'projection',
+                         description: "Projection spec (JSON)",
                          location: "query", 
                          schema: { type: "object" }, 
                          required: false,

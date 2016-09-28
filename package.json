@@ -1,10 +1,11 @@
 {
   "name": "carbond",
-  "version": "0.1.12",
+  "version": "0.1.18",
   "description": "Carbond",
   "keywords": ["carbond", "carbon.io"],
   "contributors": [
-    "Will Shulman <will@mlab.com>"
+    "Will Shulman <will@mlab.com>",
+    "Greg Banks <greg@mlab.com>"
   ],
   "repository" : { 
     "type" : "git",
@@ -14,9 +15,10 @@
   "directories" : {
     "lib" : "./lib"
   },
-  "engines": { "node": ">=0.12.0" },
+  "engines": { "node": ">=4.0.0" },
   "devDependencies": {
-    "mocha": "^2.4.0"
+    "mocha": "^2.4.0",
+    "sinon": "~1.17.3"
   },
   "dependencies": {
     "basic-auth": "~1.0.0",
@@ -28,20 +30,17 @@
     "lodash" : "~4.5.0",
     "request" : "2.34.0",
     "z-schema": "3.17.0",
-    "atom": "git+ssh://git@github.com:carbon-io/atom.git#v0.2.4",
-    "bond": "git+ssh://git@github.com:carbon-io/bond.git#v0.1.9",
-    "@carbon-io/fibers": "git+ssh://git@github.com:carbon-io/fibers.git#v0.3.0",
-    "ejson": "git+ssh://git@github.com:carbon-io/ejson.git#v0.0.3",
-    "http-errors": "git+ssh://git@github.com:carbon-io/http-errors.git#v0.0.3",
-    "leafnode": "git+ssh://git@github.com:objectlabs/leafnode.git#v3.2.0",
-    "mongodb-uri": "git+ssh://git@github.com:mongolab/mongodb-uri-node.git#v0.9.7"
-  },
-  "devDependencies": {
-    "mocha": "^2.4.0",
-    "sinon": "~1.17.3",
-    "test-tube": "git+ssh://git@github.com:carbon-io/test-tube.git"
+    "atom": "carbon-io/atom.git#v0.2.17",
+    "bond": "carbon-io/bond.git#v0.1.17",
+    "@carbon-io/fibers": "carbon-io/fibers.git#v0.3.2",
+    "ejson": "carbon-io/ejson.git#v0.0.5",
+    "http-errors": "carbon-io/http-errors.git#v0.0.3",
+    "leafnode": "objectlabs/leafnode.git#v3.2.1",
+    "mongodb-uri": "mongolab/mongodb-uri-node.git#v0.9.7",
+    "test-tube": "carbon-io/test-tube.git#v0.1.9"
   },
   "scripts": {
+    "test": "node test"
   },
   "preferGlobal": false
 }
