@@ -4,7 +4,6 @@ var crypto = require('crypto')
 var bcrypt = require('bcryptjs')
 var sinon = require('sinon')
 
-var __ = require('fiber').__
 var _o = require('bond')._o(module)
 var connect = require('leafnode').connect
 var o  = require('atom').o(module)
