@@ -1,7 +1,9 @@
 var assert = require('assert')
 
 var _ = require('lodash')
+var mockery = require('mockery')
 var sinon = require('sinon')
+var toobusy = require('toobusy-js')
 
 var fibers = require('@carbon-io/fibers')
 var __ = fibers.__(module)
@@ -9,109 +11,139 @@ var _o  = require('bond')._o(module)
 var o  = require('atom').o(module)
 var oo  = require('atom').oo(module)
 var testtube = require('test-tube')
-var toobusy = require('toobusy-js')
 
 var ApiKeyAuthenticator = require('../../lib/security/ApiKeyAuthenticator')
-var Service = require('../../lib/Service')
 var Endpoint = require('../../lib/Endpoint')
 var Operation = require('../../lib/Operation')
 var ServiceTest = require('../../lib/test/ServiceTest')
 var limiters = require('../../lib/security/Limiter')
 
-var TooBusyLimiterTestServiceBase = oo({
-  _type: Service,
+var TooBusyLimiterTestServiceBase = function() {
+  // allow use of mockery
+  var Service = require('../../lib/Service')
+  return oo({
+    _type: Service,
 
-  _C: function() {
-    this._outstandingReqs = undefined
-  },
+    _C: function() {
+      this._outstandingReqs = undefined
+    },
 
-  _init: function() {
-    Service.prototype._init.call(this)
-    var self = this
+    _init: function() {
+      Service.prototype._init.call(this)
+      var self = this
 
-    this.hostname = '127.0.0.1'
-    this.port = 8888,
-    this.verbosity = 'warn'
-    this.enableBusyLimiter = true
+      this.hostname = '127.0.0.1'
+      this.port = 8888,
+        this.verbosity = 'warn'
+      this.enableBusyLimiter = true
 
-    this._pauseReq = 0
-    this._passthroughCb = undefined
-    this._outstandingReqs = []
-    this.middleware.push(function(req, res, next) {
-      if (self.pauseReq === 0) {
-        return next()
-      }
-      self._outstandingReqs.push(_.bind(
-        function(req, res, next) {
+      this._pauseReq = 0
+      this._passthroughCb = undefined
+      this._outstandingReqs = []
+      this.middleware.push(function(req, res, next) {
+        if (self.pauseReq === 0) {
           return next()
-        }, self, req, res, next))
-      self.pauseReq--
-      if (self.pauseReq === 0 && _.isFunction(self.passthroughCb)) {
-        self.passthroughCb()
-        self.passthroughCb = undefined
-      }
-    })
-    this.endpoints = {
-      foo: o({
-        _type: Endpoint,
-        get: function(req, res) {
-          return 'foo'
+        }
+        self._outstandingReqs.push(_.bind(
+          function(req, res, next) {
+            return next()
+          }, self, req, res, next))
+        self.pauseReq--
+        if (self.pauseReq === 0 && _.isFunction(self.passthroughCb)) {
+          self.passthroughCb()
+          self.passthroughCb = undefined
         }
       })
+      this.endpoints = {
+        foo: o({
+          _type: Endpoint,
+          get: function(req, res) {
+            return 'foo'
+          }
+        })
+      }
+    },
+
+    pauseReq: {
+      $property: {
+        get: function() { return this._pauseReq },
+        set: function(val) { this._pauseReq = val }
+      }
+    },
+
+    passthroughCb: {
+      $property: {
+        get: function() { return this._passthroughCb },
+        set: function(val) { this._passthroughCb = val }
+      }
+    },
+
+    drainOutstandingReqs: function() {
+      while (this._outstandingReqs.length > 0) {
+        var req = this._outstandingReqs.pop()
+        req()
+      }
     }
-  },
+  })
+}
 
-  pauseReq: {
-    $property: {
-      get: function() { return this._pauseReq },
-      set: function(val) { this._pauseReq = val }
+var MaxOutstandingReqsLimitedTestService = function(serviceDef, setup, teardown) {
+  try {
+    if (_.isFunction(setup)) {
+      setup()
     }
-  },
+    var _TooBusyLimiterTestServiceBase = TooBusyLimiterTestServiceBase()
+    var _MaxOutstandingReqsLimitedTestService = oo({
+      _type: _TooBusyLimiterTestServiceBase,
 
-  passthroughCb: {
-    $property: {
-      get: function() { return this._passthroughCb },
-      set: function(val) { this._passthroughCb = val }
-    }
-  },
+      description: 'TooBusyLimiter absMaxOutstandingReqs integration test service',
 
-  drainOutstandingReqs: function() {
-    while (this._outstandingReqs.length > 0) {
-      var req = this._outstandingReqs.pop()
-      req()
-    }
-  }
-})
-
-var MaxOutstandingReqsLimitedTestService = oo({
-  _type: TooBusyLimiterTestServiceBase,
-
-  description: 'TooBusyLimiter absMaxOutstandingReqs integration test service',
-
-  _init: function() {
-    TooBusyLimiterTestServiceBase.prototype._init.call(this)
-    this.busyLimiter = o({
-      _type: limiters.TooBusyLimiter,
-      absMaxOutstandingReqs: 8
+      _init: function () {
+        _TooBusyLimiterTestServiceBase.prototype._init.call(this)
+        this.busyLimiter = o({
+          _type: limiters.TooBusyLimiter,
+          absMaxOutstandingReqs: 8
+        })
+      }
     })
+    serviceDef._type = _MaxOutstandingReqsLimitedTestService
+    return o(serviceDef)
+  } finally {
+    if (_.isFunction(teardown)) {
+      teardown()
+    }
   }
-})
+}
 
-var FiberPoolSizeLimitedTestService = oo({
-  _type: TooBusyLimiterTestServiceBase,
+var FiberPoolSizeLimitedTestService = function(serviceDef, setup, teardown) {
+  try {
+    if (_.isFunction(setup)) {
+      setup()
+    }
+    var _TooBusyLimiterTestServiceBase = TooBusyLimiterTestServiceBase()
+    var _FiberPoolSizeLimitedTestService = oo({
+      _type: _TooBusyLimiterTestServiceBase,
 
-  description: 'TooBusyLimiter useFiberPoolSize integration test service',
+      description: 'TooBusyLimiter useFiberPoolSize integration test service',
 
-  _init: function() {
-    TooBusyLimiterTestServiceBase.prototype._init.call(this)
-    this.busyLimiter = o({
-      _type: limiters.TooBusyLimiter,
-      useFiberPoolSize: true,
-      fiberPoolAllowedOverflow: .1,
+      _init: function () {
+        _TooBusyLimiterTestServiceBase.prototype._init.call(this)
+        this.busyLimiter = o({
+          _type: limiters.TooBusyLimiter,
+          useFiberPoolSize: true,
+          fiberPoolAllowedOverflow: .1,
+        })
+
+      }
     })
-
+    serviceDef._type = _FiberPoolSizeLimitedTestService
+    return o(serviceDef)
+  } finally {
+    if (_.isFunction(teardown)) {
+      teardown()
+    }
   }
-})
+}
 
 var TooBusyLimiterTests = o({
   _type: testtube.Test,
@@ -217,15 +249,15 @@ var TooBusyLimiterTests = o({
       }
     }),
 
+    // ---------------------------------------------
     // integration tests using absMaxOutstandingReqs
+    // ---------------------------------------------
 
     o({
       _type: ServiceTest,
       name: 'AbsMaxOutstandingReqsIntegrationTests',
       description: 'absMaxOutstandingReqs integration tests',
-      service: o({
-        _type: MaxOutstandingReqsLimitedTestService,
-      }),
+      service: MaxOutstandingReqsLimitedTestService({}),
       setup: function() {
         ServiceTest.prototype.setup.call(this)
         sinon.stub(this.service.busyLimiter, 'toobusy', function() {
@@ -305,15 +337,15 @@ var TooBusyLimiterTests = o({
       ]
     }),
 
+    // -------------------------------
     // integration tests using toobusy
+    // -------------------------------
 
     o({
       _type: ServiceTest,
       name: 'TooBusyIntegrationTests',
       description: 'toobusy integration tests',
-      service: o({
-        _type: MaxOutstandingReqsLimitedTestService,
-      }),
+      service: MaxOutstandingReqsLimitedTestService({}),
       setup: function() {
         ServiceTest.prototype.setup.call(this)
       },
@@ -444,6 +476,119 @@ var TooBusyLimiterTests = o({
           teardown: function() {
             this.parent.service.busyLimiter.toobusy.restore()
           }
+        }
+      ]
+    }),
+
+    // ---------------------------------------
+    // integration tests using fiber pool size
+    // ---------------------------------------
+
+    o({
+      _type: ServiceTest,
+      name: 'FiberPoolSizeIntegrationTests',
+      description: 'Fiber pool size integration tests',
+      service: FiberPoolSizeLimitedTestService(
+        {},
+        function() {
+          mockery.enable({
+            warnOnReplace: false,
+            warnOnUnregistered: false,
+            useCleanCache: true
+          })
+          sinon.stub(fibers, 'getFiberPoolSize', function() {
+            return 10
+          })
+          mockery.registerMock('@carbon-io/fibers', fibers)
+          mockery.resetCache()
+        },
+        function() {
+          fibers.getFiberPoolSize.restore()
+          mockery.disable()
+        }
+      ),
+      setup: function() {
+        sinon.stub(this.service.busyLimiter, 'toobusy', function() {
+          return false
+        })
+        ServiceTest.prototype.setup.call(this)
+      },
+      teardown: function() {
+        ServiceTest.prototype.teardown.call(this)
+        this.service.busyLimiter.toobusy.restore()
+      },
+      tests: [
+        {
+          reqSpec: {
+            url: '/foo',
+            method: 'get'
+          },
+          resSpec: {
+            statusCode: 200,
+            body: 'foo'
+          }
+        },
+        {
+          setup: function(done) {
+            var self = this
+            this.results = []
+            this.errors = []
+            this.resultsReceivedCb = undefined
+
+            try {
+              this.parent.service.passthroughCb = function() {
+                done()
+              }
+              this.parent.service.pauseReq = 11
+              for (var i = 0; i < 11; i++) {
+                _o(this.parent.baseUrl + '/foo').get(function (err, res) {
+                  if (err) {
+                    self.errors.push(err)
+                  } else {
+                    self.results.push(res)
+                  }
+                  if (self.errors.length + self.results.length === 11) {
+                    self.resultsReceivedCb()
+                  }
+                })
+              }
+            } catch(e) {
+              this.parent.service.pauseReq = 0
+              this.parent.service.passthroughCb = undefined
+              done()
+            }
+          },
+          reqSpec: {
+            url: '/foo',
+            method: 'get'
+          },
+          resSpec: function(res) {
+            assert.equal(res.statusCode, 503)
+            assert.equal(this.parent.service.busyLimiter.outstandingReqs, 11)
+            assert.equal(this.parent.service.busyLimiter.maxOutstandingReqs, 11)
+            return true
+          },
+          teardown: function(done) {
+            var self = this
+
+            self.resultsReceivedCb = function() {
+              assert.equal(self.errors.length, 0)
+              assert.equal(self.results.length, 11)
+              self.parent.service.pauseReq = 0
+              done()
+            }
+            this.parent.service.drainOutstandingReqs()
+          }
+        },
+        {
+          reqSpec: {
+            url: '/foo',
+            method: 'get'
+          },
+          resSpec: {
+            statusCode: 200,
+            body: 'foo'
+          },
         }
       ]
     })
