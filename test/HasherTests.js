@@ -63,7 +63,7 @@ module.exports = o({
 
     o({
       _type: testtube.Test,
-      name: 'TestHasherInstantiateAbstractBaseClass',
+      name: 'InstantiateAbstractBaseClass',
       description: 'Test instantiation of abstract base class fails',
       doTest: function() {
         assert.throws(function() {
@@ -73,7 +73,7 @@ module.exports = o({
     }),
     o({
       _type: testtube.Test,
-      name: 'TestHasherGetHasherNames',
+      name: 'GetHasherNames',
       description: 'Test getHasherNames method',
       doTest: function() {
         var hasherNames = Hasher.getHasherNames()
@@ -86,7 +86,7 @@ module.exports = o({
     }),
     o({
       _type: testtube.Test,
-      name: 'TestHasherGetHasher',
+      name: 'HasherGetHasher',
       description: 'Test getHasher method',
       doTest: function() {
         Hasher.getHasherNames().forEach(function(name) {
@@ -99,7 +99,7 @@ module.exports = o({
     }),
     o({
       _type: testtube.Test,
-      name: 'TestHasherDataProperty',
+      name: 'DataProperty',
       description: '',
       setup: function() {
         sinon.stub(Hasher.prototype, '_C')
@@ -119,7 +119,7 @@ module.exports = o({
     }),
     o({
       _type: testtube.Test,
-      name: 'TestHasherDigestProperty',
+      name: 'DigestProperty',
       description: '',
       setup: function() {
         sinon.stub(Hasher.prototype, '_C')
@@ -152,7 +152,7 @@ module.exports = o({
 
     o({
       _type: testtube.Test,
-      name: 'TestHasherEq',
+      name: 'Eq',
       description: '',
       setup: function() {
         sinon.stub(Hasher.prototype, '_C')
@@ -189,7 +189,7 @@ module.exports = o({
 
     o({
       _type: testtube.Test,
-      name: 'TestNoopHasherHashFn',
+      name: 'NoopHashFn',
       description: 'Test the NoopHashser hash function',
       doTest: function() {
         var hasher = o({_type: NoopHasher})
@@ -205,7 +205,7 @@ module.exports = o({
 
     o({
       _type: testtube.Test,
-      name: 'TestSha256HasherHashFn',
+      name: 'Sha256HashFn',
       description: 'Test the Sha256Hasher hash function',
       doTest: function() {
         var hasher = o({_type: Sha256Hasher})
@@ -222,7 +222,7 @@ module.exports = o({
 
     o({
       _type: testtube.Test,
-      name: 'TestBcryptHasherHashFn',
+      name: 'BcryptHashFn',
       description: 'Test the BcryptHasher hash function',
       doTest: function() {
         var check = function(hasher, data) {
@@ -236,7 +236,7 @@ module.exports = o({
     }),
     o({
       _type: testtube.Test,
-      name: 'TestBcryptHasherEqFn',
+      name: 'BcryptEqFn',
       description: 'Test the BcryptHasher eq function',
       doTest: function() {
         var hasher = o({_type: BcryptHasher})
