@@ -34,13 +34,12 @@ function mockService(db) {
 var MongoDBAuthenticatorTest = oo({
   _type: testtube.Test,
   _C: function () {
-    this.suite = undefined
     this.userRecords = []
   },
   db: {
     $property: {
       get: function() {
-        return this.suite.db
+        return this.parent.db
       }
     }
   },
@@ -74,23 +73,13 @@ module.exports = o({
   /**********************************************************************
    * _type
    */
-  _type: testtube.TestSuite,
+  _type: testtube.Test,
 
   /**********************************************************************
    * _C
    */
   _C: function() {
     this._db = undefined
-  },
-
-  /**********************************************************************
-   * _C
-   */
-  _init: function() {
-    var self = this
-    this.tests.forEach(function(test) {
-      test.suite = self
-    })
   },
 
   /**********************************************************************
