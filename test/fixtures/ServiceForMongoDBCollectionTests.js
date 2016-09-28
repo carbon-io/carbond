@@ -16,7 +16,7 @@ module.exports = o({
   port: 8888,
   verbosity: 'warn',
 
-  dbUri: config.MONGODB_URI,
+  dbUri: config.MONGODB_URI + '/mongodb-collection-tests',
     
   endpoints: {
     // Simple endpoint with Collection operations defined as functions

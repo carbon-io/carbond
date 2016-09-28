@@ -108,7 +108,7 @@ module.exports = o({
    */
   setup: function() {
     try {
-      this._db = connect(config.MONGODB_URI)
+      this._db = connect(config.MONGODB_URI + '/authenticator-tests')
     } catch (e) {
       console.dir(e)
     }
