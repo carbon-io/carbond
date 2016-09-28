@@ -166,6 +166,8 @@ module.exports = o({
       }
     })
 
+    // @todo move into test setup
+
     // /foo
     sinon.spy(this.service.endpoints.foo.limiter, 'process')
 
@@ -193,6 +195,8 @@ module.exports = o({
   teardown: function () {
     ServiceTest.prototype.teardown.call(this)
     ApiKeyAuthenticator.prototype.findUser.restore()
+
+    // @todo move into test teardown
 
     // /foo
     this.service.endpoints.foo.limiter.process.restore()
