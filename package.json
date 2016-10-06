@@ -31,7 +31,7 @@
     "z-schema": "3.17.0",
     "atom": "carbon-io/atom.git#v0.2.17",
     "bond": "carbon-io/bond.git#v0.1.17",
-    "@carbon-io/fibers": "carbon-io/fibers.git#v0.3.2",
+    "@carbon-io/fibers": "carbon-io/fibers.git#v0.3.3",
     "ejson": "carbon-io/ejson.git#v0.0.5",
     "http-errors": "carbon-io/http-errors.git#v0.0.3",
     "leafnode": "objectlabs/leafnode.git#v3.2.1",
