@@ -1,6 +1,6 @@
 {
   "name": "carbond",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "description": "Carbond",
   "keywords": ["carbond", "carbon.io"],
   "contributors": [
@@ -29,14 +29,14 @@
     "lodash" : "4.5.x",
     "request" : "2.34.0",
     "z-schema": "3.17.0",
-    "atom": "carbon-io/atom.git#v0.2.17",
+    "atom": "carbon-io/atom.git#v0.2.20",
     "bond": "carbon-io/bond.git#v0.1.17",
     "@carbon-io/fibers": "carbon-io/fibers.git#v0.3.2",
     "ejson": "carbon-io/ejson.git#v0.0.5",
     "http-errors": "carbon-io/http-errors.git#v0.0.3",
     "leafnode": "objectlabs/leafnode.git#v3.2.1",
     "mongodb-uri": "mongolab/mongodb-uri-node.git#v0.9.7",
-    "test-tube": "carbon-io/test-tube.git#v0.1.11"
+    "test-tube": "carbon-io/test-tube.git#v0.1.13"
   },
   "scripts": {
     "test": "node test"
