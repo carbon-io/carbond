@@ -13,18 +13,6 @@ var assert = require('assert')
 var ObjectId = require('ejson').types.ObjectId
 var carbond = require('..')
 
-/**
- * qs: serializeJsonParams(options.params),
- * body: body,
- * json: options.json,
- * headers: options.headers,
- * strictSSL: options.strictSSL,
- * cert: options.cert,
- * key: options.key,
- * ca: options.ca,
- * forever: options.forever
- */
-
 ALICE_CERT = path.resolve(__dirname, 'data/ssl/certs/client.cert.pem')
 ALICE_KEY = path.resolve(__dirname, 'data/ssl/keys/client_np.key.pem')
 CARL_CERT = path.resolve(__dirname, 'data/ssl/certs/carl.cert.pem')
