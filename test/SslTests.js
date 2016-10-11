@@ -2,6 +2,8 @@ var assert = require('assert')
 var fs = require('fs')
 var path = require('path')
 
+var sinon = require('sinon')
+
 var o  = require('atom').o(module).main
 var oo  = require('atom').oo(module)
 var _o = require('bond')._o(module)
@@ -57,7 +59,7 @@ module.exports = o({
         _type: carbond.Service,
 
         port: 8888,
-        verbosity: 'debug',
+        verbosity: 'warn',
         apiRoot: '/api',
         sslOptions: {
           serverCertPath: SERVER_CERT,
@@ -66,7 +68,7 @@ module.exports = o({
             INTERMEDIATE_CA_CERT,
             ROOT_CA_CERT
           ],
-          requestCert: true
+          requestCert: true,
         },
 
         endpoints: {
@@ -102,6 +104,13 @@ module.exports = o({
           _type: testtube.Test,
           name: 'Test handling of unauthorized connections',
           description: 'Test handling of unauthorized connections (issue #107)',
+          setup: function() {
+            this.sandbox = sinon.sandbox.create()
+            this.logSpy = this.sandbox.spy(this.parent.service, 'logWarning')
+          },
+          teardown: function() {
+            this.sandbox.restore()
+          },
           doTest: function() {
             var self = this
             // should probably spy on log property
@@ -116,6 +125,8 @@ module.exports = o({
               })
               req.get()
             }, /socket hang up/)
+            assert.equal(self.logSpy.callCount, 1)
+            assert(self.logSpy.firstCall.args[0].match(/Secure connection not authorized: .+/))
             assert.throws(function() {
               // test self signed client cert
               var req = _o(self.parent.baseUrl + '/api/foo', {
@@ -129,6 +140,8 @@ module.exports = o({
               })
               req.get()
             }, /socket hang up/)
+            assert.equal(self.logSpy.callCount, 2)
+            assert(self.logSpy.secondCall.args[0].match(/Secure connection not authorized: .+/))
           }
         }),
       ]
