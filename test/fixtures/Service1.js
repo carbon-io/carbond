@@ -1,3 +1,5 @@
+var _ = require('lodash')
+
 var o = require('atom').o(module).main
 var _o = require('bond')._o(module)
 var __ = require('@carbon-io/fibers').__(module)
