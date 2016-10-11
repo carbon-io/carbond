@@ -51,7 +51,6 @@ module.exports = o({
     var idg1 = o({ _type: '../lib/ObjectIdGenerator' })
     var idg2 = o({ _type: '../lib/ObjectIdGenerator', generateStrings: true })
 
-    debugger
     assert(idg1.generateId() instanceof ObjectId)
     assert(typeof(idg2.generateId()) === 'string')
   }
