@@ -17,7 +17,8 @@
   },
   "engines": { "node": ">=4.0.0" },
   "devDependencies": {
-    "mocha": "^2.4.0"
+    "mocha": "^2.4.0",
+    "sinon": "~1.17.0"
   },
   "dependencies": {
     "basic-auth": "~1.0.0",
