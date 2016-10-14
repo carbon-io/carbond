@@ -4,13 +4,10 @@ var path = require('path')
 
 var sinon = require('sinon')
 
-var o  = require('atom').o(module).main
-var oo  = require('atom').oo(module)
-var _o = require('bond')._o(module)
-var __ = require('@carbon-io/fibers').__(module)
-var testtube = require('test-tube')
-var assert = require('assert')
-var ObjectId = require('ejson').types.ObjectId
+var _o = require('carbon-core').bond._o(module)
+var o  = require('carbon-core').atom.o(module).main
+var testtube = require('carbon-core').testtube
+
 var carbond = require('..')
 
 ALICE_CERT = path.resolve(__dirname, 'data/ssl/certs/client.cert.pem')

@@ -1,10 +1,8 @@
-var o  = require('atom').o(module)
-var oo  = require('atom').oo(module)
-var _o = require('bond')._o(module)
-var __ = require('@carbon-io/fibers').__(module)
-var tt = require('test-tube')
 var assert = require('assert')
-var ObjectId = require('ejson').types.ObjectId
+
+var o  = require('carbon-core').atom.o(module)
+var tt = require('carbon-core').testtube
+
 var carbond = require('../')
 
 /**************************************************************************
