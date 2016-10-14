@@ -1,10 +1,5 @@
-var _ = require('lodash')
+var o = require('carbon-core').atom.o(module).main
 
-var o = require('atom').o(module).main
-var _o = require('bond')._o(module)
-var __ = require('@carbon-io/fibers').__(module)
-var assert = require('assert')
-var BSON = require('leafnode').BSON
 var carbond = require('../../')
 
 /*******************************************************************************

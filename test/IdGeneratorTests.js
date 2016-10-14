@@ -1,9 +1,8 @@
-var o  = require('atom').o(module).main
-var oo  = require('atom').oo(module)
-var _o = require('bond')._o(module)
-var __ = require('@carbon-io/fibers').__(module)
-var testtube = require('test-tube')
 var assert = require('assert')
+
+var o  = require('carbon-core').atom.o(module).main
+var testtube = require('carbon-core').testtube
+
 /* XXX
  * var ObjectId = require('ejson').types.ObjectId
  *
@@ -27,6 +26,7 @@ var assert = require('assert')
  * > idg1.generateId() instanceof Object
  * true
  */
+
 var ObjectId = require('leafnode').mongodb.ObjectId
 
 /**************************************************************************
