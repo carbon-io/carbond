@@ -1,7 +1,7 @@
 var assert = require('assert')
 
-var o  = require('carbon-core').atom.o(module).main
-var testtube = require('carbon-core').testtube
+var o  = require('@carbon-io/carbon-core').atom.o(module).main
+var testtube = require('@carbon-io/carbon-core').testtube
 
 /* XXX
  * var ObjectId = require('ejson').types.ObjectId

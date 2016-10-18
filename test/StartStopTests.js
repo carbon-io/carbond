@@ -1,7 +1,7 @@
 var assert = require('assert')
 
-var o  = require('carbon-core').atom.o(module)
-var tt = require('carbon-core').testtube
+var o  = require('@carbon-io/carbon-core').atom.o(module)
+var tt = require('@carbon-io/carbon-core').testtube
 
 var carbond = require('../')
 

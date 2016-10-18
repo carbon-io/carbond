@@ -4,9 +4,9 @@ var path = require('path')
 
 var sinon = require('sinon')
 
-var _o = require('carbon-core').bond._o(module)
-var o  = require('carbon-core').atom.o(module).main
-var testtube = require('carbon-core').testtube
+var _o = require('@carbon-io/carbon-core').bond._o(module)
+var o  = require('@carbon-io/carbon-core').atom.o(module).main
+var testtube = require('@carbon-io/carbon-core').testtube
 
 var carbond = require('..')
 

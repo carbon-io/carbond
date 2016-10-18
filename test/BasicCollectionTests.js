@@ -1,7 +1,7 @@
 var assert = require('assert')
 
-var _o = require('carbon-core').bond._o(module)
-var o  = require('carbon-core').atom.o(module).main
+var _o = require('@carbon-io/carbon-core').bond._o(module)
+var o  = require('@carbon-io/carbon-core').atom.o(module).main
 
 var carbond = require('../')
 

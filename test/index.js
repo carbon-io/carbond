@@ -1,6 +1,6 @@
-var o  = require('carbon-core').atom.o(module).main
-var _o = require('carbon-core').bond._o(module)
-var testtube = require('carbon-core').testtube
+var o  = require('@carbon-io/carbon-core').atom.o(module).main
+var _o = require('@carbon-io/carbon-core').bond._o(module)
+var testtube = require('@carbon-io/carbon-core').testtube
 
 /**************************************************************************
  * All tests

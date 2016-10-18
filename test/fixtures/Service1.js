@@ -1,4 +1,4 @@
-var o = require('carbon-core').atom.o(module).main
+var o = require('@carbon-io/carbon-core').atom.o(module).main
 
 var carbond = require('../../')
 

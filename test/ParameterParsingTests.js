@@ -1,8 +1,8 @@
 var assert = require('assert')
 
-var o  = require('carbon-core').atom.o(module).main
-var tt = require('carbon-core').testtube
-var EJSON = require('carbon-core').ejson
+var o  = require('@carbon-io/carbon-core').atom.o(module).main
+var tt = require('@carbon-io/carbon-core').testtube
+var EJSON = require('@carbon-io/carbon-core').ejson
 
 var ObjectId = EJSON.types.ObjectId
 var Timestamp = EJSON.types.Timestamp
