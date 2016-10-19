@@ -1,6 +1,6 @@
 {
   "name": "@carbon-io/carbond",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Carbond",
   "keywords": ["carbond", "carbon.io"],
   "contributors": [
@@ -30,7 +30,7 @@
     "lodash" : "4.5.x",
     "request" : "2.34.0",
     "z-schema": "3.17.0",
-    "@carbon-io/carbon-core": "carbon-io/carbon-core.git#v0.2.1",
+    "@carbon-io/carbon-core": "carbon-io/carbon-core.git#v0.2.2",
     "leafnode": "objectlabs/leafnode.git#v3.2.1",
     "mongodb-uri": "mongolab/mongodb-uri-node.git#v0.9.7"
   },
