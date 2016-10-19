@@ -5,12 +5,12 @@ var mockery = require('mockery')
 var sinon = require('sinon')
 var toobusy = require('toobusy-js')
 
-var fibers = require('@carbon-io/fibers')
+var fibers = require('@carbon-io/carbon-core').fibers
 var __ = fibers.__(module)
-var _o  = require('bond')._o(module)
-var o  = require('atom').o(module)
-var oo  = require('atom').oo(module)
-var testtube = require('test-tube')
+var _o  = require('@carbon-io/carbon-core').bond._o(module)
+var o  = require('@carbon-io/carbon-core').atom.o(module)
+var oo  = require('@carbon-io/carbon-core').atom.oo(module)
+var testtube = require('@carbon-io/carbon-core').testtube
 
 var ApiKeyAuthenticator = require('../../lib/security/ApiKeyAuthenticator')
 var Endpoint = require('../../lib/Endpoint')

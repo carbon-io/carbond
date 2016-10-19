@@ -3,10 +3,10 @@ var assert = require('assert')
 var _ = require('lodash')
 var sinon = require('sinon')
 
-var _o = require('bond')._o(module)
-var HttpErrors = require('http-errors')
-var o  = require('atom').o(module)
-var testtube = require('test-tube')
+var _o = require('@carbon-io/carbon-core').bond._o(module)
+var HttpErrors = require('@carbon-io/carbon-core').HttpErrors
+var o  = require('@carbon-io/carbon-core').atom.o(module)
+var testtube = require('@carbon-io/carbon-core').testtube
 
 var limiters = require('../../lib/security/Limiter')
 

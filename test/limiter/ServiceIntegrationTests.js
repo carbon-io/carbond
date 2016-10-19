@@ -3,8 +3,8 @@ var assert = require('assert')
 var _ = require('lodash')
 var sinon = require('sinon')
 
-var o  = require('atom').o(module)
-var oo  = require('atom').oo(module)
+var o  = require('@carbon-io/carbon-core').atom.o(module)
+var oo  = require('@carbon-io/carbon-core').atom.oo(module)
 
 var limiters = require('../../lib/security/Limiter')
 var ApiKeyAuthenticator = require('../../lib/security/ApiKeyAuthenticator')
