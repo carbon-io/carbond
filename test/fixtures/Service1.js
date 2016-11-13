@@ -14,7 +14,7 @@ module.exports = o({
   _type: carbond.Service,
   
   port: 8888,
-  verbosity: 'warn',
+  verbosity: 'info',
   apiRoot: '/api',
 
   middlewareCalled: false,
