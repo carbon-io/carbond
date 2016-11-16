@@ -1,6 +1,6 @@
 {
-  "name": "carbond",
-  "version": "0.1.19",
+  "name": "@carbon-io/carbond",
+  "version": "0.2.8",
   "description": "Carbond",
   "keywords": ["carbond", "carbon.io"],
   "contributors": [
@@ -17,27 +17,22 @@
   },
   "engines": { "node": ">=4.0.0" },
   "devDependencies": {
-    "mocha": "^2.4.0",
-    "sinon": "~1.17.3"
+    "mocha": "2.x",
+    "sinon": "1.17.x"
   },
   "dependencies": {
-    "basic-auth": "~1.0.0",
+    "basic-auth": "1.0.x",
     "bcryptjs": "2.3.0",
     "body-parser" : "1.12.3",
-    "bunyan": "1.3.5",
+    "bunyan": "1.8.4",
     "express" : "4.12.3",
     "handlebars": "~4.0.0",
     "lodash" : "~4.5.0",
     "request" : "2.34.0",
     "z-schema": "3.17.0",
-    "atom": "carbon-io/atom.git#v0.2.17",
-    "bond": "carbon-io/bond.git#v0.1.17",
-    "@carbon-io/fibers": "carbon-io/fibers.git#v0.3.2",
-    "ejson": "carbon-io/ejson.git#v0.0.5",
-    "http-errors": "carbon-io/http-errors.git#v0.0.3",
+    "@carbon-io/carbon-core": "0.2.x",
     "leafnode": "objectlabs/leafnode.git#v3.2.1",
-    "mongodb-uri": "mongolab/mongodb-uri-node.git#v0.9.7",
-    "test-tube": "carbon-io/test-tube.git#v0.1.11"
+    "mongodb-uri": "mongolab/mongodb-uri-node.git#v0.9.7"
   },
   "scripts": {
     "test": "node test"

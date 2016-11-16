@@ -1,8 +1,6 @@
-var o  = require('atom').o(module).main
-var oo  = require('atom').oo(module)
-var _o = require('bond')._o(module)
-var __ = require('@carbon-io/fibers').__(module)
-var testtube = require('test-tube')
+var o  = require('@carbon-io/carbon-core').atom.o(module).main
+var _o = require('@carbon-io/carbon-core').bond._o(module)
+var testtube = require('@carbon-io/carbon-core').testtube
 
 /**************************************************************************
  * All tests
@@ -32,5 +30,6 @@ module.exports = o({
     _o('./MongoDBCollectionTests'),
     _o('./ParameterParsingTests'),
     _o('./StartStopTests'),
+    _o('./SslTests')
   ],
 })

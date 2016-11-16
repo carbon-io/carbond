@@ -4,11 +4,11 @@ var crypto = require('crypto')
 var bcrypt = require('bcryptjs')
 var sinon = require('sinon')
 
-var _o = require('bond')._o(module)
+var _o = require('@carbon-io/bond')._o(module)
 var connect = require('leafnode').connect
-var o  = require('atom').o(module)
-var oo  = require('atom').oo(module)
-var testtube = require('test-tube')
+var o  = require('@carbon-io/atom').o(module)
+var oo  = require('@carbon-io/atom').oo(module)
+var testtube = require('@carbon-io/test-tube')
 
 var config = require('./Config')
 
