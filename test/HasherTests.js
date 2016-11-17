@@ -5,10 +5,10 @@ var _ = require('lodash')
 var bcrypt = require('bcryptjs')
 var sinon = require('sinon')
 
-var _o = require('@carbon-io/bond')._o(module)
-var o  = require('@carbon-io/atom').o(module)
-var oo  = require('@carbon-io/atom').oo(module)
-var testtube = require('@carbon-io/test-tube')
+var _o = require('@carbon-io/carbon-core').bond._o(module)
+var o  = require('@carbon-io/carbon-core').atom.o(module)
+var oo  = require('@carbon-io/carbon-core').atom.oo(module)
+var testtube = require('@carbon-io/carbon-core').testtube
 
 var Hasher = require('../lib/security/Hasher')
 var NoopHasher = require('../lib/security/NoopHasher')
