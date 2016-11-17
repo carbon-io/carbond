@@ -2,6 +2,8 @@ var o = require('@carbon-io/carbon-core').atom.o(module).main
 
 var carbond = require('../../')
 
+var config = require('../Config')
+
 /*******************************************************************************
  * ServiceForMongoDBCollectionTests
  */
@@ -11,7 +13,7 @@ module.exports = o({
   port: 8888,
   verbosity: 'warn',
 
-  dbUri: "mongodb://localhost:27017/mongodb-collection-tests",
+  dbUri: config.MONGODB_URI + '/mongodb-collection-tests',
     
   endpoints: {
     // Simple endpoint with Collection operations defined as functions
