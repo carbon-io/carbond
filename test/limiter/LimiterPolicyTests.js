@@ -8,7 +8,7 @@ var oo  = require('@carbon-io/carbon-core').atom.oo(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
 var Endpoint = require('../../lib/Endpoint')
-var limiterPolicies = require('../../lib/security/LimiterPolicy')
+var limiterPolicies = require('../../lib/limiter/LimiterPolicy')
 var Operation = require('../../lib/Operation')
 var Service = require('../../lib/Service')
 

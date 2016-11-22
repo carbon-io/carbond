@@ -8,7 +8,7 @@ var HttpErrors = require('@carbon-io/carbon-core').HttpErrors
 var o  = require('@carbon-io/carbon-core').atom.o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
-var limiters = require('../../lib/security/Limiter')
+var limiters = require('../../lib/limiter/Limiter')
 
 module.exports = o({
   _type: testtube.Test,

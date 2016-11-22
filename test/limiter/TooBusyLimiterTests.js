@@ -16,7 +16,7 @@ var ApiKeyAuthenticator = require('../../lib/security/ApiKeyAuthenticator')
 var Endpoint = require('../../lib/Endpoint')
 var Operation = require('../../lib/Operation')
 var ServiceTest = require('../../lib/test/ServiceTest')
-var limiters = require('../../lib/security/Limiter')
+var limiters = require('../../lib/limiter/Limiter')
 
 var TooBusyLimiterTestServiceBase = function() {
   // allow use of mockery

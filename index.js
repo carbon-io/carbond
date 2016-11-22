@@ -8,6 +8,23 @@ module.exports = {
     Collection: require('./lib/collections/Collection'),
     CollectionOperationConfig: require('./lib/collections/CollectionOperationConfig'), // XXX do we want to export this?
   },
+  limiter: {
+    ChainLimiter: require('./lib/limiter/Limiter').ChainLimiter,
+    FunctionLimiter: require('./lib/limiter/Limiter').FunctionLimiter,
+    Limiter: require('./lib/limiter/Limiter').Limiter,
+    PolicyLimiter: require('./lib/limiter/Limiter').PolicyLimiter,
+    TooBusyLimiter: require('./lib/limiter/Limiter').TooBusyLimiter,
+    policy: {
+      LimiterPolicy: require('./lib/limiter/LimiterPolicy').LimiterPolicy,
+      LimiterPolicyState: require('./lib/limiter/LimiterPolicy').LimiterPolicyState,
+      WindowLimiterPolicy: require('./lib/limiter/LimiterPolicy').WindowLimiterPolicy
+    },
+    selector: {
+      LimiterSelector: require('./lib/limiter/LimiterSelector').LimiterSelector,
+      StaticKeyLimiterSelector: require('./lib/limiter/LimiterSelector').StaticKeyLimiterSelector,
+      ReqPropertyLimiterSelector: require('./lib/limiter/LimiterSelector').ReqPropertyLimiterSelector,
+    }
+  },
   mongodb: {
     MongoDBCollection: require('./lib/mongodb/MongoDBCollection'),
   },
@@ -21,23 +38,6 @@ module.exports = {
     MongoDBApiKeyAuthenticator: require('./lib/security/MongoDBApiKeyAuthenticator'),
     MongoDBHttpBasicAuthenticator: require('./lib/security/MongoDBHttpBasicAuthenticator'),
     ObjectAcl: require('./lib/security/ObjectAcl'),
-    limiter: {
-      ChainLimiter: require('./lib/security/Limiter').ChainLimiter,
-      FunctionLimiter: require('./lib/security/Limiter').FunctionLimiter,
-      Limiter: require('./lib/security/Limiter').Limiter,
-      PolicyLimiter: require('./lib/security/Limiter').PolicyLimiter,
-      TooBusyLimiter: require('./lib/security/Limiter').TooBusyLimiter,
-      policy: {
-        LimiterPolicy: require('./lib/security/LimiterPolicy').LimiterPolicy,
-        LimiterPolicyState: require('./lib/security/LimiterPolicy').LimiterPolicyState,
-        WindowLimiterPolicy: require('./lib/security/LimiterPolicy').WindowLimiterPolicy
-      },
-      selector: {
-        LimiterSelector: require('./lib/security/LimiterSelector').LimiterSelector,
-        StaticKeyLimiterSelector: require('./lib/security/LimiterSelector').StaticKeyLimiterSelector,
-        ReqPropertyLimiterSelector: require('./lib/security/LimiterSelector').ReqPropertyLimiterSelector,
-      }
-    },
   },
   test: {
     ServiceTest: require('./lib/test/ServiceTest')

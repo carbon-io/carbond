@@ -6,7 +6,7 @@ var sinon = require('sinon')
 var o  = require('@carbon-io/carbon-core').atom.o(module)
 var oo  = require('@carbon-io/carbon-core').atom.oo(module)
 
-var limiters = require('../../lib/security/Limiter')
+var limiters = require('../../lib/limiter/Limiter')
 var ApiKeyAuthenticator = require('../../lib/security/ApiKeyAuthenticator')
 var Service = require('../../lib/Service')
 var Endpoint = require('../../lib/Endpoint')
