@@ -33,4 +33,5 @@ vim.session
 .python-version
 
 # docs
-docs/_build/*
+docs/*
+
