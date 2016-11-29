@@ -8,7 +8,7 @@ var HttpErrors = require('@carbon-io/carbon-core').HttpErrors
 var o  = require('@carbon-io/carbon-core').atom.o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
-var limiters = require('../../lib/limiter/Limiter')
+var Limiter = require('../../lib/limiter/Limiter')
 
 module.exports = o({
   _type: testtube.Test,
@@ -21,7 +21,7 @@ module.exports = o({
       description: 'Test instantiate',
       doTest: function () {
         assert.throws(function() {
-          var limiter = o({_type: limiters.Limiter})
+          var limiter = o({_type: Limiter})
         }, Error)
       }
     }),
@@ -30,16 +30,16 @@ module.exports = o({
       name: 'TestSendUnavailable',
       description: 'Test `sendUnavailable`',
       setup: function () {
-        sinon.stub(limiters.Limiter.prototype, '_C', function() {})
+        sinon.stub(Limiter.prototype, '_C', function() {})
       },
       teardown: function () {
-        limiters.Limiter.prototype._C.restore()
+        Limiter.prototype._C.restore()
       },
       doTest: function () {
         var _handleErrorSpy = sinon.spy()
         var resSpy = sinon.spy()
         resSpy.append = sinon.spy()
-        var limiter = o({_type: limiters.Limiter})
+        var limiter = o({_type: Limiter})
         limiter.initialize({_handleError: _handleErrorSpy}, undefined)
         limiter.sendUnavailable(resSpy, 60)
         assert(_handleErrorSpy.called)

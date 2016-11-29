@@ -16,7 +16,7 @@ var ApiKeyAuthenticator = require('../../lib/security/ApiKeyAuthenticator')
 var Endpoint = require('../../lib/Endpoint')
 var Operation = require('../../lib/Operation')
 var ServiceTest = require('../../lib/test/ServiceTest')
-var limiters = require('../../lib/limiter/Limiter')
+var TooBusyLimiter= require('../../lib/limiter/TooBusyLimiter')
 
 var TooBusyLimiterTestServiceBase = function() {
   // allow use of mockery
@@ -101,7 +101,7 @@ var MaxOutstandingReqsLimitedTestService = function(serviceDef, setup, teardown)
       _init: function () {
         _TooBusyLimiterTestServiceBase.prototype._init.call(this)
         this.busyLimiter = o({
-          _type: limiters.TooBusyLimiter,
+          _type: TooBusyLimiter,
           absMaxOutstandingReqs: 8
         })
       }
@@ -129,7 +129,7 @@ var FiberPoolSizeLimitedTestService = function(serviceDef, setup, teardown) {
       _init: function () {
         _TooBusyLimiterTestServiceBase.prototype._init.call(this)
         this.busyLimiter = o({
-          _type: limiters.TooBusyLimiter,
+          _type: TooBusyLimiter,
           useFiberPoolSize: true,
           fiberPoolAllowedOverflow: .1,
         })
@@ -165,7 +165,7 @@ var TooBusyLimiterTests = o({
         vals.forEach(function(val) {
           assert.throws(function() {
             limiter = o({
-              _type: limiters.TooBusyLimiter,
+              _type: TooBusyLimiter,
               absMaxOutstandingReqs: val
             })
           }, TypeError)
@@ -174,7 +174,7 @@ var TooBusyLimiterTests = o({
         vals.forEach(function(val) {
           assert.doesNotThrow(function () {
             limiter = o({
-              _type: limiters.TooBusyLimiter,
+              _type: TooBusyLimiter,
               absMaxOutstandingReqs: val
             })
           })
@@ -183,7 +183,7 @@ var TooBusyLimiterTests = o({
         vals.forEach(function(val) {
           assert.throws(function() {
             limiter = o({
-              _type: limiters.TooBusyLimiter,
+              _type: TooBusyLimiter,
               fiberPoolAllowedOverflow: val
             })
           }, TypeError)
@@ -192,7 +192,7 @@ var TooBusyLimiterTests = o({
         vals.forEach(function(val) {
           assert.doesNotThrow(function () {
             limiter = o({
-              _type: limiters.TooBusyLimiter,
+              _type: TooBusyLimiter,
               fiberPoolAllowedOverflow: val
             })
           })
@@ -203,7 +203,7 @@ var TooBusyLimiterTests = o({
           vals.forEach(function(val) {
             assert.throws(function() {
               limiter = o({
-                _type: limiters.TooBusyLimiter,
+                _type: TooBusyLimiter,
                 [prop]: val
               })
             }, TypeError)
@@ -214,7 +214,7 @@ var TooBusyLimiterTests = o({
           vals.forEach(function(val) {
             assert.doesNotThrow(function() {
               limiter = o({
-                _type: limiters.TooBusyLimiter,
+                _type: TooBusyLimiter,
                 [prop]: val
               })
             }, TypeError)
@@ -228,19 +228,19 @@ var TooBusyLimiterTests = o({
       description: 'Test init',
       doTest: function() {
         var limiter = o({
-          _type: limiters.TooBusyLimiter,
+          _type: TooBusyLimiter,
           absMaxOutstandingReqs: 10
         })
         assert.equal(limiter.maxOutstandingReqs, 10)
         limiter = o({
-          _type: limiters.TooBusyLimiter,
+          _type: TooBusyLimiter,
           useFiberPoolSize: true,
           fiberPoolAllowedOverflow: .1
         })
         assert.equal(limiter.maxOutstandingReqs,
                      fibers.getFiberPoolSize() + fibers.getFiberPoolSize() *.1)
         limiter = o({
-          _type: limiters.TooBusyLimiter,
+          _type: TooBusyLimiter,
           toobusyMaxLag: 1000,
           toobusyInterval: 1000
         })

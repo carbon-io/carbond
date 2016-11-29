@@ -6,7 +6,10 @@ var sinon = require('sinon')
 var o  = require('@carbon-io/carbon-core').atom.o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
-var limiters = require('../../lib/limiter/Limiter')
+var limiters = {
+  FunctionLimiter: require('../../lib/limiter/FunctionLimiter'),
+  ChainLimiter: require('../../lib/limiter/ChainLimiter')
+}
 var Service = require('../../lib/Service')
 
 module.exports = o({

@@ -5,7 +5,7 @@ var _ = require('lodash')
 var o  = require('@carbon-io/carbon-core').atom.o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
-var limiterPolicies = require('../../lib/limiter/LimiterPolicy')
+var LimiterPolicyState = require('../../lib/limiter/LimiterPolicyState')
 
 module.exports = o({
   _type: testtube.Test,
@@ -21,7 +21,7 @@ module.exports = o({
       setup: function() { },
       teardown: function() { },
       doTest: function() {
-        var state = o({_type: limiterPolicies.LimiterPolicyState})
+        var state = o({_type: LimiterPolicyState})
 
         // validation
 
@@ -63,7 +63,7 @@ module.exports = o({
       name: 'TestVisits',
       description: 'Test visits method',
       doTest: function() {
-        var state = o({_type: limiterPolicies.LimiterPolicyState})
+        var state = o({_type: LimiterPolicyState})
         var timestamps = [0, 1, 2, 3, 4, 5]
         var selectors = ['foo', 'bar', 'baz']
         selectors.forEach(function(selector) {
@@ -82,7 +82,7 @@ module.exports = o({
       name: 'TestPurge',
       description: 'Test purge method',
       doTest: function() {
-        var state = o({_type: limiterPolicies.LimiterPolicyState})
+        var state = o({_type: LimiterPolicyState})
         var timestamps = [0, 1, 2, 3, 4, 5]
         var selectors = ['foo', 'bar', 'baz']
 
@@ -122,7 +122,7 @@ module.exports = o({
       name: 'TestReset',
       description: 'Test reset method',
       doTest: function() {
-        var state = o({_type: limiterPolicies.LimiterPolicyState})
+        var state = o({_type: LimiterPolicyState})
         state.visit({}, 'foo', 1)
         state.visit({}, 'bar', 1)
         assert.equal(_.keys(state._state).length, 2)

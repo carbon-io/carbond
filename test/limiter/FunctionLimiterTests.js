@@ -7,7 +7,7 @@ var HttpErrors = require('@carbon-io/carbon-core').HttpErrors
 var o  = require('@carbon-io/carbon-core').atom.o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
-var limiters = require('../../lib/limiter/Limiter')
+var FunctionLimiter = require('../../lib/limiter/FunctionLimiter')
 
 module.exports = o({
   _type: testtube.Test,
@@ -23,25 +23,25 @@ module.exports = o({
       doTest: function() {
         assert.throws(function() {
           o({
-            _type: limiters.FunctionLimiter,
+            _type: FunctionLimiter,
             _fn: 'foo'
           })
         }, TypeError)
         assert.throws(function() {
           o({
-            _type: limiters.FunctionLimiter,
+            _type: FunctionLimiter,
             _fn: {}
           })
         }, TypeError)
         assert.throws(function() {
           o({
-            _type: limiters.FunctionLimiter,
+            _type: FunctionLimiter,
             _fn: function(req) {}
           })
         }, TypeError)
         assert.throws(function() {
           o({
-            _type: limiters.FunctionLimiter,
+            _type: FunctionLimiter,
             _fn: function(req, res, next, foo) {}
           })
         }, TypeError)
@@ -58,7 +58,7 @@ module.exports = o({
         resSpy.append = sinon.spy()
         var limiters_ = [
           o({
-            _type: limiters.FunctionLimiter,
+            _type: FunctionLimiter,
             _fn: function(req, res, next) {
               if (!req.user ||
                 req.user.username != 'foo' ||
@@ -71,7 +71,7 @@ module.exports = o({
             }
           }),
           o({
-            _type: limiters.FunctionLimiter,
+            _type: FunctionLimiter,
             _fn: function(req, res) {
               if (!req.user ||
                 req.user.username != 'foo' ||

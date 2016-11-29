@@ -6,7 +6,7 @@ var sinon = require('sinon')
 var o  = require('@carbon-io/carbon-core').atom.o(module)
 var oo  = require('@carbon-io/carbon-core').atom.oo(module)
 
-var limiters = require('../../lib/limiter/Limiter')
+var FunctionLimiter = require('../../lib/limiter/FunctionLimiter')
 var ApiKeyAuthenticator = require('../../lib/security/ApiKeyAuthenticator')
 var Service = require('../../lib/Service')
 var Endpoint = require('../../lib/Endpoint')
@@ -14,7 +14,7 @@ var Operation = require('../../lib/Operation')
 var ServiceTest = require('../../lib/test/ServiceTest')
 
 var CountDownLimiter = oo({
-  _type: limiters.FunctionLimiter,
+  _type: FunctionLimiter,
 
   _C: function() {
     this.name = 'changeme'
@@ -22,7 +22,7 @@ var CountDownLimiter = oo({
   },
 
   _init: function() {
-    limiters.FunctionLimiter.prototype._init.call(this)
+    FunctionLimiter.prototype._init.call(this)
     this.state.visits = this.maxVisits
   },
 

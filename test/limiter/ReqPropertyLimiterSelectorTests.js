@@ -3,7 +3,7 @@ var assert = require('assert')
 var o  = require('@carbon-io/carbon-core').atom.o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
-var limiterSelectors = require('../../lib/limiter/LimiterSelector')
+var ReqPropertyLimiterSelector = require('../../lib/limiter/ReqPropertyLimiterSelector')
 
 module.exports = o({
   _type: testtube.Test,
@@ -19,11 +19,11 @@ module.exports = o({
         var vals = [null, undefined, '', {foo: 'bar'}, function () {var foo = 'bar'}]
         vals.forEach(function (val) {
           assert.throws(function () {
-            s = o({_type: limiterSelectors.ReqPropertyLimiterSelector, propertyPath: val})
+            s = o({_type: ReqPropertyLimiterSelector, propertyPath: val})
           }, TypeError)
         })
         assert.doesNotThrow(function() {
-          s = o({_type: limiterSelectors.ReqPropertyLimiterSelector, propertyPath: 'foo.bar.baz'})
+          s = o({_type: ReqPropertyLimiterSelector, propertyPath: 'foo.bar.baz'})
         })
         assert.deepEqual(s.propertyPath, ['foo', 'bar', 'baz'])
       }
@@ -38,7 +38,7 @@ module.exports = o({
         vals.forEach(function (val) {
           assert.throws(function () {
             s = o({
-              _type: limiterSelectors.ReqPropertyLimiterSelector,
+              _type: ReqPropertyLimiterSelector,
               propertyPath: 'foo',
               transform: val
             })
@@ -47,7 +47,7 @@ module.exports = o({
         var transform = function(val) { return val + 'bar'}
         assert.doesNotThrow(function() {
           s = o({
-            _type: limiterSelectors.ReqPropertyLimiterSelector,
+            _type: ReqPropertyLimiterSelector,
             propertyPath: 'foo',
             transform: transform
           })
@@ -78,17 +78,17 @@ module.exports = o({
           }
         }
         var s = o({
-          _type: limiterSelectors.ReqPropertyLimiterSelector,
+          _type: ReqPropertyLimiterSelector,
           propertyPath: 'foo.bar.baz'
         })
         assert.equal(s.key(req), 1)
         s = o({
-          _type: limiterSelectors.ReqPropertyLimiterSelector,
+          _type: ReqPropertyLimiterSelector,
           propertyPath: 'bar.baz.foo'
         })
         assert.equal(s.key(req), 2)
         s = o({
-          _type: limiterSelectors.ReqPropertyLimiterSelector,
+          _type: ReqPropertyLimiterSelector,
           propertyPath: 'baz.foo.bar'
         })
         assert.equal(s.key(req), 3)
@@ -100,7 +100,7 @@ module.exports = o({
       description: 'Test transform',
       doTest: function() {
         var s = o({
-          _type: limiterSelectors.ReqPropertyLimiterSelector,
+          _type: ReqPropertyLimiterSelector,
           propertyPath: 'foo.bar',
           transform: function(val) {
             return val.split('').reverse().join('')

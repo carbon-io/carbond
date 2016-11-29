@@ -5,7 +5,7 @@ var sinon = require('sinon')
 var o  = require('@carbon-io/carbon-core').atom.o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
-var limiterPolicies = require('../../lib/limiter/LimiterPolicy')
+var WindowLimiterPolicy = require('../../lib/limiter/WindowLimiterPolicy')
 
 module.exports = o({
   _type: testtube.Test,
@@ -21,7 +21,7 @@ module.exports = o({
         vals.forEach(function(val) {
           assert.throws(function() {
             o({
-              _type: limiterPolicies.WindowLimiterPolicy,
+              _type: WindowLimiterPolicy,
               window: val
             })
           }, TypeError)
@@ -29,14 +29,14 @@ module.exports = o({
         vals.forEach(function(val) {
           assert.throws(function() {
             o({
-              _type: limiterPolicies.WindowLimiterPolicy,
+              _type: WindowLimiterPolicy,
               reqLimit: val
             })
           }, TypeError)
         })
         assert.doesNotThrow(function() {
           o({
-            _type: limiterPolicies.WindowLimiterPolicy,
+            _type: WindowLimiterPolicy,
             window: 10000,
             reqLimit: 10
           })
@@ -65,7 +65,7 @@ module.exports = o({
       },
       doTest: function() {
         var policy = o({
-          _type: limiterPolicies.WindowLimiterPolicy,
+          _type: WindowLimiterPolicy,
           window: 1000,
           reqLimit: 1
         })

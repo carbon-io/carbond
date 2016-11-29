@@ -7,9 +7,9 @@ var o  = require('@carbon-io/carbon-core').atom.o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
 var Endpoint = require('../../lib/Endpoint')
-var limiters = require('../../lib/limiter/Limiter')
-var limiterPolicies = require('../../lib/limiter/LimiterPolicy')
-var limiterSelectors = require('../../lib/limiter/LimiterSelector')
+var PolicyLimiter = require('../../lib/limiter/PolicyLimiter')
+var WindowLimiterPolicy = require('../../lib/limiter/WindowLimiterPolicy')
+var StaticKeyLimiterSelector = require('../../lib/limiter/StaticKeyLimiterSelector')
 var Operation = require('../../lib/Operation')
 var Service = require('../../lib/Service')
 
@@ -37,9 +37,9 @@ module.exports = o({
         selectors.forEach(function(selector) {
           assert.throws(function() {
             o({
-              _type: limiters.PolicyLimiter,
+              _type: PolicyLimiter,
               selector: selector,
-              policy: o({_type: limiterPolicies.WindowLimiterPolicy})
+              policy: o({_type: WindowLimiterPolicy})
             })
           }, TypeError)
         })
@@ -47,8 +47,8 @@ module.exports = o({
         policies.forEach(function(policy) {
           assert.throws(function() {
             o({
-              _type: limiters.PolicyLimiter,
-              selector: o({_type: limiterSelectors.StaticKeyLimiterSelector}),
+              _type: PolicyLimiter,
+              selector: o({_type: StaticKeyLimiterSelector}),
               policy: policy
             })
           }, TypeError)
@@ -62,35 +62,35 @@ module.exports = o({
       doTest: function() {
         var service = o({_type: Service})
         var limiter = o({
-          _type: limiters.PolicyLimiter,
+          _type: PolicyLimiter,
           selector: o({
-            _type: limiterSelectors.StaticKeyLimiterSelector,
+            _type: StaticKeyLimiterSelector,
             staticKey: 'foo'
           }),
-          policy: o({_type: limiterPolicies.WindowLimiterPolicy})
+          policy: o({_type: WindowLimiterPolicy})
         })
         limiter.initialize(service, service)
-        assert.equal(_.keys(limiters.PolicyLimiter._state).length, 1)
-        assert('service' in limiters.PolicyLimiter._state)
-        assert.equal(_.keys(limiters.PolicyLimiter._state.service).length, 1)
-        assert('foo' in limiters.PolicyLimiter._state.service)
+        assert.equal(_.keys(PolicyLimiter._state).length, 1)
+        assert('service' in PolicyLimiter._state)
+        assert.equal(_.keys(PolicyLimiter._state.service).length, 1)
+        assert('foo' in PolicyLimiter._state.service)
         var endpoint = o({
           _type: Endpoint,
           path: '/bar'
         })
         var limiter1 = o({
-          _type: limiters.PolicyLimiter,
+          _type: PolicyLimiter,
           selector: o({
-            _type: limiterSelectors.StaticKeyLimiterSelector,
+            _type: StaticKeyLimiterSelector,
             staticKey: 'foo'
           }),
-          policy: o({_type: limiterPolicies.WindowLimiterPolicy})
+          policy: o({_type: WindowLimiterPolicy})
         })
         limiter1.initialize(service, endpoint)
-        assert.equal(_.keys(limiters.PolicyLimiter._state).length, 2)
-        assert('/bar::ALL' in limiters.PolicyLimiter._state)
-        assert.equal(_.keys(limiters.PolicyLimiter._state['/bar::ALL']).length, 1)
-        assert('foo' in limiters.PolicyLimiter._state['/bar::ALL'])
+        assert.equal(_.keys(PolicyLimiter._state).length, 2)
+        assert('/bar::ALL' in PolicyLimiter._state)
+        assert.equal(_.keys(PolicyLimiter._state['/bar::ALL']).length, 1)
+        assert('foo' in PolicyLimiter._state['/bar::ALL'])
         var operation = o({
           _type: Operation,
           endpoint: ({
@@ -100,25 +100,25 @@ module.exports = o({
           name: 'GET'
         })
         var limiter2 = o({
-          _type: limiters.PolicyLimiter,
+          _type: PolicyLimiter,
           selector: o({
-            _type: limiterSelectors.StaticKeyLimiterSelector,
+            _type: StaticKeyLimiterSelector,
             staticKey: 'foo'
           }),
-          policy: o({_type: limiterPolicies.WindowLimiterPolicy})
+          policy: o({_type: WindowLimiterPolicy})
         })
         limiter2.initialize(service, operation)
-        assert.equal(_.keys(limiters.PolicyLimiter._state).length, 3)
-        assert('/baz::GET' in limiters.PolicyLimiter._state)
-        assert.equal(_.keys(limiters.PolicyLimiter._state['/baz::GET']).length, 1)
-        assert('foo' in limiters.PolicyLimiter._state['/baz::GET'])
+        assert.equal(_.keys(PolicyLimiter._state).length, 3)
+        assert('/baz::GET' in PolicyLimiter._state)
+        assert.equal(_.keys(PolicyLimiter._state['/baz::GET']).length, 1)
+        assert('foo' in PolicyLimiter._state['/baz::GET'])
         var limiter3 = o({
-          _type: limiters.PolicyLimiter,
+          _type: PolicyLimiter,
           selector: o({
-            _type: limiterSelectors.StaticKeyLimiterSelector,
+            _type: StaticKeyLimiterSelector,
             key: 'foo'
           }),
-          policy: o({_type: limiterPolicies.WindowLimiterPolicy})
+          policy: o({_type: WindowLimiterPolicy})
         })
         assert.throws(function () {
           limiter3.initialize(service, {})
@@ -147,10 +147,10 @@ module.exports = o({
       },
       doTest: function() {
         var limiter = o({
-          _type: limiters.PolicyLimiter,
-          selector: o({_type: limiterSelectors.StaticKeyLimiterSelector}),
+          _type: PolicyLimiter,
+          selector: o({_type: StaticKeyLimiterSelector}),
           policy: o({
-            _type: limiterPolicies.WindowLimiterPolicy,
+            _type: WindowLimiterPolicy,
             window: 1000,
             reqLimit: 1
           })
