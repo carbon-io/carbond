@@ -1,8 +1,8 @@
-====================================
-carbond.limiter.Limiter.ChainLimiter
-====================================
+============================
+carbond.limiter.ChainLimiter
+============================
 
-:js:class:`~carbond.limiter.Limiter.ChainLimiter` should be used to insert
+:js:class:`~carbond.limiter.ChainLimiter` should be used to insert
 multiple limiters at a given point in the :js:class:`~carbond.Endpoint.Endpoint`
 tree. A request will be evaluated by each limiter in the chain in order with
 evaluation stopping at the first limiter that rejects the request.
@@ -10,24 +10,24 @@ evaluation stopping at the first limiter that rejects the request.
 Class
 -----
 
-.. js:class:: carbond.limiter.Limiter.ChainLimiter
+.. js:class:: carbond.limiter.ChainLimiter
 
-    *extends*: :js:class:`~carbond.limiter.Limiter.Limiter`
+    *extends*: :js:class:`~carbond.limiter.Limiter`
 
     .. js:attribute:: limiters
 
        :type: :js:class:`Array`
 
-       An :js:class:`Array` of :js:class:`~carbond.limiter.Limiter.Limiter`
+       An :js:class:`Array` of :js:class:`~carbond.limiter.Limiter`
        instances.
 
 
     .. js:function:: initialize(service, node)
         
        :param service: the root ``Service`` instance
-       :type service: :js:class:`~carbond.Service.Service`
+       :type service: :js:class:`~carbond.Service`
        :param node: the ``Endpoint`` that we are attached to
-       :type node: :js:class:`carbond.Endpoint.Endpoint`
+       :type node: :js:class:`carbond.Endpoint`
        
        Called on service initialization. Cascades initialization to all limiters
        managed by this instance.
