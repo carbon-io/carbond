@@ -13,7 +13,7 @@ Class Reference
    carbond.limiter.TooBusyLimiter
    carbond.limiter.LimiterPolicy
    carbond.limiter.LimiterPolicyState
-   carbond.limiter.LimiterWindowPolicy
+   carbond.limiter.WindowLimiterPolicy
    carbond.limiter.LimiterSelector
    carbond.limiter.ReqPropertyLimiterSelector
    carbond.limiter.StaticKeyLimiterSelector

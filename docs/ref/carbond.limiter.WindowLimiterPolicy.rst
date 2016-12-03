@@ -1,5 +1,5 @@
 ===================================
-carbond.limiter.LimiterWindowPolicy
+carbond.limiter.WindowLimiterPolicy
 ===================================
 
 :js:class:`~carbond.limiter.WindowLimiterPolicy` is a concrete implementation of
@@ -9,7 +9,7 @@ allowed within a sliding window of time.
 Class
 -----
 
-.. js:class:: carbond.limiter.ChainLimiter
+.. js:class:: carbond.limiter.WindowLimiterPolicy
 
     *extends*: :js:class:`~carbond.limiter.Limiter`
 
@@ -48,5 +48,4 @@ Example
 .. .. literalinclude:: <path>
 ..     :language: js
 ..     :linenos:
-
 

@@ -60,8 +60,8 @@ Class
 Example
 -------
 
-.. .. literalinclude:: <path>
-..     :language: js
-..     :linenos:
-
+.. literalinclude:: ../code-frags/PolicyLimiterExample.js
+    :language: js
+    :lines: 17-87
+    :linenos:
 
