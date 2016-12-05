@@ -2,10 +2,9 @@ var _ = require('lodash')
 
 var cc = require('@carbon-io/carbon-core')
 var __ = cc.fibers.__(module)
-var _o = cc.bond._o(module)
 var o = cc.atom.o(module)
 var oo = cc.atom.oo(module)
-var tt = cc.testtube
+var Test = cc.testtube.Test
 
 var Service = require('../../lib/Service')
 var Endpoint = require('../../lib/Endpoint')
@@ -38,9 +37,7 @@ var PolicyLimiterExample = {
         }),
       }),
       get: function(req, res) {
-        res.status(200)
-        res.append('Content-Type', 'text/html')
-        res.send('<html><body>foo</body></html>')
+        return {get: 'foo'}
       },
       endpoints: {
         bar: o({
@@ -60,7 +57,7 @@ var PolicyLimiterExample = {
             }),
           }),
           get: function() {
-            return 'foo/bar'
+            return {get: 'foo/bar'}
           }
         })
       }
@@ -82,14 +79,14 @@ var PolicyLimiterExample = {
         }),
       }),
       get: function() {
-        return 'baz'
+        return {get: 'baz'}
       }
     })
   }
 }
 
 var test = {
-  _type: tt.Test,
+  _type: Test,
   setup: function(done) {
   },
   teardown: function(done) {
