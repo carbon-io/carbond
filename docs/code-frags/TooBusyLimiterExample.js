@@ -3,15 +3,11 @@ var fibers = cc.fibers
 var __ = cc.fibers.__(module)
 var o = cc.atom.o(module)
 var oo = cc.atom.oo(module)
-var Test = cc.testtube.Test
 
 var Service = require('../../lib/Service')
 var Endpoint = require('../../lib/Endpoint')
 
 var TooBusyLimiter = require('../../lib/limiter/TooBusyLimiter')
-
-// XXX: remove this when carbon-io/carbond/issues/131 is fixed
-fibers.setFiberPoolSize(5)
 
 var TooBusyLimiterExample = {
   _type: Service,
@@ -29,10 +25,16 @@ var TooBusyLimiterExample = {
 
   doStart: function(options) {
     var self = this
-    setInterval(function() {
+    this.loggingInterval = setInterval(function() {
       self.logInfo('max outstanding requests: ' + self.busyLimiter.maxOutstandingReqs)
       self.logInfo('outstanding requests: ' + self.busyLimiter.outstandingReqs)
     }, 500)
+  },
+
+  doStop: function() {
+    if (typeof this.loggingInterval != 'undefined') {
+      clearInterval(this.loggingInterval)
+    }
   },
 
   endpoints: {
@@ -48,18 +50,7 @@ var TooBusyLimiterExample = {
   }
 }
 
-var test = {
-  _type: Test,
-  setup: function(done) {
-  },
-  teardown: function(done) {
-  }
-}
-
-module.exports = {
-  TooBusyLimiterExample: TooBusyLimiterExample,
-  test: test
-}
+module.exports = TooBusyLimiterExample
 
 if (require.main === module) {
   __.main(function() {
