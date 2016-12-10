@@ -227,16 +227,22 @@ var TooBusyLimiterTests = o({
       name: 'TestInit',
       description: 'Test init',
       doTest: function() {
+        var mockService = {
+          on: sinon.spy(),
+          logDebug: sinon.spy()
+        }
         var limiter = o({
           _type: TooBusyLimiter,
           absMaxOutstandingReqs: 10
         })
+        limiter.initialize(mockService)
         assert.equal(limiter.maxOutstandingReqs, 10)
         limiter = o({
           _type: TooBusyLimiter,
           useFiberPoolSize: true,
           fiberPoolAllowedOverflow: .1
         })
+        limiter.initialize(mockService)
         assert.equal(limiter.maxOutstandingReqs,
                      fibers.getFiberPoolSize() + fibers.getFiberPoolSize() *.1)
         limiter = o({
@@ -244,8 +250,12 @@ var TooBusyLimiterTests = o({
           toobusyMaxLag: 1000,
           toobusyInterval: 1000
         })
+        limiter.initialize(mockService)
         assert.equal(toobusy.maxLag(), 1000)
         assert.equal(toobusy.interval(), 1000)
+        for (var i = 0; i < mockService.on.args.length; i++) {
+          mockService.on.args[i][1]()
+        }
       }
     }),
 
