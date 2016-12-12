@@ -22,7 +22,7 @@ module.exports = o({
    */
   tests: [
     _o('./TooBusyLimiterExampleTests'),
-    //_o('./PolicyLimiterExampleTests')
+    _o('./PolicyLimiterExampleTests')
   ],
 })
 
