@@ -85,18 +85,7 @@ var PolicyLimiterExample = {
   }
 }
 
-var test = {
-  _type: Test,
-  setup: function(done) {
-  },
-  teardown: function(done) {
-  }
-}
-
-module.exports = {
-  PolicyLimiterExample: PolicyLimiterExample,
-  test: test
-}
+module.exports = PolicyLimiterExample
 
 if (require.main === module) {
   __.main(function() {
