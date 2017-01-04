@@ -128,8 +128,5 @@ invoke directly at the command line.
     :language: sh 
 
 For more details on running carbond services see
-:doc:`/carbond/running-the-objectserver`
-
-For more details on running carbond services see
-:doc:`/carbond/services#running-services-from-the-command-line`
+:ref:`running-services-from-the-command-line-label`
 

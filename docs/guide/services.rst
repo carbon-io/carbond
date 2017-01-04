@@ -84,6 +84,8 @@ property on your ``Service`` object:
     }) 
   }) 
 
+.. _running-services-from-the-command-line-label:
+
 Running Services from the command line
 --------------------------------------
 
