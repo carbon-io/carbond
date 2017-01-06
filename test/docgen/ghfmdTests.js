@@ -52,6 +52,7 @@ module.exports = o({
       doTest: function() {
         var self = this
         var o = require('@carbon-io/carbon-core').atom.o(require.main).main
+        o(self.service)
         assert.throws(function() {
           o(self.service)
         }, Error)
