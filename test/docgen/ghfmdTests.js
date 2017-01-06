@@ -60,8 +60,11 @@ module.exports = o({
         fixtureHash.update(
           fs.readFileSync(
             __dirname + '/../fixtures/Service1_README.md'))
-        serviceHash.update(
-          fs.readFileSync(this.tmpFile.name))
+        var fileData = fs.readFileSync(this.tmpFile.name)
+        if (fileData.length == 0) {
+          throw new Error('file not written')
+        }
+        serviceHash.update(fileData)
         assert.equal(
           serviceHash.digest('hex'), fixtureHash.digest('hex'))
       }
