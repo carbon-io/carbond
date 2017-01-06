@@ -10,7 +10,7 @@ var carbond = require('../../')
  */
 var middlewareCalled = false
 
-module.exports = o({
+module.exports = {
   _type: carbond.Service,
   
   port: 8888,
@@ -73,4 +73,4 @@ module.exports = o({
       
     })
   }
-})
+}

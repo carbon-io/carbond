@@ -25,6 +25,7 @@ module.exports = o({
     _o('./AuthenticatorTests'),
     _o('./BasicCollectionTests'),
     _o('./BasicEndpointTests'),
+    _o('./docgen'),
     _o('./HasherTests'),
     _o('./IdGeneratorTests'),
     _o('./MongoDBCollectionTests'),

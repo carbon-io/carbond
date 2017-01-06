@@ -19,7 +19,8 @@
   "devDependencies": {
     "mocha": "2.x",
     "mockery": "1.7.x",
-    "sinon": "1.17.x"
+    "sinon": "1.17.x",
+    "tmp": "0.0.x"
   },
   "dependencies": {
     "basic-auth": "1.0.x",
