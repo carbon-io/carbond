@@ -52,7 +52,6 @@ module.exports = o({
       doTest: function() {
         var self = this
         var o = require('@carbon-io/carbon-core').atom.o(require.main).main
-        o(self.service)
         assert.throws(function() {
           o(self.service)
         }, Error)
@@ -62,9 +61,7 @@ module.exports = o({
           fs.readFileSync(
             __dirname + '/../fixtures/Service1_README.md'))
         var fileData = fs.readFileSync(this.tmpFile.name)
-        if (fileData.length == 0) {
-          throw new Error('file not written')
-        }
+        assert(fileData.length > 0)
         serviceHash.update(fileData)
         assert.equal(
           serviceHash.digest('hex'), fixtureHash.digest('hex'))
