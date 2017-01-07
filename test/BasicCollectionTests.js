@@ -294,14 +294,6 @@ module.exports = o({
                          schema:  { type: 'object' },
                          required: false,
                          default: null
-                       },
-                       view: {
-                         name: 'view',
-                         description: "View",
-                         schema: { type: 'string' },
-                         location: 'query',
-                         required: false,
-                         default: undefined
                        }
                      })
     
@@ -424,16 +416,7 @@ module.exports = o({
                        ForbiddenResponse,
                        InternalServerErrorResponse
                      ])
-    assert.deepEqual(oe.getOperation('get').parameters, {
-      view: {
-        name: 'view',
-        description: "View",
-        schema: { type: 'string' },
-        location: 'query',
-        required: false,
-        default: undefined
-      }
-    })
+    assert.deepEqual(oe.getOperation('get').parameters, {})
     
     // updateObject
     assert.deepEqual(oe.getOperation('patch').responses,
