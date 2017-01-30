@@ -2,8 +2,6 @@
 Application structure
 =====================
 
-*LAST PASS 2016.07.03 HOW DO I GET THAT REF AT BOTTOM TO WORK?*
-
 Defining your Node.js package 
 -----------------------------
 
@@ -27,7 +25,7 @@ Your ``package.json`` file should include ``carbon-io``
    }
  }
 
-You then install the package dependencies like so
+You then install the package dependencies like so:
 
 ..  code-block:: sh
 
@@ -124,9 +122,10 @@ Running your Service
 Your top-level ``MyService.js`` file creates a top-level executable application that you can
 invoke directly at the command line. 
 
-..  literalinclude:: ../../shell-frags/shell-output-starting-service.rst
+..  literalinclude:: ../shell-frags/shell-output-starting-service.rst
     :language: sh 
 
-For more details on running carbond services see
-:ref:`running-services-from-the-command-line-label`
+For more details on running ``carbond`` ``Service``\s see the documentation on
+:ref:`running services from the command line <running Services from
+the command line>`.
 

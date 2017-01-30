@@ -7,7 +7,7 @@ for creating microservices and APIs.
 
 ..  toctree::
 
-    application-structure/index
+    application-structure.rst
     services.rst
     endpoints.rst
     operations.rst

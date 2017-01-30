@@ -125,7 +125,8 @@ You can use ``-h`` or ``--help`` to get command help from your
 You can see that there are two sub-commands. One for starting the
 server and another for generating documentation for your ``Service``.
 
-The default sub-command is ``start-server``: 
+The default sub-command is ``start-server``, and will be run if you
+omit a sub-command (e.g. ``<path-to-your-app>/MyService``): 
 
 ..  literalinclude:: ../shell-frags/shell-output-service-ss-help.rst 
     :language: sh 

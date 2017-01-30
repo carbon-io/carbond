@@ -121,7 +121,7 @@ Properties of the top-level ``Service`` can be accessed via the
           get: function(req) {
             return { 
               running: true,
-              msg: "Up and running on port: " + this.service.port 
+              msg: "Up and running on port: " + this.getService().port 
             }
           }
         }) 
