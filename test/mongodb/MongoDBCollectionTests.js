@@ -3,7 +3,7 @@ var assert = require('assert')
 var o  = require('@carbon-io/carbon-core').atom.o(module).main
 var _o = require('@carbon-io/carbon-core').bond._o(module)
 
-var carbond = require('../')
+var carbond = require('../../')
 
 /**************************************************************************
  * MongoDBCollectionTests
@@ -23,7 +23,7 @@ module.exports = o({
   /**********************************************************************
    * service
    */
-  service: _o('./fixtures/ServiceForMongoDBCollectionTests'),
+  service: _o('../fixtures/ServiceForMongoDBCollectionTests'),
 
   /**********************************************************************
    * doTest
