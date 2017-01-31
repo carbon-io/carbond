@@ -27,7 +27,7 @@ var testtube = require('@carbon-io/carbon-core').testtube
  * true
  */
 
-var ObjectId = require('leafnode').mongodb.ObjectId
+var ObjectId = require('@carbon-io/carbon-core').leafnode.mongodb.ObjectId
 
 /**************************************************************************
  * IdGeneratorTests
