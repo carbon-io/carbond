@@ -50,6 +50,23 @@ module.exports = o({
         required: ['state'],
         additionalProperties: false
       }
+    }),
+    'bag-of-props': o({
+      _type: carbond.mongodb.MongoDBCollection,
+      collection: 'bag-of-props',
+
+      enabled: {
+        '*': true
+      },
+
+      schema: {
+        type: 'object',
+        properties: {
+          _id: { type: 'ObjectId' },
+        },
+        additionalProperties: true,
+        required: ['_id']
+      },
     })
   }
 })
