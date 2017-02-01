@@ -224,9 +224,30 @@ module.exports = o({
           }
         }
       },
-      resSpec: {
-        statusCode: 200,
-        body: undefined
+      resSpec: function(response, previousResponse) {
+        response.previousResponse = previousResponse
+        assert.equal(response.statusCode, 200)
+        assert(typeof body === 'undefined')
+        return true
+      }
+    },
+    {
+      // validate subsequent updates using ObjectId
+      reqSpec: function(previousResponse) {
+        return {
+          url: '/bag-of-props/' + previousResponse.previousResponse.body._id.toString() + '/',
+          method: 'PATCH',
+          body: {
+            '$set': {
+              lastName: 'baz'
+            }
+          }
+        }
+      },
+      resSpec: function(response, previousResponse) {
+        assert.equal(response.statusCode, 200)
+        assert(typeof body === 'undefined')
+        return true
       }
     }
   ],
