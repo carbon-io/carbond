@@ -1,0 +1,3 @@
+[submodule "docs/common"]
+	path = docs/common
+	url = git@github.com:carbon-io/docs-common.git
