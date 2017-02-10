@@ -3,7 +3,7 @@ var assert = require('assert')
 var o  = require('@carbon-io/carbon-core').atom.o(module).main
 var _o = require('@carbon-io/carbon-core').bond._o(module)
 
-var carbond = require('../')
+var carbond = require('../../')
 
 /**************************************************************************
  * MongoDBCollectionTests
@@ -18,12 +18,12 @@ module.exports = o({
   /**********************************************************************
    * name
    */
-  name: "MongoDBCollectionTests",
+  name: 'MongoDBCollectionTests',
 
   /**********************************************************************
    * service
    */
-  service: _o('./fixtures/ServiceForMongoDBCollectionTests'),
+  service: _o('../fixtures/ServiceForMongoDBCollectionTests'),
 
   /**********************************************************************
    * doTest
@@ -41,43 +41,43 @@ module.exports = o({
     // Test insert
     {
       reqSpec: {
-        url: "/zipcodes",
-        method: "POST",
+        url: '/zipcodes',
+        method: 'POST',
         body: {
-          _id: "94114",
-          state: "CA"
+          _id: '94114',
+          state: 'CA'
         },
       },
       resSpec: {
         statusCode: 201,
-        headers: function(headers) { return headers.location === "/zipcodes/94114" },
-        body: { _id: "94114", state: "CA" }
+        headers: function(headers) { return headers.location === '/zipcodes/94114' },
+        body: { _id: '94114', state: 'CA' }
       }
     },
 
     // Test find
     {
       reqSpec: {
-        url: "/zipcodes",
-        method: "GET",
+        url: '/zipcodes',
+        method: 'GET',
         parameters: {
-          query: { _id: "94114" },
+          query: { _id: '94114' },
         },
       },
       resSpec: {
         statusCode: 200,
-        body: [{ _id: "94114", state: "CA" }]
+        body: [{ _id: '94114', state: 'CA' }]
       }
     },
 
     // Insert another and test find again
     {
       reqSpec: {
-        url: "/zipcodes",
-        method: "POST",
+        url: '/zipcodes',
+        method: 'POST',
         body: {
-          _id: "94110",
-          state: "CA"
+          _id: '94110',
+          state: 'CA'
         },
       },
       resSpec: {
@@ -87,27 +87,27 @@ module.exports = o({
 
     {
       reqSpec: {
-        url: "/zipcodes",
-        method: "GET",
+        url: '/zipcodes',
+        method: 'GET',
         parameters: {
-          query: { _id: "94110" },
+          query: { _id: '94110' },
           sort: { '_id': 1 },
           limit: 1
         },
       },
       resSpec: {
         statusCode: 200,
-        body: [{ _id: "94110", state: "CA" }]
+        body: [{ _id: '94110', state: 'CA' }]
       }
     },
 
     // Test update
     {
       reqSpec: {
-        url: "/zipcodes",
-        method: "PATCH",
-        parameters: { query: { _id: "94114" } },
-        body: { state: "NY" }
+        url: '/zipcodes',
+        method: 'PATCH',
+        parameters: { query: { _id: '94114' } },
+        body: { state: 'NY' }
       },
       resSpec: {
         statusCode: 200,
@@ -118,9 +118,9 @@ module.exports = o({
     // Test remove
     {
       reqSpec: {
-        url: "/zipcodes",
-        method: "DELETE",
-        parameters: { query: { state: "NY" } },
+        url: '/zipcodes',
+        method: 'DELETE',
+        parameters: { query: { state: 'NY' } },
       },
       resSpec: {
         statusCode: 200,
@@ -131,20 +131,20 @@ module.exports = o({
     // Test saveObject
     {
       reqSpec: {
-        url: "/zipcodes/94114",
-        method: "PUT",
-        body: { _id: "94114", state: "CA", }
+        url: '/zipcodes/94114',
+        method: 'PUT',
+        body: { _id: '94114', state: 'CA', }
       },
       resSpec: {
         statusCode: 201,
-        body: { _id: "94114", state: "CA", }
+        body: { _id: '94114', state: 'CA', }
       }
     },
     {
       reqSpec: {
-        url: "/zipcodes/94114",
-        method: "PUT",
-        body: { _id: "94114", state: "CA", }
+        url: '/zipcodes/94114',
+        method: 'PUT',
+        body: { _id: '94114', state: 'CA', }
       },
       resSpec: {
         statusCode: 200,
@@ -155,18 +155,18 @@ module.exports = o({
     // Test findObject
     {
       reqSpec: {
-        url: "/zipcodes/94114",
-        method: "GET"
+        url: '/zipcodes/94114',
+        method: 'GET'
       },
       resSpec: {
         statusCode: 200,
-        body: { _id: "94114", state: "CA", }
+        body: { _id: '94114', state: 'CA', }
       }
     },
     {
       reqSpec: {
-        url: "/zipcodes/94119",
-        method: "GET"
+        url: '/zipcodes/94119',
+        method: 'GET'
       },
       resSpec: {
         statusCode: 404,
@@ -176,9 +176,9 @@ module.exports = o({
     // Test updateObject
     {
       reqSpec: {
-        url: "/zipcodes/94114",
-        method: "PATCH",
-        body: { state: "NY" }
+        url: '/zipcodes/94114',
+        method: 'PATCH',
+        body: { state: 'NY' }
       },
       resSpec: {
         statusCode: 200,
@@ -189,12 +189,65 @@ module.exports = o({
     // Test removeObject
     {
       reqSpec: {
-        url: "/zipcodes/94114",
-        method: "DELETE"
+        url: '/zipcodes/94114',
+        method: 'DELETE'
       },
       resSpec: {
         statusCode: 200,
         body: undefined
+      }
+    },
+
+    // Test patch with ObjectId
+    // https://github.com/carbon-io/carbond/issues/114
+    {
+      reqSpec: {
+        url: '/bag-of-props',
+        method: 'POST',
+        body: {
+          firstName: 'foo'
+        }
+      },
+      resSpec: {
+        statusCode: 201
+      }
+    },
+    {
+      reqSpec: function(previousResponse) {
+        return {
+          url: '/bag-of-props/' + previousResponse.body._id.toString() + '/',
+          method: 'PATCH',
+          body: {
+            '$set': {
+              lastName: 'bar'
+            }
+          }
+        }
+      },
+      resSpec: function(response, previousResponse) {
+        response.previousResponse = previousResponse
+        assert.equal(response.statusCode, 200)
+        assert(typeof body === 'undefined')
+        return true
+      }
+    },
+    {
+      // validate subsequent updates using ObjectId
+      reqSpec: function(previousResponse) {
+        return {
+          url: '/bag-of-props/' + previousResponse.previousResponse.body._id.toString() + '/',
+          method: 'PATCH',
+          body: {
+            '$set': {
+              lastName: 'baz'
+            }
+          }
+        }
+      },
+      resSpec: function(response, previousResponse) {
+        assert.equal(response.statusCode, 200)
+        assert(typeof body === 'undefined')
+        return true
       }
     }
   ],
@@ -246,28 +299,28 @@ module.exports = o({
 
     var NotFoundResponse = {
       statusCode: 404,
-      description: "Collection resource cannot be found by the supplied _id.",
+      description: 'Collection resource cannot be found by the supplied _id.',
       schema: defaultErrorSchema,
       headers: []
     }
   
     var BadRequestResponse = {
       statusCode: 400,
-      description: "Request is malformed (i.e. invalid parameters).",
+      description: 'Request is malformed (i.e. invalid parameters).',
       schema: defaultErrorSchema,
       headers: []
     }
       
     var ForbiddenResponse = {
       statusCode: 403,
-      description: "User is not authorized to run this operation.",
+      description: 'User is not authorized to run this operation.',
       schema: defaultErrorSchema,
       headers: []
     }
 
     var InternalServerErrorResponse = {
       statusCode: 500,
-      description: "There was an unexpected internal error processing this request.",
+      description: 'There was an unexpected internal error processing this request.',
       schema: defaultErrorSchema,
       headers: []
     }
@@ -278,8 +331,8 @@ module.exports = o({
                        {
                          statusCode: 201,
                          description: 
-                         "Returns the object inserted, along with the URL of the newly inserted object " +
-                           "in the Location header of the response.",
+                         'Returns the object inserted, along with the URL of the newly inserted object ' +
+                           'in the Location header of the response.',
                          schema: schema,
                          headers: ['Location']
                        },
@@ -287,10 +340,10 @@ module.exports = o({
                        ForbiddenResponse,
                        InternalServerErrorResponse
                      ]),
-    assert.deepEqual(ce.getOperation('post').parameters, { "body" : { description: "Object to insert",
-                                                                      name: "body",
+    assert.deepEqual(ce.getOperation('post').parameters, { 'body' : { description: 'Object to insert',
+                                                                      name: 'body',
                                                                       schema: schema,
-                                                                      location: "body", 
+                                                                      location: 'body', 
                                                                       required: true, 
                                                                       default: undefined }})
  
@@ -300,7 +353,7 @@ module.exports = o({
                        {
                          statusCode: 200,
                          description: 
-                         "Returns an array of objects. Each object has an _id and possible additional properties.",
+                         'Returns an array of objects. Each object has an _id and possible additional properties.',
                          schema: {
                            type: 'array',
                            items: schema
@@ -315,7 +368,7 @@ module.exports = o({
                      { 
                        query: {
                          name: 'query',
-                         description: "Query spec (JSON)",
+                         description: 'Query spec (JSON)',
                          location: 'query',
                          schema:  querySchema,
                          required: false,
@@ -323,33 +376,33 @@ module.exports = o({
                        },
                        sort : {
                          name: 'sort',
-                         description: "Sort spec (JSON)",
-                         location: "query", 
-                         schema: { type: "object"}, 
+                         description: 'Sort spec (JSON)',
+                         location: 'query', 
+                         schema: { type: 'object'}, 
                          required: false,
                          default: undefined
                        },
                        projection : {
                          name: 'projection',
-                         description: "Projection spec (JSON)",
-                         location: "query", 
-                         schema: { type: "object" }, 
+                         description: 'Projection spec (JSON)',
+                         location: 'query', 
+                         schema: { type: 'object' }, 
                          required: false,
                          default: undefined
                        },
                        skip: {
                          name: 'skip',
-                         description: "Results to skip",
-                         location: "query", 
-                         schema: { type: "integer" },
+                         description: 'Results to skip',
+                         location: 'query', 
+                         schema: { type: 'integer' },
                          required: false,
                          default: undefined
                        },
                        limit: {
                          name: 'limit',
-                         description: "Results to limit",
-                         location: "query", 
-                         schema: { type: "integer" },
+                         description: 'Results to limit',
+                         location: 'query', 
+                         schema: { type: 'integer' },
                          required: false,
                        default: undefined
                        }
@@ -360,7 +413,7 @@ module.exports = o({
                      [
                        {
                          statusCode: 200,
-                         description: "Returns an update result specifying the number of documents updated.",
+                         description: 'Returns an update result specifying the number of documents updated.',
                          schema:  { 
                            type: 'object',
                            properties: {
@@ -378,7 +431,7 @@ module.exports = o({
     assert.deepEqual(ce.getOperation('patch').parameters,
                      {
                        query: {
-                         name: "query",
+                         name: 'query',
                          description: undefined, // XXX should not be undefined right?
                          schema: querySchema,
                          location: 'query',
@@ -386,8 +439,8 @@ module.exports = o({
                          default: undefined
                        },
                        body: { 
-                         name: "body",
-                         location: "body", 
+                         name: 'body',
+                         location: 'body', 
                          description: "Update spec (JSON). Update operator (e.g {'$inc': {'n': 1}})",
                          schema: updateSchema,
                          required: true,
@@ -400,7 +453,7 @@ module.exports = o({
                      [
                        {
                          statusCode: 200,
-                         description: "Returns a remove result specifying the number of documents removed.",
+                         description: 'Returns a remove result specifying the number of documents removed.',
                          schema:  { 
                            type: 'object',
                            properties: {
@@ -418,7 +471,7 @@ module.exports = o({
     assert.deepEqual(ce.getOperation('delete').parameters,
                      {
                        query: {
-                         name: "query",
+                         name: 'query',
                          description: undefined,
                          schema: querySchema,
                          location: 'query',
@@ -433,15 +486,15 @@ module.exports = o({
                        {
                          statusCode: 201,
                          description: 
-                         "Returns the object inserted, along with the URL of the newly inserted object " +
-                        "in the Location header of the response.",
+                         'Returns the object inserted, along with the URL of the newly inserted object ' +
+                        'in the Location header of the response.',
                          schema: schema,
                          headers: ['Location']
                        },
                        {
                          statusCode: 200,
-                         description: "Returns no content.",
-                         schema: { type: "Undefined" }, 
+                         description: 'Returns no content.',
+                         schema: { type: 'Undefined' }, 
                          headers: []
                        },
                        BadRequestResponse,
@@ -451,8 +504,8 @@ module.exports = o({
     assert.deepEqual(oe.getOperation('put').parameters,
                      {
                        body: {
-                         name: "body",
-                         description: "Full object for update. Must contain _id field that has the same value is the id in the path.",
+                         name: 'body',
+                         description: 'Full object for update. Must contain _id field that has the same value is the id in the path.',
                          schema:  schema,
                          location: 'body',
                          required: true,
@@ -465,7 +518,7 @@ module.exports = o({
                      [
                        {
                          statusCode: 200,
-                         description: "Returns the object resource found at this URL specified by id.",
+                         description: 'Returns the object resource found at this URL specified by id.',
                          schema: schema,
                          headers: []
                        },
@@ -481,8 +534,8 @@ module.exports = o({
                      [
                        {
                          statusCode: 200,
-                         description: "Returns no content.",
-                         schema: { type: "Undefined" }, 
+                         description: 'Returns no content.',
+                         schema: { type: 'Undefined' }, 
                          headers: []
                        },
                        NotFoundResponse,
@@ -493,7 +546,7 @@ module.exports = o({
     assert.deepEqual(oe.getOperation('patch').parameters,
                      {
                        body: {
-                         name: "body",
+                         name: 'body',
                          description: "Update spec (JSON). Update operator (e.g {'$inc': {'n': 1}})", 
                          schema:  updateSchema,
                          location: 'body',
@@ -507,8 +560,8 @@ module.exports = o({
                      [
                        {
                          statusCode: 200,
-                         description: "Returns no content.",
-                         schema: { type: "Undefined" },
+                         description: 'Returns no content.',
+                         schema: { type: 'Undefined' },
                          headers: []
                        },
                        NotFoundResponse,
@@ -518,16 +571,20 @@ module.exports = o({
     assert.deepEqual(oe.getOperation('delete').parameters, {})    
   },
 
+
   /**********************************************************************
    * clearDatabase
    */
   clearDatabase: function(db) {
-    var c = db.getCollection("zipcodes")
-    try {
-      c.drop()
-    } catch (e) {
-      // ignore
-    }
+    var collections = ['zipcodes', 'bag-of-props']
+    collections.forEach(function(collection) {
+      var c = db.getCollection(collection)
+      try {
+        c.drop()
+      } catch (e) {
+        // ignore
+      }
+    })
   }
   
 })
