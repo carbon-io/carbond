@@ -50,7 +50,9 @@ module.exports = o({
       },
       resSpec: {
         statusCode: 201,
-        headers: function(headers) { return headers.location === '/zipcodes/94114' },
+        headers: function(headers) { 
+          assert.equal(headers.location, '/zipcodes/94114')
+        },
         body: { _id: '94114', state: 'CA' }
       }
     },
@@ -227,8 +229,7 @@ module.exports = o({
       resSpec: function(response, previousResponse) {
         response.previousResponse = previousResponse
         assert.equal(response.statusCode, 200)
-        assert(typeof body === 'undefined')
-        return true
+        assert.equal(typeof body, 'undefined')
       }
     },
     {
@@ -246,8 +247,7 @@ module.exports = o({
       },
       resSpec: function(response, previousResponse) {
         assert.equal(response.statusCode, 200)
-        assert(typeof body === 'undefined')
-        return true
+        assert.equal(typeof body, 'undefined')
       }
     }
   ],

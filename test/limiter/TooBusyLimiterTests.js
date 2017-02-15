@@ -414,7 +414,6 @@ var TooBusyLimiterTests = o({
             assert.equal(res.statusCode, 503)
             assert.equal(this.parent.service.busyLimiter.outstandingReqs, 4)
             assert.equal(this.parent.service.busyLimiter.maxOutstandingReqs, 4)
-            return true
           },
           teardown: function(done) {
             var self = this
@@ -443,7 +442,6 @@ var TooBusyLimiterTests = o({
             assert.equal(res.statusCode, 200)
             assert.equal(this.parent.service.busyLimiter.outstandingReqs, 0)
             assert.equal(this.parent.service.busyLimiter.maxOutstandingReqs, 5)
-            return true
           },
           teardown: function() {
             this.parent.service.busyLimiter.toobusy.restore()
@@ -462,7 +460,6 @@ var TooBusyLimiterTests = o({
           resSpec: function(res) {
             assert.equal(res.statusCode, 200)
             assert.equal(this.parent.service.busyLimiter.maxOutstandingReqs, 7)
-            return true
           },
           teardown: function() {
             this.parent.service.busyLimiter.toobusy.restore()
@@ -481,7 +478,6 @@ var TooBusyLimiterTests = o({
           resSpec: function(res) {
             assert.equal(res.statusCode, 200)
             assert.equal(this.parent.service.busyLimiter.maxOutstandingReqs, 8)
-            return true
           },
           teardown: function() {
             this.parent.service.busyLimiter.toobusy.restore()
@@ -576,7 +572,6 @@ var TooBusyLimiterTests = o({
             assert.equal(res.statusCode, 503)
             assert.equal(this.parent.service.busyLimiter.outstandingReqs, 11)
             assert.equal(this.parent.service.busyLimiter.maxOutstandingReqs, 11)
-            return true
           },
           teardown: function(done) {
             var self = this

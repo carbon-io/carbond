@@ -47,7 +47,9 @@ module.exports = o({
       },
       resSpec: {
         statusCode: 201,
-        headers: function(headers) { return headers.location === "/basic/000" },
+        headers: function(headers) { 
+          assert.equal(headers.location, "/basic/000")
+        },
         body: { 
           _id: "000",
           op: "insert",
@@ -129,7 +131,9 @@ module.exports = o({
       resSpec: {
         statusCode: 201,
         body: { _id: "foo", "name": "Foo" },
-        headers: function(headers) { return headers.location === "/basic/foo" },
+        headers: function(headers) { 
+          assert.equal(headers.location, "/basic/foo")
+        },
       }
     },
 
