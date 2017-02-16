@@ -28,7 +28,7 @@ var CountDownLimiter = oo({
 
   fn: function(req, res, next) {
     if (this.state.visits <= 0) {
-      return this.sendUnavailable(res, this.name)
+      return this.sendUnavailable(res, next, this.name)
     }
     this.state.visits--
     next()
