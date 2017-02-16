@@ -41,7 +41,7 @@ module.exports = o({
         resSpy.append = sinon.spy()
         var limiter = o({_type: Limiter})
         limiter.initialize({_handleError: _handleErrorSpy}, undefined)
-        limiter.sendUnavailable(resSpy, 60)
+        limiter.sendUnavailable(resSpy)
         assert(_handleErrorSpy.called)
         assert.equal(_handleErrorSpy.args[0].length, 2)
         assert(_handleErrorSpy.args[0][0] instanceof HttpErrors.ServiceUnavailable)

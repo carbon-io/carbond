@@ -21,6 +21,7 @@ module.exports = o({
    * tests
    */
   tests: [
+    _o('./service'),
     _o('./AclTests'),
     _o('./AuthenticatorTests'),
     _o('./collections'),

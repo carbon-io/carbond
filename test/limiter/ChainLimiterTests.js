@@ -31,16 +31,15 @@ module.exports = o({
     visits = _.isUndefined(visits) ? 1 : visits
     return o({
       _type: limiters.FunctionLimiter,
-      _fn: function(req, res) {
+      _fn: function(req, res, next) {
         if (!('visits' in this.state)) {
           this.state.visits = 0
         }
         if (this.state.visits === visits) {
-          this.sendUnavailable(res)
-          return false
+          return this.sendUnavailable(res, next)
         }
         this.state.visits += 1
-        return true
+        return next()
       }
     })
   },
