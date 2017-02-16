@@ -10,7 +10,7 @@ specifying database URIs:
 
 - ``dbUri``: A connection string specified as a `MongoDB URI
   <http://docs.mongodb.org/manual/reference/connection-string/>`_
-  (e.g. ``"mongodb:username:password@localhost:27017/mydb"``). The
+  (e.g. ``"mongodb://username:password@localhost:27017/mydb"``). The
   ``Service`` will connect to this database on startup. The
   application can then reference a connection to this database via the
   ``db`` property on the ``Service``.
