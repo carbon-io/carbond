@@ -20,7 +20,7 @@ Which results in the following tree of :class:`Endpoints` and :class:`Operations
 
 - ``/<collection>``
 
-  - ``GET`` which maps to ``find``
+  - ``GET`` which maps to :func:`find`
   - ``POST`` which maps to ``insert``
   - ``PUT`` which maps to ``update``
   - ``DELETE`` which maps to ``remove``
@@ -88,7 +88,17 @@ Properties
 Methods
 =======
 
-_TBD_
+.. js:class:: Collection()
+    :noindex:
+    :hidden:
+
+    .. js:function:: find(test)
+
+        :arg arg1: The first argument
+        :type arg1: Collection
+        :returns: Something
+
+        Foo!
 
 RESTFul interface
 =================
