@@ -1,3 +1,6 @@
+.. js:class:: carbond.limiter.TooBusyLimiter()
+    :heading:
+
 ==============================
 carbond.limiter.TooBusyLimiter
 ==============================
@@ -8,20 +11,27 @@ the process is.
 Class
 -----
 
-.. js:class:: carbond.limiter.TooBusyLimiter
+.. js:class:: carbond.limiter.TooBusyLimiter()
 
     *extends*: :js:class:`~carbond.limiter.FunctionLimiter`
-    
-    .. js:attribute:: absMaxOutstandingReqs
 
-        :type: :js:class:`Integer`
+Properties
+----------
+
+.. js:class:: carbond.limiter.TooBusyLimiter()
+    :noindex:
+    :hidden:
+
+    .. js:attribute:: carbond.limiter.TooBusyLimiter.absMaxOutstandingReqs
+
+        :type: :js:class:`int`
         :default: ``Infinity``
 
         The absolute maximum number of outstanding requests.
 
     .. js:attribute:: useFiberPoolSize
 
-        :type: :js:class:`Boolean`
+        :type: :js:class:`bool`
         :default: ``false``
 
         Use Fiber's pool size to set absMaxOutstandingReqs
@@ -64,8 +74,14 @@ Class
         
         The current number of outstanding requests (*read-only*).
 
+Methods
+-------
 
-    .. js:function:: fn
+.. js:class:: carbond.limiter.TooBusyLimiter()
+    :noindex:
+    :hidden:
+
+    .. js:function:: carbond.limiter.TooBusyLimiter.fn
 
         Overrides :js:attr:`~carbond.limiter.FunctionLimiter`
 
