@@ -44,7 +44,7 @@ Properties
         Allow for more requests than ``Fiber.poolSize`` if limiting on 
         ``Fiber.poolSize`` (i.e,
         ``absMaxOutstandingReqs == fiberPoolOverflow * Fiber.poolSize + Fiber.poolSize``).
-        **Note**, this only applies if :attr:`~.useFiberPoolSize` is
+        **Note**, this only applies if :attr:`~carbond.limiter.TooBusyLimiter.useFiberPoolSize` is
         ``true``.
 
     .. attribute:: carbond.limiter.TooBusyLimiter.toobusyMaxLag
@@ -102,18 +102,18 @@ Methods
         latter is ``true``.
 
         If the current number of outstanding requests is greater than
-        :attr:`~.maxOutstandingReqs` or the event loop appears to be lagging
+        :attr:`~carbond.limiter.TooBusyLimiter.maxOutstandingReqs` or the event loop appears to be lagging
         too far behind, the request will be rejected and a ``503`` will be sent
         to the client. If the event loop is lagging,
-        :attr:`~.maxOutstandingRequests` will be updated to reflect the
+        :attr:`~carbond.limiter.TooBusyLimiter.maxOutstandingRequests` will be updated to reflect the
         current number of outstanding requests.
 
-        If the request is allowed and :attr:`~.maxOutstandingReqs` is less
-        than :attr:`~.absMaxOutstandingReqs`, :attr:`~.maxOutstandingReqs`
+        If the request is allowed and :attr:`~carbond.limiter.TooBusyLimiter.maxOutstandingReqs` is less
+        than :attr:`~carbond.limiter.TooBusyLimiter.absMaxOutstandingReqs`, :attr:`~carbond.limiter.TooBusyLimiter.maxOutstandingReqs`
         will increase exponentially with each additional request up to
-        :attr:`~.absMaxOutstandingReqs`. 
+        :attr:`~carbond.limiter.TooBusyLimiter.absMaxOutstandingReqs`. 
 
-        Finally, :attr:`~.outstandingReqs` is incremented, a callback is
+        Finally, :attr:`~carbond.limiter.TooBusyLimiter.outstandingReqs` is incremented, a callback is
         registered do decrement the counter on request completion, and control
         is passed to the next handler.
 

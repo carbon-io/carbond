@@ -32,22 +32,22 @@ Class
     
     *abstract*
 
-    .. attribute:: service
+    .. attribute:: carbond.limiter.Limiter.service
 
         :type: :class:`~carbond.Service`
         :required: ``true``
 
         The root service instance.
 
-    .. attribute:: node
+    .. attribute:: carbond.limiter.Limiter.node
 
         :type: :class:`~carbond.Endpoint`
         :required: ``true``
 
         The endpoint instance that this limiter is protecting (**NOTE**, this can
-        be the same as :attr:`~service`).
+        be the same as :attr:`~carbond.limiter.Limiter.service`).
 
-    .. attribute:: preAuth
+    .. attribute:: carbond.limiter.Limiter.preAuth
 
         :type: :class:`Boolean`
         :required: ``false``
@@ -65,7 +65,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: initialize(service, node)
+    .. function:: carbond.limiter.Limiter.initialize(service, node)
 
         :param service: the root ``Service`` instance
         :type service: :class:`~carbond.Service`
@@ -75,7 +75,7 @@ Methods
         Called on service initialization. Sets the ``service`` and ``node``
         attributes.
 
-    .. function:: process(req, res, next)
+    .. function:: carbond.limiter.Limiter.process(req, res, next)
 
         *abstract*
        
@@ -90,7 +90,7 @@ Methods
         request-response cycle is ended or ``next`` is called (with or without an
         error).
 
-    .. function:: sendUnavailable(res, [message=undefined], [retryAfter=60]])
+    .. function:: carbond.limiter.Limiter.sendUnavailable(res, [message=undefined], [retryAfter=60]])
 
         :param res: the current ``Response`` object
         :type res: :class:`express.response`
