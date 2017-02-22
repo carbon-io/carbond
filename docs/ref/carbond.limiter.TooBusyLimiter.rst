@@ -1,4 +1,4 @@
-.. js:class:: TooBusyLimiter()
+.. js:class:: carbond.limiter.TooBusyLimiter()
     :heading:
 
 ==============================
@@ -11,18 +11,18 @@ the process is.
 Class
 -----
 
-.. js:class:: carbond.limiter.TooBusyLimiter
+.. js:class:: carbond.limiter.TooBusyLimiter()
 
     *extends*: :js:class:`~carbond.limiter.FunctionLimiter`
 
 Properties
 ----------
 
-.. js:class:: Collection()
+.. js:class:: carbond.limiter.TooBusyLimiter()
     :noindex:
     :hidden:
 
-    .. js:attribute:: absMaxOutstandingReqs
+    .. js:attribute:: carbond.limiter.TooBusyLimiter.absMaxOutstandingReqs
 
         :type: :js:class:`int`
         :default: ``Infinity``
@@ -77,11 +77,11 @@ Properties
 Methods
 -------
 
-.. js:class:: Collection()
+.. js:class:: carbond.limiter.TooBusyLimiter()
     :noindex:
     :hidden:
 
-    .. js:function:: fn
+    .. js:function:: carbond.limiter.TooBusyLimiter.fn
 
         Overrides :js:attr:`~carbond.limiter.FunctionLimiter`
 
