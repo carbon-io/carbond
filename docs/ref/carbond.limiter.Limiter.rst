@@ -9,6 +9,15 @@ limiters must extend. Generally, you will want to use
 However, if neither of these suites your needs, you can define your own limiter
 class by extending this.
 
+XXX - EXAMPLES:
+
+Link to TooBusyLimiter class: :js:class:`~carbond.limiter.TooBusyLimiter`
+
+Link to TooBusyLimiter.absMaxOutstandingReqs: :attr:`~carbond.limiter.TooBusyLimiter.absMaxOutstandingReqs`
+
+Link to TooBusyLimiter.fn: :func:`~carbond.limiter.TooBusyLimiter.fn`
+
+
 Class
 -----
 
