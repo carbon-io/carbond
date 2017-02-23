@@ -23,7 +23,7 @@ module.exports = o.main({
   /**********************************************************************
    * doTest
    */
-  doTest: function(done) {
+  doTest: function(context, done) {
     syncTest()
     asyncTest1(function(err1) {
       if (err1) { console.log(err1) }

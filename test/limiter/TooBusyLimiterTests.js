@@ -280,7 +280,7 @@ var TooBusyLimiterTests = o({
       },
       tests: [
         {
-          setup: function(done) {
+          setup: function(context, done) {
             var self = this
             this.results = []
             this.errors = []
@@ -321,7 +321,7 @@ var TooBusyLimiterTests = o({
               message: 'The server is too busy, please try back later.'
             }
           },
-          teardown: function(done) {
+          teardown: function(context, done) {
             var self = this
 
             self.resultsReceivedCb = function() {
@@ -374,7 +374,7 @@ var TooBusyLimiterTests = o({
           }
         },
         {
-          setup: function(done) {
+          setup: function(context, done) {
             var self = this
             this.results = []
             this.errors = []
@@ -415,7 +415,7 @@ var TooBusyLimiterTests = o({
             assert.equal(this.parent.service.busyLimiter.outstandingReqs, 4)
             assert.equal(this.parent.service.busyLimiter.maxOutstandingReqs, 4)
           },
-          teardown: function(done) {
+          teardown: function(context, done) {
             var self = this
 
             self.resultsReceivedCb = function() {
@@ -535,7 +535,7 @@ var TooBusyLimiterTests = o({
           }
         },
         {
-          setup: function(done) {
+          setup: function(context, done) {
             var self = this
             this.results = []
             this.errors = []
@@ -573,7 +573,7 @@ var TooBusyLimiterTests = o({
             assert.equal(this.parent.service.busyLimiter.outstandingReqs, 11)
             assert.equal(this.parent.service.busyLimiter.maxOutstandingReqs, 11)
           },
-          teardown: function(done) {
+          teardown: function(context, done) {
             var self = this
 
             self.resultsReceivedCb = function() {

@@ -215,9 +215,10 @@ module.exports = o({
       }
     },
     {
-      reqSpec: function(previousResponse) {
+      reqSpec: function(context) {
         return {
-          url: '/bag-of-props/' + previousResponse.body._id.toString() + '/',
+          url: '/bag-of-props/' + 
+               context.httpHistory.getRes(-1).body._id.toString() + '/',
           method: 'PATCH',
           body: {
             '$set': {
@@ -226,17 +227,17 @@ module.exports = o({
           }
         }
       },
-      resSpec: function(response, previousResponse) {
-        response.previousResponse = previousResponse
+      resSpec: function(response) {
         assert.equal(response.statusCode, 200)
         assert.equal(typeof body, 'undefined')
       }
     },
     {
       // validate subsequent updates using ObjectId
-      reqSpec: function(previousResponse) {
+      reqSpec: function(context) {
         return {
-          url: '/bag-of-props/' + previousResponse.previousResponse.body._id.toString() + '/',
+          url: '/bag-of-props/' + 
+               context.httpHistory.getRes(-2).body._id.toString() + '/',
           method: 'PATCH',
           body: {
             '$set': {
@@ -245,7 +246,7 @@ module.exports = o({
           }
         }
       },
-      resSpec: function(response, previousResponse) {
+      resSpec: function(response) {
         assert.equal(response.statusCode, 200)
         assert.equal(typeof body, 'undefined')
       }

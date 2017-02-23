@@ -1,6 +1,6 @@
 {
   "name": "@carbon-io/carbond",
-  "version": "0.3.9",
+  "version": "0.4.0",
   "description": "Carbond",
   "keywords": ["carbond", "carbon.io"],
   "contributors": [
@@ -35,7 +35,7 @@
     "request" : "2.34.0",
     "toobusy-js": "~0.5.1",
     "z-schema": "3.17.0",
-    "@carbon-io/carbon-core": "0.3.x",
+    "@carbon-io/carbon-core": "0.4.x",
     "mongodb-uri": "mongolab/mongodb-uri-node.git#v0.9.7"
   },
   "scripts": {
