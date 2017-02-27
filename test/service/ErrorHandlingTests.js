@@ -3,7 +3,7 @@ var assert = require('assert')
 var sinon = require('sinon')
 
 var _o = require('@carbon-io/carbon-core').bond._o(module)
-var o  = require('@carbon-io/carbon-core').atom.o(module)
+var o  = require('@carbon-io/carbon-core').atom.o(module).main
 var tt = require('@carbon-io/carbon-core').testtube
 
 var carbond = require('../..')

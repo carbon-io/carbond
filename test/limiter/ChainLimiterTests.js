@@ -3,7 +3,7 @@ var assert = require('assert')
 var _ = require('lodash')
 var sinon = require('sinon')
 
-var o  = require('@carbon-io/carbon-core').atom.o(module)
+var o  = require('@carbon-io/carbon-core').atom.o(module).main
 var testtube = require('@carbon-io/carbon-core').testtube
 
 var limiters = {

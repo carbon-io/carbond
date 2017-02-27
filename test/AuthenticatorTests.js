@@ -6,7 +6,7 @@ var sinon = require('sinon')
 
 var _o = require('@carbon-io/carbon-core').bond._o(module)
 var connect  = require('@carbon-io/carbon-core').leafnode.connect
-var o  = require('@carbon-io/carbon-core').atom.o(module)
+var o  = require('@carbon-io/carbon-core').atom.o(module).main
 var oo  = require('@carbon-io/carbon-core').atom.oo(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 

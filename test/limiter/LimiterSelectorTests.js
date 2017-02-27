@@ -1,6 +1,6 @@
 var assert = require('assert')
 
-var o  = require('@carbon-io/carbon-core').atom.o(module)
+var o  = require('@carbon-io/carbon-core').atom.o(module).main
 var testtube = require('@carbon-io/carbon-core').testtube
 
 var LimiterSelector = require('../../lib/limiter/LimiterSelector')

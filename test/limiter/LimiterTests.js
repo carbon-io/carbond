@@ -5,7 +5,7 @@ var sinon = require('sinon')
 
 var _o = require('@carbon-io/carbon-core').bond._o(module)
 var HttpErrors = require('@carbon-io/carbon-core').HttpErrors
-var o  = require('@carbon-io/carbon-core').atom.o(module)
+var o  = require('@carbon-io/carbon-core').atom.o(module).main
 var testtube = require('@carbon-io/carbon-core').testtube
 
 var Limiter = require('../../lib/limiter/Limiter')

@@ -8,7 +8,7 @@ var sinon = require('sinon')
 var tmp = require('tmp')
 
 var _o = require('@carbon-io/carbon-core').bond._o(module)
-var o  = require('@carbon-io/carbon-core').atom.o(module)
+var o  = require('@carbon-io/carbon-core').atom.o(module).main
 var testtube = require('@carbon-io/carbon-core').testtube
 var service = require('../fixtures/Service1')
 

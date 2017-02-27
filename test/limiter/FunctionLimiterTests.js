@@ -4,7 +4,7 @@ var _ = require('lodash')
 var sinon = require('sinon')
 
 var HttpErrors = require('@carbon-io/carbon-core').HttpErrors
-var o  = require('@carbon-io/carbon-core').atom.o(module)
+var o  = require('@carbon-io/carbon-core').atom.o(module).main
 var testtube = require('@carbon-io/carbon-core').testtube
 
 var FunctionLimiter = require('../../lib/limiter/FunctionLimiter')
