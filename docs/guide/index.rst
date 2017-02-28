@@ -1,3 +1,5 @@
+.. _carbond-server-guide:
+
 ======================
 Server guide (Carbond)
 ======================

@@ -1,3 +1,5 @@
+.. _carbond-class-ref:
+
 ===============
 Class Reference
 ===============
