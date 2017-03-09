@@ -20,6 +20,8 @@ module.exports = o({
 
   /**********************************************************************
    * service
+   *
+   * NOTE: looks weird because Service1 is a template that we're instantiating
    */
   service: o(_o('./fixtures/Service1')),
   

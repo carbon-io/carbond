@@ -6,7 +6,9 @@ var carbond = require('../../')
  * Service1
  * 
  * This is a very simple Service. This is meant for testing sync 
- * operations defined as simple functions. 
+ * operations defined as simple functions.
+ *
+ * Defined as a template so that it can be cloned and reused.
  */
 var middlewareCalled = false
 
