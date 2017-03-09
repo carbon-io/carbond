@@ -3,10 +3,10 @@ var carbond = require('../../')
 var _ = require('lodash')
 
 /*******************************************************************************
- * Service1
+ * ServiceForEndpointAclTests
  *
- * This is a very simple Service. This is meant for testing sync
- * operations defined as simple functions.
+ * Primarily for testing the different modes of selfAndBelow and how parent/child
+ * endpoint ACLs are composed.
  */
 var USERS = [
   { _id: 1, username: "admin", password: "admin", role: "Admin" },
@@ -15,7 +15,7 @@ var USERS = [
 
 var okFn = function() { return {ok: 1} }
 
-module.exports = {
+module.exports = o({
   _type: carbond.Service,
 
   port: 8889,
@@ -253,4 +253,4 @@ module.exports = {
       }
     })
   }
-}
+})

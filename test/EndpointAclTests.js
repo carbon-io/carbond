@@ -1,14 +1,20 @@
 var assert = require('assert')
 var o  = require('@carbon-io/carbon-core').atom.o(module).main
 var _o = require('@carbon-io/carbon-core').bond._o(module)
-var testtube = require('@carbon-io/carbon-core').testtube
+var carbond = require('..')
 
-function mockRequest(username) {
-  return {
-    headers: {
-      authorization: 'Basic ' + Buffer(username + ':' + username, 'utf8').toString('base64')
-    }
-  }
+function basicAuthString(username) {
+  return 'Basic ' + Buffer(username + ':' + username, 'utf8').toString('base64')
+}
+var USER_HEADERS = {
+  ADMIN: { authorization: basicAuthString("admin") },
+  BOB:   { authorization: basicAuthString("bob") }
+}
+var ENDPOINTS = {
+  SAB_FALSE:    "/api/e1/f1",
+  SAB_TRUE:     "/api/e2/f2",
+  SAB_GET:      "/api/e3/f3",
+  SAB_FUNCTION: "/api/e4/f4"
 }
 
 /**************************************************************************
@@ -19,7 +25,7 @@ module.exports = o({
   /**********************************************************************
    * _type
    */
-  _type: testtube.Test,
+  _type: carbond.test.ServiceTest,
 
   /**********************************************************************
    * name
@@ -27,54 +33,94 @@ module.exports = o({
   name: "EndpointAclTests",
 
   /**********************************************************************
-   * doTest
+   * description
    */
-  doTest: function() {
-    var service = o(_o('./fixtures/ServiceForEndpointAclTests'))
-    service.start()
+  description: "Test ACL composition in hierarchical endpoints",
 
-    var client = _o("http://localhost:"+service.port, {})
-    var doit = function(endpoint, user, method, allowed) {
-      var e = client.getEndpoint(endpoint)
-      var fn = function() {
-        if(method === 'get') {
-          return e[method](mockRequest(user))
-        } else {
-          return e[method]({}, mockRequest(user))
-        }
-      }
-      if(allowed) {
-        assert(fn())
-      } else {
-        assert.throws(fn)
-      }
-    }
+  /**********************************************************************
+   * service
+   */
+  service: _o('./fixtures/ServiceForEndpointAclTests'),
+
+  /**********************************************************************
+   * tests
+   */
+  tests: [
     // selfAndBelow: false
-    doit("/api/e1/f1", "admin", "get",  true)
-    doit("/api/e1/f1", "admin", "post", true)
-    doit("/api/e1/f1", "bob",   "get",  true)
-    doit("/api/e1/f1", "bob",   "post", false)
-    doit("/api/e1/f1", "admin", "put",  false)
+    {
+      reqSpec: { url: ENDPOINTS.SAB_FALSE, method: "GET", headers: USER_HEADERS.ADMIN },
+      resSpec: { statusCode: 200 }
+    },
+    {
+      reqSpec: { url: ENDPOINTS.SAB_FALSE, method: "POST", headers: USER_HEADERS.ADMIN },
+      resSpec: { statusCode: 200 }
+    },
+    {
+      reqSpec: { url: ENDPOINTS.SAB_FALSE, method: "GET", headers: USER_HEADERS.BOB },
+      resSpec: { statusCode: 200 }
+    },
+    {
+      reqSpec: { url: ENDPOINTS.SAB_FALSE, method: "POST", headers: USER_HEADERS.BOB },
+      resSpec: { statusCode: 403 }
+    },
+    {
+      reqSpec: { url: ENDPOINTS.SAB_FALSE, method: "PUT", headers: USER_HEADERS.ADMIN },
+      resSpec: { statusCode: 404 }
+    },
 
     // selfAndBelow: true
-    doit("/api/e2/f2", "admin", "post", false)
-    doit("/api/e2/f2", "admin", "get",  true)
-    doit("/api/e2/f2", "bob",   "get",  false)
-    doit("/api/e2/f2", "bob",   "post", false)
+    {
+      reqSpec: { url: ENDPOINTS.SAB_TRUE, method: "POST", headers: USER_HEADERS.ADMIN },
+      resSpec: { statusCode: 403 }
+    },
+    {
+      reqSpec: { url: ENDPOINTS.SAB_TRUE, method: "GET", headers: USER_HEADERS.ADMIN },
+      resSpec: { statusCode: 200 }
+    },
+    {
+      reqSpec: { url: ENDPOINTS.SAB_TRUE, method: "GET", headers: USER_HEADERS.BOB },
+      resSpec: { statusCode: 403 }
+    },
+    {
+      reqSpec: { url: ENDPOINTS.SAB_TRUE, method: "POST", headers: USER_HEADERS.BOB },
+      resSpec: { statusCode: 403 }
+    },
 
     // selfAndBelow: "get"
-    doit("/api/e3/f3", "admin", "post", true)
-    doit("/api/e3/f3", "admin", "get",  true)
-    doit("/api/e3/f3", "bob",   "get",  false)
-    doit("/api/e3/f3", "bob",   "post", false)
+
+    {
+      reqSpec: { url: ENDPOINTS.SAB_GET, method: "POST", headers: USER_HEADERS.ADMIN },
+      resSpec: { statusCode: 200 }
+    },
+    {
+      reqSpec: { url: ENDPOINTS.SAB_GET, method: "GET", headers: USER_HEADERS.ADMIN },
+      resSpec: { statusCode: 200 }
+    },
+    {
+      reqSpec: { url: ENDPOINTS.SAB_GET, method: "GET", headers: USER_HEADERS.BOB },
+      resSpec: { statusCode: 403 }
+    },
+    {
+      reqSpec: { url: ENDPOINTS.SAB_GET, method: "POST", headers: USER_HEADERS.BOB },
+      resSpec: { statusCode: 403 }
+    },
 
     // selfAndBelow: fn
-    doit("/api/e4/f4", "admin", "post", false)
-    doit("/api/e4/f4", "admin", "get",  true)
-    doit("/api/e4/f4", "bob",   "get",  false)
-    doit("/api/e4/f4", "bob",   "post", true)
-
-    service.stop()
-  }
-
+    {
+      reqSpec: { url: ENDPOINTS.SAB_FUNCTION, method: "POST", headers: USER_HEADERS.ADMIN },
+      resSpec: { statusCode: 403 }
+    },
+    {
+      reqSpec: { url: ENDPOINTS.SAB_FUNCTION, method: "GET", headers: USER_HEADERS.ADMIN },
+      resSpec: { statusCode: 200 }
+    },
+    {
+      reqSpec: { url: ENDPOINTS.SAB_FUNCTION, method: "GET", headers: USER_HEADERS.BOB },
+      resSpec: { statusCode: 403 }
+    },
+    {
+      reqSpec: { url: ENDPOINTS.SAB_FUNCTION, method: "POST", headers: USER_HEADERS.BOB },
+      resSpec: { statusCode: 200 }
+    }
+  ]
 })
