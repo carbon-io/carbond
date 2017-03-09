@@ -23,6 +23,7 @@ module.exports = o({
   tests: [
     _o('./service'),
     _o('./AclTests'),
+    _o('./EndpointAclTests'),
     _o('./AuthenticatorTests'),
     _o('./collections'),
     _o('./BasicEndpointTests'),
