@@ -1,8 +1,8 @@
 .. _carbond-class-ref:
 
-===============
-Class Reference
-===============
+=======================
+Carbond class reference
+=======================
 
 .. toctree::
     :maxdepth: 1
