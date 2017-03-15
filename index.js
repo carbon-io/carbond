@@ -47,7 +47,6 @@ module.exports = {
 Object.defineProperty(module.exports, '$Test', {
   enumerable: false,
   configurable: false,
-  writeable: false,
   get: function() {
     return require('./test/index.js')
   }
