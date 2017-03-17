@@ -4,16 +4,10 @@
 ==============================
 carbond.limiter.TooBusyLimiter
 ==============================
+*extends* :class:`~carbond.limiter.FunctionLimiter`
 
 :class:`~carbond.limiter.TooBusyLimiter` limits connections based on how busy
 the process is.
-
-Class
------
-
-.. class:: carbond.limiter.TooBusyLimiter
-
-    *extends*: :class:`~carbond.limiter.FunctionLimiter`
 
 Properties
 ----------
