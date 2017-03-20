@@ -4,8 +4,8 @@ Operations
 
 Each endpoint can implement one or more operations representing each
 of the HTTP methods: ``GET``, ``PUT``, ``POST``, ``PATCH``,
-``DELETE``, ``HEAD``, ``OPTIONS``. There is no requirement an endpoint
-implement all HTTP methods. It only needs to implement those it wishes
+``DELETE``, ``HEAD``, ``OPTIONS``. There is no requirement for an endpoint
+to implement all HTTP methods. It only needs to implement those it wishes
 to support.
 
 Defining Operations
@@ -14,9 +14,9 @@ Defining Operations
 Each operation is represented as either:
 
 - A function of the form ``function(req, res)``.
-- An ``Operation`` object. This is more elaborate definition which
+- An ``Operation`` object. This is a more elaborate definition which
   allows for a description, parameter definitions, and other useful
-  meta-data as well as a ``service`` method of the form
+  metadata as well as a ``service`` method of the form
   ``function(req, res)``.
 
 When responding to HTTP requests, two styles are supported:
@@ -25,7 +25,7 @@ When responding to HTTP requests, two styles are supported:
   ``HttpResponse`` object passed to the operation. This style is
   useful when the operation needs to manipulate the ``HttpResponse``
   object to do more than simply return JSON (e.g. set HTTP headers),
-  or wished to pass the response to other functions.
+  or wishes to pass the response to other functions.
 - A synchronous style where the operation simply returns a JSON object
   from the operation, or throws an exception to signal an error
   condition. When using this style the ``HttpResponse`` parameter can
@@ -84,7 +84,7 @@ accessed as ``req.parameters[<parameter-name>]`` or
 
 Carbond supports both JSON and `EJSON
 <http://docs.mongodb.org/manual/reference/mongodb-extended-json/>`_
-(Extended JSON, which includes support additional types such as
+(Extended JSON, which includes support for additional types such as
 ``Date`` and ``ObjectId``).
 
 Formally defining parameters for operations helps you to build a
