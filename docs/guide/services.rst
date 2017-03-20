@@ -139,7 +139,7 @@ top-level application, ``Service`` objects can also be used as a
 library (although it is not common). 
 
 By using the ``start`` and ``stop`` methods, you can manage the
-``Service`` lyfecyle manually. 
+``Service`` lifecyle manually. 
 
 These methods have both an asynchronous and a synchronous interface:
 
@@ -147,7 +147,7 @@ These methods have both an asynchronous and a synchronous interface:
 
 ..  code-block:: javascript 
 
-  var carbon = require('carbon-io') 
+  var carbon = require('carbon-io')
   var o  = carbon.atom.o(module)    // IMPORTANT to not use o(module).main
   var __ = carbon.fibers.__(module) // IMPORTANT to not use __(module).main
 
@@ -203,6 +203,6 @@ These methods have both an asynchronous and a synchronous interface:
   })
 
 Important note: you should not find yourself starting and stopping 
-services like this (by manually calling ``start()`` and ``stop()``
+services like this (by manually calling ``start()`` and ``stop()``)
 frequently. In most use-cases you will simply use the command line
 invocation described in the previous section.
