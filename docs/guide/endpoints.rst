@@ -1,11 +1,11 @@
-===========================
+=========
 Endpoints
-===========================
+=========
 
 .. toctree::
 
 Each ``Endpoint`` represents a single URI and can support any number
-of the HTTP operations: ``GET``, ``POST``, ``PUT``, ``PATCH``,
+of the following HTTP operations: ``GET``, ``POST``, ``PUT``, ``PATCH``,
 ``DELETE``, ``HEAD``, and ``OPTIONS``.
 
 Simple Endpoints
