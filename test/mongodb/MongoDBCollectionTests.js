@@ -53,7 +53,7 @@ module.exports = o({
         headers: function(headers) { 
           assert.equal(headers.location, '/zipcodes/94114')
         },
-        body: { _id: '94114', state: 'CA' }
+        body: undefined
       }
     },
 
@@ -139,7 +139,7 @@ module.exports = o({
       },
       resSpec: {
         statusCode: 201,
-        body: { _id: '94114', state: 'CA', }
+        body: undefined
       }
     },
     {
@@ -217,8 +217,7 @@ module.exports = o({
     {
       reqSpec: function(context) {
         return {
-          url: '/bag-of-props/' + 
-               context.httpHistory.getRes(-1).body._id.toString() + '/',
+          url: context.httpHistory.getRes(-1).headers.location,
           method: 'PATCH',
           body: {
             '$set': {
@@ -236,8 +235,7 @@ module.exports = o({
       // validate subsequent updates using ObjectId
       reqSpec: function(context) {
         return {
-          url: '/bag-of-props/' + 
-               context.httpHistory.getRes(-2).body._id.toString() + '/',
+          url: context.httpHistory.getRes(-2).headers.location,
           method: 'PATCH',
           body: {
             '$set': {
@@ -332,9 +330,9 @@ module.exports = o({
                        {
                          statusCode: 201,
                          description: 
-                         'Returns the object inserted, along with the URL of the newly inserted object ' +
+                         'Returns the URL of the newly inserted object ' +
                            'in the Location header of the response.',
-                         schema: schema,
+                         schema: { type: "Undefined" },
                          headers: ['Location']
                        },
                        BadRequestResponse,
@@ -487,9 +485,9 @@ module.exports = o({
                        {
                          statusCode: 201,
                          description: 
-                         'Returns the object inserted, along with the URL of the newly inserted object ' +
+                         'Returns the URL of the newly inserted object ' +
                         'in the Location header of the response.',
-                         schema: schema,
+                         schema: { type: 'Undefined' },
                          headers: ['Location']
                        },
                        {
