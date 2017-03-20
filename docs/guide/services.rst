@@ -1,6 +1,6 @@
-===========================
+========
 Services
-===========================
+========
 
 .. toctree::
 
@@ -134,7 +134,7 @@ omit a sub-command (e.g. ``<path-to-your-app>/MyService``):
 Embedding Services into larger applications *(advanced use)*
 ------------------------------------------------------------
 
-While you will usually run your ``Service``\s via the commandline as a
+While you will usually run your ``Service``\s via the command line as a
 top-level application, ``Service`` objects can also be used as a
 library (although it is not common). 
 
