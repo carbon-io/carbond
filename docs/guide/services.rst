@@ -4,7 +4,7 @@ Services
 
 .. toctree::
 
-APIs are defined via ``Service``\ s. Put simply, an ``Service`` is an 
+APIs are defined via ``Service``\ s. Put simply, a ``Service`` is an 
 HTTP server that exposes a JSON REST API and which is defined as a 
 tree of ``Endpoint``\s. 
 
