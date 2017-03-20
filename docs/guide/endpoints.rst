@@ -52,7 +52,7 @@ variables values can then be accessed via ``req.params``:
     :emphasize-lines: 17, 21
 
 In this example, a request for the path ``/users/jonny16`` will route to
-the ``/users/:id`` ``Endpoint`` and ``req.params.user`` will have the value ``"jonny16"``. 
+the ``/users/:id`` ``Endpoint`` and ``req.params.id`` will have the value ``"jonny16"``. 
 
 
 Sub-endpoints 
