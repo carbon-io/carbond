@@ -50,13 +50,7 @@ module.exports = o({
         headers: function(headers) { 
           assert.equal(headers.location, "/basic/000")
         },
-        body: { 
-          _id: "000",
-          op: "insert",
-          obj: {
-            msg: "hello"
-          }
-        }
+        body: undefined,
       }
     },
 
@@ -130,7 +124,7 @@ module.exports = o({
       },
       resSpec: {
         statusCode: 201,
-        body: { _id: "foo", "name": "Foo" },
+        body: undefined,
         headers: function(headers) { 
           assert.equal(headers.location, "/basic/foo")
         },
@@ -256,9 +250,9 @@ module.exports = o({
                        {
                          statusCode: 201,
                          description: 
-                         "Returns the object inserted, along with the URL of the newly inserted object " +
+                         "Returns the URL of the newly inserted object " +
                            "in the Location header of the response.",
-                         schema: defaultObjectSchema,
+                         schema: { type: "Undefined" },
                          headers: ['Location']
                        },
                        BadRequestResponse,
@@ -379,9 +373,9 @@ module.exports = o({
                        {
                          statusCode: 201,
                          description: 
-                         "Returns the object inserted, along with the URL of the newly inserted object " +
+                         "Returns the URL of the newly inserted object " +
                            "in the Location header of the response.",
-                         schema: defaultObjectSchema,
+                         schema: { type: "Undefined" }, 
                          headers: ['Location']
                        },
                        {

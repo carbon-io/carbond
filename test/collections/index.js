@@ -9,7 +9,8 @@ module.exports = o({
   setup: function() { },
   teardown: function() { },
   tests: [
-    _o('./BasicCollectionTests')
+    _o('./BasicCollectionTests'),
+    _o('./AdvancedCollectionTests')
   ]
 })
 
