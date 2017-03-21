@@ -78,7 +78,7 @@ find
 Enabling / disabling operations 
 -------------------------------
 
-While omiting an operation'e method is enough to disable it
+While omitting an operation's method is enough to disable it
 (i.e. simply not defining an ``insert`` method will cause the
 collection to not support inserts), you may also explicitly enable /
 disable ``Collection`` operations via the ``enabled`` property. This
