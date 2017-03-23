@@ -1,45 +1,50 @@
 {
-  "name": "@carbon-io/carbond",
-  "version": "0.4.7",
-  "description": "Carbond",
-  "keywords": ["carbond", "carbon.io"],
-  "contributors": [
-    "Will Shulman <will@mlab.com>",
-    "Greg Banks <greg@mlab.com>"
-  ],
-  "repository" : { 
-    "type" : "git",
-    "url" : "https://github.com/carbon-io/carbond"
-  },
-  "main": "index.js",
-  "directories" : {
-    "lib" : "./lib"
-  },
-  "engines": { "node": ">=4.0.0" },
-  "devDependencies": {
-    "mocha": "2.x",
-    "mockery": "1.7.x",
-    "sinon": "1.17.x",
-    "tmp": "0.0.x"
-  },
-  "dependencies": {
-    "basic-auth": "1.0.x",
-    "bcryptjs": "2.3.0",
-    "body-parser" : "1.12.3",
-    "bunyan": "1.8.4",
-    "express" : "4.12.3",
-    "handlebars": "4.0.x",
-    "heap": "0.2.x",
-    "lodash" : "4.15.x",
-    "on-finished": "2.3.x",
-    "request" : "2.34.0",
-    "toobusy-js": "~0.5.1",
-    "z-schema": "3.17.0",
-    "@carbon-io/carbon-core": "0.4.x",
-    "mongodb-uri": "mongolab/mongodb-uri-node.git#v0.9.7"
-  },
-  "scripts": {
-    "test": "node test"
-  },
-  "preferGlobal": false
+    "name": "@carbon-io/carbond", 
+    "version": "0.4.8", 
+    "description": "Carbond", 
+    "keywords": [
+        "carbond", 
+        "carbon.io"
+    ], 
+    "contributors": [
+        "Will Shulman <will@mlab.com>", 
+        "Greg Banks <greg@mlab.com>"
+    ], 
+    "repository": {
+        "type": "git", 
+        "url": "https://github.com/carbon-io/carbond"
+    }, 
+    "main": "index.js", 
+    "directories": {
+        "lib": "./lib"
+    }, 
+    "engines": {
+        "node": ">=4.0.0"
+    }, 
+    "devDependencies": {
+        "mocha": "2.x", 
+        "mockery": "1.7.x", 
+        "sinon": "1.17.x", 
+        "tmp": "0.0.x"
+    }, 
+    "dependencies": {
+        "basic-auth": "1.0.x", 
+        "bcryptjs": "2.3.0", 
+        "body-parser": "1.12.3", 
+        "bunyan": "1.8.4", 
+        "express": "4.12.3", 
+        "handlebars": "4.0.x", 
+        "heap": "0.2.x", 
+        "lodash": "4.15.x", 
+        "on-finished": "2.3.x", 
+        "request": "2.34.0", 
+        "toobusy-js": "~0.5.1", 
+        "z-schema": "3.17.0", 
+        "@carbon-io/carbon-core": "0.4.x", 
+        "mongodb-uri": "mongolab/mongodb-uri-node.git#v0.9.7"
+    }, 
+    "scripts": {
+        "test": "node test"
+    }, 
+    "preferGlobal": false
 }
