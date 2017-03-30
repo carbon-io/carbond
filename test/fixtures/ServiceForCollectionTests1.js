@@ -19,11 +19,7 @@ module.exports = o({
       _type: carbond.collections.Collection,
       
       insert: function(obj) {
-        return {
-          _id: "000",
-          op: "insert",
-          obj: obj
-        }
+        return { _id: "000" }
       },
 
       find: function(query, reqCtx) {
@@ -48,7 +44,7 @@ module.exports = o({
 
       saveObject: function(obj, reqCtx) {
         reqCtx.res.status(201)
-        return obj
+        return true
       },
 
       findObject: function(id) {
