@@ -1,7 +1,10 @@
 var assert = require('assert')
 
-var o  = require('@carbon-io/carbon-core').atom.o(module).main
+var _ = require('lodash')
+
 var _o = require('@carbon-io/carbon-core').bond._o(module)
+var ejson = require('@carbon-io/carbon-core').ejson
+var o  = require('@carbon-io/carbon-core').atom.o(module).main
 
 var carbond = require('../../')
 
@@ -24,6 +27,23 @@ module.exports = o({
    * service
    */
   service: _o('../fixtures/ServiceForMongoDBCollectionTests'),
+
+  /**********************************************************************
+   * setup
+   */
+  setup: function(ctx) {
+    carbond.test.ServiceTest.prototype.setup.call(this, ctx)
+    // XXX: move idHeader somewhere else so it's consistent, but keep it configurable
+    ctx.global.idHeader = this.service.endpoints.zipcodes.idHeader
+  }, 
+
+  /**********************************************************************
+   * setup
+   */
+  teardown: function(ctx) {
+    ctx.global.idHeader = this.service.idHeader
+    carbond.test.ServiceTest.prototype.teardown.call(this, ctx)
+  }, 
 
   /**********************************************************************
    * doTest
@@ -50,8 +70,9 @@ module.exports = o({
       },
       resSpec: {
         statusCode: 201,
-        headers: function(headers) { 
+        headers: function(headers, ctx) { 
           assert.equal(headers.location, '/zipcodes/94114')
+          assert.equal(ejson.parse(headers[ctx.global.idHeader]), '94114')
         },
         body: undefined
       }
@@ -139,6 +160,10 @@ module.exports = o({
       },
       resSpec: {
         statusCode: 201,
+        headers: function(headers, ctx) { 
+          assert.equal(headers.location, '/zipcodes/94114')
+          assert.equal(ejson.parse(headers[ctx.global.idHeader]), '94114')
+        },
         body: undefined
       }
     },
@@ -149,7 +174,11 @@ module.exports = o({
         body: { _id: '94114', state: 'CA', }
       },
       resSpec: {
-        statusCode: 200,
+        statusCode: 204,
+        headers: function(headers, ctx) { 
+          assert(_.isUndefined(headers.location))
+          assert(_.isUndefined(headers[ctx.global.idHeader]))
+        },
         body: undefined
       }
     },
@@ -183,7 +212,11 @@ module.exports = o({
         body: { state: 'NY' }
       },
       resSpec: {
-        statusCode: 200,
+        statusCode: 204,
+        headers: function(headers, ctx) { 
+          assert(_.isUndefined(headers.location))
+          assert(_.isUndefined(headers[ctx.global.idHeader]))
+        },
         body: undefined
       }
     },
@@ -195,7 +228,7 @@ module.exports = o({
         method: 'DELETE'
       },
       resSpec: {
-        statusCode: 200,
+        statusCode: 204,
         body: undefined
       }
     },
@@ -227,7 +260,7 @@ module.exports = o({
         }
       },
       resSpec: function(response) {
-        assert.equal(response.statusCode, 200)
+        assert.equal(response.statusCode, 204)
         assert.equal(typeof body, 'undefined')
       }
     },
@@ -245,7 +278,7 @@ module.exports = o({
         }
       },
       resSpec: function(response) {
-        assert.equal(response.statusCode, 200)
+        assert.equal(response.statusCode, 204)
         assert.equal(typeof body, 'undefined')
       }
     }
@@ -333,7 +366,7 @@ module.exports = o({
                          'Returns the URL of the newly inserted object ' +
                            'in the Location header of the response.',
                          schema: { type: "Undefined" },
-                         headers: ['Location']
+                         headers: ['Location', ce.idHeader]
                        },
                        BadRequestResponse,
                        ForbiddenResponse,
@@ -440,7 +473,7 @@ module.exports = o({
                        body: { 
                          name: 'body',
                          location: 'body', 
-                         description: "Update spec (JSON). Update operator (e.g {'$inc': {'n': 1}})",
+                         description: "Update spec (JSON). Update operator (e.g {\"$inc\": {\"n\": 1}})",
                          schema: updateSchema,
                          required: true,
                          default: undefined
@@ -488,10 +521,10 @@ module.exports = o({
                          'Returns the URL of the newly inserted object ' +
                         'in the Location header of the response.',
                          schema: { type: 'Undefined' },
-                         headers: ['Location']
+                         headers: ['Location', ce.idHeader]
                        },
                        {
-                         statusCode: 200,
+                         statusCode: 204,
                          description: 'Returns no content.',
                          schema: { type: 'Undefined' }, 
                          headers: []
@@ -532,7 +565,7 @@ module.exports = o({
     assert.deepEqual(oe.getOperation('patch').responses,
                      [
                        {
-                         statusCode: 200,
+                         statusCode: 204,
                          description: 'Returns no content.',
                          schema: { type: 'Undefined' }, 
                          headers: []
@@ -546,7 +579,7 @@ module.exports = o({
                      {
                        body: {
                          name: 'body',
-                         description: "Update spec (JSON). Update operator (e.g {'$inc': {'n': 1}})", 
+                         description: "Update spec (JSON). Update operator (e.g {\"$inc\": {\"n\": 1}})", 
                          schema:  updateSchema,
                          location: 'body',
                          required: true,
@@ -558,7 +591,7 @@ module.exports = o({
     assert.deepEqual(oe.getOperation('delete').responses,
                      [
                        {
-                         statusCode: 200,
+                         statusCode: 204,
                          description: 'Returns no content.',
                          schema: { type: 'Undefined' },
                          headers: []

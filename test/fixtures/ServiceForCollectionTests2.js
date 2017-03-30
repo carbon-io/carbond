@@ -56,6 +56,25 @@ module.exports = o({
         returnsRemovedObject: false
       },
       removeObject: function(id) {
+        return null
+      }
+
+    }),
+    
+    // Endpoint to test config of saveObject, updateObject, and removeObject
+    advanced3: o({
+      _type: carbond.collections.Collection,
+
+      // updateObject
+      updateObject: function(id, update, reqCtx) {
+        return null
+      },
+
+      // removeObject
+      removeObjectConfig: {
+        returnsRemovedObject: false
+      },
+      removeObject: function(id) {
         return false
       }
 

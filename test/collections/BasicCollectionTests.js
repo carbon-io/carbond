@@ -166,7 +166,7 @@ module.exports = o({
         }
       },
       resSpec: {
-        statusCode: 200,
+        statusCode: 204,
         body: undefined
       }
     },
@@ -178,7 +178,7 @@ module.exports = o({
         method: "DELETE"
       },
       resSpec: {
-        statusCode: 200,
+        statusCode: 204,
         body: undefined
       }
     },
@@ -253,7 +253,7 @@ module.exports = o({
                          "Returns the URL of the newly inserted object " +
                            "in the Location header of the response.",
                          schema: { type: "Undefined" },
-                         headers: ['Location']
+                         headers: ['Location', ce.defaultIdHeader]
                        },
                        BadRequestResponse,
                        ForbiddenResponse,
@@ -328,7 +328,7 @@ module.exports = o({
                      body: { 
                        name: "body",
                        location: "body", 
-                       description: "Update spec (JSON). Update operator (e.g {'$inc': {'n': 1}})",
+                       description: "Update spec (JSON). Update operator (e.g {\"$inc\": {\"n\": 1}})",
                        schema: { type: "object" },
                        required: true,
                        default: null
@@ -376,10 +376,10 @@ module.exports = o({
                          "Returns the URL of the newly inserted object " +
                            "in the Location header of the response.",
                          schema: { type: "Undefined" }, 
-                         headers: ['Location']
+                         headers: ['Location', ce.defaultIdHeader]
                        },
                        {
-                         statusCode: 200,
+                         statusCode: 204,
                          description: "Returns no content.",
                          schema: { type: "Undefined" }, 
                          headers: []
@@ -420,7 +420,7 @@ module.exports = o({
     assert.deepEqual(oe.getOperation('patch').responses,
                      [
                        {
-                         statusCode: 200,
+                         statusCode: 204,
                          description: "Returns no content.",
                          schema: { type: "Undefined" }, 
                          headers: []
@@ -434,7 +434,7 @@ module.exports = o({
                      {
                        body: {
                          name: "body",
-                         description: "Update spec (JSON). Update operator (e.g {'$inc': {'n': 1}})", 
+                         description: "Update spec (JSON). Update operator (e.g {\"$inc\": {\"n\": 1}})", 
                          schema:  { type: "object" },
                          location: 'body',
                          required: true,
@@ -446,7 +446,7 @@ module.exports = o({
     assert.deepEqual(oe.getOperation('delete').responses,
                      [
                        {
-                         statusCode: 200,
+                         statusCode: 204,
                          description: "Returns no content.",
                          schema: { type: "Undefined" },
                          headers: []

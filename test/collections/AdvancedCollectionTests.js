@@ -85,6 +85,20 @@ module.exports = o({
       }
     },
 
+    {
+      reqSpec: {
+        url: '/advanced3/foo',
+        method: "PATCH",
+        body: {
+          name: "Fooby"
+        }
+      },
+      resSpec: {
+        statusCode: 204,
+        body: null
+      }
+    },
+
     // Test removeObject
     {
       reqSpec: {
@@ -99,7 +113,17 @@ module.exports = o({
 
     {
       reqSpec: {
-        url: '/advanced2/foo2',
+        url: '/advanced2/foo',
+        method: "DELETE"
+      },
+      resSpec: {
+        statusCode: 204,
+      }
+    },
+    
+    {
+      reqSpec: {
+        url: '/advanced3/foo',
         method: "DELETE"
       },
       resSpec: {
@@ -173,10 +197,10 @@ module.exports = o({
                          "Returns the URL of the newly inserted object " +
                            "in the Location header of the response.",
                          schema: { type: "Undefined" },
-                         headers: ['Location']
+                         headers: ['Location', ce.idHeader]
                        },
                        {
-                         statusCode: 200,
+                         statusCode: 204,
                          description: "Returns no content.",
                          schema: { type: "Undefined" }, 
                          headers: []
@@ -215,7 +239,7 @@ module.exports = o({
                      {
                        body: {
                          name: "body",
-                         description: "Update spec (JSON). Update operator (e.g {'$inc': {'n': 1}})", 
+                         description: "Update spec (JSON). Update operator (e.g {\"$inc\": {\"n\": 1}})", 
                          schema:  { type: "object" },
                          location: 'body',
                          required: true,
