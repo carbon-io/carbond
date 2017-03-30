@@ -35,7 +35,7 @@
     "request" : "2.34.0",
     "toobusy-js": "~0.5.1",
     "z-schema": "3.17.0",
-    "@carbon-io/carbon-core": "0.4.x",
+    "@carbon-io/carbon-core": "0.5.x",
     "mongodb-uri": "mongolab/mongodb-uri-node.git#v0.9.7"
   },
   "scripts": {
