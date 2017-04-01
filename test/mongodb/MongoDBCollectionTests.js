@@ -160,7 +160,7 @@ module.exports = o({
       },
       resSpec: {
         statusCode: 201,
-        headers: function(headers, ctx) { 
+        headers: function(headers, ctx) {
           assert.equal(headers.location, '/zipcodes/94114')
           assert.equal(ejson.parse(headers[ctx.global.idHeader]), '94114')
         },
@@ -175,7 +175,7 @@ module.exports = o({
       },
       resSpec: {
         statusCode: 204,
-        headers: function(headers, ctx) { 
+        headers: function(headers, ctx) {
           assert(_.isUndefined(headers.location))
           assert(_.isUndefined(headers[ctx.global.idHeader]))
         },
