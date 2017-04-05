@@ -5,6 +5,7 @@ var _ = require('lodash')
 var _o = require('@carbon-io/carbon-core').bond._o(module)
 var ejson = require('@carbon-io/carbon-core').ejson
 var o  = require('@carbon-io/carbon-core').atom.o(module).main
+var SkipTestError = require('@carbon-io/carbon-core').testtube.errors.SkipTestError
 
 var carbond = require('../../')
 
@@ -121,6 +122,44 @@ module.exports = o({
       resSpec: {
         statusCode: 200,
         body: [{ _id: '94110', state: 'CA' }]
+      }
+    },
+
+    // Test for carbond#172
+    {
+      name: 'carbon-io/carbond#172',
+      description: 'Test that carbon-io/carbond#172 is fixed',
+      reqSpec: {
+        url: '/zipcodes/',
+        method: 'POST',
+        body: {
+          _id: '95125',
+          state: 'CA'
+        },
+      },
+      resSpec: {
+        headers: function(headers, ctx) {
+          assert.equal(headers.location, '/zipcodes/95125')
+        },
+        statusCode: 201,
+      }
+    },
+    {
+      name: 'carbon-io/carbond#174',
+      description: 'Test that carbon-io/carbond#174 is fixed',
+      setup: function() {
+        throw new SkipTestError('reminder to fix carbon-io/carbond#174')
+      },
+      reqSpec: {
+        url: '/zipcodes',
+        method: 'POST',
+        body: {
+          _id: '945/77',
+          state: 'CA'
+        },
+      },
+      resSpec: {
+        statusCode: 400
       }
     },
 
