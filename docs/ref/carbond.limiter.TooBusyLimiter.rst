@@ -26,7 +26,7 @@ Properties
             :class: details-table
 
             "absMaxOutstandingReqs", :class:`Integer`
-            "Default", ``Infinity``
+            *Required*, ""
             "Description", "The absolute maximum number of outstanding requests."
 
 
@@ -36,7 +36,7 @@ Properties
             :class: details-table
 
             "useFiberPoolSize", :class:`Boolean`
-            "Default", ``False``
+            *Required*, ""
             "Description", "Use Fiber's pool size to set absMaxOutstandingReqs."
 
     
@@ -46,7 +46,7 @@ Properties
             :class: details-table
 
             "fiberPoolAllowedOverflow", :class:`Number`
-            "Default", ``0``
+            *Required*, ""
             "Description", "Allow for more requests than ``Fiber.poolSize`` if limiting on ``Fiber.poolSize`` (i.e, ``absMaxOutstandingReqs == fiberPoolOverflow * Fiber.poolSize + Fiber.poolSize``). **Note**\, this only applies if :attr:`~carbond.limiter.TooBusyLimiter.useFiberPoolSize` is ``true``."
 
 
@@ -75,8 +75,8 @@ Properties
         .. csv-table::
             :class: details-table
 
-            "maxOutstandingReqs", :class:`Integer`
-            "Description", "The current allowed number of outstanding requests (*read-only*)."
+            "maxOutstandingReqs", :class:`Integer` *(read-only)*
+            "Description", "The current allowed number of outstanding requests."
         
 
     .. attribute:: carbond.limiter.TooBusyLimiter.outstandingReqs
@@ -84,8 +84,8 @@ Properties
         .. csv-table::
             :class: details-table
 
-            "outstandingReqs", :class:`Integer`
-            "Description", "The current number of outstanding requests (*read-only*)."
+            "outstandingReqs", :class:`Integer` *(read-only)*
+            "Description", "The current number of outstanding requests."
         
         
 
