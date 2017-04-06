@@ -78,6 +78,20 @@ module.exports = o({
         return false
       }
 
+    }),
+
+    // Endpoint to test config of insert
+    advanced4: o({
+      _type: carbond.collections.Collection,
+
+      insertConfig: {
+        returnsInsertedObject: true
+      },
+
+      insert: function(obj) {
+        return obj
+      }
     })
+
   }
 })

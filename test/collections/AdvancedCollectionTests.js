@@ -130,6 +130,20 @@ module.exports = o({
         statusCode: 404,
       }
     },
+
+    // Test returnsInsertedObject
+
+    {
+      reqSpec: {
+        url: '/advanced4/',
+        method: 'POST',
+        body: {_id: 'foobar'}
+      },
+      resSpec: {
+        statusCode: 201,
+        body: {_id: 'foobar'}
+      }
+    }
   ],
 
   /**********************************************************************
