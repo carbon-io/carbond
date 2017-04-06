@@ -28,16 +28,16 @@ module.exports = {
     Acl: require('./lib/security/Acl'),
     ApiKeyAuthenticator: require('./lib/security/ApiKeyAuthenticator'),
     Authenticator: require('./lib/security/Authenticator'),
-    BcryptHasher: require('./lib/security/BcryptHasher'),
     CollectionAcl: require('./lib/security/CollectionAcl'),
     EndpointAcl: require('./lib/security/EndpointAcl'),
-    Hasher: require('./lib/security/Hasher'),
     HttpBasicAuthenticator: require('./lib/security/HttpBasicAuthenticator'),
     MongoDBApiKeyAuthenticator: require('./lib/security/MongoDBApiKeyAuthenticator'),
     MongoDBHttpBasicAuthenticator: require('./lib/security/MongoDBHttpBasicAuthenticator'),
-    NoopHasher: require('./lib/security/NoopHasher'),
     ObjectAcl: require('./lib/security/ObjectAcl'),
-    Sha256Hasher: require('./lib/security/Sha256Hasher')
+    Hasher: require('./lib/security/Hasher'),
+    NoopHasher: require('./lib/security/NoopHasher'),
+    Sha256Hasher: require('./lib/security/Sha256Hasher'),
+    BcryptHasher: require('./lib/security/BcryptHasher')
   },
   test: {
     ServiceTest: require('./lib/test/ServiceTest'),
