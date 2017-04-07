@@ -17,7 +17,6 @@ Carbond class reference
     carbond.OperationParameter.rst
     carbond.ObjectIdGenerator.rst
     carbond.SslOptions.rst
-    carbond.Service.rst
     carbond.UserCollection.rst
     carbond.limiter.ChainLimiter
     carbond.limiter.FunctionLimiter
