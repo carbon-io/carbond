@@ -105,6 +105,7 @@ Methods
             "Arguments", "**req** (:class:`express.request`): The current `Request` object. |br|
             **res** (:class:`express.response`): The current `Response` object. |br|
             **next** (:class:`Function`): Continuation."
+            "Returns", ":class:`Boolean`"
             "Description", "Evaluates whether the current request should be allowed based on how
             busy the server process is. 
             
