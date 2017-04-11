@@ -6,10 +6,10 @@ This is a Service
 
 <pre>
 
-Usage: Service1.js &lt;command&gt; [options]
+Usage: Service1.js [command] [options]
 
 command     
-  start-server        start the api server
+  start-server        start the api server (default)
   gen-static-docs     generate docs for the api
 
 Options:
