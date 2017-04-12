@@ -23,232 +23,246 @@ Properties
         .. csv-table::
             :class: details-table
 
-            "cmdargs", ""
-            "Description", ""
+            "cmdargs", :class:`Object`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.hostname
 
         .. csv-table::
             :class: details-table
 
-            "hostname", ""
-            "Description", ""
+            "hostname", :class:`String`
+            "Default", ``0.0.0.0``
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.port
 
         .. csv-table::
             :class: details-table
 
-            "port", ""
-            "Description", ""
+            "port", :class:`Integer`
+            *Required*
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.description
 
         .. csv-table::
             :class: details-table
 
-            "description", ""
-            "Description", ""
+            "description", :class:`String`
+            *Required*
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.verbosity
 
         .. csv-table::
             :class: details-table
 
-            "verbosity", ""
-            "Description", ""
+            "verbosity", :class:`String`
+            "Default", ``info``
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.path
 
         .. csv-table::
             :class: details-table
 
-            "path", ""
-            "Description", ""
+            "path", :class:`String`
+            *Required*
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.processUser
 
         .. csv-table::
             :class: details-table
 
-            "processUser", ""
-            "Description", ""
+            "processUser", :class:`String`
+            *Required*
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.apiRoot
 
         .. csv-table::
             :class: details-table
 
-            "apiRoot", ""
-            "Description", ""
+            "apiRoot", :class:`String`
+            *Required*
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.adminRoot
 
         .. csv-table::
             :class: details-table
 
-            "adminRoot", ""
-            "Description", ""
+            "adminRoot", :class:`String`
+            "Default", ``/service-admin``
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.dbUri
 
         .. csv-table::
             :class: details-table
 
-            "dbUri", ""
-            "Description", ""
+            "dbUri", :class:`String`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.dbUris
 
         .. csv-table::
             :class: details-table
 
-            "dbUris", ""
-            "Description", ""
+            "dbUris", :class:`Object`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.db
 
         .. csv-table::
             :class: details-table
 
-            "db", ""
-            "Description", ""
+            "db", :class:`Object`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.dbs
 
         .. csv-table::
             :class: details-table
 
-            "dbs", ""
-            "Description", ""
+            "dbs", :class:`Object`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.endpoints
 
         .. csv-table::
             :class: details-table
 
-            "endpoints", ""
-            "Description", ""
+            "endpoints", :class:`Object`
+            *Required*
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.authenticator
 
         .. csv-table::
             :class: details-table
 
-            "authenticator", ""
-            "Description", ""
+            "authenticator", :class:`Object`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.middleware
 
         .. csv-table::
             :class: details-table
 
-            "middleware", ""
-            "Description", ""
+            "middleware", :class:`Object`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.errorHandlingMiddleware
 
         .. csv-table::
             :class: details-table
 
-            "errorHandlingMiddleware", ""
-            "Description", ""
+            "errorHandlingMiddleware", :class:`Object`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.publicDirectories
 
         .. csv-table::
             :class: details-table
 
-            "publicDirectories", ""
-            "Description", ""
+            "publicDirectories", :class:`Object`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.corsEnabled
 
         .. csv-table::
             :class: details-table
 
-            "corsEnabled", ""
-            "Description", ""
+            "corsEnabled", :class:`Boolean`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.sslOptions
 
         .. csv-table::
             :class: details-table
 
-            "sslOptions", ""
-            "Description", ""
+            "sslOptions", :class:`~SslOptions`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.parameterParser
 
         .. csv-table::
             :class: details-table
 
-            "parameterParser", ""
-            "Description", ""
+            "parameterParser", :class:`~carbond.ParameterParser`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.generateOptionsMethodsInDocs
 
         .. csv-table::
             :class: details-table
 
-            "generateOptionsMethodsInDocs", ""
-            "Description", ""
+            "generateOptionsMethodsInDocs", :class:`Boolean`
+            "Default", ``false``
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.cluster
 
         .. csv-table::
             :class: details-table
 
-            "cluster", ""
-            "Description", ""
+            "cluster", :class:`Boolean`
+            "Default", ``false``
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.numClusterWorkers
 
         .. csv-table::
             :class: details-table
 
-            "numClusterWorkers", ""
-            "Description", ""
+            "numClusterWorkers", :class:`Integer`
+            *Required*
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.busyLimiter
 
         .. csv-table::
             :class: details-table
 
-            "busyLimiter", ""
-            "Description", ""
+            "busyLimiter", :class:`Object`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.defaultBusyLimiterClass
 
         .. csv-table::
             :class: details-table
 
-            "defaultBusyLimiterClass", ""
-            "Description", ""
+            "defaultBusyLimiterClass", :class:`~carbond.limiter.TooBusyLimiter`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.limiter
 
         .. csv-table::
             :class: details-table
 
-            "limiter", ""
-            "Description", ""
+            "limiter", :class:`Object`
+            *Required*
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.fiberPoolSize
 
         .. csv-table::
             :class: details-table
 
-            "fiberPoolSize", ""
-            "Description", ""
+            "fiberPoolSize", :class:`Integer`
+            "Default", ``Fiber default pool size``
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Service.serviceName
 
         .. csv-table::
             :class: details-table
 
-            "serviceName", ""
-            "Description", ""
+            "serviceName", :class:`String`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
 
 Methods
@@ -264,8 +278,9 @@ Methods
             :class: details-table
 
             "logtrace (*obj*)", ""
-            "Arguments", "**obj**: "
-            "Descriptions", ""
+            "Arguments", "**obj** (:class:`Object`): Lorem ipsum dolor sit amet"
+            "Returns", ``VOID``
+            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. function:: carbond.Service.logDebug
 
@@ -273,8 +288,9 @@ Methods
             :class: details-table
 
             "logDebug (*obj*)", ""
-            "Arguments", "**obj**: "
-            "Descriptions", ""
+            "Arguments", "**obj** (:class:`Object`): Lorem ipsum dolor sit amet"
+            "Returns", ``VOID``
+            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. function:: carbond.Service.logInfo
 
@@ -282,8 +298,9 @@ Methods
             :class: details-table
 
             "logInfo (*obj*)", ""
-            "Arguments", "**obj**: "
-            "Descriptions", ""
+            "Arguments", "**obj** (:class:`Object`): Lorem ipsum dolor sit amet"
+            "Returns", ``VOID``
+            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. function:: carbond.Service.logWarning
 
@@ -291,8 +308,9 @@ Methods
             :class: details-table
 
             "logWarning (*obj*)", ""
-            "Arguments", "**obj**: "
-            "Descriptions", ""
+            "Arguments", "**obj** (:class:`Object`): Lorem ipsum dolor sit amet"
+            "Returns", ``VOID``
+            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. function:: carbond.Service.logError
 
@@ -300,8 +318,9 @@ Methods
             :class: details-table
 
             "logError (*obj*)", ""
-            "Arguments", "**obj**: "
-            "Descriptions", ""
+            "Arguments", "**obj** (:class:`Object`): Lorem ipsum dolor sit amet"
+            "Returns", ``VOID``
+            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. function:: carbond.Service.logFatal
 
@@ -309,8 +328,9 @@ Methods
             :class: details-table
 
             "logFatal (*obj*)", ""
-            "Arguments", "**obj**: "
-            "Descriptions", ""
+            "Arguments", "**obj** (:class:`Object`): Lorem ipsum dolor sit amet"
+            "Returns", ``VOID``
+            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. function:: carbond.Service.on
 
@@ -320,6 +340,7 @@ Methods
             "on (*event, listener*)", ""
             "Arguments", "**event** (:class:`String`): the event type |br|
             **listener** (:class:`Function`): callback to fire when `event` occurs |br|"
+            "Returns", :class:`EventEmitter`
             "Descriptions", "Register an event callback."
 
     .. function:: carbond.Service.once
@@ -330,6 +351,7 @@ Methods
             "once (*event, listener*)", ""
             "Arguments", "**event** (:class:`String`): the event type |br|
             **listener** (:class:`Function`): callback to fire when `event` occurs |br|"
+            "Returns", :class:`EventEmitter`
             "Descriptions", "Register an event callback that executes once."
 
 
@@ -340,6 +362,7 @@ Methods
 
             "removeAllListeners (*event*)", ""
             "Arguments", "**event** (:class:`String`): the event type |br|"
+            "Returns", :class:`EventEmitter`
             "Descriptions", "Remove all listeners. If `event` is passed, remove all events for that specific event (or events)."
 
     .. function:: carbond.Service.removeListener
@@ -350,6 +373,7 @@ Methods
             "removeListener (*event, listener*)", ""
             "Arguments", "**event** (:class:`String`): the event type |br|
             **listener** (:class:`Function`): callback to fire when `event` occurs |br|"
+            "Returns", :class:`EventEmitter`
             "Descriptions", "Remove a specific listener for a particular event."
 
     .. function:: carbond.Service.start
@@ -358,9 +382,10 @@ Methods
             :class: details-table
 
             "start (*options, cb*)", ""
-            "Arguments", "**options**: |br|
-            **cb**: |br|"
-            "Descriptions", ""
+            "Arguments", "**options** (:class:`Object`): Lorem ipsum dolor sit amet |br|
+            **cb** (:class:`Object`): Lorem ipsum dolor sit amet |br|"
+            "Returns", ``NoneType``
+            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. function:: carbond.Service.doStart
 
@@ -368,8 +393,9 @@ Methods
             :class: details-table
 
             "doStart (*options*)", ""
-            "Arguments", "**options**: |br|"
-            "Descriptions", ""
+            "Arguments", "**options** (:class:`Object`): Lorem ipsum dolor sit amet |br|"
+            "Returns", ``VOID``
+            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. function:: carbond.Service.stop
 
@@ -377,15 +403,17 @@ Methods
             :class: details-table
 
             "stop (*cb*)", ""
-            "Arguments", "**cb**: |br|"
-            "Descriptions", ""
+            "Arguments", "**cb** (:class:`Object`): Lorem ipsum dolor sit amet |br|"
+            "Returns", ``NoneType`` 
+            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. function:: carbond.Service.doStop
 
         .. csv-table::
             :class: details-table
 
-            "doStop", ""
+            "doStop()", ""
             "Arguments", ""
-            "Descriptions", ""
+            "Returns", ``VOID``
+            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
