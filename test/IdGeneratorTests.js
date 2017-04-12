@@ -1,6 +1,7 @@
 var assert = require('assert')
 
-var o  = require('@carbon-io/carbon-core').atom.o(module).main
+var __ = require('@carbon-io/carbon-core').fibers.__(module)
+var o = require('@carbon-io/carbon-core').atom.o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
 /* XXX
@@ -32,26 +33,28 @@ var ObjectId = require('@carbon-io/carbon-core').leafnode.mongodb.ObjectId
 /**************************************************************************
  * IdGeneratorTests
  */
-module.exports = o({
+__(function() {
+  module.exports = o.main({
 
-  /**********************************************************************
-   * _type
-   */
-  _type: testtube.Test,
+    /**********************************************************************
+     * _type
+     */
+    _type: testtube.Test,
 
-  /**********************************************************************
-   * name
-   */
-  name: "IdGeneratorTests",
+    /**********************************************************************
+     * name
+     */
+    name: "IdGeneratorTests",
 
-  /**********************************************************************
-   * doTest
-   */
-  doTest: function() {
-    var idg1 = o({ _type: '../lib/ObjectIdGenerator' })
-    var idg2 = o({ _type: '../lib/ObjectIdGenerator', generateStrings: true })
+    /**********************************************************************
+     * doTest
+     */
+    doTest: function() {
+      var idg1 = o({ _type: '../lib/ObjectIdGenerator' })
+      var idg2 = o({ _type: '../lib/ObjectIdGenerator', generateStrings: true })
 
-    assert(idg1.generateId() instanceof ObjectId)
-    assert(typeof(idg2.generateId()) === 'string')
-  }
+      assert(idg1.generateId() instanceof ObjectId)
+      assert(typeof(idg2.generateId()) === 'string')
+    }
+  })
 })

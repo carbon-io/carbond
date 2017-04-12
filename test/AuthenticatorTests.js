@@ -4,9 +4,10 @@ var crypto = require('crypto')
 var bcrypt = require('bcryptjs')
 var sinon = require('sinon')
 
+var __ = require('@carbon-io/carbon-core').fibers.__(module)
 var _o = require('@carbon-io/carbon-core').bond._o(module)
 var connect  = require('@carbon-io/carbon-core').leafnode.connect
-var o  = require('@carbon-io/carbon-core').atom.o(module).main
+var o  = require('@carbon-io/carbon-core').atom.o(module)
 var oo  = require('@carbon-io/carbon-core').atom.oo(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
@@ -68,317 +69,319 @@ var MongoDBAuthenticatorTest = oo({
 /**************************************************************************
  * AuthenticatorTests
  */
-module.exports = o({
+__(function() {
+  module.exports = o.main({
 
-  /**********************************************************************
-   * _type
-   */
-  _type: testtube.Test,
+    /**********************************************************************
+     * _type
+     */
+    _type: testtube.Test,
 
-  /**********************************************************************
-   * _C
-   */
-  _C: function() {
-    this._db = undefined
-  },
+    /**********************************************************************
+     * _C
+     */
+    _C: function() {
+      this._db = undefined
+    },
 
-  /**********************************************************************
-   * name
-   */
-  name: "AuthenticatorTests",
+    /**********************************************************************
+     * name
+     */
+    name: "AuthenticatorTests",
 
-  /**********************************************************************
-   * description
-   */
-  description: "Test the various predefined authenticators",
+    /**********************************************************************
+     * description
+     */
+    description: "Test the various predefined authenticators",
 
-  /**********************************************************************
-   * db
-   */
-  db: {
-    $property: {
-      get: function() {
-        return this._db
+    /**********************************************************************
+     * db
+     */
+    db: {
+      $property: {
+        get: function() {
+          return this._db
+        }
       }
-    }
-  },
+    },
 
-  /**********************************************************************
-   * setup
-   */
-  setup: function() {
-    try {
-      this._db = connect(config.MONGODB_URI + '/authenticator-tests')
-    } catch (e) {
-      console.dir(e)
-    }
-  },
+    /**********************************************************************
+     * setup
+     */
+    setup: function() {
+      try {
+        this._db = connect(config.MONGODB_URI + '/authenticator-tests')
+      } catch (e) {
+        console.dir(e)
+      }
+    },
 
-  /**********************************************************************
-   * teardown
-   */
-  teardown: function() {
-    this._db.close()
-  },
+    /**********************************************************************
+     * teardown
+     */
+    teardown: function() {
+      this._db.close()
+    },
 
-  /**********************************************************************
-   * tests
-   */
-  tests: [
+    /**********************************************************************
+     * tests
+     */
+    tests: [
 
-    //
-    // http basic
-    //
-    o({
-      _type: testtube.Test,
-      name: 'HttpBasicAuthenticatorTests',
-      description: 'HttpBasicAuthenticator tests',
-      tests: [
-        o({
-          _type: testtube.Test,
-          name: 'UnsupportedHashFunction',
-          description: 'Test unsupported hash function',
-          authenticator: {
-            _type: _o('../lib/security/HttpBasicAuthenticator'),
-            usernameField: 'username',
-            passwordField: 'password',
-            passwordHashFn: 'foo'
-          },
-          username: 'foo',
-          password: 'bar',
-          doTest: function() {
-            var self = this
-            assert.throws(function() {
-              var authenticator = o(self.authenticator)
-            }, Error)
-          }
-        }),
-        o({
-          _type: testtube.Test,
-          name: 'UnspecifiedRequiredFields',
-          description: 'Test with unspecified required fields',
-          authenticator: {
-            _type: _o('../lib/security/HttpBasicAuthenticator'),
-            usernameField: 'username'
-            // missing passwordField
-          },
-          username: 'foo',
-          password: 'bar',
-          doTest: function() {
-            var authenticator = o(this.authenticator)
-            var req = mockHttpBasicAuthRequest(this.username, this.password)
-            assert.throws(function() {
-              authenticator.authenticate(req)
-            }, Error)
-          }
-        }),
-        o({
-          _type: testtube.Test,
-          name: 'WrongCredentials',
-          description: 'Test wrong credentials',
-          authenticator: {
-            _type: _o('../lib/security/HttpBasicAuthenticator'),
-            usernameField: 'username',
-            passwordField: 'password'
-          },
-          username: 'foo',
-          password: 'bar',
-          doTest: function() {
-            var authenticator = o(this.authenticator)
-            authenticator.initialize(mockService())
-            var findUserStub = sinon.stub(authenticator, 'findUser')
-            findUserStub.returns({'username': 'foo', 'password': 'baz'})
-            var req = mockHttpBasicAuthRequest(this.username, this.password)
-            assert.throws(function() {
-              authenticator.authenticate(req)
-            }, process._HttpErrors.Unauthorized)
-          }
-        }),
-        o({
-          _type: testtube.Test,
-          name: 'Success',
-          description: 'Test successful authentication',
-          authenticator: {
-            _type: _o('../lib/security/HttpBasicAuthenticator'),
-            usernameField: 'username',
-            passwordField: 'password'
-          },
-          username: 'foo',
-          password: 'bar',
-          doTest: function() {
-            var authenticator = o(this.authenticator)
-            authenticator.initialize(mockService())
-            var findUserStub = sinon.stub(authenticator, 'findUser')
-            findUserStub.returns({'username': 'foo', 'password': 'bar'})
-            var req = mockHttpBasicAuthRequest(this.username, this.password)
-            var result = authenticator.authenticate(req)
-            assert.equal(result.username, this.username)
-          }
-        }),
-        o({
-          _type: testtube.Test,
-          name: 'PasswordHashFnInitialization',
-          description: 'Test password hash function initialization',
-          authenticator: {
-            _type: _o('../lib/security/HttpBasicAuthenticator'),
-            usernameField: 'username',
-            passwordField: 'password'
-          },
-          username: 'foo',
-          password: 'bar',
-          doTest: function() {
-            var self = this
-            var BarHasher = oo({
-              _type: _o('../lib/security/Hasher'),
-              hash: function(data) {
-                return 'bar'
-              }
-            })
-            var check = function() {
-              var authenticator = o(self.authenticator)
+      //
+      // http basic
+      //
+      o({
+        _type: testtube.Test,
+        name: 'HttpBasicAuthenticatorTests',
+        description: 'HttpBasicAuthenticator tests',
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'UnsupportedHashFunction',
+            description: 'Test unsupported hash function',
+            authenticator: {
+              _type: _o('../lib/security/HttpBasicAuthenticator'),
+              usernameField: 'username',
+              passwordField: 'password',
+              passwordHashFn: 'foo'
+            },
+            username: 'foo',
+            password: 'bar',
+            doTest: function() {
+              var self = this
+              assert.throws(function() {
+                var authenticator = o(self.authenticator)
+              }, Error)
+            }
+          }),
+          o({
+            _type: testtube.Test,
+            name: 'UnspecifiedRequiredFields',
+            description: 'Test with unspecified required fields',
+            authenticator: {
+              _type: _o('../lib/security/HttpBasicAuthenticator'),
+              usernameField: 'username'
+              // missing passwordField
+            },
+            username: 'foo',
+            password: 'bar',
+            doTest: function() {
+              var authenticator = o(this.authenticator)
+              var req = mockHttpBasicAuthRequest(this.username, this.password)
+              assert.throws(function() {
+                authenticator.authenticate(req)
+              }, Error)
+            }
+          }),
+          o({
+            _type: testtube.Test,
+            name: 'WrongCredentials',
+            description: 'Test wrong credentials',
+            authenticator: {
+              _type: _o('../lib/security/HttpBasicAuthenticator'),
+              usernameField: 'username',
+              passwordField: 'password'
+            },
+            username: 'foo',
+            password: 'bar',
+            doTest: function() {
+              var authenticator = o(this.authenticator)
+              authenticator.initialize(mockService())
+              var findUserStub = sinon.stub(authenticator, 'findUser')
+              findUserStub.returns({'username': 'foo', 'password': 'baz'})
+              var req = mockHttpBasicAuthRequest(this.username, this.password)
+              assert.throws(function() {
+                authenticator.authenticate(req)
+              }, process._HttpErrors.Unauthorized)
+            }
+          }),
+          o({
+            _type: testtube.Test,
+            name: 'Success',
+            description: 'Test successful authentication',
+            authenticator: {
+              _type: _o('../lib/security/HttpBasicAuthenticator'),
+              usernameField: 'username',
+              passwordField: 'password'
+            },
+            username: 'foo',
+            password: 'bar',
+            doTest: function() {
+              var authenticator = o(this.authenticator)
               authenticator.initialize(mockService())
               var findUserStub = sinon.stub(authenticator, 'findUser')
               findUserStub.returns({'username': 'foo', 'password': 'bar'})
-              var req = mockHttpBasicAuthRequest(self.username, self.password)
+              var req = mockHttpBasicAuthRequest(this.username, this.password)
               var result = authenticator.authenticate(req)
-              assert.equal(result.username, self.username)
+              assert.equal(result.username, this.username)
             }
-            this.authenticator.passwordHashFn = BarHasher
-            check()
-            this.authenticator.passwordHashFn = o({_type: BarHasher})
-            check()
-            this.authenticator.passwordHashFn = {}
-            assert.throws(function() {
-              var authenticator = o(self.authenticator)
-            }, TypeError)
-          }
-        }),
-      ]
-    }),
+          }),
+          o({
+            _type: testtube.Test,
+            name: 'PasswordHashFnInitialization',
+            description: 'Test password hash function initialization',
+            authenticator: {
+              _type: _o('../lib/security/HttpBasicAuthenticator'),
+              usernameField: 'username',
+              passwordField: 'password'
+            },
+            username: 'foo',
+            password: 'bar',
+            doTest: function() {
+              var self = this
+              var BarHasher = oo({
+                _type: _o('../lib/security/Hasher'),
+                hash: function(data) {
+                  return 'bar'
+                }
+              })
+              var check = function() {
+                var authenticator = o(self.authenticator)
+                authenticator.initialize(mockService())
+                var findUserStub = sinon.stub(authenticator, 'findUser')
+                findUserStub.returns({'username': 'foo', 'password': 'bar'})
+                var req = mockHttpBasicAuthRequest(self.username, self.password)
+                var result = authenticator.authenticate(req)
+                assert.equal(result.username, self.username)
+              }
+              this.authenticator.passwordHashFn = BarHasher
+              check()
+              this.authenticator.passwordHashFn = o({_type: BarHasher})
+              check()
+              this.authenticator.passwordHashFn = {}
+              assert.throws(function() {
+                var authenticator = o(self.authenticator)
+              }, TypeError)
+            }
+          }),
+        ]
+      }),
 
 
-    //
-    // mongodb http basic
-    //
+      //
+      // mongodb http basic
+      //
 
-    o({
-      _type: testtube.Test,
-      name: 'MongoDBHttpBasicAuthenticatorTests',
-      description: 'MongoDBHttpBasicAuthenticator tests',
-      tests: [
-        o({
-          _type: MongoDBAuthenticatorTest,
-          name: 'UnspecifiedRequiredFields',
-          description: 'Test with unspecified required fields (superclass)',
-          authenticator: {
-            _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
-            usernameField: 'username',
-          },
-          doTest: function () {
-            var authenticator = o(this.authenticator)
-            authenticator.initialize(mockService(this.db))
-            var req = mockHttpBasicAuthRequest(this.username, this.password)
-            assert.throws(function () {
-              // missing passwordField
-              authenticator.authenticate(req)
-            }, Error)
-          }
-        }),
-        o({
-          _type: MongoDBAuthenticatorTest,
-          name: 'UnspecifiedRequiredFields',
-          description: 'Test with unspecified required fields',
-          authenticator: {
-            _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
-            usernameField: 'username',
-            passwordField: 'password',
-          },
-          doTest: function () {
-            var authenticator = o(this.authenticator)
-            authenticator.initialize(mockService(this.db))
-            var req = mockHttpBasicAuthRequest(this.username, this.password)
-            assert.throws(function () {
-              // missing userCollection
-              authenticator.authenticate(req)
-            }, Error)
-          }
-        }),
-        o({
-          _type: MongoDBAuthenticatorTest,
-          name: 'UserDoesNotExist',
-          description: 'Test user does not exist',
-          authenticator: {
-            _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
-            usernameField: 'username',
-            passwordField: 'password',
-            userCollection: USERS_COL,
-          },
-          userRecords: [
-            {username: 'bar', password: 'baz'}
-          ],
-          username: 'foo',
-          password: 'bar',
-          doTest: function () {
-            var authenticator = o(this.authenticator)
-            authenticator.initialize(mockService(this.db))
-            var req = mockHttpBasicAuthRequest(this.username, this.password)
-            assert.throws(function () {
-              authenticator.authenticate(req)
-            }, process._HttpErrors.Unauthenticated)
-          }
-        }),
-        o({
-          _type: MongoDBAuthenticatorTest,
-          name: 'WrongPassword',
-          description: 'Test wrong password',
-          authenticator: {
-            _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
-            usernameField: 'username',
-            passwordField: 'password',
-            userCollection: USERS_COL,
-          },
-          userRecords: [
-            {username: 'foo', password: 'baz'}
-          ],
-          username: 'foo',
-          password: 'bar',
-          doTest: function () {
-            var authenticator = o(this.authenticator)
-            authenticator.initialize(mockService(this.db))
-            var req = mockHttpBasicAuthRequest(this.username, this.password)
-            assert.throws(function () {
-              authenticator.authenticate(req)
-            }, process._HttpErrors.Unauthenticated)
-          }
-        }),
-        o({
-          _type: MongoDBAuthenticatorTest,
-          name: 'Success',
-          description: 'Test successful authentication',
-          authenticator: {
-            _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
-            usernameField: 'username',
-            passwordField: 'password',
-            userCollection: USERS_COL,
-          },
-          userRecords: [
-            {username: 'foo', password: 'bar'}
-          ],
-          username: 'foo',
-          password: 'bar',
-          doTest: function () {
-            var authenticator = o(this.authenticator)
-            authenticator.initialize(mockService(this.db))
-            var req = mockHttpBasicAuthRequest(this.username, this.password)
-            var user = authenticator.authenticate(req)
-            assert.equal(user.username, this.username)
-          }
-        }),
-      ]
-    }),
+      o({
+        _type: testtube.Test,
+        name: 'MongoDBHttpBasicAuthenticatorTests',
+        description: 'MongoDBHttpBasicAuthenticator tests',
+        tests: [
+          o({
+            _type: MongoDBAuthenticatorTest,
+            name: 'UnspecifiedRequiredFields',
+            description: 'Test with unspecified required fields (superclass)',
+            authenticator: {
+              _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
+              usernameField: 'username',
+            },
+            doTest: function () {
+              var authenticator = o(this.authenticator)
+              authenticator.initialize(mockService(this.db))
+              var req = mockHttpBasicAuthRequest(this.username, this.password)
+              assert.throws(function () {
+                // missing passwordField
+                authenticator.authenticate(req)
+              }, Error)
+            }
+          }),
+          o({
+            _type: MongoDBAuthenticatorTest,
+            name: 'UnspecifiedRequiredFields',
+            description: 'Test with unspecified required fields',
+            authenticator: {
+              _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
+              usernameField: 'username',
+              passwordField: 'password',
+            },
+            doTest: function () {
+              var authenticator = o(this.authenticator)
+              authenticator.initialize(mockService(this.db))
+              var req = mockHttpBasicAuthRequest(this.username, this.password)
+              assert.throws(function () {
+                // missing userCollection
+                authenticator.authenticate(req)
+              }, Error)
+            }
+          }),
+          o({
+            _type: MongoDBAuthenticatorTest,
+            name: 'UserDoesNotExist',
+            description: 'Test user does not exist',
+            authenticator: {
+              _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
+              usernameField: 'username',
+              passwordField: 'password',
+              userCollection: USERS_COL,
+            },
+            userRecords: [
+              {username: 'bar', password: 'baz'}
+            ],
+            username: 'foo',
+            password: 'bar',
+            doTest: function () {
+              var authenticator = o(this.authenticator)
+              authenticator.initialize(mockService(this.db))
+              var req = mockHttpBasicAuthRequest(this.username, this.password)
+              assert.throws(function () {
+                authenticator.authenticate(req)
+              }, process._HttpErrors.Unauthenticated)
+            }
+          }),
+          o({
+            _type: MongoDBAuthenticatorTest,
+            name: 'WrongPassword',
+            description: 'Test wrong password',
+            authenticator: {
+              _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
+              usernameField: 'username',
+              passwordField: 'password',
+              userCollection: USERS_COL,
+            },
+            userRecords: [
+              {username: 'foo', password: 'baz'}
+            ],
+            username: 'foo',
+            password: 'bar',
+            doTest: function () {
+              var authenticator = o(this.authenticator)
+              authenticator.initialize(mockService(this.db))
+              var req = mockHttpBasicAuthRequest(this.username, this.password)
+              assert.throws(function () {
+                authenticator.authenticate(req)
+              }, process._HttpErrors.Unauthenticated)
+            }
+          }),
+          o({
+            _type: MongoDBAuthenticatorTest,
+            name: 'Success',
+            description: 'Test successful authentication',
+            authenticator: {
+              _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
+              usernameField: 'username',
+              passwordField: 'password',
+              userCollection: USERS_COL,
+            },
+            userRecords: [
+              {username: 'foo', password: 'bar'}
+            ],
+            username: 'foo',
+            password: 'bar',
+            doTest: function () {
+              var authenticator = o(this.authenticator)
+              authenticator.initialize(mockService(this.db))
+              var req = mockHttpBasicAuthRequest(this.username, this.password)
+              var user = authenticator.authenticate(req)
+              assert.equal(user.username, this.username)
+            }
+          }),
+        ]
+      }),
 
-    //
-    // api key
-    //
-  ]
+      //
+      // api key
+      //
+    ]
+  })
 })
