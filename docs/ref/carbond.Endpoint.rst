@@ -46,106 +46,112 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.Endpoint.path
-
-        .. csv-table::
-            :class: details-table
-
-            "path", ""
-            *Required*, ""
-            "Description", "The path to which this endpoint is bound. The path can contain variable patterns (e.g. ``'orders/:id'``). The ``path`` property is not configured directly on ``Endpoint`` objects but are specified as lvals in enclosing definitions of endpoints such as in an ``ObjectServer`` or a parent ``Endpoint`` object. When retrieved the value of this property will be the absolute path of the endpoint from ``/``."
-
-    .. attribute:: carbond.Endpoint.parent
-    
-        .. csv-table::
-            :class: details-table
-
-            "parent", ""
-            *Required*, ""
-            "Description", "The parent ``Endpoint`` of this ``Endpoint``."
-
-    .. attribute:: carbond.Endpoint.parameters
-
-        .. csv-table::
-            :class: details-table
-
-            "parameters", ""
-            *Required*, ""
-            "Description", "A mapping of parameter names to ``OperationParameter`` objects. Parameters defined for an ``Endpoint`` are inherited by all operations of this ``Endpoint`` as well as by all child ``Endpoints`` of this ``Endpoint``."
-
-    .. attribute:: carbond.Endpoint.endpoints
-
-        .. csv-table::
-            :class: details-table
-
-            "endpoints", :class:`~carbond.Endpoint`
-            *Required*
-            "Description", "A set of child ``Endpoint`` definitions. This is an object whose keys are path strings and values are instances of ``Endpoint``. Each path key will be interpreted as relative to this Endpoints ``path`` property."
-
-
-    .. attribute:: carbond.Endpoint.description
-
-         .. csv-table::
-             :class: details-table
-
-             "description", ""
-             "Description", ""
-
-    .. attribute:: carbond.Endpoint.service
-
-         .. csv-table::
-             :class: details-table
-
-             "service", ""
-             "Description", ""
-
     .. attribute:: carbond.Endpoint.acl
 
          .. csv-table::
              :class: details-table
 
-             "acl", ""
-             "Description", ""
-
-    .. attribute:: carbond.Endpoint.dataAcl
-
-         .. csv-table::
-             :class: details-table
-
-             "dataAcl", ""
-             "Description", ""
-
-    .. attribute:: carbond.Endpoint.sanitizesOutput
-
-         .. csv-table::
-             :class: details-table
-
-             "sanitizesOutput", ""
-             "Description", ""
-
-    .. attribute:: carbond.Endpoint.sanitizeMode
-
-         .. csv-table::
-             :class: details-table
-
-             "sanitizeMode", ""
-             "Description", ""
+             "acl", :class:`object`
+             "Default", ``null``
+             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Endpoint.allowUnauthenticated
 
          .. csv-table::
              :class: details-table
 
-             "allowUnauthenticated", ""
-             "Description", ""
+             "allowUnauthenticated", :class:`object`
+             "Default", ``null``
+             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+    .. attribute:: carbond.Endpoint.dataAcl
+
+         .. csv-table::
+             :class: details-table
+
+             "dataAcl", :class:`object`
+             "Default", ``null``
+             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+    .. attribute:: carbond.Endpoint.description
+
+         .. csv-table::
+             :class: details-table
+
+             "description", :class:`string`
+             "Default", ``undefined``
+             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+    .. attribute:: carbond.Endpoint.endpoints
+
+        .. csv-table::
+            :class: details-table
+
+            "endpoints", :class:`object`
+            *Required*, ""
+            "Description", "A set of child :class:`~carbond.Endpoint` definitions. This is an object whose keys are path strings and values are instances of :class:`~carbond.Endpoint`. Each path key will be interpreted as relative to this Endpoints ``path`` property."
+
+    .. attribute:: carbond.Endpoint.parameters
+
+        .. csv-table::
+            :class: details-table
+
+            "parameters", :class:`object`
+            *Required*, ""
+            "Description", "A mapping of parameter names to ``OperationParameter`` objects. Parameters defined for an ``Endpoint`` are inherited by all operations of this ``Endpoint`` as well as by all child ``Endpoints`` of this ``Endpoint``."
+
+    .. attribute:: carbond.Endpoint.parent
+    
+        .. csv-table::
+            :class: details-table
+
+            "parent", :class:`~carbond.Endpoint`
+            "Default", ``null``
+            "Description", "The parent :class:`~carbond.Endpoint` of this :class:`~carbond.Endpoint`."
+
+    .. attribute:: carbond.Endpoint.path
+
+        .. csv-table::
+            :class: details-table
+
+            "path", :class:`string`
+            *Required*, ""
+            "Description", "The path to which this endpoint is bound. The path can contain variable patterns (e.g. ``'orders/:id'``). The ``path`` property is not configured directly on ``Endpoint`` objects but are specified as lvals in enclosing definitions of endpoints such as in a parent :class:`~carbond.Endpoint` object. When retrieved the value of this property will be the absolute path of the endpoint from ``/``."
+
+    .. attribute:: carbond.Endpoint.sanitizeMode
+
+         .. csv-table::
+             :class: details-table
+
+             "sanitizeMode", :class:`string`
+             "Default", ``strict``
+             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+    .. attribute:: carbond.Endpoint.sanitizesOutput
+
+         .. csv-table::
+             :class: details-table
+
+             "sanitizesOutput", :class:`boolean`
+             "Default", ``false``
+             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+    .. attribute:: carbond.Endpoint.service
+
+         .. csv-table::
+             :class: details-table
+
+             "service", :class:`~carbond.Service`
+             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. attribute:: carbond.Endpoint.validateOutput
 
          .. csv-table::
              :class: details-table
 
-             "validateOutput", ""
-             "Description", ""
+             "validateOutput", :class:`boolean`
+             "Default", ``true``
+             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
 
 Methods
@@ -155,43 +161,15 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: carbond.Endpoint.operations
-
-        .. csv-table::
-            :class: details-table
-
-            "operations ()", ""
-            "Arguments", ""
-            "Description", ""
-
     .. function:: carbond.Endpoint.getOperation
 
         .. csv-table::
             :class: details-table
 
             "getOperation (*method*)", ""
-            "Arguments", "**method**: the HTTP method"
-            "Description", ""
-
-    .. function:: carbond.Endpoint.isOperationAuthorized
-
-        .. csv-table::
-            :class: details-table
-
-            "isOperationAuthorized (*method, user, req*)", ""
-            "Arguments", "**method**: the HTTP method |br|
-            **user**: The user to check auth against |br|
-            **req** (:class:`express.request`): The current `Request` object |br|"
-            "Description", ""
-
-    .. function:: carbond.Endpoint.supportedMethods
-
-        .. csv-table::
-            :class: details-table
-
-            "supportedMethods ()", ""
-            "Arguments", ""
-            "Description", ""
+            "Arguments", "**method** (:class:`function`): the HTTP method"
+            "Returns", :class:`function`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. function:: carbond.Endpoint.getService
 
@@ -200,7 +178,30 @@ Methods
 
             "getService ()", ""
             "Arguments", ""
-            "Description", ""
+            "Returns", :class:`~carbond.Service`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+    .. function:: carbond.Endpoint.isOperationAuthorized
+
+        .. csv-table::
+            :class: details-table
+
+            "isOperationAuthorized (*method, user, req*)", ""
+            "Arguments", "**method** (:class:`function`): the HTTP method |br|
+            **user**: The user to check auth against |br|
+            **req** (:class:`express.request`): The current `Request` object |br|"
+            "Returns", :class:`boolean`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+    .. function:: carbond.Endpoint.operations
+
+        .. csv-table::
+            :class: details-table
+
+            "operations ()", ""
+            "Arguments", ``undefined``
+            "Returns", :class:`object`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
     .. function:: carbond.Endpoint.options
 
@@ -210,7 +211,18 @@ Methods
             "options (*req, res*)", ""
             "Arguments", "**req** (:class:`express.request`): The current `Request` object. |br|
             **res** (:class:`express.response`): The current `Response` object."
-            "Description", ""
+            "Returns", ``undefined``
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+    .. function:: carbond.Endpoint.supportedMethods
+
+        .. csv-table::
+            :class: details-table
+
+            "supportedMethods ()", ""
+            "Arguments", ``undefined``
+            "Returns", :class:`object`
+            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
 Operations
 ==========
