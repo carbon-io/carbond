@@ -26,12 +26,14 @@ HOST: {{host}}
 {{/if_ne~}}
 
 {{! ---------- endpoints ---------- ~}}
-
 {{~#each this}}
-
+{{! Only show endpoints that have at least one allowed operation ~}}
+{{~#if operations}}
 {{! XXX: if we add "name" properties to endpoints, we can use "## <identifier> [URI template]" here }}
 
-{{~#MDHeading level=(APIBPGroupedNesting this 1)}}{{{APIBPURLTemplate this}}}{{/MDHeading}}
+{{~#MDHeading level=(APIBPGroupedNesting this 1)}}
+  {{~#if this.name}}{{{this.name}}} [{{{APIBPURLTemplate this}}}]{{else}}{{{APIBPURLTemplate this}}}{{/if~}}
+{{/MDHeading}}
 
 {{#if description~}}
 {{description}}
@@ -78,7 +80,7 @@ HOST: {{host}}
 
 {{#indent spaces=8}}
 {{#MDCodeBlock}}
-{{{MDRenderSchema schema}}}
+{{{MDRenderBody schema}}}
 {{/MDCodeBlock}}
 {{~/indent}}
 {{~/if_eq}}
@@ -104,12 +106,20 @@ HOST: {{host}}
 {{~/if}}
 
 {{#if parameters.body.0.schema}}
+
+    + Body
+{{#indent spaces=8}}
+{{#MDCodeBlock}}
+{{~#if parameters.body.0.example}}{{{MDRenderSchema parameters.body.0.example}}}{{else}}{{{MDRenderBody parameters.body.0.schema}}}{{/if~}}
+{{/MDCodeBlock}}
+{{/indent}}
     + Schema
 {{#indent spaces=8}}
 {{#MDCodeBlock}}
 {{{MDRenderSchema parameters.body.0.schema}}}
 {{/MDCodeBlock}}
 {{/indent~}}
+
 {{/if~}}
 {{/if}}
 
@@ -122,6 +132,12 @@ HOST: {{host}}
         {{name}}: {{#if schema}}{ {{~schema.type~}} }{{#if description}} - {{/if}}{{/if}}{{#if description}}{{description}}{{/if}}
 {{/each~}}
 {{~/ifnotempty}}
+    + Body
+{{#indent spaces=8}}
+{{#MDCodeBlock}}
+{{~#if example}}{{{MDRenderSchema example}}}{{else}}{{{MDRenderBody schema}}}{{/if~}}
+{{/MDCodeBlock}}
+{{/indent}}
     + Schema
 {{#indent spaces=8}}
 {{#MDCodeBlock}}
@@ -137,6 +153,7 @@ HOST: {{host}}
 
 {{~! ---------- /actions ---------- ~}}
 
+{{/if}}
 {{~/each~}}
 
 {{~! ---------- /endpoints ---------- }}
