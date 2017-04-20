@@ -227,7 +227,7 @@ Methods
 Operations
 ==========
 
-Each endpoint can implement one or more operations representing each of the HTTP methods: ``GET``, ``PUT``, ``POST``, ``CREATE``, ``DELETE``, ``HEAD``, ``OPTIONS``. There is no requirement an endpoint implement all HTTP methods. It only needs to implement those it wishes to support.
+Each endpoint can implement one or more operations representing each of the HTTP methods: ``GET``, ``PUT``, ``POST``, ``PATCH``, ``DELETE``, ``HEAD``, ``OPTIONS``. There is no requirement an endpoint implement all HTTP methods. It only needs to implement those it wishes to support.
 
 Each operation is represented as either:
 

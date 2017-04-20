@@ -8,16 +8,16 @@ Carbond class reference
     :maxdepth: 1
     :titlesonly:
 
-    carbond.Collection.rst
     carbond.Endpoint.rst
     carbond.IdGenerator.rst
-    carbond.MongoDBCollection.rst
-    carbond.ObjectServer.rst
+    carbond.ObjectIdGenerator.rst
     carbond.Operation.rst
     carbond.OperationParameter.rst
-    carbond.ObjectIdGenerator.rst
-    carbond.SslOptions.rst
+    carbond.OperationResponse.rst
+    carbond.ParameterParser.rst
     carbond.Service.rst
+    carbond.SslOptions.rst
+    carbond.SwaggerDescriptorGenerator.rst
     carbond.UserCollection.rst
     carbond.limiter.ChainLimiter
     carbond.limiter.FunctionLimiter

@@ -40,7 +40,7 @@ Methods
         .. csv-table::
             :class: details-table
 
-            "generateId ()", ""
+            "generateId ()", "overrides :attr:`~carbond.IdGenerator.generateId`"
             "Arguments", ``undefined``
             "Returns", :class:`string`
             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
