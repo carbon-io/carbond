@@ -20,14 +20,16 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.limiter.TooBusyLimiter.absMaxOutstandingReqs
+    .. ifconfig:: carbonio_env != 'prod'
+        
+         .. attribute:: carbond.limiter.TooBusyLimiter.absMaxOutstandingReqs
 
-        .. csv-table::
-            :class: details-table
+            .. csv-table::
+                :class: details-table
 
-            "absMaxOutstandingReqs", :class:`Integer`
-            *Required*, ""
-            "Description", "The absolute maximum number of outstanding requests."
+                "absMaxOutstandingReqs", :class:`Integer`
+                *Required*, ""
+                "Description", "The absolute maximum number of outstanding requests."
 
 
     .. attribute:: carbond.limiter.TooBusyLimiter.useFiberPoolSize
