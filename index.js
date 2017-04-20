@@ -3,6 +3,7 @@ module.exports = {
   IdGenerator: require('./lib/IdGenerator'),
   ObjectIdGenerator: require('./lib/ObjectIdGenerator'),
   Operation: require('./lib/Operation'),
+  OperationParameter: require('./lib/OperationParameter'),
   Service: require('./lib/Service'),
   collections: {
     Collection: require('./lib/collections/Collection'),
