@@ -1,9 +1,13 @@
+.. class:: carbond.SslOptions
+    :heading:
+
+.. |br| raw:: html
+ 
+   <br />
+
 ==================
 carbond.SslOptions
 ==================
-
-.. js:class:: SslOptions()
-    :hidden:
 
 Instances of this class represent a set of ssl related options for an ObjectServer. Options mostly mirror those of the Node.js `tls <https://nodejs.org/api/tls.html#tls_tls_connect_port_host_options_callback>`_ and `https <https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener>`_ modules.
 

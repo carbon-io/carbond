@@ -1,9 +1,13 @@
+.. class:: carbond.Operation
+    :heading:
+
+.. |br| raw:: html
+ 
+   <br />
+
 =================
 carbond.Operation
 =================
-
-.. js:class:: Operation()
-    :hidden:
 
 An ``Operation`` represents a single HTTP method on an endpoint (``GET``, ``PUT``, ``POST``, ``PATCH``, ``DELETE``, ``HEAD``, ``OPTIONS``). 
 

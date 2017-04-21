@@ -1,9 +1,13 @@
+.. class:: carbond.OperationParameter
+    :heading:
+
+.. |br| raw:: html
+ 
+   <br />
+
 ==========================
 carbond.OperationParameter
 ==========================
-
-.. js:class:: Operation()
-    :hidden:
 
 ``Operations`` can optionally define one or more ``OperationParameter``\ s. Each ``OperationParameter`` can specify the 
 location of the parameter (path, query string, or body) as well as a JSON schema definition to which the parameter must conform.

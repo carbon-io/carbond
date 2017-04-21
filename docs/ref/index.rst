@@ -19,6 +19,8 @@ Carbond class reference
     carbond.SslOptions.rst
     carbond.SwaggerDescriptorGenerator.rst
     carbond.UserCollection.rst
+    carbond.collections.Collection.rst
+    carbond.collections.CollectionOperationConfig.rst
     carbond.limiter.ChainLimiter
     carbond.limiter.FunctionLimiter
     carbond.limiter.Limiter
@@ -30,6 +32,7 @@ Carbond class reference
     carbond.limiter.LimiterSelector
     carbond.limiter.ReqPropertyLimiterSelector
     carbond.limiter.StaticKeyLimiterSelector
+    carbond.mongodb.MongoDBCollection.rst
     carbond.security.Acl.rst
     carbond.security.ApiKeyAuthenticator.rst
     carbond.security.Authenticator.rst
