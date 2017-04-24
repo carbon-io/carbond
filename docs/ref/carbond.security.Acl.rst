@@ -14,7 +14,7 @@ Description for :class:`~carbond.security.Acl` goes here
 Properties
 ==========
 
-.. class:: carbond.security.Acl.
+.. class:: carbond.security.Acl
     :noindex:
     :hidden:
 
@@ -49,7 +49,7 @@ Properties
 Methods
 =======
 
-.. class:: carbond.collections.Collection
+.. class:: carbond.security.Acl
     :noindex:
     :hidden:
 
