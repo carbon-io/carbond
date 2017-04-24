@@ -48,7 +48,7 @@ Methods
         .. csv-table::
             :class: details-table
 
-            "hasPermission (*user, permission, env*)", "overrides :attr:`~carbond.security.Acl.hasPermission`"
+            "hasPermission (*user, permission, env*)", "overrides :attr:`~carbond.security.EndpointAcl.hasPermission`"
             "Arguments", "**user** (:class:`object`): Lorem ipsum dolor sit amet |br|
             **permission** (:class:`string`): Lorem ipsum dolor sit amet |br|
             **env** (:class:`object`): Lorem ipsum dolor sit amet |br|"

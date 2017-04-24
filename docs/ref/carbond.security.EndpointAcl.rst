@@ -5,9 +5,9 @@
  
    <br />
 
-==============================
+============================
 carbond.security.EndpointAcl
-==============================
+============================
 *extends* :class:`~carbond.security.Acl`
 
 Description for :class:`~carbond.security.EndpointAcl` goes here
