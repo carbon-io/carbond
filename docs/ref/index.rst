@@ -14,6 +14,8 @@ Carbond class reference
     carbond.Operation.rst
     carbond.OperationParameter.rst
     carbond.Service.rst
+    carbond.collections.Collection.rst
+    carbond.collections.CollectionOperationConfig.rst
     carbond.mongodb.MongoDBCollection.rst
     carbond.security.Acl.rst
     carbond.security.ApiKeyAuthenticator.rst
