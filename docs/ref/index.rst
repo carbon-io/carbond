@@ -45,4 +45,4 @@ Carbond class reference
     carbond.security.MongoDBHttpBasicAuthenticator.rst
     carbond.security.NoopHasher.rst
     carbond.security.Sha256Hasher.rst
-
+    carbond.test.ServiceTest.rst
