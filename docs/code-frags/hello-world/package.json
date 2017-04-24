@@ -1,0 +1,19 @@
+{
+  "name": "hello-world",
+  "version": "0.0.1",
+  "description": "Hello World API.",
+  "contributors": [
+    "Bob Smith <bob@smith.com>"
+  ],
+  "main": "./lib/HellService.js",
+  "scripts": {
+      "start": "node ./lib/HelloService.js",
+      "test": "node ./test/HelloServiceTest.js"
+  },
+  "bin": {
+      "HelloService": "./bin/HelloService.js"
+  },
+  "dependencies": {
+      "carbon-io": "*"
+  }
+}

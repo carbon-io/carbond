@@ -4,10 +4,10 @@ var __ = cc.fibers.__(module)
 var o = cc.atom.o(module)
 var oo = cc.atom.oo(module)
 
-var Service = require('../../lib/Service')
-var Endpoint = require('../../lib/Endpoint')
+var Service = require('../../../lib/Service')
+var Endpoint = require('../../../lib/Endpoint')
 
-var TooBusyLimiter = require('../../lib/limiter/TooBusyLimiter')
+var TooBusyLimiter = require('../../../lib/limiter/TooBusyLimiter')
 
 var TooBusyLimiterExample = {
   _type: Service,

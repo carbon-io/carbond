@@ -5,7 +5,7 @@ var oo  = require('@carbon-io/carbon-core').atom.oo(module)
 var _o = require('@carbon-io/carbon-core').bond._o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
-var PolicyLimiterExample = _.cloneDeep(require('../../PolicyLimiterExample'))
+var PolicyLimiterExample = _.cloneDeep(require('../../standaloneExamples/PolicyLimiterExample'))
 
 _.assign(PolicyLimiterExample, {
     hostname: '127.0.0.1',

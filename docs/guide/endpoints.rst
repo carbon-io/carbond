@@ -46,7 +46,7 @@ Endpoints with templated paths
 ``Endpoint``\ s can be defined using templated paths. Bound template
 variables values can then be accessed via ``req.params``:
 
-..  literalinclude:: ../code-frags/objectserver-endpoint.js 
+..  literalinclude:: ../code-frags/SimpleServiceEndpointExample.js 
     :language: javascript 
     :linenos:
     :emphasize-lines: 17, 21

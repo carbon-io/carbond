@@ -5,7 +5,7 @@ var oo  = require('@carbon-io/carbon-core').atom.oo(module)
 var _o = require('@carbon-io/carbon-core').bond._o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
-var TooBusyLimiterExample = _.cloneDeep(require('../../TooBusyLimiterExample'))
+var TooBusyLimiterExample = _.cloneDeep(require('../../standaloneExamples/TooBusyLimiterExample'))
 
 _.assign(TooBusyLimiterExample, {
     hostname: '127.0.0.1',

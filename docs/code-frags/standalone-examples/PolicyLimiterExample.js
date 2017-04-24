@@ -6,12 +6,12 @@ var o = cc.atom.o(module)
 var oo = cc.atom.oo(module)
 var Test = cc.testtube.Test
 
-var Service = require('../../lib/Service')
-var Endpoint = require('../../lib/Endpoint')
+var Service = require('../../../lib/Service')
+var Endpoint = require('../../../lib/Endpoint')
 
-var PolicyLimiter = require('../../lib/limiter/PolicyLimiter')
-var StaticKeyLimiterSelector = require('../../lib/limiter/StaticKeyLimiterSelector')
-var WindowLimiterPolicy = require('../../lib/limiter/WindowLimiterPolicy')
+var PolicyLimiter = require('../../../lib/limiter/PolicyLimiter')
+var StaticKeyLimiterSelector = require('../../../lib/limiter/StaticKeyLimiterSelector')
+var WindowLimiterPolicy = require('../../../lib/limiter/WindowLimiterPolicy')
 
 var PolicyLimiterExample = {
   _type: Service,
