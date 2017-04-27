@@ -1,10 +1,11 @@
-var __ = require('@carbon-io/carbon-core').fibers.__(module)
-var o  = require('@carbon-io/carbon-core').atom.o(module)
-var _o = require('@carbon-io/carbon-core').bond._o(module)
-var testtube = require('@carbon-io/carbon-core').testtube
+var core = require('@carbon-io/carbon-core')
+var __ = core.fibers.__(module)
+var _o = core.bond._o(module)
+var o = core.atom.o(module)
+var testtube = core.testtube
 
 /**************************************************************************
- * Limiter code fragments tests
+ * Code fragments service tests
  */
 __(function() {
   module.exports = o.main({
@@ -17,15 +18,16 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: "LimiterCodeFragsTestSuite",
+    name: "ServiceCodeFragsTestSuite",
 
     /**********************************************************************
      * tests
      */
     tests: [
-      _o('./TooBusyLimiterExampleTests'),
-      _o('./PolicyLimiterExampleTests')
-    ],
+      _o('./SingleDBConnectionTests'),
+      _o('./MultipleDBConnectionTests'),
+      _o('./SimpleEndpointsTests')
+    ]
   })
 })
 

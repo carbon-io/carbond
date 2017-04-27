@@ -25,10 +25,15 @@ specifying database URIs:
 
 A ``Service`` with a single db connection:
 
-..  code-block:: javascript
+.. literalinclude:: ../code-frags/standalone-examples/ServiceSingleDBConnectionExample.js
+    :language: javascript
+    :lines: 5-
+    :linenos:
+    :emphasize-lines: 5, 10
+
+.. code-block javascript
   :linenos:
   :emphasize-lines: 5, 10
-
   __(function() {
     module.exports = o({
       _type: carbon.carbond.Service,
@@ -47,10 +52,16 @@ A ``Service`` with a single db connection:
 
 A ``Service`` that connects to multiple databases:
 
-..  code-block:: javascript
+.. literalinclude:: ../code-frags/standalone-examples/ServiceMultipleDBConnectionExample.js
+    :language: javascript
+    :lines: 7-
+    :linenos: 
+    :emphasize-lines: 5-8, 13-16, 22-25
+
+
+..  code-block javascript
   :linenos:
   :emphasize-lines: 5-8, 13, 19
-
   __(function() {
     module.exports = o({
       _type: carbon.carbond.Service,

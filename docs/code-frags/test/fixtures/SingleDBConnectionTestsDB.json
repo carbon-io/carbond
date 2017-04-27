@@ -1,0 +1,11 @@
+{
+    "data": {
+        "messages": [
+            {
+                "_id": 0,
+                "text": "foo bar"
+            }
+        ]
+    }
+}
+

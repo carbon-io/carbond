@@ -40,9 +40,13 @@ When defining a ``Collection``, one is not required to define all
 methods. Only defined methods will be enabled. For example, here is a
 collection that only defines the ``insert`` method:
 
-..  code-block:: javascript
+.. todo:: XXX: add :lines: when the example gets fleshed out (see comment)
 
-  __(function() {
+.. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
+    :language: javascript
+    :linenos:
+
+.. __(function() {
     module.exports = o({
       _type: carbon.carbond.Service,
       port: 8888,
@@ -82,12 +86,17 @@ While omitting an operation's method is enough to disable it
 (i.e. simply not defining an ``insert`` method will cause the
 collection to not support inserts), you may also explicitly enable /
 disable ``Collection`` operations via the ``enabled`` property. This
-is useful for temporarily diabling an operation or when instantiating
+is useful for temporarily disabling an operation or when instantiating
 or sub-classing ``Collections`` that support default implementations
 for all ``Collection`` operations, such as ``MongoDBCollection``.
 
-..  code-block:: javascript
- :linenos:
+.. todo:: XXX: add :lines: when the example gets fleshed out (see comment)
+
+.. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
+    :language: javascript
+    :linenos:
+
+.. :linenos:
  :emphasize-lines: 10 - 14
                       
   __(function() {
@@ -98,13 +107,11 @@ for all ``Collection`` operations, such as ``MongoDBCollection``.
       endpoints: {
         feedback: o({
           _type: carbon.carbond.collections.Collection,
-
           enabled: {
             insert: false, // insert is disabled even though it is defined below
             find: true,
             '*': false,
           },
-          
           insert: function(obj) { ... },
           find: function(query) { ... }
         })

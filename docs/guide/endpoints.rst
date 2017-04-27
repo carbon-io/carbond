@@ -46,13 +46,15 @@ Endpoints with templated paths
 ``Endpoint``\ s can be defined using templated paths. Bound template
 variables values can then be accessed via ``req.params``:
 
-..  literalinclude:: ../code-frags/SimpleServiceEndpointExample.js 
+..  literalinclude:: ../code-frags/standalone-examples/ServiceSimpleEndpointExample.js 
     :language: javascript 
     :linenos:
-    :emphasize-lines: 17, 21
+    :lines: 17-44
+    :emphasize-lines: 14, 18
 
-In this example, a request for the path ``/users/jonny16`` will route to
-the ``/users/:id`` ``Endpoint`` and ``req.params.id`` will have the value ``"jonny16"``. 
+In this example, a request for the path ``/users/jonny16`` will route to the
+``/users/:id`` ``Endpoint`` and ``req.params.id`` will have the value
+``"jonny16"``. 
 
 
 Sub-endpoints 
