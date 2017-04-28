@@ -18,7 +18,6 @@ __(function() {
     name: 'MultipleDBConnectionTests',
     service: _o('../../standalone-examples/ServiceMultipleDBConnectionExample'),
     suppressServiceLogging: false,
-    /*
     _mongoFixtures: {
       main: {
         dbUri: "mongodb://localhost:27017/mydb",
@@ -27,6 +26,7 @@ __(function() {
                                'fixtures', 
                                'MultipleDbConnectionTestsDB.json')
       },
+      /*
       reporting: {
         dbUri: "mongodb://localhost:27017/reporting",
         fixturePath: path.join(path.dirname(module.filename), 
@@ -34,8 +34,8 @@ __(function() {
                                'fixtures', 
                                'MultipleDbConnectionTestsDB.json')
       }
-    },
     */
+    },
     tests: [
       {
         reqSpec: {
