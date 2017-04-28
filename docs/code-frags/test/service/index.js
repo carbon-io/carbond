@@ -25,7 +25,6 @@ __(function() {
      */
     tests: [
       _o('./SingleDBConnectionTests'),
-      //_o('./MultipleDBConnectionTests'),
       _o('./SimpleEndpointTests'),
       _o('./SimpleEndpointServiceReferenceTests'),
       _o('./SimpleSubEndpointTests'),
@@ -33,6 +32,7 @@ __(function() {
       _o('./SimpleTests'),
       _o('./AsyncProgrammaticServiceStartTests'),
       _o('./SyncProgrammaticServiceStartTests'),
+      _o('./MultipleDBConnectionTests'),
     ]
   })
 })
