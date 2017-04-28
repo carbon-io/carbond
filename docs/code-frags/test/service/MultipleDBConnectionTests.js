@@ -26,6 +26,7 @@ __(function() {
                                'fixtures', 
                                'MultipleDbConnectionTestsDB.json')
       },
+      /*
       reporting: {
         dbUri: "mongodb://localhost:27017/reporting",
         fixturePath: path.join(path.dirname(module.filename), 
@@ -33,6 +34,7 @@ __(function() {
                                'fixtures', 
                                'MultipleDbConnectionTestsDB.json')
       }
+      */
     },
     tests: [
       {
