@@ -1,9 +1,8 @@
-% node <path-to-your-app>/MyService --help
 
-Usage: node MyService <command> [options]
+Usage: node <path-to-your-app>/lib/HelloService.js [command] [options]
 
 command     
-  start-server        start the api server
+  start-server        start the api server (default)
   gen-static-docs     generate docs for the api
 
 Options:

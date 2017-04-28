@@ -29,7 +29,10 @@ __(function() {
       _o('./SimpleEndpointTests'),
       _o('./SimpleEndpointServiceReferenceTests'),
       _o('./SimpleSubEndpointTests'),
-      _o('./SimpleEndpointsTests')
+      _o('./SimpleEndpointsTests'),
+      _o('./SimpleTests'),
+      _o('./AsyncProgrammaticServiceStartTests'),
+      _o('./SyncProgrammaticServiceStartTests'),
     ]
   })
 })

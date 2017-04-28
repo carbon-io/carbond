@@ -18,7 +18,7 @@ operations, ``get`` and ``post``:
     :language: javascript 
     :linenos:
     :lines: 5-
-    :emphasize-lines: 6-14
+    :emphasize-lines: 7-15
 
 ..  code-block javascript 
   :linenos:
