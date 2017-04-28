@@ -19,10 +19,6 @@ __(function() {
     service: _o('../../standalone-examples/ServiceMultipleDBConnectionExample'),
     suppressServiceLogging: false,
     _mongoFixtures: {
-      main: path.join(path.dirname(module.filename), 
-                               '..', 
-                               'fixtures', 
-                               'MultipleDbConnectionTestsDB.json')
       /*
       main: {
         dbUri: "mongodb://localhost:27017/mydb",

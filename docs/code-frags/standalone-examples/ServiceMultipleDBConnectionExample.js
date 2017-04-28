@@ -8,10 +8,13 @@ __(function() {
   module.exports = o.main({
     _type: carbon.carbond.Service,
     port: 8888,
+    dbUri:'mongodb://localhost:27017/mydb',
+    /*
     dbUris: {
       main: 'mongodb://localhost:27017/mydb',
       reporting: 'mongodb://localhost:27017/reporting'
     },
+    */
     endpoints: {
       messages: o({
         _type: carbon.carbond.Endpoint,
