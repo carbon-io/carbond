@@ -14,14 +14,18 @@ Simple Endpoints
 Below is a simple ``Endpoint`` at the path ``/hello`` that defines two
 operations, ``get`` and ``post``:
 
-..  code-block:: javascript 
+.. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleEndpointExample.js
+    :language: javascript 
+    :linenos:
+    :lines: 5-
+    :emphasize-lines: 6-14
+
+..  code-block javascript 
   :linenos:
   :emphasize-lines: 10-18
-
   var carbon = require('carbon-io') 
   var o  = carbon.atom.o(module).main 
   var __ = carbon.fibers.__(module).main
-
   __(function() {
     module.exports = o({
       _type: carbon.carbond.Service,
@@ -46,7 +50,7 @@ Endpoints with templated paths
 ``Endpoint``\ s can be defined using templated paths. Bound template
 variables values can then be accessed via ``req.params``:
 
-..  literalinclude:: ../code-frags/standalone-examples/ServiceSimpleEndpointExample.js 
+.. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleEndpointsExample.js 
     :language: javascript 
     :linenos:
     :lines: 17-44
@@ -64,14 +68,18 @@ Sub-endpoints
 similar to the API as above, but that uses a sub-endpoint to define an
 ``Endpoint`` at the path ``/users/:id``.
 
-..  code-block:: javascript
+.. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleSubEndpointExample.js 
+    :language: javascript 
+    :linenos:
+    :lines: 17-
+    :emphasize-lines: 15, 19
+
+..  code-block javascript
     :linenos:
     :emphasize-lines: 16, 20
-
     var carbon = require('carbon-io')
     var o  = carbon.atom.o(module).main
     var __ = carbon.fibers.__(module).main
-
     __(function() {
       module.exports = o({
         _type: carbon.carbond.Service,
@@ -105,14 +113,18 @@ Accessing Service properties from within Endpoints
 Properties of the top-level ``Service`` can be accessed via the
 ``service`` property of your ``Endpoint``:
 
-..  code-block:: javascript
+.. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleEndpointServiceReferenceExample.js 
+    :language: javascript 
+    :linenos:
+    :lines: 5-
+    :emphasize-lines: 11
+
+.. code-block javascript
   :linenos:
   :emphasize-lines: 15
-
   var carbon = require('carbon-io')
   var o  = carbon.atom.o(module).main
   var __ = carbon.fibers.__(module).main
-
   __(function() {
     module.exports = o({
       _type: carbon.carbond.Service,
