@@ -25,7 +25,7 @@ __(function() {
      */
     tests: [
       _o('./SingleDBConnectionTests'),
-      _o('./MultipleDBConnectionTests'),
+      //_o('./MultipleDBConnectionTests'),
       _o('./SimpleEndpointTests'),
       _o('./SimpleEndpointServiceReferenceTests'),
       _o('./SimpleSubEndpointTests'),
