@@ -20,6 +20,11 @@ __(function() {
     suppressServiceLogging: false,
     _mongoFixtures: {
       /*
+      main: path.join(path.dirname(module.filename), 
+                               '..', 
+                               'fixtures', 
+                               'MultipleDbConnectionTestsDB.json')
+      */
       main: {
         dbUri: "mongodb://localhost:27017/mydb",
         fixturePath: path.join(path.dirname(module.filename), 
@@ -34,7 +39,6 @@ __(function() {
                                'fixtures', 
                                'MultipleDbConnectionTestsDB.json')
       }
-    */
     },
     tests: [
       {
