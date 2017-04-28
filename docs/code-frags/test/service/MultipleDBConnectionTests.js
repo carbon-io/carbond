@@ -35,6 +35,7 @@ __(function() {
                                'MultipleDbConnectionTestsDB.json')
       }
     },
+    */
     tests: [
       {
         reqSpec: {
@@ -67,6 +68,5 @@ __(function() {
         }
       }
     ]
-    */
   })
 })
