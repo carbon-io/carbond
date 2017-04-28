@@ -16,19 +16,25 @@ __(function() {
       messages: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
+          return []
+          /*
           return this.service.dbs['main']
                              .getCollection('messages')
                              .find()
                              .toArray()
+          */
         }
       }),
       dashboards: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
+          return []
+          /*
           return this.service.dbs['reporting']
                              .getCollection('dashboards')
                              .find()
                              .toArray()
+          */
         }
       })
     }
