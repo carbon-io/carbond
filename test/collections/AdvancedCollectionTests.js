@@ -1,7 +1,10 @@
 var assert = require('assert')
 
+var _ = require('lodash')
+
 var _o = require('@carbon-io/carbon-core').bond._o(module)
-var o  = require('@carbon-io/carbon-core').atom.o(module).main
+var o = require('@carbon-io/carbon-core').atom.o(module).main
+var testtube = require('@carbon-io/carbon-core').testtube
 
 var carbond = require('../../')
 
@@ -143,7 +146,19 @@ module.exports = o({
         statusCode: 201,
         body: {_id: 'foobar'}
       }
-    }
+    },
+    
+    // Test config responses are honored
+
+    o({
+      _type: testtube.Test,
+      doTest: function() {
+        assert(_.some(this.parent.service.endpoints.advanced4.post.responses,
+                      function(val) {
+                        return val.statusCode === 201
+                      }))
+      }
+    })
   ],
 
   /**********************************************************************

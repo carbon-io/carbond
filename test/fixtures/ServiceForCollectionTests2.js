@@ -85,6 +85,21 @@ module.exports = o({
       _type: carbond.collections.Collection,
 
       insertConfig: {
+        responses: [
+          {
+            statusCode: 201,
+            description: 'foo',
+            schema: {
+              type: 'object',
+              properties: {
+                _id: { type: 'string' }
+              },
+              required: ['_id'],
+              additionalProperties: true
+            },
+            headers: ['Location', this.idHeader]
+          }
+        ],
         returnsInsertedObject: true
       },
 
