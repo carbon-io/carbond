@@ -17,7 +17,6 @@ __(function() {
     _type: carbond.test.ServiceTest,
     name: 'SingleDBConnectionTests',
     service: _o('../../standalone-examples/ServiceSingleDBConnectionExample'),
-    suppressServiceLogging: false,
     _mongoFixtures: {
       db: path.join(path.dirname(module.filename), 
                     '..', 

@@ -17,7 +17,6 @@ __(function() {
     _type: carbond.test.ServiceTest,
     name: 'MultipleDBConnectionTests',
     service: _o('../../standalone-examples/ServiceMultipleDBConnectionExample'),
-    suppressServiceLogging: false,
     _mongoFixtures: {
       main: {
         dbUri: "mongodb://localhost:27017/mydb",
