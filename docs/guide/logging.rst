@@ -4,33 +4,37 @@ Logging
 
 .. toctree::
 
-The ``Service`` class provides a logging facility that can be used to
-log application messages at various logging levels. 
+The :js:class:`~carbond.Service` class provides a logging facility that can be
+used to log application messages at various logging levels. 
 
 Logging messages 
 ----------------
 
-To support logging the ``Service`` class exposes the following
+To support logging the :js:class:`~carbond.Service` class exposes the following
 methods:
 
-* ``logTrace(msg)`` 
-* ``logDebug(msg)`` 
-* ``logInfo(msg)`` 
-* ``logWarning(msg)`` 
-* ``logError(msg)`` 
-* ``logFatal(msg)`` 
+* :js:func:`~carbond.Service.logTrace` 
+* :js:func:`~carbond.Service.logDebug` 
+* :js:func:`~carbond.Service.logInfo` 
+* :js:func:`~carbond.Service.logWarning` 
+* :js:func:`~carbond.Service.logError` 
+* :js:func:`~carbond.Service.logFatal` 
 
-To log a message you simply use these methods on your ``Service``
-object:
+To log a message you simply use these methods on your
+:js:class:`~carbond.Service` object:
 
-..  code-block:: javascript 
+.. literalinclude:: ../code-frags/standalone-examples/ServiceLoggingExample.js
+    :language: javascript
+    :linenos:
+    :lines: 1-8, 13-19, 23-
+    :emphasize-lines: 13, 17
+
+.. code-block: javascript 
   :linenos:
   :emphasize-lines: 13, 17
-
   var carbon = require('carbon-io') 
   var o  = carbon.atom.o(module).main 
   var __ = carbon.fibers.__(module).main
-
   __(function() {
     module.exports = o({
       _type: carbon.carbond.Service,
@@ -55,9 +59,10 @@ object:
 Controling verbosity 
 --------------------
 
-The verbosity level of your ``Service`` at runtime (i.e. which log
-levels are logged) can is controlled by the ``verbosity`` property of
-you ``Service`` object. 
+The verbosity level of your :js:class:`~carbond.Service` at runtime (i.e. which
+log levels are logged) can is controlled by the
+:js:attr:`~carbond.Service.verbosity` property of you
+:js:class:`~carbond.Service` object. 
 
 The verbosity property is a string and can have the following values:
 
@@ -68,27 +73,33 @@ The verbosity property is a string and can have the following values:
 * ``'error'``
 * ``'fatal'``
 
-These values have an ordering, and by setting the ``verbosity``
-property to one of these values you are directing the ``Service`` to
-log all messages with that log level and any "higher" log level. 
+These values have an ordering, and by setting the
+:js:attr:`~carbond.Service.verbosity` property to one of these values you are
+directing the :js:class:`~carbond.Service` to log all messages with that log
+level and any "higher" log level. 
 
-For example, setting the ``verbosity`` to ``'info'`` will result in all
-messages of log level ``'info'``, ``'warn'``, ``'error'``, and ``'fatal'`` to
-be logged. 
+For example, setting the :js:attr:`~carbond.Service.verbosity` to ``'info'``
+will result in all messages of log level ``'info'``, ``'warn'``, ``'error'``,
+and ``'fatal'`` to be logged. 
 
-There are two ways to control the verbosity level of a ``Service``:
+There are two ways to control the verbosity level of a
+:js:class:`~carbond.Service`:
 
-1. Setting the ``verbosity`` property of the ``Service`` as part of its
-   configuration:
+1. Setting the :js:attr:`~carbond.Service.verbosity` property of the
+   :js:class:`~carbond.Service` as part of its configuration:
 
-.. code-block:: javascript 
+.. literalinclude:: ../code-frags/standalone-examples/ServiceLoggingExample.js
+    :language: javascript
+    :linenos:
+    :lines: 1-12, 30-
+    :emphasize-lines: 9
+
+.. code-block: javascript 
   :linenos:
   :emphasize-lines: 9 
-
   var carbon = require('carbon-io') 
   var o  = carbon.atom.o(module) 
   var __ = carbon.fibers.__(module, true) 
-
   __(function() {
     module.exports = o({
       _type: carbon.carbond.Service,
@@ -100,9 +111,10 @@ There are two ways to control the verbosity level of a ``Service``:
     })
   })
 
-2. Using the ``-v, --verbosity`` flag at the commandline to specifity
-   the verbosity level, which will set the value of the ``verbosity``
-   property on your ``Service`` object. 
+2. Using the ``-v, --verbosity`` flag at the commandline to specifity the
+   verbosity level, which will set the value of the
+   :js:attr:`~carbond.Service.verbosity` property on your
+   :js:class:`~carbond.Service` object. 
 
 .. code-block:: sh 
 

@@ -85,4 +85,4 @@ your :js:attr:`~carbond.Service` definition.
 * ``510``: NotExtended
 * ``511``: NetworkAuthenticationRequired
 
-.. todo: add section documenting ``errorHandlingMiddleware``
+.. todo:: add section documenting ``errorHandlingMiddleware``
