@@ -124,6 +124,6 @@ There are two ways to control the verbosity level of a
 Logging output
 --------------
 
-All output of the logging facility is directed to stderr. This can
+All output of the logging facility is directed to ``stderr``. This can
 then be piped manually or via a process manager into log files or to
 implement more elaborate logging strategies.
