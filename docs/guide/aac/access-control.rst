@@ -4,25 +4,29 @@ Access Control
 
 .. toctree::
 
-``Services``\s accomplish access control by way of ACLs or *Access Control Lists*. 
+:js:class:`~carbond.Service`\'s accomplish access control by way of ACLs or
+*Access Control Lists*. 
 
 ACLs
 ----
 
-Carbond provides a very generic and extensible ACL framework. In their
-most generic form, ``Acl`` objects map *Users* and *Groups* to a set
-of *Permissions* which govern access to some entity.
+Carbond provides a very generic and extensible ACL framework. In their most
+generic form, :js:class:`~carbond.security.Acl` objects map *Users* and *Groups*
+to a set of *Permissions* which govern access to some entity.
 
-In practice you will use one of the pre-packaged ACL types to gate
-access to your ``Endpoints`` and their ``Operations``.
+In practice you will use one of the pre-packaged ACL types to gate access to
+your :js:class:`~carbond.Endpoint`\'s and their
+:js:class:`~carbond.Operation`\'s.
 
 Endpoint ACLs 
 ------------- 
 
-All ``Endpoints`` can be configured with an ``EndpointAcl`` to govern
-which endpoint ``Operations`` can be accessed by users.
+All :js:class:`~carbond.Endpoint`\'s can be configured with an
+:js:class:`~carbond.security.EndpointAcl` to govern which endpoint
+:js:class:`~carbond.Operation`\'s can be accessed by users.
 
-``EndpointAcl``\s defined the following permissions, one for each HTTP method:
+:js:class:`~carbond.EndpointAcl`\s defined the following permissions, one for
+each HTTP method:
 
 * ``get``
 * ``post``
@@ -35,16 +39,22 @@ which endpoint ``Operations`` can be accessed by users.
 All permissions default to ``false`` except the ``options`` permission
 which defaults to ``true``.
 
-Here is an example of a ``Service`` using an ``EndpointAcl``:
+Here is an example of a :js:class:`~carbond.Service` using an
+:js:class:`~carbond.security.EndpointAcl`:
 
-..  code-block:: javascript 
+.. literalinclude:: ../../code-frags/standalone-examples/ServiceSimpleAuthorizationExample.js
+    :language: javascript
+    :linenos:
+    :lines: 6-71
+    :dedent: 2
+    :emphasize-lines: 16-53
+
+.. code-block: javascript 
   :linenos:
   :emphasize-lines: 13-49
-
   var carbon = require('carbon-io') 
   var o  = carbon.atom.o(module).main 
   var __ = carbon.fibers.__(module).main
-
   __(function() {
     module.exports = o({
       _type: carbon.carbond.Service,
@@ -52,10 +62,8 @@ Here is an example of a ``Service`` using an ``EndpointAcl``:
       endpoints: {
         hello: o({
           _type: carbon.carbond.Endpoint,
-
           acl: o({
             _type: carbon.carbond.security.EndpointAcl
-
             groupDefinitions: { // This ACL defined two groups, 'role' and 'title'.
               role: 'role' // We define a group called 'role' based on the user property named 'role'.
               title: function(user) { return user.title } 
@@ -90,15 +98,12 @@ Here is an example of a ``Service`` using an ``EndpointAcl``:
               }
             ]
           }),
-
           get: function(req) {
             return { msg: "Hello World!" }
           },
-
           post: function(req) {
             return { msg: "Hello World! " + req.body }
           }
-
         })
       })
     }) 
@@ -126,14 +131,19 @@ All permissions default to ``false``.
 
 Here is an example of a ``Service`` using a ``CollectionAcl`` on a ``MongoDBCollection``:
 
-..  code-block:: javascript 
+.. literalinclude:: ../../code-frags/standalone-examples/ServiceSimpleAuthorizationExample.js
+    :language: javascript
+    :linenos:
+    :lines: 76-134
+    :dedent: 2
+    :emphasize-lines: 17-55
+
+.. code-block: javascript 
   :linenos:
   :emphasize-lines: 14-50
-
   var carbon = require('carbon-io') 
   var o  = carbon.atom.o(module).main 
   var __ = carbon.fibers.__(module).main
-
   __(function() {
     module.exports = o({
       _type: carbon.carbond.Service,
@@ -142,10 +152,8 @@ Here is an example of a ``Service`` using a ``CollectionAcl`` on a ``MongoDBColl
         hello: o({
           _type: carbon.carbond.mongodb.MongoDBCollection,
           collection: 'zipcodes',
-
           acl: o({
             _type: carbon.carbond.security.CollectionAcl
-
             groupDefinitions: { // This ACL defined two groups, 'role' and 'title'.
               role: 'role' // We define a group called 'role' based on the user property named 'role'.
               title: function(user) { return user.title } 
@@ -180,7 +188,6 @@ Here is an example of a ``Service`` using a ``CollectionAcl`` on a ``MongoDBColl
               }
             ]
           })
-
         }) 
       }
     }) 
@@ -198,13 +205,16 @@ component and then reference it in your ``Endpoint``.
 
 MyAcl.js:
 
-..  code-block:: javascript 
-  :linenos:
+.. literalinclude:: ../../code-frags/standalone-examples/ACLExternalACLExample.js
+    :language: javascript
+    :linenos:
+    :lines: 1-8, 45
 
+.. code-block: javascript 
+  :linenos:
   var carbon = require('carbon-io') 
   var o  = carbon.atom.o(module).main 
   var __ = carbon.fibers.__(module).main
-
   module.exports = o({
     _type: carbon.carbond.security.CollectionAcl,
     .
@@ -215,16 +225,18 @@ MyAcl.js:
 Now you can reference this ACL from any ``Endpoint`` that wished to
 use that ACL:
 
+.. literalinclude:: ../../code-frags/standalone-examples/ServiceExternalACLExample.js
+    :language: javascript
+    :linenos:
+    :emphasize-lines: 3, 22
 
 ..  code-block:: javascript 
   :linenos:
   :emphasize-lines: 4, 14
-
   var carbon = require('carbon-io') 
   var o  = carbon.atom.o(module).main 
   var __ = carbon.fibers.__(module).main
   var _o = carbon.bond._o(module)
-
   __(function() {
     module.exports = o({
       _type: carbon.carbond.Service,

@@ -1,0 +1,52 @@
+{
+    "data": {
+        "users": [
+            {
+                "_id": "10000",
+                "username": "Foo",
+                "role": "Admin",
+                "title": "COO",
+                "password": "12345",
+                "apiKey": "a",
+                "email": "foo@megacorp.com"
+            },
+            {
+                "_id": "10001",
+                "username": "Bar",
+                "role": "Financial",
+                "title": "CFO",
+                "password": "12345",
+                "apiKey": "b",
+                "email": "bar@megacorp.com"
+            },
+            {
+                "_id": "10002",
+                "username": "Baz",
+                "role": "Engineer",
+                "title": "Software Engineer",
+                "password": "12345",
+                "apiKey": "c",
+                "email": "baz@megacorp.com"
+            },
+            {
+                "_id": "10003",
+                "username": "Yaz",
+                "role": "Engineer",
+                "title": "Hardware Engineer",
+                "password": "12345",
+                "apiKey": "d",
+                "email": "yaz@megacorp.com"
+            }
+        ],
+        "hello": [
+            {
+                "_id": {
+                    "$oid": "000000000000000000000000"
+                },
+                "msg": "foo"
+            }
+        ]
+    }
+}
+
+

@@ -1,0 +1,16 @@
+{
+    "data": {
+        "users": [
+            {
+                "_id": {
+                    "$oid": "000000000000000000000000"
+                },
+                "username": "skroob",
+                "password": "12345",
+                "apiKey": "12345",
+                "email": "pres@skroob.com"
+            }
+        ]
+    }
+}
+
