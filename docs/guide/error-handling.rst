@@ -7,16 +7,25 @@ Error handling
 HTTP errors can be thrown as exceptions from within your code to
 communicate HTTP errors to clients of your ``Service``. 
 
-For example, the following will produce an HTTP ``400`` error (Bad Request):
+For example, the following will produce an HTTP ``400`` error (Bad Request) if
+no body is present when posting to either the ``/hello`` or ``/goodbye``
+endpoints:
 
-..  code-block:: javascript 
+.. literalinclude:: ../code-frags/standalone-examples/ServiceErrorHandlingExample.js
+    :language: javascript
+    :linenos:
+    :emphasize-lines: 14, 23
+
+Note, all HTTP errors can be referenced via the ``HttpErrors`` property of the
+``carbon-io`` module or via the :js:attr:`~carbond.Service.errors` property of
+your :js:attr:`~carbond.Service` definition.
+
+.. code-block: javascript 
   :linenos:
   :emphasize-lines: 14
-
   var carbon = require('carbon-io') 
   var o  = carbon.atom.o(module).main 
   var __ = carbon.fibers.__(module).main
-
   __(function() {
     module.exports = o({
       _type: carbon.carbond.Service,
@@ -75,3 +84,5 @@ For example, the following will produce an HTTP ``400`` error (Bad Request):
 * ``508``: LoopDetected
 * ``510``: NotExtended
 * ``511``: NetworkAuthenticationRequired
+
+.. todo: add section documenting ``errorHandlingMiddleware``

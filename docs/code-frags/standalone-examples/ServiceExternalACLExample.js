@@ -19,7 +19,7 @@ __(function() {
       hello: o({
         _type: carbon.carbond.mongodb.MongoDBCollection,
         collection: 'hello',
-        acl: _o('./ACLExternalACLExample')
+        acl: _o('./MyAcl')
       })
     }
   }) 

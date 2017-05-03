@@ -205,7 +205,7 @@ component and then reference it in your ``Endpoint``.
 
 MyAcl.js:
 
-.. literalinclude:: ../../code-frags/standalone-examples/ACLExternalACLExample.js
+.. literalinclude:: ../../code-frags/standalone-examples/MyAcl.js
     :language: javascript
     :linenos:
     :lines: 1-8, 45

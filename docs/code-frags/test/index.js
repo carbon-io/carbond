@@ -11,6 +11,7 @@ carbonioMock = {
   atom: core.atom,
   bond: core.bond,
   testtube: core.testtube,
+  ejson: core.ejson,
   HttpErrors: core.HttpErrors,
   carbond: require('../../..')
 }

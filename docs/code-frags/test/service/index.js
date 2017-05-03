@@ -36,6 +36,7 @@ __(function() {
       _o('./SyncProgrammaticServiceStartTests'),
       _o('./SimpleAuthenticationTests'),
       _o('./SimpleAuthorizationTests'),
+      _o('./ErrorHandlingTests')
     ]
   })
 })
