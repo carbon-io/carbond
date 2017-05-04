@@ -34,7 +34,7 @@ __(function() {
         resSpec: {
           statusCode: 200,
           body: {
-            msg: 'Hello World! foo bar baz'
+            msg: 'foo bar baz'
           }
         }
       }

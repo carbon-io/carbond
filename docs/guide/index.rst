@@ -19,5 +19,5 @@ for creating microservices and APIs.
     error-handling.rst
     logging.rst
     testing.rst
-    generating-api-documentation.rst
-    admin-interface.rst
+
+.. todo:: generating-api-documentation.rst, admin-interface.rst

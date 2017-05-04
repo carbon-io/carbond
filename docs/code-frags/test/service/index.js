@@ -37,7 +37,8 @@ __(function() {
       _o('./SimpleAuthenticationTests'),
       _o('./SimpleAuthorizationTests'),
       _o('./ErrorHandlingTests'),
-      _o('./LoggingTests')
+      _o('./LoggingTests'),
+      _o('../../standalone-examples/ServiceTestTestingExample'),
     ]
   })
 })
