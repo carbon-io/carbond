@@ -32,6 +32,7 @@ __(function() {
           find: true,
           '*': false,
         },
+        // POST /feedback
         insert: function(obj) {
           /*
            * implementation...

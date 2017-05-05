@@ -11,7 +11,10 @@ __(function() {
       hello: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
-          return this.service.db.getCollection('messages').find().toArray()
+          return this.getService().db
+                                  .getCollection('messages')
+                                  .find()
+                                  .toArray()
         }
       })
     }

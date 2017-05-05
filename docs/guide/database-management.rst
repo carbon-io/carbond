@@ -8,22 +8,20 @@ Carbond makes it easy to manage connections to multiple databases in
 your application. The ``Service`` class has two properties for
 specifying database URIs:
 
-- ``dbUri``: A connection string specified as a `MongoDB URI
-  <http://docs.mongodb.org/manual/reference/connection-string/>`_
-  (e.g. ``"mongodb://username:password@localhost:27017/mydb"``). The
-  ``Service`` will connect to this database on startup. The
+- :js:attr:`~carbond.Service.dbUri`: A connection string specified as a `MongoDB
+  URI`_ (e.g.  ``"mongodb://username:password@localhost:27017/mydb"``). The
+  :js:class:`~carbond.Service` will connect to this database on startup. The
   application can then reference a connection to this database via the
-  ``db`` property on the ``Service``.
+  :js:class:`~carbond.Service.db` property on the :js:class:`~carbond.Service`.
 
-- ``dbUris``: A mapping of names to `MongoDB URIs
-  <http://docs.mongodb.org/manual/reference/connection-string/>`_. The
-  ``Service`` will connect to these databases on startup. The
-  application can reference a connection to these databases via the
-  ``Service`` as ``dbs[<name>]`` or ``dbs.<name>``.
+- :js:attr:`~carbond.Service.dbUris`: A mapping of names to `MongoDB URI`_\s .
+  The :js:class:`~carbond.Service` will connect to these databases on startup.
+  The application can reference a connection to these databases via the
+  :js:class:`~carbond.Service` as ``dbs[<name>]`` or ``dbs.<name>``.
 
 **Examples**
 
-A ``Service`` with a single db connection:
+A :js:class:`~carbond.Service` with a single db connection:
 
 .. literalinclude:: ../code-frags/standalone-examples/ServiceSingleDBConnectionExample.js
     :language: javascript
@@ -31,26 +29,7 @@ A ``Service`` with a single db connection:
     :linenos:
     :emphasize-lines: 5, 10
 
-.. code-block javascript
-  :linenos:
-  :emphasize-lines: 5, 10
-  __(function() {
-    module.exports = o({
-      _type: carbon.carbond.Service,
-      port: 8888,
-      dbUri: "mongodb://localhost:27017/mydb",
-      endpoints: {
-        hello: o({
-          _type: carbon.carbond.Endpoint,
-          get: function(req) {
-            return this.getService().db.getCollection('messages').find().toArray()
-          }
-        })
-      }
-    })
-  })
-
-A ``Service`` that connects to multiple databases:
+A :js:class:`~carbond.Service` that connects to multiple databases:
 
 .. literalinclude:: ../code-frags/standalone-examples/ServiceMultipleDBConnectionExample.js
     :language: javascript
@@ -58,31 +37,4 @@ A ``Service`` that connects to multiple databases:
     :linenos: 
     :emphasize-lines: 5-8, 13-16, 22-25
 
-
-..  code-block javascript
-  :linenos:
-  :emphasize-lines: 5-8, 13, 19
-  __(function() {
-    module.exports = o({
-      _type: carbon.carbond.Service,
-      port: 8888,
-      dbUris: {
-        main: "mongodb://localhost:27017/mydb",
-        reporting: "mongodb://localhost:27017/reporting"
-      }
-      endpoints: {
-        messages: o({
-          _type: carbon.carbond.Endpoint,
-          get: function(req) {
-            return this.getService().dbs['main'].getCollection('messages').find().toArray()
-          }
-        }),
-        dashboards: o({
-          _type: carbon.carbond.Endpoint,
-          get: function(req) {
-            return this.getService().dbs['reporting'].getCollection('dashboards').find().toArray()
-          }
-        })
-      }
-    })
-  })
+.. _MongoDB URI: http://docs.mongodb.org/manual/reference/connection-string/

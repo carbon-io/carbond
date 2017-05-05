@@ -18,9 +18,9 @@ Your ``package.json`` file should include ``carbon-io``:
     :linenos:
     :lines: 1-4,8-
 
-While the ``carbon-io`` dependency shown in the above example will
-always pull in the latest version, you will likely want to to pin it to a
-specific minor version. e.g.: 
+While the ``carbon-io`` dependency shown in the above example will always pull
+in the latest version, you will likely want to to pin it to a specific minor
+version. e.g.: 
 
 .. XXX we can't use inline markup with substitutions... so we're using
        parse-literal here. 
@@ -42,43 +42,39 @@ Defining your Service
 Next you create your app / service. Continuing with the example above,
 ``HelloService.js`` would look something like:
 
-.. todo:: XXX add :lines: when the example gets fleshed out
+.. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
+    :language: javascript
+    :linenos:
+    :lines: 3-14, 51-
+
+Using __, _o, and o
+-------------------
+
+The preamble requires the main ``carbon-io`` package as well and defines the
+:js:func:`~fibers.__`, :js:func:`~bond._o`, and :js:func:`~atom.o` operators. 
 
 .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
     :language: javascript
     :linenos:
+    :lines: 3-7
 
-Using o, __, and _o
---------------------
+The :js:func:`~fibers.__` operator is used to run this service inside of a `Fiber
+<https://github.com/carbon-io/fibers>`_ when this module is invoked as the main
+module from the command line. Carbon.io makes heavy use of `Node Fibers
+<https://github.com/laverdet/node-fibers>`_ to allow for services to be written
+in a synchronous (as well as asynchronous) style. More details can be found in
+the documentation for the Carbon.io `fibers package
+<https://github.com/carbon-io/fibers>`_.
 
-The preamble requires the main ``carbon-io`` package as well and
-defines the ``o``, ``__``, and ``_o`` operators. 
-
-.. todo:: XXX fix :lines: when the example gets fleshed out
-
-.. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
-    :language: javascript
-    :linenos:
-    :lines: 1-5
-
-The ``__`` operator is used to run this service inside of a `Fiber
-<https://github.com/carbon-io/fibers>`_ when this module is invoked as
-the main module from the command line. Carbon.io makes heavy use of
-`Node Fibers <https://github.com/laverdet/node-fibers>`_ to allow for
-services to be written in a synchronous (as well as asynchronous)
-style. More details can be found in the documentation for the
-Carbon.io `fibers package <https://github.com/carbon-io/fibers>`_.
-
-The ``_o`` operator is the name resolver utility used by Carbon.io. It is not
-used in this example, although it is used commonly, and documented as
+The :js:func:`~bond._o` operator is the name resolver utility used by Carbon.io.
+It is not used in this example, although it is used commonly, and documented as
 part of the `bond <https://github.com/carbon-io/bond>`_ sub-project.
 
-The ``o`` operator is part of the Atom sub-project of Carbon.io and 
-is what is used to define Carbon.io components. It is not crucial you
-understand this deeply at this point but you should eventually read
-the `Atom <https://github.com/carbon-io/atom>`_ documentation to
-understand the Carbon.io component infrastructure, as it is core to
-Carbon.io.
+The :js:func:`~atom.o` operator is part of the Atom sub-project of Carbon.io and
+is what is used to define Carbon.io components. It is not crucial you understand
+this deeply at this point but you should eventually read the `Atom
+<https://github.com/carbon-io/atom>`_ documentation to understand the Carbon.io
+component infrastructure, as it is core to Carbon.io.
 
 In our example, we define our top-level component and export it via
 ``module.exports``. While exporting the component we define is not strictly
@@ -89,12 +85,10 @@ instance of the :js:class:`~carbond.Service` class. This class is the base class
 used for defining services in ``carbond`` and will be described more fully
 in subsequent sections.
 
-.. todo:: XXX fix :lines: when the example gets fleshed out
-
 .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
     :language: javascript
     :linenos:
-    :lines: 7-14
+    :lines: 9-14, 51-
 
 Running your Service 
 --------------------

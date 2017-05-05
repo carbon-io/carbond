@@ -4,10 +4,11 @@ Collections
 
 .. toctree::
 
-Carbond ``Collection``\ s provide a high-level abstraction for
-defining ``Endpoint``\s that behave like a collection of
-resources. When you define a ``Collection`` you may define the
-following methods:
+Carbond :js:class:`~carbond.collections.Collection`\ s provide a high-level
+abstraction for defining :js:class:`~carbond.Endpoint`\s that behave like a
+collection of resources. When you define a
+:js:class:`~carbond.collections.Collection` you may define the following
+methods:
 
 - ``insert(obj, reqCtx)``
 - ``find(query, reqCtx)``
@@ -18,7 +19,8 @@ following methods:
 - ``updateObject(id, update, reqCtx)``
 - ``removeObject(id, reqCtx)``
 
-Which results in the following tree of ``Endpoint``\s and ``Operation``\s:
+Which results in the following tree of :js:class:`~carbond.Endpoint`\s and
+:js:class:`~carbond.Operation`\s:
 
 - ``/<collection>``
 
@@ -36,45 +38,32 @@ Which results in the following tree of ``Endpoint``\s and ``Operation``\s:
 
 .. _Collections: https://mongolab.com/
 
-When defining a ``Collection``, one is not required to define all
-methods. Only defined methods will be enabled. For example, here is a
-collection that only defines the ``insert`` method:
+When defining a :js:class:`~carbond.collections.Collection`, one is not required
+to define all methods. Only defined methods will be enabled. For example, here
+is a collection that only defines the ``insert`` method:
 
 .. todo:: XXX: add :lines: when the example gets fleshed out (see comment)
 
 .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
     :language: javascript
     :linenos:
-
-.. __(function() {
-    module.exports = o({
-      _type: carbon.carbond.Service,
-      port: 8888,
-      dbUri: "mongodb://localhost:27017/mydb",
-      endpoints: {
-        feedback: o({
-          _type: carbon.carbond.collections.Collection,
-          // POST /feedback
-          insert: function(obj) {
-            return this.service.db.getCollection('feedback').insert(obj)
-          }
-        })
-      }
-    })
-  })
+    :lines: 9-11,15-19,35-36,40-42
 
 Creating Collections
 ---------------------------------
 
-``Collection`` endpoints can be created either by creating an instance
-of ``Collection`` (most common) or by sub-classing (as with the
-``MongoDBCollection`` class).
+:js:class:`~carbond.collections.Collection` endpoints can be created either by
+creating an instance of :js:class:`~carbond.collections.Collection` (most
+common) or by sub-classing (as with the
+:js:class:`carbond.mongodb.MongoDBCollection` class).
+
+.. todo:: fill in these sections
 
 insert
 *********************
 
 The ``insert`` operation is used to implement how objects are inserted
-into the ``Collection``. 
+into the :js:class:`~carbond.collections.Collection`. 
 
 find
 *********************
@@ -82,48 +71,33 @@ find
 Enabling / disabling operations 
 -------------------------------
 
-While omitting an operation's method is enough to disable it
-(i.e. simply not defining an ``insert`` method will cause the
-collection to not support inserts), you may also explicitly enable /
-disable ``Collection`` operations via the ``enabled`` property. This
-is useful for temporarily disabling an operation or when instantiating
-or sub-classing ``Collections`` that support default implementations
-for all ``Collection`` operations, such as ``MongoDBCollection``.
+While omitting an operation's method is enough to disable it (i.e. simply not
+defining an ``insert`` method will cause the collection to not support inserts),
+you may also explicitly enable / disable
+:js:class:`~carbond.collections.Collection` operations via the
+:js:attr:`~carbond.collections.Collection.enabled` property. This is useful for
+temporarily disabling an operation or when instantiating or sub-classing
+:js:class:`~carbond.collections.Collections` that support default
+implementations for all :js:class:`~carbond.collections.Collection` operations,
+such as :js:class:`carbond.mongodb.MongoDBCollection`.
 
 .. todo:: XXX: add :lines: when the example gets fleshed out (see comment)
 
 .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
     :language: javascript
     :linenos:
-
-.. :linenos:
- :emphasize-lines: 10 - 14
-                      
-  __(function() {
-    module.exports = o({
-      _type: carbon.carbond.Service,
-      port: 8888,
-      dbUri: "mongodb://localhost:27017/mydb",
-      endpoints: {
-        feedback: o({
-          _type: carbon.carbond.collections.Collection,
-          enabled: {
-            insert: false, // insert is disabled even though it is defined below
-            find: true,
-            '*': false,
-          },
-          insert: function(obj) { ... },
-          find: function(query) { ... }
-        })
-      }
-    })
-  })
+    :lines: 9-11,15-19,30-34,36-39,42-46,49-53
 
 Access control 
 -------------------------------
 
 In addition to enabling / disabling operations, you may also gate
 operations via access control policies.
+
+.. todo:: reference aac?
+
+
+.. todo:: fill in these sections
 
 Related resources 
 -------------------------------
