@@ -118,6 +118,8 @@ define a set of permissions that matches the ``Collection`` interface.
 
 ``CollectionAcl``\s define the following permissions:
 
+.. todo:: revisit as collection interface settles
+
 * ``insert``
 * ``find``
 * ``update``

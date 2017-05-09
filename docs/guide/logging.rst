@@ -60,7 +60,7 @@ Controling verbosity
 --------------------
 
 The verbosity level of your :js:class:`~carbond.Service` at runtime (i.e. which
-log levels are logged) can is controlled by the
+log levels are logged) can controlled by the
 :js:attr:`~carbond.Service.verbosity` property of you
 :js:class:`~carbond.Service` object. 
 
@@ -93,23 +93,6 @@ There are two ways to control the verbosity level of a
     :linenos:
     :lines: 1-12, 30-
     :emphasize-lines: 9
-
-.. code-block: javascript 
-  :linenos:
-  :emphasize-lines: 9 
-  var carbon = require('carbon-io') 
-  var o  = carbon.atom.o(module) 
-  var __ = carbon.fibers.__(module, true) 
-  __(function() {
-    module.exports = o({
-      _type: carbon.carbond.Service,
-      port: 8888,
-      verbosity: 'info',
-      .
-      .
-      .
-    })
-  })
 
 2. Using the ``-v, --verbosity`` flag at the commandline to specifity the
    verbosity level, which will set the value of the

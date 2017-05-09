@@ -12,15 +12,11 @@ Every :js:class:`~carbond.Service` can be configured with an
 :js:class:`~carbond.security.Authenticator`. When so configured, the
 :js:class:`~carbond.Service` will dispatch each HTTP request to that
 :js:class:`~carbond.security.Authenticator`\'s
-:js:meth:`~carbond.security.Authenticator.authenticate` method. This method will
-use credentials in the request (e.g. HTTP Basic credentials, API-key, etc...) to
-authenticate and return the user associated with those credentials, if one
-exists. The :js:class:`~carbond.Service` will then store the resolved user
-object in the ``HttpRequest`` object.
-
-The user associated with the request can later be accessed via the
-``user`` property of the request (e.g. ``req.user``).
-
+:js:func:`~carbond.security.Authenticator.authenticate` method. This method will
+use credentials in the request (e.g., HTTP Basic Auth credentials, API-key,
+etc...) to authenticate and return the user associated with those credentials,
+if one exists. The :js:class:`~carbond.Service` will then store the resolved
+user object in the :express4:`req` (e.g., ``req.user``).
 
 Built-in authenticators
 -----------------------

@@ -4,11 +4,11 @@ Error handling
 
 .. toctree::
 
-HTTP errors can be thrown as exceptions from within your code to
-communicate HTTP errors to clients of your ``Service``. 
+To report errors back to a client of your :js:class:`~carbond.Service`, simply
+throw an instance of the appropriate :js:class:`~httperrors.HttpError` subclass.
 
 For example, the following will produce an HTTP ``400`` error (Bad Request) if
-no body is present when posting to either the ``/hello`` or ``/goodbye``
+no request body is present when posting to either the ``/hello`` or ``/goodbye``
 endpoints:
 
 .. literalinclude:: ../code-frags/standalone-examples/ServiceErrorHandlingExample.js
@@ -19,30 +19,6 @@ endpoints:
 Note, all HTTP errors can be referenced via the ``HttpErrors`` property of the
 ``carbon-io`` module or via the :js:attr:`~carbond.Service.errors` property of
 your :js:attr:`~carbond.Service` definition.
-
-.. code-block: javascript 
-  :linenos:
-  :emphasize-lines: 14
-  var carbon = require('carbon-io') 
-  var o  = carbon.atom.o(module).main 
-  var __ = carbon.fibers.__(module).main
-  __(function() {
-    module.exports = o({
-      _type: carbon.carbond.Service,
-      port: 8888,
-      endpoints: {
-        hello: o({
-          _type: carbon.carbond.Endpoint,
-          post: function(req) {
-            if (!req.body) {
-              throw new carbon.HttpErrors.BadRequest("Must supply a body")
-            }
-            return { msg: "Hello World! " + req.body }
-          }
-        }) 
-      }
-    }) 
-  })
 
 **Supported HTTP errors**
 
