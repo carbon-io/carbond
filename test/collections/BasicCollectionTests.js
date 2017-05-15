@@ -182,6 +182,37 @@ module.exports = o({
         body: undefined
       }
     },
+
+    // Test Location header properly normalized
+    
+    {
+      reqSpec: {
+        url: '/basic/',
+        method: "POST",
+      },
+      resSpec: {
+        statusCode: 201,
+        headers: function(headers) {
+          assert.equal(headers.location, '/basic/000')
+        }
+      }
+    },
+    
+    {
+      reqSpec: {
+        url: '/basic/666/',
+        method: "PUT",
+        body: {
+          _id: '666'
+        }
+      },
+      resSpec: {
+        statusCode: 201,
+        headers: function(headers) {
+          assert.equal(headers.location, '/basic/666')
+        }
+      }
+    },
   ],
 
   /**********************************************************************
