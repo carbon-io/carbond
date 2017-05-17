@@ -1,3 +1,5 @@
+.. _access-control-ref:
+
 ==============
 Access Control
 ==============
@@ -49,67 +51,6 @@ Here is an example of a :js:class:`~carbond.Service` using an
     :dedent: 2
     :emphasize-lines: 16-53
 
-.. code-block: javascript 
-  :linenos:
-  :emphasize-lines: 13-49
-  var carbon = require('carbon-io') 
-  var o  = carbon.atom.o(module).main 
-  var __ = carbon.fibers.__(module).main
-  __(function() {
-    module.exports = o({
-      _type: carbon.carbond.Service,
-      port: 8888,
-      endpoints: {
-        hello: o({
-          _type: carbon.carbond.Endpoint,
-          acl: o({
-            _type: carbon.carbond.security.EndpointAcl
-            groupDefinitions: { // This ACL defined two groups, 'role' and 'title'.
-              role: 'role' // We define a group called 'role' based on the user property named 'role'.
-              title: function(user) { return user.title } 
-            }
-            entries: [
-              {
-                user: { role: "Admin" },
-                permissions: {
-                  "*": true // "*" grants all permissions 
-                }
-              },
-              {
-                user: { title: "CFO" },
-                permissions: { // We could have used "*" here but are being explicit. 
-                  get: true,
-                  post: true
-                }
-              },
-              {
-                user: "12345", // User with _id "12345"
-                permissions: { 
-                  get: false,
-                  post: true
-                }
-              },
-              {
-                user: "*" // All other users
-                permissions: { 
-                  get: true,
-                  post: false,
-                }
-              }
-            ]
-          }),
-          get: function(req) {
-            return { msg: "Hello World!" }
-          },
-          post: function(req) {
-            return { msg: "Hello World! " + req.body }
-          }
-        })
-      })
-    }) 
-  })
-
-
 Collection ACLs 
 ---------------
 
@@ -140,62 +81,6 @@ Here is an example of a ``Service`` using a ``CollectionAcl`` on a ``MongoDBColl
     :dedent: 2
     :emphasize-lines: 17-55
 
-.. code-block: javascript 
-  :linenos:
-  :emphasize-lines: 14-50
-  var carbon = require('carbon-io') 
-  var o  = carbon.atom.o(module).main 
-  var __ = carbon.fibers.__(module).main
-  __(function() {
-    module.exports = o({
-      _type: carbon.carbond.Service,
-      port: 8888,
-      endpoints: {
-        hello: o({
-          _type: carbon.carbond.mongodb.MongoDBCollection,
-          collection: 'zipcodes',
-          acl: o({
-            _type: carbon.carbond.security.CollectionAcl
-            groupDefinitions: { // This ACL defined two groups, 'role' and 'title'.
-              role: 'role' // We define a group called 'role' based on the user property named 'role'.
-              title: function(user) { return user.title } 
-            }
-            entries: [
-              {
-                user: { role: "Admin" },
-                permissions: {
-                  "*": true // "*" grants all permissions 
-                }
-              },
-              {
-                user: { title: "CFO" },
-                permissions: { 
-                  find: true,
-                  findObject: true,
-                  "*": false // This is implied since the default value for all permissions is ``false``.
-                }
-              },
-              {
-                user: "12345", // User with _id "12345"
-                permissions: { 
-                  insert: true,
-                  findObject: true
-                }
-              },
-              {
-                user: "*" // All other users
-                permissions: { 
-                  findObject: true
-                }
-              }
-            ]
-          })
-        }) 
-      }
-    }) 
-  })
-
-
 Re-using ACLs across multiple Endpoints
 ---------------------------------------
 
@@ -212,18 +97,6 @@ MyAcl.js:
     :linenos:
     :lines: 1-8, 45
 
-.. code-block: javascript 
-  :linenos:
-  var carbon = require('carbon-io') 
-  var o  = carbon.atom.o(module).main 
-  var __ = carbon.fibers.__(module).main
-  module.exports = o({
-    _type: carbon.carbond.security.CollectionAcl,
-    .
-    . // Your ACL definition
-    .
-  })
-
 Now you can reference this ACL from any ``Endpoint`` that wished to
 use that ACL:
 
@@ -231,24 +104,3 @@ use that ACL:
     :language: javascript
     :linenos:
     :emphasize-lines: 3, 22
-
-..  code-block:: javascript 
-  :linenos:
-  :emphasize-lines: 4, 14
-  var carbon = require('carbon-io') 
-  var o  = carbon.atom.o(module).main 
-  var __ = carbon.fibers.__(module).main
-  var _o = carbon.bond._o(module)
-  __(function() {
-    module.exports = o({
-      _type: carbon.carbond.Service,
-      port: 8888,
-      endpoints: {
-        hello: o({
-          _type: carbon.carbond.mongodb.MongoDBCollection,
-          collection: 'zipcodes',
-          acl: _o('./MyAcl')
-        }) 
-      }
-    }) 
-  })
