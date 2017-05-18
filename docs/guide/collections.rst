@@ -43,7 +43,7 @@ For example, here is a collection that only defines the
 .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
     :language: javascript
     :linenos:
-    :lines: 9-11,15-19,35-36,40-42,50-
+    :lines: 1-11,15-19,35-36,40-42,50-
 
 Creating Collections
 ---------------------------------

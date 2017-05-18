@@ -25,30 +25,36 @@ __(function() {
     name: "ParameterParsingTests",
 
     /**********************************************************************
+     * process
+     */
+    process: function(test) {
+      var self = this
+      var datum = test.datum
+      var definition = o(test.definition, '../lib/OperationParameter')
+      var value = undefined
+      try {
+        (test.error ? assert.throws : function(f) { f() })(
+          function() {
+            value = self.parser.processParameterValue(datum, definition)
+          }
+        )
+      } catch (e) {
+        throw new Error("Error during test " + EJSON.stringify(test) + ". " + e)
+      }
+      if (test.error) {
+        assert.deepEqual(test.result, value, EJSON.stringify(test))
+        assert.deepEqual(typeof(test.result), typeof(value), EJSON.stringify(test))
+      }
+      return value
+    },
+
+    /**********************************************************************
      * doTest
      */
     doTest: function() {
       var self = this
-
-      var value
-      var definition
       self.parsingTests.forEach(function(test) {
-        value = undefined
-        definition = undefined
-        definition = o(test.definition, '../lib/OperationParameter')
-        if (test.error) {
-          assert.throws(function() {
-            value = parser.parse(test.datum, definition)
-          })
-        } else {
-          try {
-            value = self.parser.processParameterValue(test.datum, definition)
-          } catch (e) {
-            throw new Error("Error during test " + EJSON.stringify(test) + ". " + e)
-          }
-          assert.deepEqual(test.result, value, EJSON.stringify(test))
-          assert.deepEqual(typeof(test.result), typeof(value), EJSON.stringify(test))
-        }
+        self.process(test)
       })
     },
 
@@ -176,6 +182,51 @@ __(function() {
       
       {
         datum: '"hello"',
+        definition: {
+          name: 'x',
+          schema: { type: 'string'} 
+        },
+        result: "hello"
+      },
+      
+      {
+        datum: '{"hello": "world"}',
+        definition: {
+          name: 'x',
+          schema: { type: 'string'} 
+        },
+        error: true
+      },
+      
+      {
+        datum: '      {"hello": "world"} ',
+        definition: {
+          name: 'x',
+          schema: { type: 'string'} 
+        },
+        error: true
+      },
+      
+      {
+        datum: '["hello", "world"]',
+        definition: {
+          name: 'x',
+          schema: { type: 'string'} 
+        },
+        error: true
+      },
+      
+      {
+        datum: '["hello", "world"]     ',
+        definition: {
+          name: 'x',
+          schema: { type: 'string'} 
+        },
+        error: true
+      },
+      
+      {
+        datum: '    "hello" ',
         definition: {
           name: 'x',
           schema: { type: 'string'} 

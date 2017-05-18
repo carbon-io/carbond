@@ -5,7 +5,7 @@
   "contributors": [
     "Bob Smith <bob@smith.com>"
   ],
-  "main": "./lib/HellService.js",
+  "main": "./lib/HelloService.js",
   "scripts": {
       "start": "node ./lib/HelloService.js",
       "test": "node ./test/HelloServiceTest.js"
