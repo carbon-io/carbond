@@ -7,7 +7,8 @@ var serviceTests = o({
   name: 'ServiceTests',
   description: 'Services tests',
   tests: [
-    _o('./ErrorHandlingTests')
+    _o('./ErrorHandlingTests'),
+    _o('./ParameterParsingTests')
   ]
 })
 
