@@ -1,6 +1,7 @@
 var assert = require('assert')
 var crypto = require('crypto')
 
+var _ = require('lodash')
 var bcrypt = require('bcryptjs')
 var sinon = require('sinon')
 
@@ -109,11 +110,7 @@ __(function() {
      * setup
      */
     setup: function() {
-      try {
-        this._db = connect(config.MONGODB_URI + '/authenticator-tests')
-      } catch (e) {
-        console.dir(e)
-      }
+      this._db = connect(config.MONGODB_URI + '/authenticator-tests')
     },
 
     /**********************************************************************
@@ -382,6 +379,29 @@ __(function() {
       //
       // api key
       //
+
+      o({
+        _type: testtube.Test,
+        name: 'ApiKeyAuthenticatorTests',
+        description: 'ApiKeyAuthenticator tests',
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'GenerateKeyTest',
+            description: 'Key generation test',
+            authenticator: {
+              _type: _o('../lib/security/ApiKeyAuthenticator')
+            },
+            doTest: function () {
+              var key = o(this.authenticator).generateApiKey()
+              assert(_.isString(key))
+              assert(
+                key.match(
+                  '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}'))
+            }
+          })
+        ]
+      })
     ]
   })
 })

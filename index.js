@@ -2,6 +2,7 @@ module.exports = {
   Endpoint: require('./lib/Endpoint'),
   IdGenerator: require('./lib/IdGenerator'),
   ObjectIdGenerator: require('./lib/ObjectIdGenerator'),
+  UUIDGenerator: require('./lib/UUIDGenerator'),
   Operation: require('./lib/Operation'),
   OperationParameter: require('./lib/OperationParameter'),
   Service: require('./lib/Service'),
