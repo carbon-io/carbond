@@ -33,6 +33,7 @@
     "lodash" : "4.15.x",
     "on-finished": "2.3.x",
     "request" : "2.34.0",
+    "server-destroy": "1.0.x",
     "toobusy-js": "~0.5.1",
     "z-schema": "3.17.0",
     "@carbon-io/carbon-core": "0.6.x",
