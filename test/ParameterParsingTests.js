@@ -195,7 +195,7 @@ __(function() {
           name: 'x',
           schema: { type: 'string'} 
         },
-        error: true
+        result: '{"hello": "world"}'
       },
       
       {
@@ -204,7 +204,7 @@ __(function() {
           name: 'x',
           schema: { type: 'string'} 
         },
-        error: true
+        result: '      {"hello": "world"} '
       },
       
       {
@@ -213,7 +213,7 @@ __(function() {
           name: 'x',
           schema: { type: 'string'} 
         },
-        error: true
+        result: '["hello", "world"]'
       },
       
       {
@@ -222,7 +222,7 @@ __(function() {
           name: 'x',
           schema: { type: 'string'} 
         },
-        error: true
+        result: '["hello", "world"]     '
       },
       
       {
@@ -231,7 +231,7 @@ __(function() {
           name: 'x',
           schema: { type: 'string'} 
         },
-        result: "hello"
+        result: '    "hello" '
       },
       
       {
