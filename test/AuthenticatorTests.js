@@ -1,6 +1,7 @@
 var assert = require('assert')
 var crypto = require('crypto')
 
+var _ = require('lodash')
 var bcrypt = require('bcryptjs')
 var sinon = require('sinon')
 
@@ -109,11 +110,7 @@ __(function() {
      * setup
      */
     setup: function() {
-      try {
-        this._db = connect(config.MONGODB_URI + '/authenticator-tests')
-      } catch (e) {
-        console.dir(e)
-      }
+      this._db = connect(config.MONGODB_URI + '/authenticator-tests')
     },
 
     /**********************************************************************
@@ -382,6 +379,131 @@ __(function() {
       //
       // api key
       //
+
+      o({
+        _type: testtube.Test,
+        name: 'ApiKeyAuthenticatorTests',
+        description: 'ApiKeyAuthenticator tests',
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'GenerateKeyTest',
+            description: 'Key generation test',
+            authenticator: {
+              _type: _o('../lib/security/ApiKeyAuthenticator')
+            },
+            doTest: function () {
+              var key = o(this.authenticator).generateApiKey()
+              assert(_.isString(key))
+              assert(
+                key.match(
+                  '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}'))
+            }
+          }),
+          o({
+            _type: testtube.Test,
+            name: 'MaskUserObjectTest',
+            description: 'Key generation test',
+            authenticator: {
+              _type: _o('../lib/security/ApiKeyAuthenticator'),
+              maskUserObjectKeys: [
+                'credentials.password',
+                'credentials.apiKey'
+              ],
+              findUser: function(apiKey) {
+                return {
+                  name: 'Foo',
+                  title: 'Bar',
+                  credentials: {
+                    password: '12345',
+                    apiKey: '123456'
+                  }
+                }
+              }
+            },
+            doTest: function () {
+              var self = this
+              var authenticator = o(this.authenticator)
+              authenticator.initialize(o({
+                _type: _o('../lib/Service'),
+                logDebug: sinon.spy(),
+                logInfo: sinon.spy(),
+                logError: sinon.spy()
+              }))
+              var user = authenticator.authenticate({
+                header: function() {
+                  return '123456'
+                }
+              })
+              assert.equal(user.credentials.apiKey, '123456')
+              assert.equal(user.credentials.password, '12345')
+              var check = function(call) {
+                assert(_.isNull(call.args[0].match(/12345/)))
+              }
+              var loggerNames = ['logDebug', 'logInfo', 'logError']
+              loggerNames.forEach(function(loggerName) {
+                var logger = authenticator.service[loggerName]
+                for (var i = 0; i < logger.callCount; i++) {
+                  check(logger.getCall(i))
+                }
+              })
+            }
+          })
+        ]
+      }),
+      o({
+        _type: testtube.Test,
+        name: 'MongoDBApiKeyAuthenticatorTests',
+        description: 'MongoDBApiKeyAuthenticator tests',
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'MaskUserObjectTest',
+            description: 'Key generation test',
+            authenticator: {
+              _type: _o('../lib/security/MongoDBApiKeyAuthenticator'),
+              apiKeyField: 'credentials.apiKey',
+              findUser: function(apiKey) {
+                return {
+                  name: 'Foo',
+                  title: 'Bar',
+                  credentials: {
+                    password: '12345',
+                    apiKey: '123456'
+                  }
+                }
+              }
+            },
+            doTest: function () {
+              var self = this
+              var authenticator = o(this.authenticator)
+              authenticator.initialize(o({
+                _type: _o('../lib/Service'),
+                logDebug: sinon.spy(),
+                logInfo: sinon.spy(),
+                logError: sinon.spy()
+              }))
+              var user = authenticator.authenticate({
+                header: function() {
+                  return '123456'
+                }
+              })
+              assert.equal(user.credentials.apiKey, '123456')
+              assert.equal(user.credentials.password, '12345')
+              var check = function(call) {
+                assert(_.isNull(call.args[0].match(/123456/)))
+              }
+              var loggerNames = ['logDebug', 'logInfo', 'logError']
+              loggerNames.forEach(function(loggerName) {
+                var logger = authenticator.service[loggerName]
+                for (var i = 0; i < logger.callCount; i++) {
+                  check(logger.getCall(i))
+                }
+              })
+            }
+          })
+        ]
+      })
     ]
   })
 })
