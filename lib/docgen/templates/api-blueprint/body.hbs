@@ -31,9 +31,7 @@ HOST: {{host}}
 {{~#if operations}}
 {{! XXX: if we add "name" properties to endpoints, we can use "## <identifier> [URI template]" here }}
 
-{{~#MDHeading level=(APIBPGroupedNesting this 1)}}
-  {{~#if this.name}}{{{this.name}}} [{{{APIBPURLTemplate this}}}]{{else}}{{{APIBPURLTemplate this}}}{{/if~}}
-{{/MDHeading}}
+{{~#MDHeading level=(APIBPGroupedNesting this 1)}}{{APIBPEndpointName this}} [{{{APIBPURLTemplate this}}}]{{/MDHeading}}
 
 {{#if description~}}
 {{description}}
@@ -53,7 +51,7 @@ HOST: {{host}}
     XXX: if we add "name" properties to operations, we can use "## <identifier> [HTTP request method]" here
 ~}}
 
-{{~#MDHeading level=(APIBPGroupedNesting ../this 2)}}{{method}}{{/MDHeading}}
+{{~#MDHeading level=(APIBPGroupedNesting ../this 2)}}{{APIBPOperationName ../this method}} [{{method}}]{{/MDHeading}}
 
 {{#if description~}}
 {{description}}
