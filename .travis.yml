@@ -14,6 +14,7 @@ addons:
       - mongodb-3.0-precise
     packages:
       - g++-4.8
+      - build-essential
       - mongodb-org-server
 before_script:
   - sleep 15
