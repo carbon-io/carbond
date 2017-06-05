@@ -36,7 +36,7 @@ parameters. Bound template variables values can then be accessed via
 .. todo:: add role to display external doc links with same styling as js xrefs
 
 In this example, a request for the path ``/users/jonny16`` will route to the
-``/users/:id`` :js:class:`~carbond.Endpoint` and :express4:`req.params` will
+``/users/:id`` :js:class:`~carbond.Endpoint` and :express4:`req.params.id` will
 have the value ``"jonny16"``. 
 
 Sub-endpoints 
