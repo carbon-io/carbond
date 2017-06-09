@@ -11,7 +11,7 @@ HOST: {{host}}
 
 # {{title}}
 
-{{description}}
+{{{description}}}
 
 {{~! ---------- /name + overview ---------- }}
 
@@ -34,7 +34,7 @@ HOST: {{host}}
 {{~#MDHeading level=(APIBPGroupedNesting this 1)}}{{APIBPEndpointName this}} [{{{APIBPURLTemplate this}}}]{{/MDHeading}}
 
 {{#if description~}}
-{{description}}
+{{{description}}}
 {{/if}}
 
 {{! ---------- model ---------- ~}}
@@ -54,7 +54,7 @@ HOST: {{host}}
 {{~#MDHeading level=(APIBPGroupedNesting ../this 2)}}{{APIBPOperationName ../this method}} [{{method}}]{{/MDHeading}}
 
 {{#if description~}}
-{{description}}
+{{{description}}}
 {{~/if}}
 
 {{! ---------- attributes ---------- ~}}

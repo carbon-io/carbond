@@ -66,5 +66,5 @@ env/
 scratch
 
 # Docs
-docs/
-!docs/code-frags
+/docs/*
+!/docs/code-frags
