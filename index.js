@@ -1,3 +1,7 @@
+var logging = require('@carbon-io/carbon-core').logging
+
+var logger = logging.getLogger('carbon-io', {level: 'WARN'}).child('carbond')
+
 module.exports = { 
   Endpoint: require('./lib/Endpoint'),
   IdGenerator: require('./lib/IdGenerator'),
@@ -46,10 +50,16 @@ module.exports = {
   }
 }
 
+Object.defineProperty(module.exports, 'logger', {
+  enumerable: false,
+  configurable: true,
+  writable: true,
+  value: logger
+})
+
 Object.defineProperty(module.exports, '$Test', {
   enumerable: false,
   configurable: false,
-  writeable: false,
   get: function() {
     return require('./test/index.js')
   }
