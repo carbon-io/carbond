@@ -1,6 +1,5 @@
-var logging = require('@carbon-io/carbon-core').logging
-
-var logger = logging.getLogger('carbon-io', {level: 'WARN'}).child('carbond')
+var core = require('@carbon-io/carbon-core')
+var o = core.atom.o(module)
 
 module.exports = { 
   Endpoint: require('./lib/Endpoint'),
@@ -45,6 +44,14 @@ module.exports = {
     Sha256Hasher: require('./lib/security/Sha256Hasher'),
     BcryptHasher: require('./lib/security/BcryptHasher')
   },
+  logger: o({
+    _type: core.logging.Logger,
+    parent: 'carbon-io',
+    config: {
+      name: 'carbond',
+      level: 'WARN'
+    }
+  }),
   test: {
     ServiceTest: require('./lib/test/ServiceTest'),
   }
@@ -54,7 +61,7 @@ Object.defineProperty(module.exports, 'logger', {
   enumerable: false,
   configurable: true,
   writable: true,
-  value: logger
+  value: module.exports.logger
 })
 
 Object.defineProperty(module.exports, '$Test', {
