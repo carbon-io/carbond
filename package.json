@@ -1,6 +1,6 @@
 {
   "name": "@carbon-io/carbond",
-  "version": "0.6.33",
+  "version": "0.7.0",
   "description": "Carbond",
   "keywords": ["carbond", "carbon.io"],
   "contributors": [
@@ -15,11 +15,11 @@
   "directories" : {
     "lib" : "./lib"
   },
-  "engines": { "node": ">=4.0.0" },
+  "engines": { "node": ">=6.0.0" },
   "devDependencies": {
     "mocha": "2.x",
     "mockery": "1.7.x",
-    "sinon": "1.17.x",
+    "sinon": "2.3.x",
     "tmp": "0.0.x"
   },
   "dependencies": {

@@ -64,29 +64,29 @@ __(function() {
     parser: o({
       _type: '../lib/ParameterParser',
     }),
-    
+
     /**********************************************************************
      * tests
      */
     parsingTests: [
       {
-        datum: undefined, 
+        datum: undefined,
         definition: {
           name: 'x',
           schema: { type: 'Undefined' }
         },
         result: undefined
       },
-      
+
       {
-        datum: '{ "$undefined": true }', 
+        datum: '{ "$undefined": true }',
         definition: {
           name: 'x',
           schema: { type: 'Undefined' }
         },
         result: undefined
       },
-      
+
       {
         datum: undefined,
         definition: {
@@ -96,7 +96,7 @@ __(function() {
         },
         result: 2
       },
-      
+
       {
         datum: '',
         definition: {
@@ -106,7 +106,7 @@ __(function() {
         },
         result: 2
       },
-      
+
       {
         datum: null, // XXX I think this is right but might interact strangely with qs parser so revisit this
         definition: {
@@ -116,7 +116,7 @@ __(function() {
         },
         result: 2
       },
-      
+
       {
         datum: "null",
         definition: {
@@ -125,7 +125,7 @@ __(function() {
         },
         result: null
       },
-      
+
       {
         datum: 3,
         definition: {
@@ -134,7 +134,7 @@ __(function() {
         },
         error: true // should error since 3 is not a string
       },
-      
+
       {
         datum: '3',
         definition: {
@@ -143,7 +143,7 @@ __(function() {
         },
         result: 3
       },
-      
+
       {
         datum: '3',
         definition: {
@@ -152,7 +152,7 @@ __(function() {
         },
         result: '3' // if no schema we do not do any conversions
       },
-      
+
       {
         datum: '"3"',
         definition: {
@@ -161,129 +161,129 @@ __(function() {
         },
         result: "3"
       },
-      
+
       {
         datum: 'true',
         definition: {
           name: 'x',
-          schema: { type: 'boolean' } 
+          schema: { type: 'boolean' }
         },
         result: true
       },
-      
+
       {
         datum: 'hello',
         definition: {
           name: 'x',
-          schema: { type: 'string'} 
+          schema: { type: 'string'}
         },
         result: "hello"
       },
-      
+
       {
         datum: '"hello"',
         definition: {
           name: 'x',
-          schema: { type: 'string'} 
+          schema: { type: 'string'}
         },
         result: "hello"
       },
-      
+
       {
         datum: '{"hello": "world"}',
         definition: {
           name: 'x',
-          schema: { type: 'string'} 
+          schema: { type: 'string'}
         },
         result: '{"hello": "world"}'
       },
-      
+
       {
         datum: '      {"hello": "world"} ',
         definition: {
           name: 'x',
-          schema: { type: 'string'} 
+          schema: { type: 'string'}
         },
         result: '      {"hello": "world"} '
       },
-      
+
       {
         datum: '["hello", "world"]',
         definition: {
           name: 'x',
-          schema: { type: 'string'} 
+          schema: { type: 'string'}
         },
         result: '["hello", "world"]'
       },
-      
+
       {
         datum: '["hello", "world"]     ',
         definition: {
           name: 'x',
-          schema: { type: 'string'} 
+          schema: { type: 'string'}
         },
         result: '["hello", "world"]     '
       },
-      
+
       {
         datum: '    "hello" ',
         definition: {
           name: 'x',
-          schema: { type: 'string'} 
+          schema: { type: 'string'}
         },
         result: '    "hello" '
       },
-      
+
       {
         datum: '{ "a": 1 }',
         definition: {
           name: 'x',
-          schema: { type: 'object'} 
+          schema: { type: 'object'}
         },
         result: { a:1 }
       },
-      
+
       {
         datum: '[{ "a": 1 }]',
         definition: {
           name: 'x',
-          schema: { type: 'array'} 
+          schema: { type: 'array'}
         },
         result: [{ a:1 }]
       },
-      
+
       {
         datum: '{ "$date": "1970-01-01T00:00:00.000Z" }',
         definition: {
           name: 'x',
-          schema: { type: 'Date'} 
+          schema: { type: 'Date'}
         },
         result: new Date(0)
       },
-      
+
       {
         datum: '{ "$oid": "c2c48257aa5a56df131db1e4" }',
         definition: {
           name: 'x',
-          schema: { type: 'ObjectId'} 
+          schema: { type: 'ObjectId'}
         },
         result: new ObjectId("c2c48257aa5a56df131db1e4")
       },
-      
+
       {
         datum: 'c2c48257aa5a56df131db1e4',
         definition: {
           name: 'x',
-          schema: { type: 'ObjectId'} 
+          schema: { type: 'ObjectId'}
         },
         result: new ObjectId("c2c48257aa5a56df131db1e4")
       },
-      
+
       {
         datum: { a: '1' },
         definition: {
           name: 'x',
-          schema: { 
+          schema: {
             type: 'object',
             properties: {
               a: { type: 'integer' }
@@ -292,13 +292,13 @@ __(function() {
         },
         result: { a: 1 }
       },
-      
+
       {
         datum: { a: '1' },
         definition: {
           name: 'x',
           location: "body",
-          schema: { 
+          schema: {
             type: 'object',
             properties: {
               a: { type: 'integer' }
@@ -307,12 +307,12 @@ __(function() {
         },
         error: true // Will fail validation -- not coerced since in body
       },
-      
+
       {
         datum: { a: 'true' },
         definition: {
           name: 'x',
-          schema: { 
+          schema: {
             type: 'object',
             properties: {
               a: { type: 'boolean' }
@@ -321,15 +321,15 @@ __(function() {
         },
         result: { a: true }
       },
-      
+
       {
         datum: { a: ['true'] },
         definition: {
           name: 'x',
-          schema: { 
-            type: 'object', 
+          schema: {
+            type: 'object',
             properties: {
-              a: { 
+              a: {
                 type: 'array',
                 items: { type: 'boolean' }
               }
@@ -338,13 +338,13 @@ __(function() {
         },
         result: { a: [true] }
       },
-      
+
       {
         datum: { a: { $timestamp: { t: "0", i: "0" }}},
         definition: {
           name: 'x',
-          schema: { 
-            type: 'object', 
+          schema: {
+            type: 'object',
             properties: {
               a: { type: 'Timestamp' }
             }

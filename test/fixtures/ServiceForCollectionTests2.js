@@ -2,17 +2,17 @@ var o = require('@carbon-io/carbon-core').atom.o(module).main
 
 var carbond = require('../../')
 
-/*******************************************************************************
+/***************************************************************************************************
  * ServiceForBasicCollectionTests2
- * 
+ *
  * This is an Service for advanced Collection testing.
  */
 module.exports = o({
   _type: carbond.Service,
-  
+
   port: 8888,
   verbosity: 'warn',
-  
+
   endpoints: {
     // Endpoint to test config of saveObject, updateObject, and removeObject
     advanced1: o({
@@ -29,7 +29,7 @@ module.exports = o({
       updateObject: function(id, update, reqCtx) {
         return { _id: "1111" }
       },
-      
+
       // removeObject
       removeObjectConfig: {
         returnsRemovedObject: true
@@ -60,7 +60,7 @@ module.exports = o({
       }
 
     }),
-    
+
     // Endpoint to test config of saveObject, updateObject, and removeObject
     advanced3: o({
       _type: carbond.collections.Collection,

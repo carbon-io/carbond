@@ -34,7 +34,7 @@ module.exports = o({
   doTest: function() {
     this.testConfiguration()
   },
-  
+
   /**********************************************************************
    * tests
    */
@@ -53,7 +53,7 @@ module.exports = o({
       resSpec: {
         statusCode: 201,
         body: undefined,
-        headers: function(headers) { 
+        headers: function(headers) {
           assert.equal(headers.location, "/advanced1/foo")
         },
       }
@@ -123,7 +123,7 @@ module.exports = o({
         statusCode: 204,
       }
     },
-    
+
     {
       reqSpec: {
         url: '/advanced3/foo',
@@ -147,7 +147,7 @@ module.exports = o({
         body: {_id: 'foobar'}
       }
     },
-    
+
     // Test config responses are honored
 
     o({
@@ -170,7 +170,7 @@ module.exports = o({
 
     var ce2 = this.service.endpoints['advanced2']
     var oe2 = ce2.endpoints[':_id']
-    
+
     var defaultObjectSchema = {
       type: 'object',
       properties: {
@@ -178,7 +178,7 @@ module.exports = o({
       },
       required: ['_id']
     }
-    
+
     var defaultErrorSchema = {
       type: 'object',
       properties: {
@@ -188,50 +188,50 @@ module.exports = o({
       },
       required: ['code', 'description', 'message']
     }
-    
+
     var NotFoundResponse = {
       statusCode: 404,
       description: "Collection resource cannot be found by the supplied _id.",
       schema: defaultErrorSchema,
       headers: []
     }
-    
+
     var BadRequestResponse = {
       statusCode: 400,
       description: "Request is malformed (i.e. invalid parameters).",
       schema: defaultErrorSchema,
       headers: []
     }
-    
+
     var ForbiddenResponse = {
       statusCode: 403,
       description: "User is not authorized to run this operation.",
       schema: defaultErrorSchema,
       headers: []
     }
-    
+
     var InternalServerErrorResponse = {
       statusCode: 500,
       description: "There was an unexpected internal error processing this request.",
       schema: defaultErrorSchema,
       headers: []
     }
-    
+
     // saveObject
     assert.deepEqual(oe.getOperation('put').responses,
                      [
                        {
                          statusCode: 201,
-                         description: 
+                         description:
                          "Returns the URL of the newly inserted object " +
                            "in the Location header of the response.",
-                         schema: { type: "Undefined" },
+                         schema: { type: 'undefined' },
                          headers: ['Location', ce.idHeader]
                        },
                        {
                          statusCode: 204,
                          description: "Returns no content.",
-                         schema: { type: "Undefined" }, 
+                         schema: { type: 'undefined' },
                          headers: []
                        },
                        BadRequestResponse,
@@ -242,21 +242,30 @@ module.exports = o({
                      {
                        body: {
                          name: "body",
-                         description: "Full object for update. Must contain _id field that has the same value is the id in the path.",
+                         description: "Full object for update. Must contain _id field that has the same value as the _id in the path.",
                          schema:  defaultObjectSchema,
                          location: 'body',
                          required: true,
                          default: null
+                       },
+                       _id: {
+                         name: '_id',
+                         description: 'Object _id',
+                         location: 'path',
+                         schema: { type: 'string' },
+                         required: true,
+                         default: null,
+                         resolver: null
                        }
                      })
-        
+
     // updateObject
     assert.deepEqual(oe.getOperation('patch').responses,
                      [
                        {
                          statusCode: 200,
                          description: "Returns the updated object.",
-                         schema: defaultObjectSchema, 
+                         schema: defaultObjectSchema,
                          headers: []
                        },
                        NotFoundResponse,
@@ -268,11 +277,20 @@ module.exports = o({
                      {
                        body: {
                          name: "body",
-                         description: "Update spec (JSON). Update operator (e.g {\"$inc\": {\"n\": 1}})", 
+                         description: "Update spec (JSON). Update operator (e.g {\"$inc\": {\"n\": 1}})",
                          schema:  { type: "object" },
                          location: 'body',
                          required: true,
                          default: null
+                       },
+                       _id: {
+                         name: '_id',
+                         description: 'Object _id',
+                         location: 'path',
+                         schema: { type: 'string' },
+                         required: true,
+                         default: null,
+                         resolver: null
                        }
                      })
     assert.deepEqual(oe2.getOperation('patch').responses,
@@ -280,7 +298,7 @@ module.exports = o({
                        {
                          statusCode: 200,
                          description: "Returns the original object.",
-                         schema: defaultObjectSchema, 
+                         schema: defaultObjectSchema,
                          headers: []
                        },
                        NotFoundResponse,
@@ -288,7 +306,7 @@ module.exports = o({
                        ForbiddenResponse,
                        InternalServerErrorResponse
                      ])
-    
+
     // removeObject
     assert.deepEqual(oe.getOperation('delete').responses,
                      [
@@ -302,7 +320,18 @@ module.exports = o({
                        ForbiddenResponse,
                        InternalServerErrorResponse
                      ])
-    assert.deepEqual(oe.getOperation('delete').parameters, {})
-    
+    assert.deepEqual(oe.getOperation('delete').parameters,
+                     {
+                       _id: {
+                         name: '_id',
+                         description: 'Object _id',
+                         location: 'path',
+                         schema: { type: 'string' },
+                         required: true,
+                         default: null,
+                         resolver: null
+                       }
+                     })
+
   }
 })
