@@ -32,7 +32,7 @@ __(function() {
       _o('./docgen'),
       _o('./HasherTests'),
       _o('./IdGeneratorTests'),
-      // _o('./mongodb'),
+      _o('./mongodb'),
       _o('./limiter'),
       _o('./ParameterParsingTests'),
       _o('./StartStopTests'),
