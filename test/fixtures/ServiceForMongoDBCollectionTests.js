@@ -20,6 +20,10 @@ module.exports = o({
     zipcodes: o({
       _type: carbond.mongodb.MongoDBCollection,
       collection: 'zipcodes',
+      enabled: {
+        find: true,
+        findObject: true
+      },
       schema: {
         type: 'object',
         properties: {

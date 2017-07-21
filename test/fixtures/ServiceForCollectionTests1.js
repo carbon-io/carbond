@@ -20,9 +20,18 @@ module.exports = o({
     basic: o({
       _type: carbond.collections.Collection,
 
-      // insert: function(obj) {
-      //   return { _id: "000" }
-      // },
+      enabled: {
+        insert: true,
+        find: true,
+        findObject: true
+      },
+
+      insert: function(objects, context) {
+        var count = 0
+        return _.map(objects, function(obj) {
+          return _.assignIn(_.cloneDeep(obj), {_id: (count++).toString()})
+        })
+      },
 
       find: function(context) {
         var self = this

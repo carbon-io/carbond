@@ -133,7 +133,9 @@ module.exports = o({
         statusCode: 200,
         headers: function(headers) {
           assert('link' in headers)
-          assert.equal(headers.link, '<http://localhost:8888/zipcodes?page=1&limit=15>; rel="next"')
+          assert.equal(
+            headers.link,
+            '<http://localhost:8888/zipcodes?page=1&limit=15>; rel="next"')
         },
         body: function(body) {
           assert(_.isArray(body))
