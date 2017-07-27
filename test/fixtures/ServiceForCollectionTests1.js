@@ -22,8 +22,15 @@ module.exports = o({
 
       enabled: {
         insert: true,
+        insertObject: true,
         find: true,
-        findObject: true
+        findObject: true,
+        save: true,
+        saveObject: true,
+        update: true,
+        updateObject: true,
+        remove: true,
+        removeObject: true
       },
 
       insert: function(objects, context) {
@@ -44,25 +51,24 @@ module.exports = o({
         })
       },
 
-      // update: function(query, update) {
-      //   return {
-      //     n: 1
-      //   }
-      // },
+      save: function(objs, context) {
+        return objs
+      },
 
-      // remove: function(query) {
-      //   return {
-      //     n: 1
-      //   }
-      // },
+      update: function(update, context) {
+        return 1
+      },
 
-      // saveObject: function(obj, reqCtx) {
-      //   reqCtx.res.status(201)
-      //   return true
-      // },
+      remove: function(context) {
+        return 1
+      },
+
+      insertObject: function(obj, context) {
+        return _.assignIn(_.cloneDeep(obj), {_id: "0"})
+      },
 
       findObject: function(id, context) {
-        if (id === "doesnotexist") {
+        if (id < 0) {
           return null
         }
         return {
@@ -72,13 +78,17 @@ module.exports = o({
         }
       },
 
-      // updateObject: function(id, update, reqCtx) {
-      //   return true
-      // },
+      saveObject: function(obj, context) {
+        return obj
+      },
 
-      // removeObject: function(id) {
-      //   return true
-      // }
+      updateObject: function(id, update, context) {
+        return 1
+      },
+
+      removeObject: function(id, context) {
+        return 1
+      }
 
     })
   }
