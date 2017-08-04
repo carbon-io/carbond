@@ -12,6 +12,7 @@ module.exports = {
   collections: {
     Collection: require('./lib/collections/Collection'),
     CollectionOperationConfig: require('./lib/collections/CollectionOperationConfig'), // XXX do we want to export this?
+    CollectionOperationResult: require('./lib/collections/CollectionOperationResult')
   },
   limiter: {
     ChainLimiter: require('./lib/limiter/ChainLimiter'),
@@ -71,3 +72,4 @@ Object.defineProperty(module.exports, '$Test', {
     return require('./test/index.js')
   }
 })
+

@@ -21,8 +21,16 @@ module.exports = o({
       _type: carbond.mongodb.MongoDBCollection,
       collection: 'zipcodes',
       enabled: {
+        insert: true,
+        insertObject: true,
         find: true,
-        findObject: true
+        findObject: true,
+        save: false,
+        saveObject: false,
+        update: true,
+        updateObject: true,
+        remove: false,
+        removeObject: false
       },
       schema: {
         type: 'object',
@@ -41,14 +49,14 @@ module.exports = o({
         },
         additionalProperties: false
       },
-      // updateSchema: {
-      //   type: 'object',
-      //   properties: {
-      //     state: { type: 'string' }
-      //   },
-      //   required: ['state'],
-      //   additionalProperties: false
-      // }
+      updateSchema: {
+        type: 'object',
+        properties: {
+          state: { type: 'string' }
+        },
+        required: ['state'],
+        additionalProperties: false
+      },
       findConfig: {
         pageSize: 5,
         maxPageSize: 10
@@ -59,7 +67,16 @@ module.exports = o({
       collection: 'bag-of-props',
 
       enabled: {
-        '*': true
+        insert: true,
+        insertObject: true,
+        find: true,
+        findObject: true,
+        save: false,
+        saveObject: false,
+        update: true,
+        updateObject: true,
+        remove: false,
+        removeObject: false
       },
 
       schema: {

@@ -5,6 +5,7 @@ var sinon = require('sinon')
 
 var __ = require('@carbon-io/carbon-core').fibers.__(module)
 var _o = require('@carbon-io/carbon-core').bond._o(module)
+var ejson = require('@carbon-io/carbon-core').ejson
 var o = require('@carbon-io/carbon-core').atom.o(module)
 var oo = require('@carbon-io/carbon-core').atom.oo(module)
 var testtube = require('@carbon-io/carbon-core').testtube
@@ -22,12 +23,12 @@ var OpHttpTest = oo({
   _type: testtube.HttpTest,
 
   /***************************************************************************
-   * genDoc
+   * op
    */
   op: undefined,
 
   /***************************************************************************
-   * genDoc
+   * setup
    */
   setup: function() {
     var self = this
@@ -48,7 +49,7 @@ var OpHttpTest = oo({
   },
 
   /***************************************************************************
-   * genDoc
+   * teardown
    */
   teardown: function() {
     this.sb.restore()
@@ -64,7 +65,7 @@ var OpHttpTest = oo({
       context: {
         skip: this.config.opConfig.pageSize * page + skip,
         limit: limit,
-        _id: []
+        _id: undefined
       }
     }
   }
@@ -282,10 +283,14 @@ __(function() {
               }
             },
             resSpec: {
-              statusCode: 200,
+              statusCode: 201,
               body: {
                 _id: '666',
                 foo: 'foo'
+              },
+              headers: function(headers) {
+                assert.equal(headers.location, '/basic/666')
+                assert.equal(ejson.parse(headers['carbonio-id']), '666')
               }
             }
           },
@@ -524,7 +529,7 @@ __(function() {
         tests: [
           o({
             _type: testtube.Test,
-            name: 'InsertConfigTest',
+            name: 'InsertAndInsertObjectConfigTest',
             doTest: function() {
               // insert
               assert.deepEqual(
@@ -729,69 +734,6 @@ __(function() {
           }),
           o({
             _type: testtube.Test,
-            name: 'InsertObjectConfigTest',
-            doTest: function() {
-              // insertObject
-              assert.deepEqual(
-                this.parent.ce.getOperation('post').responses, [
-                  {
-                    statusCode: 201,
-                    description: 'The object(s) were successfully inserted. The Location ' +
-                                 'header will contain a URL pointing to the newly created ' +
-                                 'resources and the body will contain the list of inserted ' +
-                                 'object(s) if configured to do so.',
-                    schema: {
-                      oneOf: [
-                        {
-                          items: {
-                            properties: {_id: {type: 'string'}},
-                            required: ['_id'],
-                            type: 'object'
-                          },
-                          type: 'array'
-                        },
-                        {
-                          properties: {_id: {type: 'string'}},
-                          required: ['_id'],
-                          type: 'object'
-                        }
-                      ]
-                    },
-                    headers: ['Location', this.parent.ce.defaultIdHeader]
-                  },
-                  this.parent.BadRequestResponse,
-                  this.parent.ForbiddenResponse,
-                  this.parent.InternalServerErrorResponse
-                ])
-              assert.deepEqual(
-                this.parent.ce.getOperation('post').parameters, {
-                  body: {
-                    description: 'Object(s) to insert',
-                    location: 'body',
-                    name: 'body',
-                    required: true,
-                    schema: {
-                      oneOf: [
-                        {
-                          items: {
-                            properties: {_id: {type: 'string'}},
-                            type: 'object'
-                          },
-                          type: 'array'
-                        },
-                        {
-                          properties: {_id: {type: 'string'}},
-                          type: 'object'
-                        }
-                      ]
-                    },
-                    default: null
-                  }
-                })
-            }
-          }),
-          o({
-            _type: testtube.Test,
             name: 'SaveObjectConfigTest',
             doTest: function() {
               // saveObject
@@ -803,6 +745,15 @@ __(function() {
                                  'contain the saved object.',
                     schema: this.parent.normalizedDefaultObjectSchema,
                     headers: []
+                  },
+                  {
+                    statusCode: 201,
+                    description: 'The object was successfully inserted. The Location ' +
+                                 'header will contain a URL pointing to the newly created ' +
+                                 'resource and the body will contain the inserted object if ' +
+                                 'configured to do so.',
+                    schema: this.parent.normalizedDefaultObjectSchema,
+                    headers: ['Location', this.parent.ce.idHeader]
                   },
                   this.parent.BadRequestResponse,
                   this.parent.ForbiddenResponse,

@@ -4,6 +4,7 @@ var o = require('@carbon-io/carbon-core').atom.o(module).main
 
 var carbond = require('../../')
 
+
 /***************************************************************************************************
  * ServiceForBasicCollectionTests1
  *
@@ -35,9 +36,12 @@ module.exports = o({
 
       insert: function(objects, context) {
         var count = 0
-        return _.map(objects, function(obj) {
-          return _.assignIn(_.cloneDeep(obj), {_id: (count++).toString()})
-        })
+        return {
+          val: _.map(objects, function(obj) {
+            return _.assignIn(_.cloneDeep(obj), {_id: (count++).toString()})
+          }),
+          created: true
+        }
       },
 
       find: function(context) {
@@ -56,7 +60,10 @@ module.exports = o({
       },
 
       update: function(update, context) {
-        return 1
+        return {
+          val: 1,
+          created: true
+        }
       },
 
       remove: function(context) {
@@ -64,7 +71,10 @@ module.exports = o({
       },
 
       insertObject: function(obj, context) {
-        return _.assignIn(_.cloneDeep(obj), {_id: "0"})
+        return {
+          val: _.assignIn(_.cloneDeep(obj), {_id: "0"}),
+          created: true
+        }
       },
 
       findObject: function(id, context) {
@@ -79,7 +89,10 @@ module.exports = o({
       },
 
       saveObject: function(obj, context) {
-        return obj
+        return {
+          val: obj,
+          created: true
+        }
       },
 
       updateObject: function(id, update, context) {

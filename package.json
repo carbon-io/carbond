@@ -17,6 +17,7 @@
   },
   "engines": { "node": ">=6.0.0" },
   "devDependencies": {
+    "deep-diff": "0.3.x",
     "mocha": "2.x",
     "mockery": "1.7.x",
     "sinon": "2.3.x",
