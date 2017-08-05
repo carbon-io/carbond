@@ -62,7 +62,7 @@ module.exports = o({
       update: function(update, context) {
         return {
           val: 1,
-          created: true
+          created: context.upsert ? true : false
         }
       },
 
@@ -96,7 +96,10 @@ module.exports = o({
       },
 
       updateObject: function(id, update, context) {
-        return 1
+        return {
+          val: 1,
+          created: context.upsert ? true : false
+        }
       },
 
       removeObject: function(id, context) {

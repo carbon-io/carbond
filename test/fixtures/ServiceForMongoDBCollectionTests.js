@@ -4,6 +4,8 @@ var carbond = require('../../')
 
 var config = require('../Config')
 
+var zipCounter = 11110
+
 /***************************************************************************************************
  * ServiceForMongoDBCollectionTests
  */
@@ -21,16 +23,7 @@ module.exports = o({
       _type: carbond.mongodb.MongoDBCollection,
       collection: 'zipcodes',
       enabled: {
-        insert: true,
-        insertObject: true,
-        find: true,
-        findObject: true,
-        save: false,
-        saveObject: false,
-        update: true,
-        updateObject: true,
-        remove: false,
-        removeObject: false
+        '*': true
       },
       schema: {
         type: 'object',
@@ -51,32 +44,35 @@ module.exports = o({
       },
       updateSchema: {
         type: 'object',
-        properties: {
-          state: { type: 'string' }
+        patternProperties: {
+          '^\\$.+': {
+            type: 'object',
+            properties: {
+              state: {type: 'string'}
+            },
+            required: ['state'],
+            additionalProperties: false
+          }
         },
-        required: ['state'],
         additionalProperties: false
       },
       findConfig: {
         pageSize: 5,
         maxPageSize: 10
       },
+      // idGenerator doesn't really make sense in this context, but is here for tests
+      idGenerator: {
+        generateId: function() {
+          return (zipCounter++).toString()
+        }
+      }
     }),
     'bag-of-props': o({
       _type: carbond.mongodb.MongoDBCollection,
       collection: 'bag-of-props',
 
       enabled: {
-        insert: true,
-        insertObject: true,
-        find: true,
-        findObject: true,
-        save: false,
-        saveObject: false,
-        update: true,
-        updateObject: true,
-        remove: false,
-        removeObject: false
+        '*': true
       },
 
       schema: {

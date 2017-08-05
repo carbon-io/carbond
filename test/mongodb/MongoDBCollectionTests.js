@@ -1,6 +1,7 @@
 var assert = require('assert')
 
 var _ = require('lodash')
+var sinon = require('sinon')
 
 var SkipTestError = require('@carbon-io/carbon-core').testtube.errors.SkipTestError
 var __ = require('@carbon-io/fibers').__(module)
@@ -164,108 +165,160 @@ __(function() {
       },
 
       // Test insert
-      // {
-      //   reqSpec: {
-      //     url: '/zipcodes',
-      //     method: 'POST',
-      //     body: {
-      //       _id: '94114',
-      //       state: 'CA'
-      //     },
-      //   },
-      //   resSpec: {
-      //     statusCode: 201,
-      //     headers: function(headers, ctx) {
-      //       mssert.equal(headers.location, '/zipcodes/94114')
-      //       assert.equal(ejson.parse(headers[ctx.global.idHeader]), '94114')
-      //     },
-      //     body: undefined
-      //   }
-      // },
-      //
-      // Insert another and test find again
-      // {
-      //   reqSpec: {
-      //     url: '/zipcodes',
-      //     method: 'POST',
-      //     body: {
-      //       _id: '94110',
-      //       state: 'CA'
-      //     },
-      //   },
-      //   resSpec: {
-      //     statusCode: 201,
-      //   }
-      // },
+      {
+        reqSpec: {
+          url: '/zipcodes',
+          method: 'POST',
+          body: {
+            _id: '94114',
+            state: 'CA'
+          },
+        },
+        resSpec: {
+          // body needs to be a list
+          statusCode: 400
+        }
+      },
+      {
+        reqSpec: {
+          url: '/zipcodes',
+          method: 'POST',
+          body: [{
+            _id: '94114',
+            state: 'CA'
+          }],
+        },
+        resSpec: {
+          // _id is not allowed on insert, save must be used in this case
+          statusCode: 400
+        }
+      },
+      {
+        setup: function() {
+          // overriding generateId to get what we want here... save should be used 
+          // instead
+          this.generateIdStub = 
+            sinon.stub(this.parent.service.endpoints.zipcodes.idGenerator, 
+                       'generateId').callsFake(function() {
+                          return '94114'
+                        })
+        },
+        teardown: function() {
+          try {
+            var collection = this.parent.service.endpoints.zipcodes 
+            var dbObject = 
+              collection._db.getCollection(collection.collection).findOne({
+                _id: '94114'
+              })
+            assert(!_.isNil(dbObject))
+            assert.deepEqual(dbObject, {
+              _id: '94114',
+              state: 'CA'
+            })
+          } finally {
+            this.generateIdStub.restore()
+          }
+        },
+        reqSpec: {
+          url: '/zipcodes',
+          method: 'POST',
+          body: [{
+            state: 'CA'
+          }],
+        },
+        resSpec: {
+          statusCode: 201,
+          headers: function(headers, ctx) {
+            assert.equal(headers.location, '/zipcodes?_id=94114')
+            assert.equal(ejson.parse(headers[ctx.global.idHeader]), ['94114'])
+          },
+          body: [{
+            _id: '94114',
+            state: 'CA'
+          }]
+        }
+      },
+     
+      // Test GET of previously inserted object
+      
+      {
+        reqSpec: {
+          url: '/zipcodes',
+          method: 'GET',
+          parameters: {
+            query: {_id: '94114'},
+            sort: {'_id': 1},
+            limit: 1
+          },
+        },
+        resSpec: {
+          statusCode: 200,
+          body: [{_id: '94114', state: 'CA'}]
+        }
+      },
 
-      // {
-      //   reqSpec: {
-      //     url: '/zipcodes',
-      //     method: 'GET',
-      //     parameters: {
-      //       query: { _id: '94110' },
-      //       sort: { '_id': 1 },
-      //       limit: 1
-      //     },
-      //   },
-      //   resSpec: {
-      //     statusCode: 200,
-      //     body: [{ _id: '94110', state: 'CA' }]
-      //   }
-      // },
+      // Test for carbond#172
+      {
+        name: 'carbon-io/carbond#172',
+        description: 'Test that carbon-io/carbond#172 is fixed',
+        reqSpec: {
+          url: '/zipcodes/95125',
+          method: 'PUT',
+          body: {
+            _id: '95125',
+            state: 'CA'
+          },
+        },
+        resSpec: {
+          statusCode: 201,
+          headers: function(headers, ctx) {
+            assert.equal(headers.location, '/zipcodes/95125')
+          }
+        }
+      },
+      {
+        name: 'carbon-io/carbond#174',
+        description: 'Test that carbon-io/carbond#174 is fixed',
+        setup: function() {
+          throw new SkipTestError('reminder to fix carbon-io/carbond#174')
+        },
+        reqSpec: {
+          url: '/zipcodes',
+          method: 'PUT',
+          body: {
+            _id: '945/77',
+            state: 'CA'
+          },
+        },
+        resSpec: {
+          statusCode: 400
+        }
+      },
 
-      // // Test for carbond#172
-      // {
-      //   name: 'carbon-io/carbond#172',
-      //   description: 'Test that carbon-io/carbond#172 is fixed',
-      //   reqSpec: {
-      //     url: '/zipcodes/',
-      //     method: 'POST',
-      //     body: {
-      //       _id: '95125',
-      //       state: 'CA'
-      //     },
-      //   },
-      //   resSpec: {
-      //     headers: function(headers, ctx) {
-      //       assert.equal(headers.location, '/zipcodes/95125')
-      //     },
-      //     statusCode: 201,
-      //   }
-      // },
-      // {
-      //   name: 'carbon-io/carbond#174',
-      //   description: 'Test that carbon-io/carbond#174 is fixed',
-      //   setup: function() {
-      //     throw new SkipTestError('reminder to fix carbon-io/carbond#174')
-      //   },
-      //   reqSpec: {
-      //     url: '/zipcodes',
-      //     method: 'POST',
-      //     body: {
-      //       _id: '945/77',
-      //       state: 'CA'
-      //     },
-      //   },
-      //   resSpec: {
-      //     statusCode: 400
-      //   }
-      // },
-
-      // // Test update
-      // {
-      //   reqSpec: {
-      //     url: '/zipcodes',
-      //     method: 'PATCH',
-      //     parameters: { query: { _id: '94114' } },
-      //     body: { state: 'NY' }
-      //   },
-      //   resSpec: {
-      //     statusCode: 200,
-      //     body: { n: 1 },
-      //   }
-      // },
-
+      // Test update
+      {
+        reqSpec: {
+          url: '/zipcodes',
+          method: 'PATCH',
+          parameters: {query: {_id: '94114'}},
+          body: {state: 'NY'}
+        },
+        resSpec: {
+          statusCode: 400
+        }
+      },
+      {
+        reqSpec: {
+          url: '/zipcodes',
+          method: 'PATCH',
+          parameters: {query: {_id: '94114'}},
+          body: {$set: {state: 'NY'}}
+        },
+        resSpec: {
+          statusCode: 200,
+          body: {n: 1},
+        }
+      },
       // // Test remove
       // {
       //   reqSpec: {
