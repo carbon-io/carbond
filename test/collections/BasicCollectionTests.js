@@ -691,8 +691,8 @@ __(function() {
                   this.parent.InternalServerErrorResponse])
             assert.deepEqual(
               this.parent.ce.getOperation('patch').parameters, {
-                body: {
-                  name: 'body',
+                update: {
+                  name: 'update',
                   location: 'body',
                   description: 'The update spec',
                   schema: {type: 'object'},
@@ -841,8 +841,8 @@ __(function() {
                   this.parent.InternalServerErrorResponse])
               assert.deepEqual(
                 this.parent.oe.getOperation('patch').parameters, {
-                  body: {
-                    name: 'body',
+                  update: {
+                    name: 'update',
                     description: 'The update spec',
                     schema:  {
                       type: 'object'
