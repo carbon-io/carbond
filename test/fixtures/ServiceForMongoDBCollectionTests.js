@@ -28,8 +28,8 @@ module.exports = o({
       schema: {
         type: 'object',
         properties: {
-          _id: { type: 'string' },
-          state: { type: 'string' }
+          _id: {type: 'string'},
+          state: {type: 'string'}
         },
         additionalProperties: false,
         required: ['_id', 'state']
@@ -37,8 +37,8 @@ module.exports = o({
       querySchema: {
         type: 'object',
         properties: {
-          _id: { type: 'string' },
-          state: { type: 'string' }
+          _id: {type: 'string'},
+          state: {type: 'string'}
         },
         additionalProperties: false
       },
@@ -54,6 +54,14 @@ module.exports = o({
             additionalProperties: false
           }
         },
+        additionalProperties: false
+      },
+      updateObjectSchema: {
+        type: 'object',
+        properties: {
+          state: {type: 'string'}
+        },
+        required: ['state'],
         additionalProperties: false
       },
       findConfig: {
@@ -78,7 +86,7 @@ module.exports = o({
       schema: {
         type: 'object',
         properties: {
-          _id: { type: 'ObjectId' },
+          _id: {type: 'ObjectId'},
         },
         additionalProperties: true,
         required: ['_id']
