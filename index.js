@@ -1,6 +1,10 @@
 var core = require('@carbon-io/carbon-core')
 var o = core.atom.o(module)
 
+/**
+ * @namespace carbond
+ */
+
 module.exports = { 
   Endpoint: require('./lib/Endpoint'),
   IdGenerator: require('./lib/IdGenerator'),
