@@ -1,4 +1,6 @@
-var o = require('@carbon-io/carbon-core').atom.o(module).main
+var _ = require('lodash')
+
+var o = require('@carbon-io/carbon-core').atom.o(module)
 
 var carbond = require('../../')
 
@@ -18,16 +20,28 @@ module.exports = o({
     advanced1: o({
       _type: carbond.collections.Collection,
 
-      saveObject: function(obj, reqCtx) {
-        return true
+      enabled: {
+        saveObject: true,
+        updateObject: true,
+        removeObject: true
+      },
+
+      saveObject: function(object, context, options) {
+        return {
+          val: object,
+          created: true
+        }
       },
 
       // updateObject
       updateObjectConfig: {
-        returnsUpdatedObject: true
+        supportsUpsert: true
       },
-      updateObject: function(id, update, reqCtx) {
-        return { _id: "1111" }
+      updateObject: function(id, update, context, options) {
+        return {
+          val: _.assign({_id: id}, update),
+          created: context.upsert
+        }
       },
 
       // removeObject
@@ -35,7 +49,7 @@ module.exports = o({
         returnsRemovedObject: true
       },
       removeObject: function(id) {
-        return { _id: "1234" }
+        return {_id: id}
       }
     }),
 
@@ -43,12 +57,22 @@ module.exports = o({
     advanced2: o({
       _type: carbond.collections.Collection,
 
+      enabled: {
+        saveObject: true,
+        updateObject: true,
+        removeObject: true
+      },
+
       // updateObject
       updateObjectConfig: {
-        returnsOriginalObject: true
+        supportsUpsert: true,
+        returnsUpsertedObject: true
       },
-      updateObject: function(id, update, reqCtx) {
-        return { _id: "1111" }
+      updateObject: function(id, update, context, options) {
+        return {
+          val: _.assign({_id: id}, update),
+          created: context.upsert
+        }
       },
 
       // removeObject
@@ -56,7 +80,7 @@ module.exports = o({
         returnsRemovedObject: false
       },
       removeObject: function(id) {
-        return null
+        return 0
       }
 
     }),
@@ -65,9 +89,15 @@ module.exports = o({
     advanced3: o({
       _type: carbond.collections.Collection,
 
+      enabled: {
+        saveObject: true,
+        updateObject: true,
+        removeObject: true
+      },
+
       // updateObject
-      updateObject: function(id, update, reqCtx) {
-        return null
+      updateObject: function(id, update, context, options) {
+        return 0
       },
 
       // removeObject
@@ -75,7 +105,7 @@ module.exports = o({
         returnsRemovedObject: false
       },
       removeObject: function(id) {
-        return false
+        return 1
       }
 
     }),
@@ -84,27 +114,41 @@ module.exports = o({
     advanced4: o({
       _type: carbond.collections.Collection,
 
+      enabled: {
+        insert: true
+      },
+
+      idGenerator: o({
+        id: 0,
+        generateId: function() {
+          return (this.id++).toString()
+        }
+      }),
+
       insertConfig: {
         responses: [
           {
             statusCode: 201,
             description: 'foo',
             schema: {
-              type: 'object',
-              properties: {
-                _id: { type: 'string' }
-              },
-              required: ['_id'],
-              additionalProperties: true
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  _id: { type: 'string' }
+                },
+                required: ['_id'],
+                additionalProperties: true
+              }
             },
             headers: ['Location', this.idHeader]
           }
         ],
-        returnsInsertedObject: true
+        returnsInsertedObjects: true
       },
 
-      insert: function(obj) {
-        return obj
+      insert: function(objects) {
+        return objects
       }
     })
 

@@ -12,7 +12,7 @@ __(function() {
     teardown: function() { },
     tests: [
       _o('./BasicCollectionTests'),
-      // _o('./AdvancedCollectionTests')
+      _o('./AdvancedCollectionTests')
     ]
   })
 })
