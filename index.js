@@ -5,7 +5,7 @@ var o = core.atom.o(module)
  * @namespace carbond
  */
 
-module.exports = { 
+module.exports = {
   Endpoint: require('./lib/Endpoint'),
   IdGenerator: require('./lib/IdGenerator'),
   ObjectIdGenerator: require('./lib/ObjectIdGenerator'),
@@ -15,8 +15,19 @@ module.exports = {
   Service: require('./lib/Service'),
   collections: {
     Collection: require('./lib/collections/Collection'),
-    CollectionOperationConfig: require('./lib/collections/CollectionOperationConfig'), // XXX do we want to export this?
-    CollectionOperationResult: require('./lib/collections/CollectionOperationResult')
+    CollectionOperationResult: require('./lib/collections/CollectionOperationResult'),
+    CollectionOperationConfig: require('./lib/collections/CollectionOperationConfig'),
+    InsertConfig: require('./lib/collections/CollectionOperationConfig'),
+    FindConfig: require('./lib/collections/FindConfig'),
+    FindObjectConfig: require('./lib/collections/FindObjectConfig'),
+    InsertConfig: require('./lib/collections/InsertConfig'),
+    InsertObjectConfig: require('./lib/collections/InsertObjectConfig'),
+    RemoveConfig: require('./lib/collections/RemoveConfig'),
+    RemoveObjectConfig: require('./lib/collections/RemoveObjectConfig'),
+    SaveConfig: require('./lib/collections/SaveConfig'),
+    SaveObjectConfig: require('./lib/collections/SaveObjectConfig'),
+    UpdateConfig: require('./lib/collections/UpdateConfig'),
+    UpdateObjectConfig: require('./lib/collections/UpdateObjectConfig')
   },
   limiter: {
     ChainLimiter: require('./lib/limiter/ChainLimiter'),
@@ -33,6 +44,17 @@ module.exports = {
   },
   mongodb: {
     MongoDBCollection: require('./lib/mongodb/MongoDBCollection'),
+    MongoDBCollectionOperationConfig: require('./lib/collections/MongoDBCollectionOperationConfig'),
+    MongoDBFindConfig: require('./lib/collections/MongoDBFindConfig'),
+    MongoDBFindObjectConfig: require('./lib/collections/MongoDBFindObjectConfig'),
+    MongoDBInsertConfig: require('./lib/collections/MongoDBInsertConfig'),
+    MongoDBInsertObjectConfig: require('./lib/collections/MongoDBInsertObjectConfig'),
+    MongoDBRemoveConfig: require('./lib/collections/MongoDBRemoveConfig'),
+    MongoDBRemoveObjectConfig: require('./lib/collections/MongoDBRemoveObjectConfig'),
+    MongoDBSaveConfig: require('./lib/collections/MongoDBSaveConfig'),
+    MongoDBSaveObjectConfig: require('./lib/collections/MongoDBSaveObjectConfig'),
+    MongoDBUpdateConfig: require('./lib/collections/MongoDBUpdateConfig'),
+    MongoDBUpdateObjectConfig: require('./lib/collections/MongoDBUpdateObjectConfig')
   },
   security: {
     Acl: require('./lib/security/Acl'),
