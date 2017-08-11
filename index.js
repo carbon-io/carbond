@@ -1,8 +1,32 @@
 var core = require('@carbon-io/carbon-core')
 var o = core.atom.o(module)
 
-/**
+/***************************************************************************************************
+ * @external express
+ * @description The express namespace
+ * @see {@link https://expressjs.com/en/4x/api.html}
+ */
+
+/***************************************************************************************************
  * @namespace carbond
+ */
+
+// XXX: fill in any documentation for extensions to the express classes
+
+/***************************************************************************************************
+ * @class Request
+ * @memberof carbond
+ * @description The Request object represents the HTTP request and has properties for the request
+ *              query string, parameters, body, HTTP headers, and so on
+ * @extends external:express.Request
+ */
+
+/***************************************************************************************************
+ * @class Response
+ * @memberof carbond
+ * @description The Response object represents the HTTP response that an Express app sends when it
+ *              gets an HTTP request
+ * @extends external:express.Response
  */
 
 module.exports = {
@@ -44,17 +68,17 @@ module.exports = {
   },
   mongodb: {
     MongoDBCollection: require('./lib/mongodb/MongoDBCollection'),
-    MongoDBCollectionOperationConfig: require('./lib/collections/MongoDBCollectionOperationConfig'),
-    MongoDBFindConfig: require('./lib/collections/MongoDBFindConfig'),
-    MongoDBFindObjectConfig: require('./lib/collections/MongoDBFindObjectConfig'),
-    MongoDBInsertConfig: require('./lib/collections/MongoDBInsertConfig'),
-    MongoDBInsertObjectConfig: require('./lib/collections/MongoDBInsertObjectConfig'),
-    MongoDBRemoveConfig: require('./lib/collections/MongoDBRemoveConfig'),
-    MongoDBRemoveObjectConfig: require('./lib/collections/MongoDBRemoveObjectConfig'),
-    MongoDBSaveConfig: require('./lib/collections/MongoDBSaveConfig'),
-    MongoDBSaveObjectConfig: require('./lib/collections/MongoDBSaveObjectConfig'),
-    MongoDBUpdateConfig: require('./lib/collections/MongoDBUpdateConfig'),
-    MongoDBUpdateObjectConfig: require('./lib/collections/MongoDBUpdateObjectConfig')
+    MongoDBCollectionOperationConfig: require('./lib/mongodb/MongoDBCollectionOperationConfig'),
+    MongoDBFindConfig: require('./lib/mongodb/MongoDBFindConfig'),
+    MongoDBFindObjectConfig: require('./lib/mongodb/MongoDBFindObjectConfig'),
+    MongoDBInsertConfig: require('./lib/mongodb/MongoDBInsertConfig'),
+    MongoDBInsertObjectConfig: require('./lib/mongodb/MongoDBInsertObjectConfig'),
+    MongoDBRemoveConfig: require('./lib/mongodb/MongoDBRemoveConfig'),
+    MongoDBRemoveObjectConfig: require('./lib/mongodb/MongoDBRemoveObjectConfig'),
+    MongoDBSaveConfig: require('./lib/mongodb/MongoDBSaveConfig'),
+    MongoDBSaveObjectConfig: require('./lib/mongodb/MongoDBSaveObjectConfig'),
+    MongoDBUpdateConfig: require('./lib/mongodb/MongoDBUpdateConfig'),
+    MongoDBUpdateObjectConfig: require('./lib/mongodb/MongoDBUpdateObjectConfig')
   },
   security: {
     Acl: require('./lib/security/Acl'),
