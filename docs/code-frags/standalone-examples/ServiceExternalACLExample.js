@@ -19,8 +19,9 @@ __(function() {
       hello: o({
         _type: carbon.carbond.mongodb.MongoDBCollection,
         collection: 'hello',
+        enabled: {'*': true},
         acl: _o('./MyAcl')
       })
     }
-  }) 
+  })
 })

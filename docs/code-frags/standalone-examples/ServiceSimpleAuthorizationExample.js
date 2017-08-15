@@ -21,35 +21,35 @@ __(function() {
           acl: o({
             _type: carbon.carbond.security.EndpointAcl,
             groupDefinitions: { // This ACL defined two groups, 'role' and 'title'.
-              role: 'role', // We define a group called 'role' based on the user 
+              role: 'role', // We define a group called 'role' based on the user
                             // property named 'role'.
-              title: function(user) { return user.title } 
+              title: function(user) { return user.title }
             },
             entries: [
               {
                 user: { role: 'Admin' },
                 permissions: {
-                  '*': true // '*' grants all permissions 
+                  '*': true // '*' grants all permissions
                 }
               },
               {
                 user: { title: 'CFO' },
-                permissions: { // We could have used '*' here but are being 
-                               // explicit. 
+                permissions: { // We could have used '*' here but are being
+                               // explicit.
                   get: true,
                   post: true
                 }
               },
               {
                 user: '10002', // User with _id '10002'
-                permissions: { 
+                permissions: {
                   get: false,
                   post: true
                 }
               },
               {
                 user: '*', // All other users
-                permissions: { 
+                permissions: {
                   get: true,
                   post: false
                 }
@@ -69,7 +69,7 @@ __(function() {
       }
     })
   })
-  
+
   // just playing this game for presentation's sake in the docs
   var Service1 = module.exports
 
@@ -89,48 +89,49 @@ __(function() {
         hello: o({
           _type: carbon.carbond.mongodb.MongoDBCollection,
           collection: 'hello',
+          enabled: {'*': true},
           acl: o({
             _type: carbon.carbond.security.CollectionAcl,
-            groupDefinitions: { // This ACL defined two groups, 'role' and 
+            groupDefinitions: { // This ACL defined two groups, 'role' and
                                 // 'title'.
-              role: 'role', // We define a group called 'role' based on the 
+              role: 'role', // We define a group called 'role' based on the
                             // user property named 'role'.
-              title: function(user) { return user.title } 
+              title: function(user) { return user.title }
             },
             entries: [
               {
                 user: { role: 'Admin' },
                 permissions: {
-                  '*': true // '*' grants all permissions 
+                  '*': true // '*' grants all permissions
                 }
               },
               {
                 user: { title: 'CFO' },
-                permissions: { 
+                permissions: {
                   find: true,
                   findObject: true,
-                  '*': false // This is implied since the default value for 
+                  '*': false // This is implied since the default value for
                              // all permissions is `false`.
                 }
               },
               {
                 user: '10002', // User with _id '10002'
-                permissions: { 
-                  insert: true,
+                permissions: {
+                  insertObject: true,
                   findObject: true
                 }
               },
               {
                 user: '*', // All other users
-                permissions: { 
+                permissions: {
                   findObject: true
                 }
               }
             ]
           })
-        }) 
+        })
       }
-    }) 
+    })
   })
 
   var Service2 = module.exports
