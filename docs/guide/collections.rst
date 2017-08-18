@@ -7,440 +7,418 @@ Collections
 Carbond :js:class:`~carbond.Collection`\s provide a high-level abstraction for
 defining :js:class:`~carbond.Endpoint`\s that behave like a collection of
 resources. When you define a :js:class:`~carbond.Collection` you may define the
-following methods:
+following operation handler methods:
 
-- ``insert(obj, reqCtx)``
-- ``find(query, reqCtx)``
-- ``update(query, update, reqCtx)``
-- ``remove(query, reqCtx)``
-- ``saveObject(obj, reqCtx)``
-- ``findObject(id, reqCtx)``
-- ``updateObject(id, update, reqCtx)``
-- ``removeObject(id, reqCtx)``
+- ``insert(objects, context, options)``
+- ``find(context, options)``
+- ``save(objects, context, options)``
+- ``update(update, context, options)``
+- ``remove(context, options)``
+- ``insertObject(object, context, options)``
+- ``findObject(id, context, options)``
+- ``saveObject(object, context, options)``
+- ``updateObject(id, update, context, options)``
+- ``removeObject(id, context, options)``
 
 Which results in the following tree of :js:class:`~carbond.Endpoint`\s and
 :js:class:`~carbond.Operation`\s:
 
 - ``/<collection>``
 
-  - ``POST`` which maps to :js:func:`~carbond.Collection.insert`
+  - ``POST`` which maps to :js:func:`~carbond.Collection.insert` and :js:func:`~carbond.Collection.insertObject`
   - ``GET`` which maps to :js:func:`~carbond.Collection.find`
+  - ``PUT`` which maps to :js:func:`~carbond.Collection.save`
   - ``PATCH`` which maps to :js:func:`~carbond.Collection.update`
   - ``DELETE`` which maps to :js:func:`~carbond.Collection.remove`
-    
-- ``/<collection>/:_id``
 
-  -  ``PUT`` which maps to :js:func:`~carbond.Collection.saveObject`
-  -  ``GET`` which maps to :js:func:`~carbond.Collection.findObject`
-  -  ``PATCH`` which maps to :js:func:`~carbond.Collection.updateObject`
-  -  ``DELETE`` which maps to :js:func:`~carbond.Collection.removeObject`
+- ``/<collection>/:<id>``
+
+  - ``GET`` which maps to :js:func:`~carbond.Collection.findObject`
+  - ``PUT`` which maps to :js:func:`~carbond.Collection.saveObject`
+  - ``PATCH`` which maps to :js:func:`~carbond.Collection.updateObject`
+  - ``DELETE`` which maps to :js:func:`~carbond.Collection.removeObject`
 
 When defining a :js:class:`~carbond.Collection`, it is not required that all
-methods be implemented. Instead, only methods that are defined will be enabled.
+operations be implemented. Instead, only define the operations that are required
+and enable them via the :js:attr:`~carbond.Collection.enabled` property.
 For example, here is a collection that only defines the
-:js:func:`~carbond.Collection.insert` method:
+:js:func:`~carbond.Collection.find` method:
 
 .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
     :language: javascript
     :linenos:
-    :lines: 1-11,15-19,35-36,40-42,50-
+    :lines: 1-11,15-19,30,32-33,54-58,61-
 
 Creating Collections
----------------------------------
-
-.. todo:: remove mongodb specific options from this document (e.g., ``multi``)
+====================
 
 :js:class:`~carbond.Collection` endpoints can be created either by creating an
 instance of :js:class:`~carbond.Collection` (most common) or by sub-classing (as
-with the :js:class:`~carbond.mongodb.MongoDBCollection` class). 
+with the :js:class:`~carbond.mongodb.MongoDBCollection` class) and are
+configured through a combination of top-level collection properties and through
+a set of :js:class:`~carbond.collections.CollectionOperationConfig` s.
 
-The following sections describe at a high-level how each operation should be
-implemented (note, if an error condition arises, the appropriate
-:js:class:`~httperrors.HttpError` should be thrown).
+In most cases, you should only need to define the appropriate operation handlers
+(e.g., ``insert``, ``insertObject``, ``find``, ``findObject``, etc.) and enable
+them via the :js:attr:`~carbond.collections.Collection.enabled` property. Further
+configuration of the behavior of each operation at the HTTP level should be
+done using the appropriate collection operation config class (e.g.,
+:js:class:`~carbond.collections.InsertConfig`). While the inputs and outputs to
+and from the operation handlers should remain the same, the configuration allows
+you to specify things like whether the HTTP response body should contain the objects
+inserted or whether "upserts" should be allowed in response to ``PATCH`` requests
+(more on this later).
+
+.. todo:: add link for "more on this later"
+
+There are two types of parameters passed to each operation handler, those that
+are required by the operation and those that serve to augment how that operation
+is applied. Required arguments are common to all collection implementations and
+are explicitly specified at the head of the parameter list (e.g., ``id`` and
+``update`` for the ``updateObject`` operation). Additional parameters are passed
+via the ``context`` and ``options`` arguments. For example, the
+:js:func:`~carbond.mongodb.MongoDBCollection.update` operation supports queries
+by adding another parameter called ``query`` (not to be confused with the query
+string component of the URL) to the set of parameters recognized by the
+endpoint. When a HTTP request is received, the ``update`` spec will be passed to
+the operation handler via the first parameter (``update``), while the ``query``
+spec will be passed via the ``context`` parameter as a property of that object
+(e.g., ``context.query``).  The ``options`` parameter is intended to be used for
+concrete implementation driver specific options and will be covered later.
+
+The following sections describe at a high-level the semantics of each operation.
+
+Collection Operation Handlers
+-----------------------------
 
 insert
-*********************
+~~~~~~
 
-The :js:func:`~carbond.Collection.insert` method should take the ``object``
-passed to it as an argument and save that ``object`` to the backing datastore.
-If :js:attr:`~carbond.Collection.idGenerator` is defined, the ``object`` will
-have its ``_id`` field prepopulated, otherwise,
-:js:func:`~carbond.Collection.insert` should generate, or delegate the
-generation of, the ``_id`` field and update the ``object``. It should return the
-``object`` (updated to include the ``_id`` if appropriate) that was inserted.
+The :js:func:`~carbond.collections.Collection.insert` operation handler takes a
+list of objects and persists them to the backing datastore. Each individual
+object will be a JSON blob whose structure will be validated with the
+appropriate `json schema`_ as definded by
+:js:attr:`~carbond.collections.Collection.schema` (note, the ID property will be
+omitted from the schema when validating). By default, this schema is very loose,
+just specifying that the object should be of type ``object`` and allowing for
+any and all properties. Once the objects have been persisted, the list of
+objects with IDs populated should be returned.
+
+.. todo:: add link to example implementation
 
 find
-*********************
+~~~~
 
-The :js:func:`~carbond.Colletion.find` method should take the query ``object``
-passed to it, interrogate the backing datastore, and return the ``list`` of
-resources that satisfy the query. Query modifiers (e.g., ``limit`` and ``skip``)
-should be accessed via the ``reqCtx`` parameter.
+The :js:func:`~carbond.collections.Colletion.find` operation handler does not
+take any required arguments. Instead, the most basic implementation should
+return a list of objects in the collection in natural order. Pagination is
+supported if configured (see
+:js:attr:`~carbond.collections.FindConfig.supportsPagination`). If this is the
+case, the handler should honor the parameters indicating the subset of objects
+to return (e.g., ``context.skip`` and ``context.limit``). To support rich
+queries, a ``query`` parameter (not to be confused with the query string
+component of a URL) can be added via the
+:js:attr:`~carbond.collections.CollectionOperationConfig.additionalParameters``
+property and will be passed down to the operation handler in the ``context``
+object using a property of the same name (e.g., if you add the parameter
+``{name: 'foo', description: 'rich query', location: 'query', default: {}}`` to
+the config, ``context`` will contain the property ``foo`` with a default value
+of ``{}``).  The list of objects should be returned.
+
+.. todo:: add link to example implementation
+
+save
+~~~~
+
+The :js:func:`~carbond.Collection.save` operation handler takes a list of
+objects whose ID properties have been populated by the client and replaces the
+entire collection with these objects. This is a dangerous operation and should
+likely only be enabled in development or for super users. It should return the
+list of objects that make up the new collection.
+
+.. todo:: add link to example implementation
 
 update
-*********************
+~~~~~~
 
-The :js:func:`~carbond.Colletion.update` method should take the query ``object``
-and update ``object`` passed to it, update all resources in the backing
-datastore as appropriate, and return an object of the form ``{"n": <integer>}``
-indicating how many resources were updated .  Query/update modifiers (e.g.,
-``multi``) should be accessed via the ``reqCtx`` parameter.
+The :js:func:`~carbond.Collection.update` operation handler takes an ``update``
+spec object which should be applied to the collection as a whole. Similar to the
+``insert`` operation, the ``update`` spec object is a JSON blob that will be
+weakly validated using a default schema. To enforce a particular structure, you
+can specify the update schema using the
+:js:attr:`~carbond.collections.UpdateSchema.updateSchema` property. The return
+type of the ``update`` operation deviates a bit from the return types for
+previous operation handlers. Instead of simply returning a value, an ``object``
+should be returned containing the property ``val``, whose value should be set to
+the return value for the operation. Additionally, the update operation can be
+configured to support "upserts". By default, the ``update`` operation is
+configured to not return the objects that were upserted as this is not generally
+possible.  Instead, the number of objects updated/upserted should be returned
+and, if upserts are supported, a ``created`` flag should be present as well, to
+indicate that an upsert took place (e.g., if five objects were updated, you
+would return ``{val: 5}`` and if five objects were upserted, you would return
+``{val: 5, created: true}``). If it is possible to return the upserted object(s)
+and the concrete implementation of the collection is configured to do so, then
+the list of upserted object(s) should be substituted for the number of objects
+as the value of the ``val`` property in the return object *if* an upsert took
+place.
+
+.. todo:: add link to example implementation
 
 remove
-*********************
+~~~~~~
 
-.. todo:: should this be ``delete``. ``remove`` has been deprecated in the
-          mongo driver and ``delete`` fits better with HTTP verbs.
+The :js:func:`~carbond.Collection.remove` operation handler does not take any
+required arguments. Instead, the ``remove`` operation should simply remove all
+objects in the collection. Similar to ``update`` operation, ``remove`` can be
+configured to return the removed objects. If this is possible given the backing
+datastore, it should return the objects removed (e.g., if five objects were
+removed, the return value should look something like ``[obj1, obj2, obj3, obj4,
+obj4]``). If not, the number of objects removed should be returned.
 
-The :js:func:`~carbond.Collection.remove` method should take the query
-``object`` and remove all matching resources from the backing datastore. It
-should then return a document of the form ``{"n": <integer>}`` indicating how
-many resources were removed. Query modifiers (e.g., ``single``) should be
-accessed via the ``reqCtx`` parameter.
+.. todo:: add link to example implementation
 
-saveObject
-*********************
+insertObject
+~~~~~~~~~~~~
 
-The :js:func:`~carbond.Collection.saveObject` method should take the ``object``
-passed to it (already populated with the appropriate ``_id``) and save it to the
-backing datastore. If the resource replaced another resource that existed with
-that ``_id``, ``false`` should be returned. Otherwise, ``true`` should be
-returned to indicate a new resource was created for the ``_id``.
+The :js:func:`~carbond.Collection.insertObject` operation handler takes a single
+object as its first argument and persists it to the backing datastore. Similar
+to the :js:func:`~carbond.Collection.insert` operation handler, the object will
+be a JSON blob whose structure will be validated with the appropriate `json
+schema`_ as definded by :js:attr:`~carbond.collections.Collection.schema` Once
+the object has been persisted, the list of objects inserted with IDs populated
+should be returned.
+
+.. todo:: add link to example implementation
 
 findObject
-*********************
+~~~~~~~~~~
 
-The :js:func:`~carbond.Collection.findObject` method should take the ``id``
-parameter passed to it and query the backing datastore for the resource with
-that ``id``. If the resource exists, the ``object`` representing the resource
-should be returned. Otherwise, ``null`` or ``undefined`` can be returned to
-indicate that no resource was found matching that ``id``.
+The :js:func:`~carbond.Colletion.findObject` operation takes an ``id`` parameter and
+should return the object from the collection with that ``id`` if it exists and
+``null`` otherwise.
+
+.. todo:: add link to example implementation
+
+saveObject
+~~~~~~~~~~
+
+The :js:func:`~carbond.Collection.saveObject` operation handler takes a single
+object whose ID property has been populated by the client and should replace
+the object in the collection with the same ID. Like
+``update``, ``saveObject`` can be configured to support upserts. It is left up
+to the concrete implementation of the collection to decide how this is
+communicated to the operation handler.
+:js:class:`~carbond.mongodb.MongoDBCollection`, for instance, updates the
+``options`` parameter to include ``{upsert: true}`` if upserts are allowed. If
+the object is saved, it should be returned in either case. If upserts are
+not allowed and there is no object that has a matching ID,
+``null`` should be returned.
+
+.. todo:: add link to example implementation
 
 updateObject
-*********************
+~~~~~~~~~~~~
 
-The :js:func:`~carbond.Collection.updateObject` method should take the ``id``
-and update ``object`` passed to it, update the resource identified by ``id`` if
-present, and return the ``object`` representing the resource if it existed. If
-not, ``null`` or ``undefined`` can be returned to indicate that the resource was
-not found.
+The :js:func:`~carbond.Collection.updateObject` operation handler takes an
+``id`` and an ``update`` object and should apply that update to an object in the
+collection with a matching ID. Similar to :js:func:`~carbond.Collection.update`,
+the ``updateObject`` operation can be configured to support upserts with all
+the same return value caveats. The only difference in this case is that if the
+operation is configured to return an upserted document and an upsert took place,
+the upserted document should be returned instead of the number of
+updated/upserted objects (e.g., ``1`` or ``0`` in the case of ``updateObject``).
+
+.. todo:: add link to example implementation
 
 removeObject
-*********************
+~~~~~~~~~~~~
 
-The :js:func:`~carbond.Collection.removeObject` method should take the ``id``
-parameter passed to it, remove the resource identified bu ``id``, and return the
-``object`` representing the resource that was removed if it was present.
-Otherwise, ``null`` or ``undefined`` can be returned to indicate that the
-resource was not fount
+The :js:func:`~carbond.Collection.removeObject` operation handler takes an
+``id`` argument and should remove the object with a matching ID. Similar to
+:js:func:`~carbond.Collection.remove`, the return value for this operation will
+depend on how the concrete implementation of the collection is configured and if
+the underlying datastore supports returning the removed object.
 
-Enabling / disabling operations 
+.. todo:: add link to example implementation
+
+Enabling / Disabling Operations
 -------------------------------
 
-While omitting an operation's method is enough to disable it (i.e. simply not
-defining an :js:func:`~carbond.Collection.insert` method will cause the
-collection to not support inserts), you may also explicitly enable / disable
-:js:class:`~carbond.Collection` operations via the
-:js:func:`~carbond.Collection.enabled` property. This is useful for temporarily
-diabling an operation or when instantiating or sub-classing
-:js:class:`~carbond.Collections` that support default implementations for all
-:js:class:`~carbond.Collection` operations, such as
-:js:class:`~.carbond.MongoDBCollection`.
-    
-.. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
+As previously mentioned, a :js:class:`~carbond.collections.Collection`'s
+operations can be enabled and disabled using the
+:js:class:`~carbond.collections.Collection.enabled` property. Note, all
+operations are disabled by default, so, to enable an operation you will
+have to explicitly mark it as enabled:
+
+.. code-block:: js
+
+    ...
+    enabled: {find: true},
+    ...
+
+If you want to enable all operations, you can use the ``*`` property:
+
+.. code-block:: js
+
+    ...
+    enabled: {'*': true},
+    ...
+
+If you want to enable all but the ``find`` operation, you could do something
+like:
+
+.. code-block:: js
+
+    ...
+    enabled: {'*': true, find: false},
+    ...
+
+When instantiating a concrete collection implementation, you will likely have to
+do little else than name the collection and enable the operations that you want
+exposed to the user:
+
+.. literalinclude:: ../code-frags/hello-world-mongodb/lib/HelloService.js
     :language: javascript
     :linenos:
-    :emphasize-lines: 9-13
-    :lines: 9-11,15-19,30-34,36-39,42-46,49-53
 
-Access control 
--------------------------------
+Collection Configuration
+------------------------
+
+:js:class:`~carbond.collections.Collection`\ s support configuration at multiple
+levels with two types of configuration: ``Collection`` level configuration,
+which may have have implications for certain collection operations, and
+``CollectionOperation`` specific configs.
+
+The base ``Collection`` configuration consists of a few properties:
+
+    :js:attr:`~carbond.collections.Collection.enabled`
+        See `Enabling / Disabling Operations`_
+    :js:attr:`~carbond.collections.Collection.schema`
+        This is the schema for all objects in the collection. It must be of type
+        ``object`` and contain an ID property whose name is the same as the
+        value of :js:attr:`~carbond.collections.Collection.idParameter`.
+    :js:attr:`~carbond.collections.Collection.example`
+        This is an example object in the collection and is used for
+        documentation.
+    :js:attr:`~carbond.collections.Collection.idGenerator`
+        If present, this must be an object with at least one method:
+        ``generateId``. This method does not take any parameters and should
+        return a suitable ID for a collection object on ``insert`` or
+        ``insertObject``.
+    :js:attr:`~carbond.collections.Collection.idPathParameter`
+        This is the name of the path parameter used to capture an object ID for
+        object specific endpoints (e.g.,
+        ``/<someCollectionName>/:<idPathParameter>``).
+    :js:attr:`~carbond.collections.Collection.idParameter`
+        This is the name of the ID property of a collection object (e.g.,
+        ``{<idParameter>: "foo", "bar": "baz"}``).
+    :js:attr:`~carbond.collections.Collection.idHeader`
+        This is the name of the HTTP response header that will contain the
+        object ID or IDs when objects are created in the collection.
+
+Note, most of these properties already have sane defaults (see:
+:js:class:`~carbond.collections.Collection` for more details).
+
+``CollectionOperation`` specific configs should be set on the ``Collection``. If
+they are omitted, and an operation is enabled, they will be instantiated as if
+they were initialized as ``{}`` using the appropriate
+:js:class:`~carbond.collections.CollectionOperationConfig` subclass (e.g. if
+:js:attr:`~carbond.collections.Collection.insertConfig` is left as ``undefined``,
+it will be instantiated as ``o({}, this.InsertConfigClass)``, where
+``this.InsertConfigClass`` is a class member that allows subclasses of
+:js:class:`carbond.collection.Collection` to override the default config class).
+Operations should be configured with the following properties:
+    
+- :js:attr:`~carbond.collections.Collection.insertConfig`
+- :js:attr:`~carbond.collections.Collection.findConfig`
+- :js:attr:`~carbond.collections.Collection.saveConfig`
+- :js:attr:`~carbond.collections.Collection.updateConfig`
+- :js:attr:`~carbond.collections.Collection.removeConfig`
+- :js:attr:`~carbond.collections.Collection.insertObjectConfig`
+- :js:attr:`~carbond.collections.Collection.findObjectConfig`
+- :js:attr:`~carbond.collections.Collection.saveObjectConfig`
+- :js:attr:`~carbond.collections.Collection.updateObjectConfig`
+- :js:attr:`~carbond.collections.Collection.removeObjectConfig`
+
+Collection Operation Configuration
+----------------------------------
+
+As mentioned in the previous section, when instantiating an instance of
+:js:class:`~carbond.collections.Collection`, you can configure each operation
+using the config property for that operation (e.g.
+:js:attr:`~carbond.collections.Collection.insertConfig` for the ``insert``
+operation). When defining the config, you can either explicitly instantiate a
+config instance using the appropriate config class (e.g.,
+:js:class:`~carbond.collections.InsertConfig` for the ``insert`` operation), or
+you can simply define an object that will be instantiated using a default config
+class for that operation. :js:class:`~carbond.collections.Collection` defines a
+default config classes for each operation as class members:
+
+- :js:attr:`~carbond.collections.Collection.InsertConfigClass`
+- :js:attr:`~carbond.collections.Collection.FindConfigClass`
+- :js:attr:`~carbond.collections.Collection.SaveConfigClass`
+- :js:attr:`~carbond.collections.Collection.UpdateConfigClass`
+- :js:attr:`~carbond.collections.Collection.RemoveConfigClass`
+- :js:attr:`~carbond.collections.Collection.InsertObjectConfigClass`
+- :js:attr:`~carbond.collections.Collection.FindObjectConfigClass`
+- :js:attr:`~carbond.collections.Collection.SaveObjectConfigClass`
+- :js:attr:`~carbond.collections.Collection.UpdateObjectConfigClass`
+- :js:attr:`~carbond.collections.Collection.RemoveObjectConfigClass`
+
+Subclasses that require additional parameters for certain operations or that can
+not support certain features (e.g., returning removed objects), should subclass
+the individual config classes and override these member properties in the
+subclass. When the subclass is instantiated, it will use these overriden config
+classes instead of the default ones as defined on
+:js:class:`carbond.collections.Collection`.
+
+CollectionOperationConfig
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+InsertConfig
+~~~~~~~~~~~~
+
+The :js:class:`~carbond.collections.InsertConfig` class is the default
+
+FindConfig
+~~~~~~~~~~
+
+SaveConfig
+~~~~~~~~~~
+
+UpdateConfig
+~~~~~~~~~~~~
+
+RemoveConfig
+~~~~~~~~~~~~
+
+InsertObjectConfig
+~~~~~~~~~~~~~~~~~~
+
+FindObjectConfig
+~~~~~~~~~~~~~~~~
+
+SaveObjectConfig
+~~~~~~~~~~~~~~~~
+
+UpdateObjectConfig
+~~~~~~~~~~~~~~~~~~
+
+RemoveObjectConfig
+~~~~~~~~~~~~~~~~~~
+
+Collection Operation Client (REST) Interface
+--------------------------------------------
+
+Access Control
+--------------
 
 In addition to enabling / disabling operations, you may also gate operations via
 access control policies (see: :ref:`access control <access-control-ref>`).
 
-..
-    XXX: work in progress, do not rely on these docs for semantics at the moment
+Collection Operation Pre/Post Hooks (Advanced)
+----------------------------------------------
 
-    Carbond :js:class:`~carbond.collections.Collection`\ s provide a high-level
-    abstraction for defining :js:class:`~carbond.Endpoint`\s that behave like a
-    collection of resources. When you define a
-    :js:class:`~carbond.collections.Collection` you may define the following
-    methods:
 
-    .. todo:: consider json patch implementation here that can be overriden with a
-              header or embedded type
-
-    .. todo:: finalize these
-
-    - ``insert([obj, ...], reqCtx)``
-    - ``save([obj, ...], reqCtx)``
-    - ``find(query, reqCtx)``
-    - ``update(query, update, reqCtx)``
-    - ``remove(query, reqCtx)``
-    - ``insertObject(obj, reqCtx)``
-    - ``saveObject(id, obj, reqCtx)``
-    - ``findObject(id, reqCtx)``
-    - ``updateObject(id, update, reqCtx)``
-    - ``removeObject(id, reqCtx)``
-
-    ..  - ``insert(obj, reqCtx)``
-        - ``find(query, reqCtx)``
-        - ``update(query, update, reqCtx)``
-        - ``remove(query, reqCtx)``
-        - ``saveObject(obj, reqCtx)``
-        - ``findObject(id, reqCtx)``
-        - ``updateObject(id, update, reqCtx)``
-        - ``removeObject(id, reqCtx)``
-
-    Which results in the following tree of :js:class:`~carbond.Endpoint`\s and
-    :js:class:`~carbond.Operation`\s:
-
-    - ``/<collection>``
-
-      - ``POST`` which maps to ``insert``, ``insertObject``
-      - ``PUT`` which maps to ``save``
-      - ``GET`` which maps to ``find``
-      - ``PATCH`` which maps to ``update``
-      - ``DELETE`` which maps to ``remove``
-        
-    - ``/<collection>/:_id``
-
-      - ``PUT`` which maps to ``saveObject``
-      - ``GET`` which maps to ``findObject``
-      - ``PATCH`` which maps to ``updateObject``
-      - ``DELETE`` which maps to ``removeObject``
-
-    .. - ``/<collection>``
-          - ``POST`` which maps to ``insert``
-          - ``GET`` which maps to ``find``
-          - ``PATCH`` which maps to ``update``
-          - ``DELETE`` which maps to ``remove``
-        - ``/<collection>/:_id``
-          -  ``PUT`` which maps to ``saveObject``
-          -  ``GET`` which maps to ``findObject``
-          -  ``PATCH`` which maps to ``updateObject``
-          -  ``DELETE`` which maps to ``removeObject``
-
-    Note, the convention is that ``*Object`` variants operate on a single resource,
-    while non-\ ``*Object`` variants operate on the entire collection. The one
-    exception to the rule, given the collection vs. resource level paths (e.g.
-    ``/<collection>/:_id``), is ``insertObject`` since the resource id is generated
-    in this case and can not be known a priori. At the ``HTTP`` level ``insert`` and
-    ``insertObject`` are disambiguated by whether the body carries the
-    representation for a single resource or multiple.
-
-    When defining a :js:class:`~carbond.collections.Collection`, one is not required
-    to define all methods. Only defined methods will be enabled. For example, here
-    is a collection that only defines the ``insert`` method:
-
-    .. todo:: XXX: add :lines: when the example gets fleshed out (see comment)
-
-    .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
-        :language: javascript
-        :linenos:
-        :lines: 9-11,15-19,35-36,40-42
-
-    Creating Collections
-    ---------------------------------
-
-    :js:class:`~carbond.collections.Collection` endpoints can be created either by
-    creating an instance of :js:class:`~carbond.collections.Collection` (most
-    common) or by sub-classing (as with the
-    :js:class:`carbond.mongodb.MongoDBCollection` class).
-
-    .. todo:: revisit these sections
-
-    .. todo:: document operation modifiers like ``limit`` and ``upsert``
-
-    The following descriptions of operation implementations are from the perspective
-    of the person implementing the handlers. The actual semantics of the HTTP level
-    exchange are defined by the various operation configurations (e.g., ``insertObject``)
-    and the :js:class:`~carbond.Collection` class itself. Only the "happy path" is
-    described below. If an error condition is encountered, handlers should
-    throw the appropriate :js:class:`~httperrors.HttpError` to indicate this.
-
-    insert
-    ******
-
-    The ``insert`` implementation should:
-
-    - expect a list of resources
-    - generate, or delegate the generation of, identifiers for the resources
-    - persist the resources
-    - return a list of resources updated to include the new identifiers
-
-    :js:class:`~carbond.Collection` will then: 
-
-    - return the list of resources if clients are not ``Carbon`` aware, or 
-      the identifiers themselves if dealing with ``Carbon`` aware clients
-
-    save
-    ****
-
-    The ``save`` implementation should:
-
-    - expect a list of resources with identifiers present
-    - replace the existing collection with the list of resources
-    - return nothing
-
-    :js:class:`~carbond.Collection` will then: 
-
-    - return nothing
-
-    find
-    ****
-
-    The ``find`` implementation should:
-
-    - expect a query (along with other query modifiers like ``limit``, etc.)
-    - collect all resources that satisfy the query
-    - return the list of matched resources
-
-    :js:class:`~carbond.Collection` will then: 
-
-    - return the list of resources matching the query
-
-    update
-    ******
-
-    The ``update`` implementation should:
-
-    - expect a query (along with other query modifiers like ``upsert``, etc.)
-    - expect a document describing how to update the target resources
-    - update all resources matching the query or insert a resource if conditions are
-      met warranting an ``upsert``
-    - if an ``upsert`` took place, return the new resource updated to include a new
-      identifier 
-    - otherwise, it should return the number of resources updated
-
-    :js:class:`~carbond.Collection` will then: 
-
-    - if an ``upsert`` took place, return the new resource updated to include a new
-      identifier if clients are not ``Carbon`` aware, or simply the identifier
-      itself if dealing with ``Carbon`` aware clients
-    - otherwise, it will return the number of resources updated
-
-    remove
-    *********************
-
-    The ``remove`` implementation should:
-
-    - expect a query (along with other query modifiers like ``limit``, etc.)
-    - remove all resources that match the query
-    - return the number of resources that were removed
-
-    :js:class:`~carbond.Collection` will then: 
-
-    - return the number of resources that were removed
-
-    insertObject
-    *********************
-
-    The ``insertObject`` implementation should:
-
-    - expect a single resource
-    - generate, or delegate the generation of, the identifier for the resource
-    - persist the resource
-    - return the resource updated to include the new identifier 
-
-    :js:class:`~carbond.Collection` will then: 
-
-    - return the resource if clients are not ``Carbon`` aware, or 
-      the identifier itself if dealing with ``Carbon`` aware clients
-
-    saveObject
-    *********************
-
-    The ``saveObject`` implementation should:
-
-    - expect a resource with identifier present
-    - replace the existing resource if one exists with the same identifier or insert
-      the object if it is not present
-    - return ``true`` if the object was inserted and ``false`` otherwise
-
-    :js:class:`~carbond.Collection` will then: 
-
-    - if the resource was inserted, return the resource if clients are not ``Carbon`` aware, or 
-      the identifier itself if dealing with ``Carbon`` aware clients
-    - otherwise, return nothing
-      
-    findObject
-    *********************
-
-    The ``findObject`` implementation should:
-
-    - expect an identifier
-    - retrieve the resource with the specified identifier
-    - return the resource
-
-    :js:class:`~carbond.Collection` will then: 
-
-    - return the resource with the specified identifier
-
-
-    updateObject
-    *********************
-
-    The ``updateObject`` implementation should:
-
-    - expect an identifier (along with other query modifiers like ``upsert``, etc.)
-    - expect a document describing how to update the target resources
-    - update the resource having the identifier specified or save the resource if conditions are
-      met warranting an ``upsert``
-    - if an ``upsert`` took place, return the new resource 
-    - otherwise, return ``true`` if the resource was updated or ``false`` if not
-
-    :js:class:`~carbond.Collection` will then: 
-
-    - if an ``upsert`` took place, return the new resource updated to include a new
-      identifier if clients are not ``Carbon`` aware, or simply the identifier
-      itself if dealing with ``Carbon`` aware clients
-    - otherwise, return nothing
-
-    removeObject
-    *********************
-
-    The ``removeObject`` implementation should:
-
-    - expect an identifier
-    - remove the resource associated with the identifier
-    - return nothing
-
-    :js:class:`~carbond.Collection` will then: 
-
-    - return nothing
-
-    Enabling / disabling operations 
-    -------------------------------
-
-    While omitting an operation's method is enough to disable it (i.e. simply not
-    defining an ``insert`` method will cause the collection to not support inserts),
-    you may also explicitly enable / disable
-    :js:class:`~carbond.collections.Collection` operations via the
-    :js:attr:`~carbond.collections.Collection.enabled` property. This is useful for
-    temporarily disabling an operation or when instantiating or sub-classing
-    :js:class:`~carbond.collections.Collections` that support default
-    implementations for all :js:class:`~carbond.collections.Collection` operations,
-    such as :js:class:`carbond.mongodb.MongoDBCollection`.
-
-    .. todo:: XXX: add :lines: when the example gets fleshed out (see comment)
-
-    .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
-        :language: javascript
-        :linenos:
-        :lines: 9-11,15-19,30-34,36-39,42-46,49-53
-
-    Access control 
-    -------------------------------
-
-    In addition to enabling / disabling operations, you may also gate
-    operations via access control policies.
-
-    .. todo:: reference aac?
-
-
-    .. todo:: fill in these sections
-
-    Related resources 
-    -------------------------------
+.. _json schema: http://json-schema.org/

@@ -29,23 +29,35 @@ __(function() {
         },
         enabled: {
           insert: false, // insert is disabled even though it is defined below
-          find: true,
-          '*': false,
+          find: true
         },
         // POST /feedback
-        insert: function(obj) {
+        insertObject: function(object, context, options) {
           /*
            * implementation...
            */
           var col = this.service.db.getCollection(path.basename(this.path))
           return col.insertObject(obj)
         },
-        find: function(query) {
+        // find operation config (will be instantiated as o(this.findConfig, this.FindConfigClass))
+        findConfig: {
+          additionalParameters: {
+            name: 'query',
+            description: 'A MongoDB query',
+            location: 'query',
+            schema: {
+              type: 'object'
+            },
+            default: {}
+          }
+        },
+        // GET /feedback
+        find: function(context, options) {
           /*
            * implementation...
            */
           var col = this.service.db.getCollection(path.basename(this.path))
-          return col.find(query).toArray()
+          return col.find(context.query).toArray()
         }
       })
     }
