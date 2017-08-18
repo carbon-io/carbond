@@ -350,10 +350,45 @@ using the config property for that operation (e.g.
 :js:attr:`~carbond.collections.Collection.insertConfig` for the ``insert``
 operation). When defining the config, you can either explicitly instantiate a
 config instance using the appropriate config class (e.g.,
-:js:class:`~carbond.collections.InsertConfig` for the ``insert`` operation), or
-you can simply define an object that will be instantiated using a default config
-class for that operation. :js:class:`~carbond.collections.Collection` defines a
-default config classes for each operation as class members:
+:js:class:`~carbond.collections.InsertConfig` for the ``insert`` operation):
+
+.. code-block:: js
+
+    insertConfig: o({
+      _type: carbond.collections.MyCustomInsertConfig,
+      description: "My collection's insert operation",
+      additionalParameters: {
+        foo: {
+          name: "foo",
+          location: "query",
+          schema: {
+            type: "string"
+          }
+        }
+      }
+    })
+
+Or you can simply define an object that will be instantiated using a default
+config class for that operation (in this case,
+:js:class:`~carbond.collections.InsertConfig`:
+
+.. code-block:: js
+
+    insertConfig: {
+      description: "My collection's insert operation",
+      additionalParameters: {
+        foo: {
+          name: "foo",
+          location: "query",
+          schema: {
+            type: "string"
+          }
+        }
+      }
+    }
+
+:js:class:`~carbond.collections.Collection` defines default config classes for
+each operation as class members:
 
 - :js:attr:`~carbond.collections.Collection.InsertConfigClass`
 - :js:attr:`~carbond.collections.Collection.FindConfigClass`
@@ -369,44 +404,333 @@ default config classes for each operation as class members:
 Subclasses that require additional parameters for certain operations or that can
 not support certain features (e.g., returning removed objects), should subclass
 the individual config classes and override these member properties in the
-subclass. When the subclass is instantiated, it will use these overriden config
+subclass. When the subclass is instantiated, it will use these overridden config
 classes instead of the default ones as defined on
 :js:class:`carbond.collections.Collection`.
 
 CollectionOperationConfig
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
+:js:class:`~carbond.collections.CollectionOperationConfig` is the base class for
+all collection configs. It defines basic properties that are common to all
+operation configs like:
+
+- :js:attr:`~carbond.collections.CollectionOperationConfig.description`
+- :js:attr:`~carbond.collections.CollectionOperationConfig.noDocument`
+- :js:attr:`~carbond.collections.CollectionOperationConfig.allowUnauthenticated`
+- :js:attr:`~carbond.collections.CollectionOperationConfig.parameters`
+- :js:attr:`~carbond.collections.CollectionOperationConfig.additionalParameters`
+- :js:attr:`~carbond.collections.CollectionOperationConfig.responses`
+- :js:attr:`~carbond.collections.CollectionOperationConfig.endpoint`
+- :js:attr:`~carbond.collections.CollectionOperationConfig.options`
+
 InsertConfig
 ~~~~~~~~~~~~
 
-The :js:class:`~carbond.collections.InsertConfig` class is the default
+The :js:class:`~carbond.collections.InsertConfig` class is the base ``insert``
+operation config class and the default for
+:js:class:`~carbond.collections.Collection`. It can be used to configure whether
+or not inserted objects are returned
+(:js:attr:`~carbond.collection.InsertConfig.returnsInsertedObjects`) in the
+response body and to define a schema separate from the collection level schema
+that will be used to verify incoming objects
+(:js:attr:`~carbond.collection.InsertConfig.insertSchema`). 
+
+.. code-block:: js
+    
+    ...
+    insertConfig: {
+      description: 'My collection insert operation',
+      returnsInsertedObjects: false,
+      insertSchema: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            foo: {type: 'boolean'},
+            bar: {type: 'number'}
+          },
+          required: ['foo'],
+          additionalProperties: {type: 'string'}
+        }
+      }
+    },
+    ...
+
+In the previous example, the ``insert`` operation on this collection will not
+return the objects that were inserted and each incoming object must contain at
+least the ``foo`` property.
 
 FindConfig
 ~~~~~~~~~~
 
+The :js:class:`~carbond.collections.FindConfig` class is the base ``find``
+operation config class and the default for
+:js:class:`~carbond.collections.Collection`. By default, the ``find`` operation
+supports ID queries and pagination. ID queries on the ``find`` operation are
+used by Carbon to communicate the location (i.e., the ``Location`` header) of
+objects when doing a bulk insert. If this is disabled, then the ``insert``
+operation should likely be disabled as well (note, ``insertObject`` makes use of
+the ID path parameter instead). Enabling pagination adds the ``page`` parameter
+to the list of parameters for the collection operation. Note, ``find`` operation
+parameter list includes to more parameters: ``skip`` and ``limit``. When
+pagination is enabled, it will be transparent to the operation handlers
+themselves. Instead, :js:class:`~carbond.collections.Collection` will update
+``context.skip`` and ``context.limit`` to reflect the page start and size. This
+allows the handler to be implemented without concern for whether pagination is
+enabled or not.
+
+.. code-block:: js
+
+    ...
+    findConfig: {
+      description: 'My collection find operation',
+      supportsIdQuery: false,
+      supportsPagination: false
+    },
+    ...
+
+In the previous example, ID queries and pagination are disabled. This will
+result in the omission of both parameters from the collection operation
+parameters list that are used to support these features (note, ``skip`` and
+``limit`` will still be present).
+
 SaveConfig
 ~~~~~~~~~~
+
+The :js:class:`~carbond.collections.SaveConfig` class is the base ``save``
+operation config class and the default for
+:js:class:`~carbond.collections.Collection`. Similar to
+:js:class:`~carbond.collections.InsertConfig`, this config class allows you to
+specify a separate schema for the objects being saved and whether or not the
+objects saved are returned in the response.
+
+.. code-block:: js
+    
+    ...
+    saveConfig: {
+      description: 'My collection save operation',
+      returnsSavedObjects: false,
+      saveSchema: {
+        type: 'object',
+        properties: {
+          _id: {type: 'string'},
+          foo: {type: 'boolean'},
+          bar: {type: 'number'}
+        },
+        required: ['_id', 'foo'],
+        additionalProperties: {type: 'string'}
+      }
+    },
+    ...
+
+Note, unlike :js:attr:`~carbond.collections.InsertConfig.insertSchema`, it is
+necessary to specify the ID parameter (``_id`` in this case) on ``saveSchema``.
+An error will be thrown in the case that it isn't.
 
 UpdateConfig
 ~~~~~~~~~~~~
 
+The :js:class:`~carbond.collections.UpdateConfig` class is the base ``update``
+operation config class and the default for
+:js:class:`~carbond.collections.Collection`. It allows you to configure an
+update schema, whether or not upserts are supported, and whether upserted
+objects are returned in the response body. The update schema is "loose" by
+default and only specifies that it should be an object. This should be tailored
+depending on the update language that your collection/datastore understand
+(e.g., `json patch`_). If upserts are enabled, an ``upsert`` parameter will be
+added to the list of parameters for the collection operation.
+
+.. code-block:: js
+
+    ...
+    updateConfig: {
+      description: 'My collection update operation',
+      updateSchema: {
+        type: 'object',
+        properties: {
+          op: {
+            type: 'string',
+            enum: ['add', 'remove'],
+          },
+          path: {type: 'string'},
+          value: {}
+        },
+        required: ['op', 'path', 'value'],
+        additionalProperties: false
+      }
+    },
+    ...
+
+The example above specifies a simplistic schema for `json patch`_ style updates.
+Note, upserts and returning upserted objects are disabled by default.
+
 RemoveConfig
 ~~~~~~~~~~~~
+
+The :js:class:`~carbond.collections.RemoveConfig` class is the base ``remove``
+operation config class and the default for
+:js:class:`~carbond.collections.Collection`. It allows you to configure whether
+or not removed objects are returned.
+
+.. code-block:: js
+
+    ...
+    removeConfig: {
+      description: 'My collection remove operation',
+      returnsRemovedObjects: true
+    }
+    ...
 
 InsertObjectConfig
 ~~~~~~~~~~~~~~~~~~
 
+The :js:class:`~carbond.collections.InsertObjectConfig` class is the base ``insertObject``
+operation config class and the default for
+:js:class:`~carbond.collections.Collection`. This config follows the same
+pattern as :js:attr:`~carbond.collections.InsertConfig`, allowing you to
+configure a schema specific to this operation and to specify whether the
+inserted object should be returned or not.
+
+.. code-block:: js
+    
+    ...
+    insertObjectConfig: {
+      description: 'My collection insertObject operation',
+      returnsInsertedObject: false,
+      insertObjectSchema: {
+        type: 'object',
+        properties: {
+          foo: {type: 'boolean'},
+          bar: {type: 'number'}
+        },
+        required: ['foo'],
+        additionalProperties: {type: 'string'}
+      }
+    },
+    ...
+
 FindObjectConfig
 ~~~~~~~~~~~~~~~~
+
+The :js:class:`~carbond.collections.FindObjectConfig` class is the base ``findObject``
+operation config class and the default for
+:js:class:`~carbond.collections.Collection`. This config does not have any
+configuration that is specific to the operation beyond the base config and
+simply supports object lookup by ID.
+
+.. code-block:: js
+    
+    ...
+    findObjectConfig: {
+      description: 'My collection findObject operation',
+      additionalParameters: {
+        project: {
+          name: 'project',
+          location: 'query',
+          schema: {
+            type: 'object',
+            additionalProperties: {
+              oneOf: [
+                {
+                  type: 'number',
+                  minimum: 0,
+                  maximum: 1,
+                  multipleOf: 1
+                },
+                {
+                  type: 'boolean'
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    ...
+
+In this example, we add another parameter ``project``, which allows us to return
+results with only the fields that we want (note, this has implications for the
+response schema that will validate the structure of objects returned from the
+``findObject`` handler).
+
+.. todo:: i think this makes more sense when we overhaul responses, since
+          there's not a great way to configure the response body schema here
 
 SaveObjectConfig
 ~~~~~~~~~~~~~~~~
 
+The :js:class:`~carbond.collections.SaveObjectConfig` class is the base ``saveObject``
+operation config class and the default for
+:js:class:`~carbond.collections.Collection`. Like previous config classes, it
+allows you to set a specific schema for the incoming object (again, an ID
+property is required). Additionally, like the ``update`` config class, the
+``saveObject`` operation can be configured to create objects in the collection
+(this is the default) and to return the object in the response to the client.
+Note, the ``save`` operation never "creates" objects since it is an operation at
+the collection level. Instead, it "replaces" the collection.
+
+.. code-block:: js
+    
+    ...
+    saveObjectConfig: {
+      description: 'My collection saveObject operation',
+      supportsInsert: false,
+      returnsSavedObject: false
+    }
+    ...
+
+
 UpdateObjectConfig
 ~~~~~~~~~~~~~~~~~~
 
+The :js:class:`~carbond.collections.UpdateObjectConfig` class is the base ``updateObject``
+operation config class and the default for
+:js:class:`~carbond.collections.Collection`. Like
+:js:class:`~carbond.collections.UpdateConfig`, this config allows you to specify
+an update spec schema, whether or not upserts are allowed, and, if they are
+allowed, whether an object is returned if an upsert takes place.
+
+.. code-block:: js
+
+    ...
+    updateConfig: {
+      description: 'My collection updateObject operation',
+      supportsUpsert: true,
+      returnsUpsertedObject: true,
+      updateSchema: {
+        type: 'object',
+        properties: {
+          op: {
+            type: 'string',
+            enum: ['add', 'remove'],
+          },
+          path: {type: 'string'},
+          value: {}
+        },
+        required: ['op', 'path', 'value'],
+        additionalProperties: false
+      }
+    },
+    ...
+
 RemoveObjectConfig
 ~~~~~~~~~~~~~~~~~~
+
+The :js:class:`~carbond.collections.RemoveObjectConfig` class is the base ``removeObject``
+operation config class and the default for
+:js:class:`~carbond.collections.Collection`. This config offers essentially the
+same configuration parameters as
+:js:class:`~carbond.collections.RemoveObjectConfig`.
+
+.. code-block:: js
+
+    ...
+    removeConfig: {
+      description: 'My collection remove operation',
+      returnsRemovedObjects: true
+    }
+    ...
 
 Collection Operation Client (REST) Interface
 --------------------------------------------
@@ -422,3 +746,4 @@ Collection Operation Pre/Post Hooks (Advanced)
 
 
 .. _json schema: http://json-schema.org/
+.. _json patch: http://jsonpatch.com/
