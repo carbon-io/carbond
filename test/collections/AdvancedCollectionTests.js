@@ -258,8 +258,8 @@ __(function() {
                                ])
               assert.deepEqual(this.parent.oe.getOperation('put').parameters,
                                {
-                                 body: {
-                                   name: 'body',
+                                 object: {
+                                   name: 'object',
                                    description: 'Object to save',
                                    schema:  this.parent.defaultObjectSchema,
                                    location: 'body',
@@ -324,7 +324,6 @@ __(function() {
                                    },
                                    headers: ['Location', this.parent.ce.idHeader]
                                  },
-                                 this.parent.NotFoundResponse,
                                  this.parent.BadRequestResponse,
                                  this.parent.ForbiddenResponse,
                                  this.parent.InternalServerErrorResponse
@@ -396,7 +395,6 @@ __(function() {
                                    schema: this.parent.normalizedDefaultObjectSchema,
                                    headers: ['Location', this.parent.ce.idHeader]
                                  },
-                                 this.parent.NotFoundResponse,
                                  this.parent.BadRequestResponse,
                                  this.parent.ForbiddenResponse,
                                  this.parent.InternalServerErrorResponse
@@ -416,6 +414,7 @@ __(function() {
                                    headers: []
                                  },
                                  this.parent.NotFoundResponse,
+                                 this.parent.BadRequestResponse,
                                  this.parent.ForbiddenResponse,
                                  this.parent.InternalServerErrorResponse
                                ])

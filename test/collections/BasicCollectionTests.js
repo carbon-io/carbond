@@ -565,10 +565,32 @@ __(function() {
                 ])
               assert.deepEqual(
                 this.parent.ce.getOperation('post').parameters, {
-                  body: {
+                  object: {
+                    description: 'Object to insert',
+                    location: 'body',
+                    name: 'object',
+                    required: true,
+                    schema: {
+                      oneOf: [
+                        {
+                          items: {
+                            properties: {_id: {type: 'string'}},
+                            type: 'object'
+                          },
+                          type: 'array'
+                        },
+                        {
+                          properties: {_id: {type: 'string'}},
+                          type: 'object'
+                        }
+                      ]
+                    },
+                    default: null
+                  },
+                  objects: {
                     description: 'Object(s) to insert',
                     location: 'body',
-                    name: 'body',
+                    name: 'objects',
                     required: true,
                     schema: {
                       oneOf: [
@@ -760,8 +782,8 @@ __(function() {
                   this.parent.InternalServerErrorResponse])
               assert.deepEqual(
                 this.parent.oe.getOperation('put').parameters, {
-                  body: {
-                    name: 'body',
+                  object: {
+                    name: 'object',
                     description: 'Object to save',
                     location: 'body',
                     schema: this.parent.saveSchema,
@@ -891,6 +913,7 @@ __(function() {
                     headers: []
                   },
                   this.parent.NotFoundResponse,
+                  this.parent.BadRequestResponse,
                   this.parent.ForbiddenResponse,
                   this.parent.InternalServerErrorResponse])
               assert.deepEqual(

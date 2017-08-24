@@ -638,9 +638,9 @@ __(function() {
                   this.parent.InternalServerErrorResponse])
               assert.deepEqual(
                 this.parent.ce.getOperation('post').parameters, {
-                  'body' : {
+                  'objects' : {
                     description: 'Object(s) to insert',
-                    name: 'body',
+                    name: 'objects',
                     schema: {
                       oneOf: [
                         {
@@ -668,7 +668,39 @@ __(function() {
                     location: 'body',
                     required: true,
                     default: undefined
-                  }})
+                  },
+                  'object' : {
+                    description: 'Object to insert',
+                    name: 'object',
+                    schema: {
+                      oneOf: [
+                        {
+                          type: 'array',
+                          items: {
+                            type: 'object',
+                            properties: {
+                              _id: {type: 'string'},
+                              state: {type: 'string'}
+                            },
+                            additionalProperties: false,
+                            required: ['state']
+                          }
+                        }, {
+                          type: 'object',
+                          properties: {
+                            _id: {type: 'string'},
+                            state: {type: 'string'}
+                          },
+                          additionalProperties: false,
+                          required: ['state']
+                        }
+                      ]
+                    },
+                    location: 'body',
+                    required: true,
+                    default: undefined
+                  }
+                })
             }
           }),
           o({
@@ -829,7 +861,7 @@ __(function() {
                                  update: {
                                    name: 'update',
                                    location: 'body',
-                                   description: 'Update spec (JSON)',
+                                   description: 'The update spec',
                                    schema: this.parent.updateSchema,
                                    required: true,
                                    default: undefined
@@ -937,8 +969,8 @@ __(function() {
                                ])
               assert.deepEqual(this.parent.oe.getOperation('put').parameters,
                                {
-                                 body: {
-                                   name: 'body',
+                                 object: {
+                                   name: 'object',
                                    description: 'Object to save',
                                    schema:  this.parent.schema,
                                    location: 'body',
@@ -991,7 +1023,7 @@ __(function() {
                                {
                                  update: {
                                    name: 'update',
-                                   description: 'Update spec (JSON)',
+                                   description: 'The update spec',
                                    schema:  this.parent.updateObjectSchema,
                                    location: 'body',
                                    required: true,
@@ -1035,6 +1067,7 @@ __(function() {
                                    headers: []
                                  },
                                  this.parent.NotFoundResponse,
+                                 this.parent.BadRequestResponse,
                                  this.parent.ForbiddenResponse,
                                  this.parent.InternalServerErrorResponse
                                ])
