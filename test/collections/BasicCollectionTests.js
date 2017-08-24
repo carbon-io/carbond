@@ -60,10 +60,10 @@ var OpHttpTest = oo({
    */
   genDoc: function(id, page, skip, limit) {
     return {
-      '_id': (this.config.opConfig.pageSize * page + skip + id).toString(),
+      '_id': (this.config.pageSize * page + skip + id).toString(),
       op: 'find',
       context: {
-        skip: this.config.opConfig.pageSize * page + skip,
+        skip: this.config.pageSize * page + skip,
         limit: limit,
         _id: undefined
       }
