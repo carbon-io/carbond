@@ -72,6 +72,20 @@ __(function() {
           body: [{_id: '94577', state: 'CA'}]
         }
       },
+      {
+        name: 'headWithExplicitQueryTest',
+        reqSpec: {
+          url: '/zipcodes',
+          method: 'HEAD',
+          parameters: {
+            query: {_id: '94577'},
+          },
+        },
+        resSpec: {
+          statusCode: 200,
+          body: null
+        }
+      },
 
       // Test find with paging and implicit query
       {
@@ -88,6 +102,17 @@ __(function() {
               body.length,
               this.parent.service.endpoints.zipcodes.findConfig.pageSize)
           }
+        }
+      },
+      {
+        name: 'headWithPagingAndImplicitQueryTest',
+        reqSpec: {
+          url: '/zipcodes',
+          method: 'HEAD'
+        },
+        resSpec: {
+          statusCode: 200,
+          body: null
         }
       },
 
@@ -111,6 +136,22 @@ __(function() {
               body.length,
               this.parent.service.endpoints.zipcodes.findConfig.maxPageSize)
           }
+        }
+      },
+      {
+        name: 'headMaxPageSizeTest',
+        reqSpec: function() {
+          return {
+            url: '/zipcodes',
+            method: 'HEAD',
+            parameters: {
+              limit: this.parent.service.endpoints.zipcodes.findConfig.maxPageSize + 5
+            }
+          }
+        },
+        resSpec: {
+          statusCode: 200,
+          body: null
         }
       },
 
@@ -140,6 +181,28 @@ __(function() {
               body.length,
               this.parent.service.endpoints.zipcodes.findConfig.maxPageSize)
           }
+        }
+      },
+      {
+        name: 'headMaxPageSizeTest',
+        reqSpec: function() {
+          return {
+            url: '/zipcodes',
+            method: 'HEAD',
+            parameters: {
+              limit: this.parent.service.endpoints.zipcodes.findConfig.maxPageSize + 5
+            }
+          }
+        },
+        resSpec: {
+          statusCode: 200,
+          headers: function(headers) {
+            assert('link' in headers)
+            assert.equal(
+              headers.link,
+              '<http://localhost:8888/zipcodes?page=1&limit=15>; rel="next"')
+          },
+          body: null
         }
       },
 
