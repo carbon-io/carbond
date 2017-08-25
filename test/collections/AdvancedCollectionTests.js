@@ -235,27 +235,27 @@ __(function() {
             doTest: function() {
               // saveObject
               assert.deepEqual(this.parent.oe.getOperation('put').responses,
-                               [
-                                 {
-                                   statusCode: 200,
-                                   description: 'The object was successfully saved. The body will ' +
-                                                'contain the saved object.',
-                                   schema: this.parent.normalizedDefaultObjectSchema,
-                                   headers: []
-                                 },
-                                 {
-                                   statusCode: 201,
-                                   description: 'The object was successfully inserted. The Location ' +
-                                                'header will contain a URL pointing to the newly created ' +
-                                                'resource and the body will contain the inserted object if ' +
-                                                'configured to do so.',
-                                   schema: this.parent.normalizedDefaultObjectSchema,
-                                   headers: ['Location', this.parent.ce.idHeader]
-                                 },
-                                 this.parent.BadRequestResponse,
-                                 this.parent.ForbiddenResponse,
-                                 this.parent.InternalServerErrorResponse
-                               ])
+                {
+                  '200': {
+                    statusCode: 200,
+                    description: 'The object was successfully saved. The body will ' +
+                                 'contain the saved object.',
+                    schema: this.parent.normalizedDefaultObjectSchema,
+                    headers: []
+                  },
+                  '201': {
+                    statusCode: 201,
+                    description: 'The object was successfully inserted. The Location ' +
+                                 'header will contain a URL pointing to the newly created ' +
+                                 'resource and the body will contain the inserted object if ' +
+                                 'configured to do so.',
+                    schema: this.parent.normalizedDefaultObjectSchema,
+                    headers: ['Location', this.parent.ce.idHeader]
+                  },
+                  '400': this.parent.BadRequestResponse,
+                  '403': this.parent.ForbiddenResponse,
+                  '500': this.parent.InternalServerErrorResponse
+                })
               assert.deepEqual(this.parent.oe.getOperation('put').parameters,
                                {
                                  object: {
