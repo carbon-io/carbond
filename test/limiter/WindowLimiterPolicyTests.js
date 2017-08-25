@@ -56,7 +56,7 @@ module.exports = o({
           1900, // reject
           2000  // allow
         ]
-        sinon.stub(Date, 'now', function() {
+        sinon.stub(Date, 'now').callsFake(function() {
           return results.shift()
         })
       },

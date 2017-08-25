@@ -138,7 +138,7 @@ module.exports = o({
           1900, // reject
           2000  // allow
         ]
-        sinon.stub(Date, 'now', function() {
+        sinon.stub(Date, 'now').callsFake(function() {
           return results.shift()
         })
       },
@@ -155,7 +155,7 @@ module.exports = o({
             reqLimit: 1
           })
         })
-        sinon.stub(limiter, 'sendUnavailable', function() {})
+        sinon.stub(limiter, 'sendUnavailable').callsFake(function() {})
         var nextSpy = sinon.spy()
         var service = o({_type: Service})
         limiter.initialize(service, service)

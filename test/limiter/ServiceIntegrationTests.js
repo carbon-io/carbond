@@ -160,7 +160,7 @@ module.exports = o({
   },
   setup: function () {
     ServiceTest.prototype.setup.call(this)
-    sinon.stub(ApiKeyAuthenticator.prototype, 'findUser', function() {
+    sinon.stub(ApiKeyAuthenticator.prototype, 'findUser').callsFake(function() {
       return {
         username: 'foo'
       }

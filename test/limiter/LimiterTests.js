@@ -30,7 +30,7 @@ module.exports = o({
       name: 'TestSendUnavailable',
       description: 'Test `sendUnavailable`',
       setup: function () {
-        sinon.stub(Limiter.prototype, '_C', function() {})
+        sinon.stub(Limiter.prototype, '_C').callsFake(function() {})
       },
       teardown: function () {
         Limiter.prototype._C.restore()
