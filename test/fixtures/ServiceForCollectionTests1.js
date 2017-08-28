@@ -1,6 +1,6 @@
 var _ = require('lodash')
 
-var o = require('@carbon-io/carbon-core').atom.o(module).main
+var o = require('@carbon-io/carbon-core').atom.o(module)
 
 var carbond = require('../../')
 
@@ -10,7 +10,7 @@ var carbond = require('../../')
  *
  * This is an Service for basic Collection testing.
  */
-module.exports = o({
+module.exports = o.main({
   _type: carbond.Service,
 
   port: 8888,
