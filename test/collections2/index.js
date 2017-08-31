@@ -4,7 +4,7 @@ var _o = require('@carbon-io/carbon-core').bond._o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
 /**************************************************************************
- * All tests
+ * Collection tests
  */
 __(function() {
   module.exports = o.main({
@@ -17,29 +17,25 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: "Carbond tests",
+    name: 'CollectionTests',
 
     /**********************************************************************
      * tests
      */
     tests: [
-      _o('./service'),
-      _o('./AclTests'),
-      _o('./EndpointAclTests'),
-      _o('./AuthenticatorTests'),
-      _o('./collections'),
-      _o('./collections2'),
-      _o('./BasicEndpointTests'),
-      _o('./docgen'),
-      _o('./HasherTests'),
-      _o('./IdGeneratorTests'),
-      _o('./mongodb'),
-      _o('./mongodb2'),
-      _o('./limiter'),
-      _o('./ParameterParsingTests'),
-      _o('./StartStopTests'),
-      _o('./SslTests'),
-      _o('../docs/code-frags/test')
+      _o('./insertTests'),
+      _o('./insertConfigTests'),
+      _o('./insertObjectTests'),
+      _o('./findTests'),
+      _o('./findObjectTests'),
+      _o('./saveTests'),
+      _o('./saveObjectTests'),
+      _o('./updateTests'),
+      _o('./updateObjectTests'),
+      _o('./removeTests'),
+      _o('./removeObjectTests'),
     ],
   })
 })
+
+

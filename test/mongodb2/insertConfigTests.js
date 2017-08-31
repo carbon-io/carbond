@@ -3,8 +3,10 @@ var o = require('@carbon-io/carbon-core').atom.o(module)
 var _o = require('@carbon-io/carbon-core').bond._o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
+var carbond = require('../..')
+
 /**************************************************************************
- * All tests
+ * insert config tests
  */
 __(function() {
   module.exports = o.main({
@@ -17,29 +19,14 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: "Carbond tests",
+    name: 'insertConfigTests',
 
     /**********************************************************************
      * tests
      */
     tests: [
-      _o('./service'),
-      _o('./AclTests'),
-      _o('./EndpointAclTests'),
-      _o('./AuthenticatorTests'),
-      _o('./collections'),
-      _o('./collections2'),
-      _o('./BasicEndpointTests'),
-      _o('./docgen'),
-      _o('./HasherTests'),
-      _o('./IdGeneratorTests'),
-      _o('./mongodb'),
-      _o('./mongodb2'),
-      _o('./limiter'),
-      _o('./ParameterParsingTests'),
-      _o('./StartStopTests'),
-      _o('./SslTests'),
-      _o('../docs/code-frags/test')
     ],
   })
 })
+
+
