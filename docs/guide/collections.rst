@@ -56,16 +56,16 @@ Creating Collections
 instance of :js:class:`~carbond.Collection` (most common) or by sub-classing (as
 with the :js:class:`~carbond.mongodb.MongoDBCollection` class) and are
 configured through a combination of top-level collection properties and
-a set of :js:class:`~carbond.collections.CollectionOperationConfig` s.
+a set of :js:class:`~carbond.collections.CollectionOperationConfig`\ s.
 
 In most cases, you should only need to define the appropriate operation handlers
 (e.g., ``insert``, ``insertObject``, ``find``, ``findObject``, etc.) and enable
 them via the :js:attr:`~carbond.collections.Collection.enabled` property. Further
 configuration of the behavior of each operation at the HTTP level should be
-done using the appropriate collection operation config class (e.g.,
-:js:class:`~carbond.collections.InsertConfig`). While the inputs and outputs to
+done using the appropriate collection operation config property (e.g.,
+:js:class:`~carbond.collections.Collection.insertConfig`). While the inputs and outputs to
 and from the operation handlers should remain the same, the configuration allows
-you to specify things like whether the HTTP response body should contain the objects
+you to specify behaviors like whether the HTTP response body should contain the objects
 inserted or whether "upserts" should be allowed in response to ``PATCH`` requests
 (see: `Collection Configuration`_).
 
@@ -73,21 +73,26 @@ There are two types of parameters passed to each operation handler, those that
 are required by the operation and those that serve to augment how that operation
 is applied. Required arguments are common to all collection implementations and
 are explicitly passed at the head of the parameter list (e.g., ``id`` and
-``update`` for the ``updateObject`` operation). Additional parameters are passed
-via the ``context`` and ``options`` arguments. For example, the
-:js:func:`~carbond.mongodb.MongoDBCollection.update` operation supports queries
-by adding another parameter called ``query`` (not to be confused with the query
-string component of the URL) to the set of parameters recognized by the
-endpoint. When a HTTP request is received, the ``update`` spec will be passed to
-the operation handler via the first parameter (``update``), while the ``query``
-spec will be passed via the ``context`` parameter as a property of that object
-(e.g., ``context.query``).  The ``options`` parameter is intended to be used for
-concrete implementation driver specific options (see: `SaveObject`_).
+``update`` for the :js:func:`~carbond.collections.Collection..updateObject``
+operation). Additional parameters are passed via the ``context`` and ``options``
+arguments. For example, the :js:func:`~carbond.mongodb.MongoDBCollection.update`
+operation supports queries by adding another parameter called ``query`` (not to
+be confused with the query string component of the URL) to the set of parameters
+recognized by the endpoint. When an HTTP request is received, the ``update`` spec
+will be passed to the operation handler via the first parameter (``update``),
+while the ``query`` spec will be passed via the ``context`` parameter as a
+property of that object (e.g., ``context.query``).  The ``options`` parameter is
+intended to be used for concrete implementation driver specific options (see:
+`SaveObject`_).
 
 The following sections describe the general semantics of each operation.
 
 Collection Operation Handlers
 -----------------------------
+
+The code snippets in the following sections come from the ``mem-col`` project in
+the ``carbond``\ 's ``code-frags`` directory. The "collection" in this case is
+simply an in memory object that maps IDs to objects in the collection.
 
 insert
 ~~~~~~
@@ -102,28 +107,41 @@ just specifying that the object should be of type ``object`` and allowing for
 any and all properties. Once the objects have been persisted, the list of
 objects with IDs populated should be returned.
 
-.. todo:: add link to example implementation
+.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+    :language: javascript
+    :linenos:
+    :lines: 208-214
+    :dedent: 8
 
 find
 ~~~~
 
 The :js:func:`~carbond.collections.Colletion.find` operation handler does not
 take any required arguments. Instead, the most basic implementation should
-return a list of objects in the collection in natural order. Pagination is
-supported if configured (see
-:js:attr:`~carbond.collections.FindConfig.supportsPagination`). If this is the
-case, the handler should honor the parameters indicating the subset of objects
-to return (e.g., ``context.skip`` and ``context.limit``). To support rich
-queries, a ``query`` parameter (not to be confused with the query string
-component of a URL) can be added via the
-:js:attr:`~carbond.collections.CollectionOperationConfig.additionalParameters``
-property and will be passed down to the operation handler in the ``context``
-object using a property of the same name (e.g., if you add the parameter
-``{name: 'foo', description: 'rich query', location: 'query', default: {}}`` to
-the config, ``context`` will contain the property ``foo`` with a default value
-of ``{}``).  The list of objects should be returned.
+return a list of objects in the collection in natural order. 
 
-.. todo:: add link to example implementation
+.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+    :language: javascript
+    :linenos:
+    :lines: 219-225
+    :dedent: 8
+
+Additionally, the ``find`` operation can be configured to support pagination and ID queries (see
+:js:attr:`~carbond.collections.FindConfig.supportsPagination` and
+:js:attr:`~carbond.collections.FindConfig.supportsIdQuery`). If pagination
+support is enabled, the handler should honor the parameters indicating the subset of objects
+to return (e.g., ``context.skip`` and ``context.limit``). If ID queries are
+supported (note, ID query support is necessary when supporting bulk inserts), a
+query parameter by the same name as
+:js:attr:`carbond.collections.Collection.idParameter` will be added and
+ultimately passed to the handler via ``context[this.idParameter]``. The
+following example accommodates both of these options.
+
+.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+    :language: javascript
+    :linenos:
+    :lines: 62-85
+    :dedent: 8
 
 save
 ~~~~
@@ -134,35 +152,56 @@ entire collection with these objects. This is a dangerous operation and should
 likely only be enabled in development or for super users. It should return the
 list of objects that make up the new collection.
 
-.. todo:: add link to example implementation
+.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+    :language: javascript
+    :linenos:
+    :lines: 229-231
+    :dedent: 8
 
 update
 ~~~~~~
 
 The :js:func:`~carbond.Collection.update` operation handler takes an ``update``
 spec object which should be applied to the collection as a whole. Similar to the
-``insert`` operation, the ``update`` spec object is a EJSON blob that will be
+``insert`` operation, the ``update`` spec object is an EJSON blob that will be
 weakly validated using a default schema. To enforce a particular structure, you
 can specify the update schema using the
 :js:attr:`~carbond.collections.UpdateSchema.updateSchema` property. 
 
-The return type of the ``update`` operation deviates a bit from the return types
-for previous operation handlers. Instead of simply returning a value, an
-``object`` should be returned containing the property ``val``, whose value
-should be set to the return value for the operation. Additionally, the update
-operation can be configured to support "upserts." By default, the ``update``
-operation is configured to not return the objects that were upserted as this is
-not generally possible.  Instead, the number of objects updated/upserted should
-be returned and, if upserts are supported, a ``created`` flag should be present
-as well, to indicate that an upsert took place (e.g., if five objects were
-updated, you would return ``{val: 5}`` and if five objects were upserted, you
-would return ``{val: 5, created: true}``). If it is possible to return the
-upserted object(s) and the concrete implementation of the collection is
-configured to do so, then the list of upserted object(s) should be substituted
-for the number of objects as the value of the ``val`` property in the return
-object *if* an upsert took place.
+Unlike other operations (excluding the ``remove`` operation and their ``object``
+variants), the ``update`` operation's return type varies depending on the
+capabilities of the underlying datastore and the operation config. Essentially,
+there are three scenarios:
 
-.. todo:: add link to example implementation
+1. "upserts" are not supported
+2. "upserts" are supported, but the upserted document(s) can not be returned without
+   a subsequent read issued to the backing datastore
+3. "upserts" are supported and the upserted document(s) are returned by the
+   write to the backing datastore
+
+In scenario number 1, the handler should always return the number of documents
+updated. As shorthand, the handler can simply return the number. However, the
+official return type for this handler is an ``object`` with two properties:
+``val`` and ``created`` (see :js:class:`~carbond.collections.UpdateResult`).
+Since upserts are not supported in this scenario, you can always omit
+``created`` and simply set ``val`` to the number of documents updated.
+
+Scenario 2 is much like scenario 1, except you also have to take the ``created``
+property into consideration. In other words, if an object is upserted, the
+return value should specify the number of objects upserted and the fact that
+they were created (e.g., if 2 objects were upserted, the return value should be
+``{val: 2, created: true}``.
+
+In scenario 3, we have the ability to return any documents that were upserted.
+To do this, ``val`` should be set to the objects that were upserted and
+``created`` should be set to ``true`` if objects were upserted. If no objects
+were upserted, then the behavior is the same as the previous two scenarios.
+
+.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+    :language: javascript
+    :linenos:
+    :lines: 251-258
+    :dedent: 8
 
 remove
 ~~~~~~
@@ -175,7 +214,11 @@ datastore, it should return the objects removed (e.g., if five objects were
 removed, the return value should look something like ``[obj1, obj2, obj3, obj4,
 obj4]``). If not, the number of objects removed should be returned.
 
-.. todo:: add link to example implementation
+.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+    :language: javascript
+    :linenos:
+    :lines: 277-281
+    :dedent: 8
 
 insertObject
 ~~~~~~~~~~~~
@@ -184,10 +227,14 @@ The :js:func:`~carbond.Collection.insertObject` operation handler takes a single
 object as its first argument and persists it to the backing datastore. Similar
 to the :js:func:`~carbond.Collection.insert` operation handler, the object will
 be an EJSON blob whose structure will be validated with the appropriate `json
-schema`_ as definded by :js:attr:`~carbond.collections.Collection.schema` Once
+schema`_ as definded by :js:attr:`~carbond.collections.Collection.schema`. Once
 the object has been persisted, it should be returned with its ID populated.
 
-.. todo:: add link to example implementation
+.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+    :language: javascript
+    :linenos:
+    :lines: 215-218
+    :dedent: 8
 
 findObject
 ~~~~~~~~~~
@@ -196,7 +243,11 @@ The :js:func:`~carbond.Colletion.findObject` operation takes an ``id`` parameter
 should return the object from the collection with that ``id`` if it exists and
 ``null`` otherwise.
 
-.. todo:: add link to example implementation
+.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+    :language: javascript
+    :linenos:
+    :lines: 226-228
+    :dedent: 8
 
 saveObject
 ~~~~~~~~~~
@@ -207,12 +258,16 @@ object in the collection with the same ID. Like ``update``, ``saveObject`` can
 be configured to support inserts. It is left up to the concrete implementation
 of the collection to decide how this is communicated to the operation handler.
 :js:class:`~carbond.mongodb.MongoDBCollection`, for instance, updates the
-``options`` parameter to include ``{upsert: true}`` if inserts are allowed. If
-the object is saved, it should be returned in either case. If inserts are not
-allowed and there is no object that has a matching ID, ``null`` should be
-returned.
+``options`` parameter to include ``{upsert: true}`` if inserts are allowed.  If
+inserts are not allowed and there is no object that has a matching ID, ``null``
+should be returned. Otherwise, the object that was saved should be returned and
+``created`` should be set to ``true`` if an insert took place.
 
-.. todo:: add link to example implementation
+.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+    :language: javascript
+    :linenos:
+    :lines: 233-236
+    :dedent: 8
 
 updateObject
 ~~~~~~~~~~~~
@@ -223,7 +278,11 @@ collection with a matching ID. Similar to :js:func:`~carbond.Collection.update`,
 the ``updateObject`` operation can be configured to support upserts and to
 return the upserted document with all the same return value caveats. 
 
-.. todo:: add link to example implementation
+.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+    :language: javascript
+    :linenos:
+    :lines: 273-276
+    :dedent: 8
 
 removeObject
 ~~~~~~~~~~~~
@@ -234,7 +293,11 @@ The :js:func:`~carbond.Collection.removeObject` operation handler takes an
 depend on how the concrete implementation of the collection is configured and if
 the underlying datastore supports returning the removed object.
 
-.. todo:: add link to example implementation
+.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+    :language: javascript
+    :linenos:
+    :lines: 282-285
+    :dedent: 8
 
 Enabling / Disabling Operations
 -------------------------------
@@ -543,24 +606,69 @@ parameter will be added to the list of parameters for the collection operation.
     ...
     updateConfig: {
       description: 'My collection update operation',
+      supportsUpsert: false,
       updateSchema: {
-        type: 'object',
-        properties: {
-          op: {
-            type: 'string',
-            enum: ['add', 'remove'],
-          },
-          path: {type: 'string'},
-          value: {}
-        },
-        required: ['op', 'path', 'value'],
-        additionalProperties: false
-      }
-    },
+        oneOf: [
+          {
+            type: 'object',
+            properties: {
+              inc: {
+                type: object,
+                minProperties: 1,
+                additionalProperties: {
+                  type: 'integer',
+                  minimum: 1
+                }
+              },
+              requiredProperties: ['inc'],
+              additionalProperties: false
+            },
+            {
+              type: 'object',
+              dec: {
+                type: object,
+                minProperties: 1,
+                additionalProperties: {
+                  type: 'integer',
+                  minimum: 1
+                }
+              },
+              requiredProperties: ['dec'],
+              additionalProperties: false
+            }
+          }
+        ]
+      } 
+    }
     ...
 
-The example above specifies a simplistic schema for `json patch`_ style updates.
-Note, upserts and returning upserted objects are disabled by default.
+The example config above disallows upserts and specifies a simple schema that
+allows updates to increment or decrement properties in the collection by an
+arbitrary amount (e.g.  ``{inc: {foo: 5}}`` or ``{dec: {foo: 1}}``).
+
+.. .. code-block:: js
+
+..    ...
+..    updateConfig: {
+..      description: 'My collection update operation',
+..      updateSchema: {
+..        type: 'object',
+..        properties: {
+..          op: {
+..            type: 'string',
+..            enum: ['add', 'remove'],
+..          },
+..          path: {type: 'string'},
+..          value: {}
+..        },
+..        required: ['op', 'path', 'value'],
+..        additionalProperties: false
+..      }
+..    },
+..    ...
+
+.. The example above specifies a simplistic schema for `json patch`_ style updates.
+.. Note, upserts and returning upserted objects are disabled by default.
 
 RemoveConfig
 ~~~~~~~~~~~~
@@ -582,8 +690,8 @@ or not removed objects are returned.
 InsertObjectConfig
 ~~~~~~~~~~~~~~~~~~
 
-The :js:class:`~carbond.collections.InsertObjectConfig` class is the base ``insertObject``
-operation config class and the default for
+The :js:class:`~carbond.collections.InsertObjectConfig` class is the base
+``insertObject`` operation config class and the default for
 :js:class:`~carbond.collections.Collection`. This config follows the same
 pattern as :js:attr:`~carbond.collections.InsertConfig`, allowing you to
 configure a schema specific to this operation and to specify whether the
@@ -612,44 +720,53 @@ FindObjectConfig
 
 The :js:class:`~carbond.collections.FindObjectConfig` class is the base ``findObject``
 operation config class and the default for
-:js:class:`~carbond.collections.Collection`. This config does not have any
-configuration that is specific to the operation beyond the base config and
-simply supports object lookup by ID.
+:js:class:`~carbond.collections.Collection`. It extends the base config class
+with the property ``supportsHead``, which allows you to configure whether the
+HEAD operation is allowed (in addition to GET) on this endpoint.
 
 .. code-block:: js
     
     ...
     findObjectConfig: {
       description: 'My collection findObject operation',
-      additionalParameters: {
-        project: {
-          name: 'project',
-          location: 'query',
-          schema: {
-            type: 'object',
-            additionalProperties: {
-              oneOf: [
-                {
-                  type: 'number',
-                  minimum: 0,
-                  maximum: 1,
-                  multipleOf: 1
-                },
-                {
-                  type: 'boolean'
-                }
-              ]
-            }
-          }
-        }
-      }
+      supportsHead: false
     },
     ...
 
-In this example, we add another parameter ``project``, which allows us to return
-results with only the fields that we want (note, this has implications for the
-response schema that will validate the structure of objects returned from the
-``findObject`` handler).
+.. .. code-block:: js
+    
+..     ...
+..     findObjectConfig: {
+..       description: 'My collection findObject operation',
+..       additionalParameters: {
+..         project: {
+..           name: 'project',
+..           location: 'query',
+..           schema: {
+..             type: 'object',
+..             additionalProperties: {
+..               oneOf: [
+..                 {
+..                   type: 'number',
+..                   minimum: 0,
+..                   maximum: 1,
+..                   multipleOf: 1
+..                 },
+..                 {
+..                   type: 'boolean'
+..                 }
+..               ]
+..             }
+..           }
+..         }
+..       }
+..     },
+..     ...
+
+.. In this example, we add another parameter ``project``, which allows us to return
+.. results with only the fields that we want (note, this has implications for the
+.. response schema that will validate the structure of objects returned from the
+.. ``findObject`` handler).
 
 .. todo:: i think this makes more sense when we overhaul responses, since
           there's not a great way to configure the response body schema here
@@ -692,22 +809,42 @@ allowed, whether an object is returned if an upsert takes place.
 .. code-block:: js
 
     ...
-    updateConfig: {
+    updateObjectConfig: {
       description: 'My collection updateObject operation',
       supportsUpsert: true,
       returnsUpsertedObject: true,
       updateSchema: {
-        type: 'object',
-        properties: {
-          op: {
-            type: 'string',
-            enum: ['add', 'remove'],
-          },
-          path: {type: 'string'},
-          value: {}
-        },
-        required: ['op', 'path', 'value'],
-        additionalProperties: false
+      updateSchema: {
+        oneOf: [
+          {
+            type: 'object',
+            properties: {
+              inc: {
+                type: object,
+                minProperties: 1,
+                additionalProperties: {
+                  type: 'integer',
+                  minimum: 1
+                }
+              },
+              requiredProperties: ['inc'],
+              additionalProperties: false
+            },
+            {
+              type: 'object',
+              dec: {
+                type: object,
+                minProperties: 1,
+                additionalProperties: {
+                  type: 'integer',
+                  minimum: 1
+                }
+              },
+              requiredProperties: ['dec'],
+              additionalProperties: false
+            }
+          }
+        ]
       }
     },
     ...
@@ -724,7 +861,7 @@ same configuration parameters as
 .. code-block:: js
 
     ...
-    removeConfig: {
+    removeObjectConfig: {
       description: 'My collection remove operation',
       returnsRemovedObject: true
     }
