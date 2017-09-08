@@ -11,9 +11,9 @@ __(function() {
   module.exports = o.main({
     _type: carbon.carbond.Service,
     port: 8888,
-    dbUri: 'mongodb://127.0.0.1:27017/cache-col',
+    dbUri: 'mongodb://127.0.0.1:27017/counter-col',
     endpoints: {
-      memCacheAdvanced: o({
+      memCacheCounterAdvanced: o({
         _type: carbon.carbond.collections.Collection,
         cache: {},
         schema: {
@@ -196,7 +196,7 @@ __(function() {
           return 0
         }
       }),
-      memCacheBasic: o({
+      memCacheCounterBasic: o({
         _type: carbon.carbond.collections.Collection,
         cache: {},
         schema: {
@@ -306,13 +306,13 @@ __(function() {
           return 1
         }
       }),
-      mongoCacheBasic: o({
+      mongoCounterBasic: o({
         _type: carbon.carbond.collections.Collection,
         enabled: {'*': true},
         collection: {
           $property: {
             get: function() {
-              return this.service.db.getCollection('mongo-cache')
+              return this.service.db.getCollection('mongo-counter')
             }
           }
         },

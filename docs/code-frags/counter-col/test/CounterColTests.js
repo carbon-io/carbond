@@ -15,18 +15,18 @@ var ObjectId = ejson.types.ObjectId
 __(function() {
   module.exports = o.main({
     _type: carbon.testtube.Test,
-    name: 'CacheColTests',
+    name: 'CounterColTests',
     tests: [
       o({
         _type: carbond.test.ServiceTest,
-        name: 'MemCacheAdvancedTests',
-        description: 'MemCache advanced tests.',
-        service: _o('../lib/CacheCol'),
+        name: 'MemCacheCounterAdvancedTests',
+        description: 'MemCacheCounter advanced tests.',
+        service: _o('../lib/CounterCol'),
         tests: [
           {
             reqSpec: {
               method: 'POST',
-              url: '/memCacheAdvanced',
+              url: '/memCacheCounterAdvanced',
               body: [
                 {
                   name: 'foo',
@@ -57,7 +57,7 @@ __(function() {
           {
             reqSpec: {
               method: 'POST',
-              url: '/memCacheAdvanced',
+              url: '/memCacheCounterAdvanced',
               body: {
                 name: 'baz',
                 count: 0
@@ -75,7 +75,7 @@ __(function() {
           {
             reqSpec: {
               method: 'GET',
-              url: '/memCacheAdvanced'
+              url: '/memCacheCounterAdvanced'
             },
             resSpec: {
               statusCode: 200,
@@ -101,7 +101,7 @@ __(function() {
           {
             reqSpec: {
               method: 'GET',
-              url: '/memCacheAdvanced',
+              url: '/memCacheCounterAdvanced',
               parameters: {
                 skip: 1,
                 limit: 1
@@ -121,7 +121,7 @@ __(function() {
           {
             reqSpec: {
               method: 'GET',
-              url: '/memCacheAdvanced/1'
+              url: '/memCacheCounterAdvanced/1'
             },
             resSpec: {
               statusCode: 200,
@@ -135,7 +135,7 @@ __(function() {
           {
             reqSpec: {
               method: 'GET',
-              url: '/memCacheAdvanced/3'
+              url: '/memCacheCounterAdvanced/3'
             },
             resSpec: {
               statusCode: 404,
@@ -144,7 +144,7 @@ __(function() {
           {
             reqSpec: {
               method: 'PUT',
-              url: '/memCacheAdvanced',
+              url: '/memCacheCounterAdvanced',
               body: [
                 {
                   _id: 0,
@@ -167,7 +167,7 @@ __(function() {
           {
             reqSpec: {
               method: 'PUT',
-              url: '/memCacheAdvanced/1',
+              url: '/memCacheCounterAdvanced/1',
               body: {
                 _id: 1,
                 name: 'bar',
@@ -185,21 +185,21 @@ __(function() {
           },
           {
             setup: function() {
-              this.parent.service.endpoints.memCacheAdvanced.cache = {
+              this.parent.service.endpoints.memCacheCounterAdvanced.cache = {
                 0: {_id: 0, name: 'foo', count: 0},
                 1: {_id: 1, name: 'bar', count: 0},
                 2: {_id: 2, name: 'baz', count: 0},
               }
             },
             teardown: function() {
-              var cache = this.parent.service.endpoints.memCacheAdvanced.cache
+              var cache = this.parent.service.endpoints.memCacheCounterAdvanced.cache
               for (var id in cache) {
                 assert.equal(cache[id].count, 1)
               }
             },
             reqSpec: {
               method: 'PATCH',
-              url: '/memCacheAdvanced',
+              url: '/memCacheCounterAdvanced',
               body: {
                 $inc: 1
               }
@@ -214,7 +214,7 @@ __(function() {
           {
             reqSpec: {
               method: 'PATCH',
-              url: '/memCacheAdvanced',
+              url: '/memCacheCounterAdvanced',
               body: {
                 $inc: 1,
                 $dec: 1
@@ -227,7 +227,7 @@ __(function() {
           {
             reqSpec: {
               method: 'PATCH',
-              url: '/memCacheAdvanced/1',
+              url: '/memCacheCounterAdvanced/1',
               body: {
                 $inc: 1
               }
@@ -242,7 +242,7 @@ __(function() {
           {
             reqSpec: {
               method: 'PATCH',
-              url: '/memCacheAdvanced/666',
+              url: '/memCacheCounterAdvanced/666',
               body: {
                 $inc: 1
               }
@@ -254,7 +254,7 @@ __(function() {
           {
             reqSpec: {
               method: 'DELETE',
-              url: '/memCacheAdvanced',
+              url: '/memCacheCounterAdvanced',
             },
             resSpec: {
               statusCode: 200,
@@ -265,18 +265,18 @@ __(function() {
           },
           {
             setup: function() {
-              this.parent.service.endpoints.memCacheAdvanced.cache = {
+              this.parent.service.endpoints.memCacheCounterAdvanced.cache = {
                 0: {_id: 0, name: 'foo', count: 0},
                 1: {_id: 1, name: 'bar', count: 0},
                 2: {_id: 2, name: 'baz', count: 0},
               }
             },
             teardown: function() {
-              assert.equal(Object.keys(this.parent.service.endpoints.memCacheAdvanced.cache).length, 0)
+              assert.equal(Object.keys(this.parent.service.endpoints.memCacheCounterAdvanced.cache).length, 0)
             },
             reqSpec: {
               method: 'DELETE',
-              url: '/memCacheAdvanced',
+              url: '/memCacheCounterAdvanced',
             },
             resSpec: {
               statusCode: 200,
@@ -287,19 +287,19 @@ __(function() {
           },
           {
             setup: function() {
-              this.parent.service.endpoints.memCacheAdvanced.cache = {
+              this.parent.service.endpoints.memCacheCounterAdvanced.cache = {
                 0: {_id: 0, name: 'foo', count: 0},
                 1: {_id: 1, name: 'bar', count: 0},
                 2: {_id: 2, name: 'baz', count: 0},
               }
             },
             teardown: function() {
-              assert.equal(Object.keys(this.parent.service.endpoints.memCacheAdvanced.cache).length, 2)
-              assert(!('0' in this.parent.service.endpoints.memCacheAdvanced.cache))
+              assert.equal(Object.keys(this.parent.service.endpoints.memCacheCounterAdvanced.cache).length, 2)
+              assert(!('0' in this.parent.service.endpoints.memCacheCounterAdvanced.cache))
             },
             reqSpec: {
               method: 'DELETE',
-              url: '/memCacheAdvanced/0',
+              url: '/memCacheCounterAdvanced/0',
             },
             resSpec: {
               statusCode: 200,
@@ -311,7 +311,7 @@ __(function() {
           {
             reqSpec: {
               method: 'DELETE',
-              url: '/memCacheAdvanced/666',
+              url: '/memCacheCounterAdvanced/666',
             },
             resSpec: {
               statusCode: 404,
@@ -321,14 +321,14 @@ __(function() {
       }),
       o({
         _type: carbond.test.ServiceTest,
-        name: 'MemCacheBasicTests',
-        description: 'MemCache basic tests.',
-        service: _o('../lib/CacheCol'),
+        name: 'MemCacheCounterBasicTests',
+        description: 'MemCacheCounter basic tests.',
+        service: _o('../lib/CounterCol'),
         tests: [
           {
             reqSpec: {
               method: 'POST',
-              url: '/memCacheBasic',
+              url: '/memCacheCounterBasic',
               body: [
                 {
                   name: 'foo',
@@ -359,7 +359,7 @@ __(function() {
           {
             reqSpec: {
               method: 'POST',
-              url: '/memCacheBasic',
+              url: '/memCacheCounterBasic',
               body: {
                 name: 'baz',
                 count: 0
@@ -377,7 +377,7 @@ __(function() {
           {
             reqSpec: {
               method: 'GET',
-              url: '/memCacheBasic'
+              url: '/memCacheCounterBasic'
             },
             resSpec: {
               statusCode: 200,
@@ -403,7 +403,7 @@ __(function() {
           {
             reqSpec: {
               method: 'GET',
-              url: '/memCacheBasic/0'
+              url: '/memCacheCounterBasic/0'
             },
             resSpec: {
               statusCode: 200,
@@ -417,7 +417,7 @@ __(function() {
           {
             reqSpec: {
               method: 'GET',
-              url: '/memCacheBasic/666'
+              url: '/memCacheCounterBasic/666'
             },
             resSpec: {
               statusCode: 404
@@ -426,7 +426,7 @@ __(function() {
           {
             reqSpec: {
               method: 'PUT',
-              url: '/memCacheBasic',
+              url: '/memCacheCounterBasic',
               body: [
                 {
                   _id: '0',
@@ -469,7 +469,7 @@ __(function() {
           {
             reqSpec: {
               method: 'PUT',
-              url: '/memCacheBasic/666',
+              url: '/memCacheCounterBasic/666',
               body: {
                 _id: '2',
                 name: 'yaz',
@@ -482,11 +482,11 @@ __(function() {
           },
           {
             teardown: function() {
-              assert.equal(this.parent.service.endpoints.memCacheBasic.cache['2'].name, 'yaz')
+              assert.equal(this.parent.service.endpoints.memCacheCounterBasic.cache['2'].name, 'yaz')
             },
             reqSpec: {
               method: 'PUT',
-              url: '/memCacheBasic/2',
+              url: '/memCacheCounterBasic/2',
               body: {
                 _id: '2',
                 name: 'yaz',
@@ -505,7 +505,7 @@ __(function() {
           {
             reqSpec: {
               method: 'PATCH',
-              url: '/memCacheBasic',
+              url: '/memCacheCounterBasic',
               body: {n: 1}
             },
             resSpec: {
@@ -518,7 +518,7 @@ __(function() {
           {
             reqSpec: {
               method: 'PATCH',
-              url: '/memCacheBasic/1',
+              url: '/memCacheCounterBasic/1',
               body: {n: 1}
             },
             resSpec: {
@@ -531,7 +531,7 @@ __(function() {
           {
             reqSpec: {
               method: 'DELETE',
-              url: '/memCacheBasic'
+              url: '/memCacheCounterBasic'
             },
             resSpec: {
               statusCode: 200,
@@ -542,19 +542,19 @@ __(function() {
           },
           {
             setup: function() {
-              this.parent.service.endpoints.memCacheBasic.cache = {
+              this.parent.service.endpoints.memCacheCounterBasic.cache = {
                 0: {_id: 0, name: 'foo', count: 0},
                 1: {_id: 1, name: 'bar', count: 0},
                 2: {_id: 2, name: 'baz', count: 0},
               }
             },
             teardown: function() {
-              assert.equal(Object.keys(this.parent.service.endpoints.memCacheBasic.cache).length, 2)
-              assert(!('1' in this.parent.service.endpoints.memCacheBasic.cache))
+              assert.equal(Object.keys(this.parent.service.endpoints.memCacheCounterBasic.cache).length, 2)
+              assert(!('1' in this.parent.service.endpoints.memCacheCounterBasic.cache))
             },
             reqSpec: {
               method: 'DELETE',
-              url: '/memCacheBasic/1'
+              url: '/memCacheCounterBasic/1'
             },
             resSpec: {
               statusCode: 200,
@@ -567,12 +567,12 @@ __(function() {
       }),
       o({
         _type: carbond.test.ServiceTest,
-        name: 'MongoCacheBasicTests',
-        description: 'MongoCache basic tests.',
-        service: _o('../lib/CacheCol'),
+        name: 'MongoCounterBasicTests',
+        description: 'MongoCounter basic tests.',
+        service: _o('../lib/CounterCol'),
         setup: function() {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          this.collection = this.service.db.getCollection('mongo-cache')
+          this.collection = this.service.db.getCollection('mongo-counter')
           this.collection.deleteMany()
         },
         teardown: function() {
@@ -583,7 +583,7 @@ __(function() {
           {
             reqSpec: {
               method: 'POST',
-              url: '/mongoCacheBasic',
+              url: '/mongoCounterBasic',
               body: [
                 {
                   name: 'foo',
@@ -614,7 +614,7 @@ __(function() {
           {
             reqSpec: {
               method: 'POST',
-              url: '/mongoCacheBasic',
+              url: '/mongoCounterBasic',
               body: {
                 name: 'baz',
                 count: 0
@@ -632,7 +632,7 @@ __(function() {
           {
             reqSpec: {
               method: 'GET',
-              url: '/mongoCacheBasic'
+              url: '/mongoCounterBasic'
             },
             resSpec: {
               statusCode: 200,
@@ -658,7 +658,7 @@ __(function() {
           {
             reqSpec: {
               method: 'GET',
-              url: '/mongoCacheBasic/000000000000000000000000'
+              url: '/mongoCounterBasic/000000000000000000000000'
             },
             resSpec: {
               statusCode: 200,
@@ -672,7 +672,7 @@ __(function() {
           {
             reqSpec: {
               method: 'GET',
-              url: '/mongoCacheBasic/000000000000000000000666'
+              url: '/mongoCounterBasic/000000000000000000000666'
             },
             resSpec: {
               statusCode: 404
@@ -681,7 +681,7 @@ __(function() {
           {
             reqSpec: {
               method: 'PUT',
-              url: '/mongoCacheBasic',
+              url: '/mongoCounterBasic',
               body: [
                 {
                   _id: ObjectId('000000000000000000000000'),
@@ -724,7 +724,7 @@ __(function() {
           {
             reqSpec: {
               method: 'PUT',
-              url: '/mongoCacheBasic/000000000000000000000666',
+              url: '/mongoCounterBasic/000000000000000000000666',
               body: {
                 _id: ObjectId('000000000000000000000002'),
                 name: 'yaz',
@@ -743,7 +743,7 @@ __(function() {
             },
             reqSpec: {
               method: 'PUT',
-              url: '/mongoCacheBasic/000000000000000000000002',
+              url: '/mongoCounterBasic/000000000000000000000002',
               body: {
                 _id: ObjectId('000000000000000000000002'),
                 name: 'yaz',
@@ -762,7 +762,7 @@ __(function() {
           {
             reqSpec: {
               method: 'PATCH',
-              url: '/mongoCacheBasic',
+              url: '/mongoCounterBasic',
               body: {n: 1}
             },
             resSpec: {
@@ -775,7 +775,7 @@ __(function() {
           {
             reqSpec: {
               method: 'PATCH',
-              url: '/mongoCacheBasic/000000000000000000000001',
+              url: '/mongoCounterBasic/000000000000000000000001',
               body: {n: 1}
             },
             resSpec: {
@@ -788,7 +788,7 @@ __(function() {
           {
             reqSpec: {
               method: 'DELETE',
-              url: '/mongoCacheBasic'
+              url: '/mongoCounterBasic'
             },
             resSpec: {
               statusCode: 200,
@@ -812,7 +812,7 @@ __(function() {
             },
             reqSpec: {
               method: 'DELETE',
-              url: '/mongoCacheBasic/000000000000000000000001'
+              url: '/mongoCounterBasic/000000000000000000000001'
             },
             resSpec: {
               statusCode: 200,
