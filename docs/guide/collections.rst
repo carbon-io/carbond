@@ -90,7 +90,7 @@ The following sections describe the general semantics of each operation.
 Collection Operation Handlers
 -----------------------------
 
-The code snippets in the following sections come from the ``mem-col`` project in
+The code snippets in the following sections come from the ``cache-col`` project in
 the ``carbond``\ 's ``code-frags`` directory. The "collection" in this case is
 simply an in memory object that maps IDs to objects in the collection.
 
@@ -107,10 +107,10 @@ just specifying that the object should be of type ``object`` and allowing for
 any and all properties. Once the objects have been persisted, the list of
 objects with IDs populated should be returned.
 
-.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
     :language: javascript
     :linenos:
-    :lines: 208-214
+    :lines: 230-236
     :dedent: 8
 
 find
@@ -120,10 +120,10 @@ The :js:func:`~carbond.collections.Colletion.find` operation handler does not
 take any required arguments. Instead, the most basic implementation should
 return a list of objects in the collection in natural order. 
 
-.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
     :language: javascript
     :linenos:
-    :lines: 219-225
+    :lines: 362-364
     :dedent: 8
 
 Additionally, the ``find`` operation can be configured to support pagination and ID queries (see
@@ -137,10 +137,10 @@ query parameter by the same name as
 ultimately passed to the handler via ``context[this.idParameter]``. The
 following example accommodates both of these options.
 
-.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
     :language: javascript
     :linenos:
-    :lines: 62-85
+    :lines: 64-87
     :dedent: 8
 
 save
@@ -152,10 +152,10 @@ entire collection with these objects. This is a dangerous operation and should
 likely only be enabled in development or for super users. It should return the
 list of objects that make up the new collection.
 
-.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
     :language: javascript
     :linenos:
-    :lines: 229-231
+    :lines: 251-254
     :dedent: 8
 
 update
@@ -197,10 +197,10 @@ To do this, ``val`` should be set to the objects that were upserted and
 ``created`` should be set to ``true`` if objects were upserted. If no objects
 were upserted, then the behavior is the same as the previous two scenarios.
 
-.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
     :language: javascript
     :linenos:
-    :lines: 251-258
+    :lines: 273-280
     :dedent: 8
 
 remove
@@ -214,10 +214,10 @@ datastore, it should return the objects removed (e.g., if five objects were
 removed, the return value should look something like ``[obj1, obj2, obj3, obj4,
 obj4]``). If not, the number of objects removed should be returned.
 
-.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
     :language: javascript
     :linenos:
-    :lines: 277-281
+    :lines: 299-303
     :dedent: 8
 
 insertObject
@@ -230,10 +230,10 @@ be an EJSON blob whose structure will be validated with the appropriate `json
 schema`_ as definded by :js:attr:`~carbond.collections.Collection.schema`. Once
 the object has been persisted, it should be returned with its ID populated.
 
-.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
     :language: javascript
     :linenos:
-    :lines: 215-218
+    :lines: 237-240
     :dedent: 8
 
 findObject
@@ -243,10 +243,10 @@ The :js:func:`~carbond.Colletion.findObject` operation takes an ``id`` parameter
 should return the object from the collection with that ``id`` if it exists and
 ``null`` otherwise.
 
-.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
     :language: javascript
     :linenos:
-    :lines: 226-228
+    :lines: 248-250
     :dedent: 8
 
 saveObject
@@ -263,10 +263,10 @@ inserts are not allowed and there is no object that has a matching ID, ``null``
 should be returned. Otherwise, the object that was saved should be returned and
 ``created`` should be set to ``true`` if an insert took place.
 
-.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
     :language: javascript
     :linenos:
-    :lines: 233-236
+    :lines: 255-258
     :dedent: 8
 
 updateObject
@@ -278,10 +278,10 @@ collection with a matching ID. Similar to :js:func:`~carbond.Collection.update`,
 the ``updateObject`` operation can be configured to support upserts and to
 return the upserted document with all the same return value caveats. 
 
-.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
     :language: javascript
     :linenos:
-    :lines: 273-276
+    :lines: 295-298
     :dedent: 8
 
 removeObject
@@ -293,10 +293,10 @@ The :js:func:`~carbond.Collection.removeObject` operation handler takes an
 depend on how the concrete implementation of the collection is configured and if
 the underlying datastore supports returning the removed object.
 
-.. literalinclude:: ../code-frags/mem-col/lib/MemCol.js
+.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
     :language: javascript
     :linenos:
-    :lines: 282-285
+    :lines: 304-307
     :dedent: 8
 
 Enabling / Disabling Operations

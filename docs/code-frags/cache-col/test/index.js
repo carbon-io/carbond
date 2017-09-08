@@ -8,10 +8,10 @@ var testtube = carbon.testtube
 __(function() {
   module.exports = o.main({
     _type: testtube.Test,
-    name: 'MemColTestSuite',
-    description: 'MemCol test suite.',
+    name: 'CacheColTestSuite',
+    description: 'CacheCol test suite.',
     tests: [
-      _o('./MemColTests')
+      _o('./CacheColTests')
     ]
   })
 })
