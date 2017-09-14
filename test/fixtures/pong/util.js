@@ -1,4 +1,5 @@
 var IncomingMessage = require('http').IncomingMessage
+var assert = require('assert')
 
 var _ = require('lodash')
 var express = require('express')
@@ -34,10 +35,15 @@ function setNestedProps(object, overrides) {
 }
 
 function _getPongRet(type, object, name, args, pong) {
-  var ret = pong[name]
-  if (_.isObjectLike(ret)) {
-    if ('$args' in ret) {
-      ret = args[ret.$args]
+  var retDescriptor = pong[name]
+  var ret = _.clone(retDescriptor)
+  if (_.isObjectLike(retDescriptor)) {
+    if ('$args' in retDescriptor) {
+      ret = args[retDescriptor.$args]
+    }
+    if ('$id' in ret) {
+      assert(_.isObjectLike(retDescriptor.$id), 'Bad pong $id descriptor')
+      ret = _.assignIn(retDescriptor.$id)
     }
   }
   return ret
@@ -83,7 +89,7 @@ function overrideOrSuper(type, object, name, args, reqOrContext, noSuper) {
   return type.prototype[name].apply(object, args)
 }
 
-var idGenerator = o({
+var collectionIdGenerator = o({
   id: 0,
 
   resetId: function() {
@@ -95,9 +101,34 @@ var idGenerator = o({
   }
 })
 
+var collectionIdGenerator = o({
+  id: 0,
+
+  resetId: function() {
+    this.id = 0
+  },
+
+  generateId: function() {
+    return (this.id++).toString()
+  }
+})
+
+var mongoDbCollectionIdGenerator = o({
+  id: 0,
+
+  resetId: function() {
+    this.id = 0
+  },
+
+  generateId: function() {
+    return new ejson.types.ObjectId(_.padStart((this.id++).toString(16), 24, '0'))
+  }
+})
+
 module.exports = {
-  setNestedProps: setNestedProps,
+  collectionIdGenerator: collectionIdGenerator,
+  mongoDbCollectionIdGenerator: mongoDbCollectionIdGenerator,
   overrideOrSuper: overrideOrSuper,
-  idGenerator: idGenerator
+  setNestedProps: setNestedProps
 }
 

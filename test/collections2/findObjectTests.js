@@ -41,7 +41,7 @@ __(function() {
           endpoints: {
             findObject: o({
               _type: pong.Collection,
-              idGenerator: pong.util.idGenerator,
+              idGenerator: pong.util.collectionIdGenerator,
               enabled: {findObject: true}
             })
           }

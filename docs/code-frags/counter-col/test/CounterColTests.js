@@ -258,9 +258,11 @@ __(function() {
             },
             resSpec: {
               statusCode: 200,
-              body: {
-                n: 3
-              }
+              body: [
+                {_id: 0, name: 'foo', count: 1},
+                {_id: 1, name: 'bar', count: 2},
+                {_id: 2, name: 'baz', count: 1},
+              ]
             }
           },
           {
@@ -280,9 +282,11 @@ __(function() {
             },
             resSpec: {
               statusCode: 200,
-              body: {
-                n: 3
-              }
+              body: [
+                {_id: 0, name: 'foo', count: 0},
+                {_id: 1, name: 'bar', count: 0},
+                {_id: 2, name: 'baz', count: 0},
+              ]
             }
           },
           {

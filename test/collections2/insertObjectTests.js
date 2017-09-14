@@ -41,7 +41,7 @@ __(function() {
           endpoints: {
             insertObject: o({
               _type: pong.Collection,
-              idGenerator: pong.util.idGenerator,
+              idGenerator: pong.util.collectionIdGenerator,
               enabled: {insertObject: true}
             })
           }
@@ -52,7 +52,7 @@ __(function() {
           context.global.idHeader = this.service.endpoints.insertObject.idHeader
         },
         teardown: function(context) {
-          pong.util.idGenerator.resetId()
+          pong.util.collectionIdGenerator.resetId()
           delete context.global.idHeader
           delete context.global.idParameter
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)

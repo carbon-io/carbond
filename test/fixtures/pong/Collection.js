@@ -23,8 +23,6 @@ var _Collection = oo({
     util.setNestedProps(this, this.overrides)
   },
 
-  idGenerator: util.idGenerator,
-
   preInsertOperation: function(config, req, res) {
     return util.overrideOrSuper(Collection, this, 'preInsertOperation', arguments, req)
   },

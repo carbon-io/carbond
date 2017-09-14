@@ -44,6 +44,10 @@ module.exports = o.main({
         }
       },
 
+      findConfig: {
+        supportsPagination: true
+      },
+
       find: function(context) {
         var self = this
         return _.map(_.range(context.limit), function(id) {

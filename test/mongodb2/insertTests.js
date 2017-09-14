@@ -13,6 +13,10 @@ var testtube = require('@carbon-io/carbon-core').testtube
 var carbond = require('../..')
 var pong = require('../fixtures/pong')
 
+function getObjectId(n) {
+  return new ejson.types.ObjectId(_.padStart(n.toString(16), 24, '0'))
+}
+
 /**************************************************************************
  * insert tests
  */
@@ -41,6 +45,7 @@ __(function() {
           endpoints: {
             insert: o({
               _type: pong.MongoDBCollection,
+              idGenerator: pong.util.mongoDbCollectionIdGenerator,
               enabled: {insert: true}
             })
           }
@@ -49,9 +54,10 @@ __(function() {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
           context.global.idParameter = this.service.endpoints.insert.idParameter
           context.global.idHeader = this.service.endpoints.insert.idHeader
+          debugger
         },
         teardown: function(context) {
-          pong.util.idGenerator.resetId()
+          pong.util.mongoDbCollectionIdGenerator.resetId()
           delete context.global.idHeader
           delete context.global.idParameter
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
@@ -75,7 +81,7 @@ __(function() {
             name: 'InsertSinglObjectInArrayTest',
             description: 'Test POST of array with single object',
             setup: function() {
-              pong.util.idGenerator.resetId()
+              pong.util.mongoDbCollectionIdGenerator.resetId()
             },
             reqSpec: function(context) {
               return {
@@ -94,14 +100,14 @@ __(function() {
               headers: function(headers, context) {
                 assert.deepEqual(
                   headers[context.global.idHeader],
-                  ejson.stringify(['0']))
+                  ejson.stringify([getObjectId(0)]))
                 assert.deepEqual(
                   headers.location,
-                  url.format({pathname: '/insert', query: {[context.global.idParameter]: '0'}}))
+                  url.format({pathname: '/insert', query: {[context.global.idParameter]: getObjectId(0).toString()}}))
               },
               body: function(body, context) {
                 assert.deepEqual(body, [{
-                  [context.global.idParameter]: 0,
+                  [context.global.idParameter]: getObjectId(0),
                   foo: 'bar'
                 }])
               }
@@ -111,7 +117,7 @@ __(function() {
             name: 'InsertMultipleObjectsTest',
             description: 'Test POST of array with multiple objects',
             setup: function() {
-              pong.util.idGenerator.resetId()
+              pong.util.mongoDbCollectionIdGenerator.resetId()
             },
             reqSpec: function(context) {
               return {
@@ -130,17 +136,26 @@ __(function() {
               headers: function(headers, context) {
                 assert.deepEqual(
                   headers[context.global.idHeader],
-                  ejson.stringify(['0', '1', '2']))
+                  ejson.stringify([getObjectId(0), getObjectId(1), getObjectId(2)]))
                 assert.deepEqual(
                   headers.location,
                   url.format(
-                    {pathname: '/insert', query: {[context.global.idParameter]: ['0', '1', '2']}}))
+                    {
+                      pathname: '/insert',
+                      query: {
+                        [context.global.idParameter]: [
+                          getObjectId(0).toString(),
+                          getObjectId(1).toString(),
+                          getObjectId(2).toString()
+                        ]
+                      }
+                    }))
               },
               body: function(body, context) {
                 assert.deepEqual(body, [
-                  {[context.global.idParameter]: 0, foo: 'bar'},
-                  {[context.global.idParameter]: 1, bar: 'baz'},
-                  {[context.global.idParameter]: 2, baz: 'yaz'}
+                  {[context.global.idParameter]: getObjectId(0), foo: 'bar'},
+                  {[context.global.idParameter]: getObjectId(1), bar: 'baz'},
+                  {[context.global.idParameter]: getObjectId(2), baz: 'yaz'}
                 ])
               }
             }

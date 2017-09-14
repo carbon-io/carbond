@@ -50,6 +50,7 @@ __(function() {
             return this._id++
           }
         }),
+        // pre-insert-memCacheCounterAdvanced
         insert: function(objects, context, options) {
           var self = this
           objects.forEach(function(object) {
@@ -57,10 +58,17 @@ __(function() {
           })
           return objects
         },
+        // post-insert-memCacheCounterAdvanced
+        // pre-insertObject-memCacheCounterAdvanced
         insertObject: function(object, context, options) {
           this.cache[object._id] = object
           return object
         },
+        // post-insertObject-memCacheCounterAdvanced
+        findConfig: {
+          supportsPagination: true
+        },
+        // pre-find-memCacheCounterAdvanced
         find: function(context, options) {
           var self = this
           var result = []
@@ -85,9 +93,13 @@ __(function() {
           }
           return result
         },
+        // post-find-memCacheCounterAdvanced
+        // pre-findObject-memCacheCounterAdvanced
         findObject: function(id, context, options) {
           return typeof this.cache[id] === 'undefined' ? null : this.cache[id]
         },
+        // post-findObject-memCacheCounterAdvanced
+        // pre-save-memCacheCounterAdvanced
         save: function(objects, context, options) {
           var idSet = new Set(objects.map(function(object) {
             return object._id
@@ -98,6 +110,8 @@ __(function() {
           this.cache = objects
           return objects
         },
+        // post-save-memCacheCounterAdvanced
+        // pre-saveObject-memCacheCounterAdvanced
         saveObject: function(object, context, options) {
           var created = typeof this.cache[object._id] === 'undefined'
           this.cache[object._id] = object
@@ -106,6 +120,8 @@ __(function() {
             val: object
           }
         },
+        // post-saveObject-memCacheCounterAdvanced
+        // pre-updateConfig-memCacheCounterAdvanced
         updateConfig: {
           updateSchema: {
             oneOf: [{
@@ -133,6 +149,8 @@ __(function() {
             }]
           }
         },
+        // post-updateConfig-memCacheCounterAdvanced
+        // pre-update-memCacheCounterAdvanced
         update: function(update, context, options) {
           var count = 0
           for (var id in this.cache) {
@@ -145,6 +163,8 @@ __(function() {
           }
           return count
         },
+        // post-update-memCacheCounterAdvanced
+        // pre-updateObjectConfig-memCacheCounterAdvanced
         updateObjectConfig: {
           updateObjectSchema: {
             oneOf: [{
@@ -172,6 +192,8 @@ __(function() {
             }]
           }
         },
+        // post-updateObjectConfig-memCacheCounterAdvanced
+        // pre-updateObject-memCacheCounterAdvanced
         updateObject: function(id, update, context, options) {
           if (this.cache[id]) {
             if (update.$inc) {
@@ -183,11 +205,23 @@ __(function() {
           }
           return 0
         },
-        remove: function(context, options) {
-          var n = Object.keys(this.cache).length
-          this.cache = {}
-          return n
+        // post-updateObject-memCacheCounterAdvanced
+        // pre-removeConfig-memCacheCounterAdvanced
+        removeConfig: {
+          returnsRemovedObjects: true
         },
+        // post-removeConfig-memCacheCounterAdvanced
+        // pre-remove-memCacheCounterAdvanced
+        remove: function(context, options) {
+          var objects = []
+          for (var id in this.cache) {
+            objects.push(this.cache[id])
+          }
+          this.cache = {}
+          return objects
+        },
+        // post-remove-memCacheCounterAdvanced
+        // pre-removeObject-memCacheCounterAdvanced
         removeObject: function(id, context, options) {
           if (this.cache[id]) {
             delete this.cache[id]
@@ -195,6 +229,7 @@ __(function() {
           }
           return 0
         }
+        // post-removeObject-memCacheCounterAdvanced
       }),
       memCacheCounterBasic: o({
         _type: carbon.carbond.collections.Collection,
@@ -227,6 +262,7 @@ __(function() {
             return (this._id++).toString()
           }
         }),
+        // pre-insert-memCacheCounterBasic
         insert: function(objects, context, options) {
           var self = this
           objects.forEach(function(object) {
@@ -234,10 +270,14 @@ __(function() {
           })
           return objects
         },
+        // post-insert-memCacheCounterBasic
+        // pre-insertObject-memCacheCounterBasic
         insertObject: function(object, context, options) {
           this.cache[object._id] = object
           return object
         },
+        // post-insertObject-memCacheCounterBasic
+        // pre-find-memCacheCounterBasic
         find: function(context, options) {
           var objects = []
           for (var id in this.cache) {
@@ -245,17 +285,25 @@ __(function() {
           }
           return objects
         },
+        // post-find-memCacheCounterBasic
+        // pre-findObject-memCacheCounterBasic
         findObject: function(id, context, options) {
           return this.cache[id] || null
         },
+        // post-findObject-memCacheCounterBasic
+        // pre-save-memCacheCounterBasic
         save: function(objects, context, options) {
           this.cache = objects
           return objects
         },
+        // post-save-memCacheCounterBasic
+        // pre-saveObject-memCacheCounterBasic
         saveObject: function(object, context, options) {
           this.cache[object._id] = object
           return object
         },
+        // post-saveObject-memCacheCounterBasic
+        // pre-updateConfig-memCacheCounterBasic
         updateConfig: {
           updateSchema: {
             type: 'object',
@@ -270,14 +318,19 @@ __(function() {
           required: ['n'],
           additionalProperties: false
         },
+        // post-updateConfig-memCacheCounterBasic
+        // pre-update-memCacheCounterBasic
         update: function(update, context, options) {
           var count = 0
           for (var id in this.cache) {
             this.cache[id].count += update.n
             count += 1
           }
-          return count
+          // demonstrate full return type
+          return {val: count, created: false}
         },
+        // post-update-memCacheCounterBasic
+        // pre-updateObjectConfig-memCacheCounterBasic
         updateObjectConfig: {
           updateObjectSchema: {
             type: 'object',
@@ -292,19 +345,26 @@ __(function() {
           required: ['n'],
           additionalProperties: false
         },
+        // post-updateObjectConfig-memCacheCounterBasic
+        // pre-updateObject-memCacheCounterBasic
         updateObject: function(id, update, context, options) {
           this.cache[id] += update.n
           return 1
         },
+        // post-updateObject-memCacheCounterBasic
+        // pre-remove-memCacheCounterBasic
         remove: function(context, options) {
           var n = Object.keys(this.cache).length
           this.cache = {}
           return n
         },
+        // post-remove-memCacheCounterBasic
+        // pre-removeObject-memCacheCounterBasic
         removeObject: function(id, context, options) {
           delete this.cache[id]
           return 1
         }
+        // post-removeObject-memCacheCounterBasic
       }),
       mongoCounterBasic: o({
         _type: carbon.carbond.collections.Collection,
@@ -353,26 +413,39 @@ __(function() {
             return ejson.types.ObjectId(oid)
           }
         }),
+        // pre-insert-mongoCounterBasic
         insert: function(objects, context, options) {
           return this.collection.insertObjects(objects)
         },
+        // post-insert-mongoCounterBasic
+        // pre-insertObject-mongoCounterBasic
         insertObject: function(object, context, options) {
           return this.collection.insertObject(object)
         },
+        // post-insertObject-mongoCounterBasic
+        // pre-find-mongoCounterBasic
         find: function(context, options) {
           return this.collection.find().toArray()
         },
+        // post-find-mongoCounterBasic
+        // pre-findObject-mongoCounterBasic
         findObject: function(id, context, options) {
           return this.collection.findOne({_id: id})
         },
+        // post-findObject-mongoCounterBasic
+        // pre-save-mongoCounterBasic
         save: function(objects, context, options) {
           this.collection.deleteMany()
           return this.collection.insertMany(objects).ops
         },
+        // post-save-mongoCounterBasic
+        // pre-saveObject-mongoCounterBasic
         saveObject: function(object, context, options) {
           return this.collection.findOneAndReplace(
             {_id: object._id}, object, {returnOriginal: false}).value
         },
+        // post-saveObject-mongoCounterBasic
+        // pre-updateConfig-mongoCounterBasic
         updateConfig: {
           updateSchema: {
             type: 'object',
@@ -387,9 +460,14 @@ __(function() {
           required: ['n'],
           additionalProperties: false
         },
+        // post-updateConfig-mongoCounterBasic
+        // pre-update-mongoCounterBasic
         update: function(update, context, options) {
+          // demonstrate abbreviated return type
           return this.collection.updateMany({}, {$inc: {count: update.n}}).modifiedCount
         },
+        // post-update-mongoCounterBasic
+        // pre-updateObjectConfig-mongoCounterBasic
         updateObjectConfig: {
           updateObjectSchema: {
             type: 'object',
@@ -404,16 +482,25 @@ __(function() {
           required: ['n'],
           additionalProperties: false
         },
+        // post-updateObjectConfig-mongoCounterBasic
+        // pre-updateObject-mongoCounterBasic
         updateObject: function(id, update, context, options) {
-          return this.collection.updateOne({_id: id}, {$inc: {count: update.n}}).modifiedCount
+          this.collection.updateObject(id, {$inc: {count: update.n}})
+          return 1
         },
+        // post-updateObject-mongoCounterBasic
+        // pre-remove-mongoCounterBasic
         remove: function(context, options) {
           return this.collection.deleteMany({}).deletedCount
         },
+        // post-remove-mongoCounterBasic
+        // pre-removeObject-mongoCounterBasic
         removeObject: function(id, context, options) {
           var _ejson = ejson
-          return this.collection.deleteOne({_id: id}).deletedCount
+          this.collection.removeObject(id)
+          return 1
         }
+        // post-removeObject-mongoCounterBasic
       }),
     }
   })

@@ -157,7 +157,7 @@ __(function() {
 
       // Test find with paging and implicit query
       {
-        name: 'findMaxPageSizeTest',
+        name: 'findLinkHeadersTest',
         reqSpec: function() {
           return {
             url: '/zipcodes',
@@ -174,17 +174,11 @@ __(function() {
             assert.equal(
               headers.link,
               '<http://localhost:8888/zipcodes?page=1&limit=15>; rel="next"')
-          },
-          body: function(body) {
-            assert(_.isArray(body))
-            assert.equal(
-              body.length,
-              this.parent.service.endpoints.zipcodes.findConfig.maxPageSize)
           }
         }
       },
       {
-        name: 'headMaxPageSizeTest',
+        name: 'headLinkHeadersSizeTest',
         reqSpec: function() {
           return {
             url: '/zipcodes',
@@ -201,8 +195,7 @@ __(function() {
             assert.equal(
               headers.link,
               '<http://localhost:8888/zipcodes?page=1&limit=15>; rel="next"')
-          },
-          body: null
+          }
         }
       },
 
@@ -293,7 +286,7 @@ __(function() {
           statusCode: 201,
           headers: function(headers, ctx) {
             assert.equal(headers.location, '/zipcodes?_id=94114')
-            assert.equal(ejson.parse(headers[ctx.global.idHeader]), ['94114'])
+            assert.deepStrictEqual(ejson.parse(headers[ctx.global.idHeader]), ['94114'])
           },
           body: [{
             _id: '94114',

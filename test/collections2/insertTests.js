@@ -41,7 +41,7 @@ __(function() {
           endpoints: {
             insert: o({
               _type: pong.Collection,
-              idGenerator: pong.util.idGenerator,
+              idGenerator: pong.util.collectionIdGenerator,
               enabled: {insert: true}
             })
           }
@@ -52,7 +52,7 @@ __(function() {
           context.global.idHeader = this.service.endpoints.insert.idHeader
         },
         teardown: function(context) {
-          pong.util.idGenerator.resetId()
+          pong.util.collectionIdGenerator.resetId()
           delete context.global.idHeader
           delete context.global.idParameter
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
@@ -76,7 +76,7 @@ __(function() {
             name: 'InsertSinglObjectInArrayTest',
             description: 'Test POST of array with single object',
             setup: function() {
-              pong.util.idGenerator.resetId()
+              pong.util.collectionIdGenerator.resetId()
             },
             reqSpec: function(context) {
               return {
@@ -112,7 +112,7 @@ __(function() {
             name: 'InsertMultipleObjectsTest',
             description: 'Test POST of array with multiple objects',
             setup: function() {
-              pong.util.idGenerator.resetId()
+              pong.util.collectionIdGenerator.resetId()
             },
             reqSpec: function(context) {
               return {
@@ -150,7 +150,7 @@ __(function() {
             name: 'InsertSingleObjectWithIdTest',
             description: 'Test POST of array with single object with ID',
             setup: function() {
-              pong.util.idGenerator.resetId()
+              pong.util.collectionIdGenerator.resetId()
             },
             reqSpec: function(context) {
               return {
@@ -172,7 +172,7 @@ __(function() {
             name: 'InsertMultipleObjectsWithIdsTest',
             description: 'Test POST of array with multiple objects with IDs',
             setup: function() {
-              pong.util.idGenerator.resetId()
+              pong.util.collectionIdGenerator.resetId()
             },
             reqSpec: function(context) {
               return {
@@ -204,7 +204,7 @@ __(function() {
           endpoints: {
             insert: o({
               _type: pong.Collection,
-              idGenerator: pong.util.idGenerator,
+              idGenerator: pong.util.collectionIdGenerator,
               enabled: {insert: true},
               insertConfig: {
                 insertSchema: {
@@ -230,7 +230,7 @@ __(function() {
           context.global.idHeader = this.service.endpoints.insert.idHeader
         },
         teardown: function(context) {
-          pong.util.idGenerator.resetId()
+          pong.util.collectionIdGenerator.resetId()
           delete context.global.idHeader
           delete context.global.idParameter
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
@@ -240,7 +240,7 @@ __(function() {
             name: 'failInsertSchemaTest',
             description: 'Test POST of array with malformed object',
             setup: function() {
-              pong.util.idGenerator.resetId()
+              pong.util.collectionIdGenerator.resetId()
               this.preInsertOperationSpy = 
                 sinon.spy(this.parent.service.endpoints.insert, 'preInsertOperation')
             },
@@ -262,7 +262,7 @@ __(function() {
             name: 'successInsertSchemaTest',
             description: 'Test POST of array with well formed objects',
             setup: function() {
-              pong.util.idGenerator.resetId()
+              pong.util.collectionIdGenerator.resetId()
             },
             reqSpec: function(context) {
               return {
@@ -306,7 +306,7 @@ __(function() {
           endpoints: {
             insert: o({
               _type: pong.Collection,
-              idGenerator: pong.util.idGenerator,
+              idGenerator: pong.util.collectionIdGenerator,
               enabled: {insert: true},
               insertConfig: {
                 returnsInsertedObject: false
@@ -320,7 +320,7 @@ __(function() {
           context.global.idHeader = this.service.endpoints.insert.idHeader
         },
         teardown: function(context) {
-          pong.util.idGenerator.resetId()
+          pong.util.collectionIdGenerator.resetId()
           delete context.global.idHeader
           delete context.global.idParameter
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
@@ -330,7 +330,7 @@ __(function() {
             name: 'InsertSinglObjectInArrayTest',
             description: 'Test POST of array with single object',
             setup: function() {
-              pong.util.idGenerator.resetId()
+              pong.util.collectionIdGenerator.resetId()
             },
             reqSpec: function(context) {
               return {
@@ -363,7 +363,7 @@ __(function() {
             name: 'InsertMultipleObjectsTest',
             description: 'Test POST of array with multiple objects',
             setup: function() {
-              pong.util.idGenerator.resetId()
+              pong.util.collectionIdGenerator.resetId()
             },
             reqSpec: function(context) {
               return {

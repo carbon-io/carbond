@@ -41,7 +41,7 @@ __(function() {
           endpoints: {
             update: o({
               _type: pong.Collection,
-              idGenerator: pong.util.idGenerator,
+              idGenerator: pong.util.collectionIdGenerator,
               enabled: {update: true}
             })
           }

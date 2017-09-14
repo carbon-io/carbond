@@ -4,10 +4,11 @@ Collections
 
 .. toctree::
 
-Carbond :js:class:`~carbond.Collection`\s provide a high-level abstraction for
-defining :js:class:`~carbond.Endpoint`\s that behave like a collection of
-resources. When you define a :js:class:`~carbond.Collection` you may define the
-following operation handler methods:
+Carbond :js:class:`~carbond.collections.Collection`\s provide a high-level
+abstraction for defining :js:class:`~carbond.Endpoint`\s that behave like a
+collection of resources. When you define a
+:js:class:`~carbond.collections.Collection` you may define the following
+operation handler methods:
 
 - ``insert(objects, context, options)``
 - ``find(context, options)``
@@ -25,24 +26,25 @@ Which results in the following tree of :js:class:`~carbond.Endpoint`\s and
 
 - ``/<collection>``
 
-  - ``POST`` which maps to :js:func:`~carbond.Collection.insert` and :js:func:`~carbond.Collection.insertObject`
-  - ``GET`` which maps to :js:func:`~carbond.Collection.find`
-  - ``PUT`` which maps to :js:func:`~carbond.Collection.save`
-  - ``PATCH`` which maps to :js:func:`~carbond.Collection.update`
-  - ``DELETE`` which maps to :js:func:`~carbond.Collection.remove`
+  - ``POST`` which maps to :js:func:`~carbond.collections.Collection.insert` and
+    :js:func:`~carbond.collections.Collection.insertObject`
+  - ``GET`` which maps to :js:func:`~carbond.collections.Collection.find`
+  - ``PUT`` which maps to :js:func:`~carbond.collections.Collection.save`
+  - ``PATCH`` which maps to :js:func:`~carbond.collections.Collection.update`
+  - ``DELETE`` which maps to :js:func:`~carbond.collections.Collection.remove`
 
 - ``/<collection>/:<id>``
 
-  - ``GET`` which maps to :js:func:`~carbond.Collection.findObject`
-  - ``PUT`` which maps to :js:func:`~carbond.Collection.saveObject`
-  - ``PATCH`` which maps to :js:func:`~carbond.Collection.updateObject`
-  - ``DELETE`` which maps to :js:func:`~carbond.Collection.removeObject`
+  - ``GET`` which maps to :js:func:`~carbond.collections.Collection.findObject`
+  - ``PUT`` which maps to :js:func:`~carbond.collections.Collection.saveObject`
+  - ``PATCH`` which maps to :js:func:`~carbond.collections.Collection.updateObject`
+  - ``DELETE`` which maps to :js:func:`~carbond.collections.Collection.removeObject`
 
-When defining a :js:class:`~carbond.Collection`, it is not required that all
+When defining a :js:class:`~carbond.collections.Collection`, it is not required that all
 operations be implemented. Instead, only define the operations that are required
-and enable them via the :js:attr:`~carbond.Collection.enabled` property.
+and enable them via the :js:attr:`~carbond.collections.Collection.enabled` property.
 For example, here is a collection that only defines and enables the
-:js:func:`~carbond.Collection.find` method:
+:js:func:`~carbond.collections.Collection.find` method:
 
 .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
     :language: javascript
@@ -52,22 +54,23 @@ For example, here is a collection that only defines and enables the
 Creating Collections
 ====================
 
-:js:class:`~carbond.Collection` endpoints can be created either by creating an
-instance of :js:class:`~carbond.Collection` (most common) or by sub-classing (as
-with the :js:class:`~carbond.mongodb.MongoDBCollection` class) and are
-configured through a combination of top-level collection properties and
-a set of :js:class:`~carbond.collections.CollectionOperationConfig`\ s.
+:js:class:`~carbond.collections.Collection` endpoints can be created either by
+creating an instance of :js:class:`~carbond.collections.Collection` (most
+common) or by sub-classing (as with the
+:js:class:`~carbond.mongodb.MongoDBCollection` class) and are configured through
+a combination of top-level collection properties and a set of
+:js:class:`~carbond.collections.CollectionOperationConfig`\ s.
 
 In most cases, you should only need to define the appropriate operation handlers
 (e.g., ``insert``, ``insertObject``, ``find``, ``findObject``, etc.) and enable
-them via the :js:attr:`~carbond.collections.Collection.enabled` property. Further
-configuration of the behavior of each operation at the HTTP level should be
-done using the appropriate collection operation config property (e.g.,
-:js:class:`~carbond.collections.Collection.insertConfig`). While the inputs and outputs to
-and from the operation handlers should remain the same, the configuration allows
-you to specify behaviors like whether the HTTP response body should contain the objects
-inserted or whether "upserts" should be allowed in response to ``PATCH`` requests
-(see: `Collection Configuration`_).
+them via the :js:attr:`~carbond.collections.Collection.enabled` property.
+Further configuration of the behavior of each operation at the HTTP level should
+be done using the appropriate collection operation config property (e.g.,
+:js:class:`~carbond.collections.Collection.insertConfig`). While the inputs and
+outputs to and from the operation handlers should remain the same, the
+configuration allows you to specify behaviors like whether the HTTP response
+body should contain the objects inserted or whether "upserts" should be allowed
+in response to ``PATCH`` requests (see: `Collection Configuration`_).
 
 There are two types of parameters passed to each operation handler, those that
 are required by the operation and those that serve to augment how that operation
@@ -90,16 +93,20 @@ The following sections describe the general semantics of each operation.
 Collection Operation Handlers
 -----------------------------
 
-The code snippets in the following sections come from the ``cache-col`` project in
-the ``carbond``\ 's ``code-frags`` directory. The "collection" in this case is
-simply an in memory object that maps IDs to objects in the collection.
+The code snippets in the following sections come from the ``counter-col``
+project in the ``carbond``\ 's ``code-frags`` directory. The "collection" in
+this case is simply meant to keep a count associated with some "name". Also, it
+should be noted that the ``collection`` property in the MongoDB examples is an
+instance of :js:class:`leafnode.collection.Collection`, a wrapper class that
+wraps the native MongoDB driver's ``Collection`` (see `mongo driver`_ docs), and
+not an instance of :js:class:`~carbond.collections.Collection`.
 
 insert
 ~~~~~~
 
 The :js:func:`~carbond.collections.Collection.insert` operation handler takes a
 list of objects and persists them to the backing datastore. Each individual
-object will be a EJSON blob whose structure will be validated with the
+object will be an EJSON blob whose structure will be validated with the
 appropriate `json schema`_ as definded by
 :js:attr:`~carbond.collections.Collection.schema` (note, the ID property will be
 omitted from the schema when validating). By default, this schema is very loose,
@@ -107,66 +114,97 @@ just specifying that the object should be of type ``object`` and allowing for
 any and all properties. Once the objects have been persisted, the list of
 objects with IDs populated should be returned.
 
-.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
-    :lines: 230-236
     :dedent: 8
+    :start-after: pre-insert-memCacheCounterBasic
+    :end-before: post-insert-memCacheCounterBasic
+    :caption: Example implementation using in-memory cache:
+
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
+    :language: javascript
+    :linenos:
+    :dedent: 8
+    :start-after: pre-insert-mongoCounterBasic
+    :end-before: post-insert-mongoCounterBasic
+    :caption: Example implementation using MongoDB:
 
 find
 ~~~~
 
 The :js:func:`~carbond.collections.Colletion.find` operation handler does not
 take any required arguments. Instead, the most basic implementation should
-return a list of objects in the collection in natural order. 
+return a list of objects in the collection in natural order.
 
-.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
-    :lines: 362-364
     :dedent: 8
+    :start-after: pre-find-memCacheCounterBasic
+    :end-before: post-find-memCacheCounterBasic
+    :caption: Example implementation using in-memory cache:
 
-Additionally, the ``find`` operation can be configured to support pagination and ID queries (see
-:js:attr:`~carbond.collections.FindConfig.supportsPagination` and
-:js:attr:`~carbond.collections.FindConfig.supportsIdQuery`). If pagination
-support is enabled, the handler should honor the parameters indicating the subset of objects
-to return (e.g., ``context.skip`` and ``context.limit``). If ID queries are
-supported (note, ID query support is necessary when supporting bulk inserts), a
-query parameter by the same name as
-:js:attr:`carbond.collections.Collection.idParameter` will be added and
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
+    :language: javascript
+    :linenos:
+    :dedent: 8
+    :start-after: pre-find-mongoCounterBasic
+    :end-before: post-find-mongoCounterBasic
+    :caption: Example implementation using MongoDB:
+
+Additionally, the ``find`` operation can be configured to support pagination and
+ID queries (see :js:attr:`~carbond.collections.FindConfig.supportsPagination`
+and :js:attr:`~carbond.collections.FindConfig.supportsIdQuery`). If pagination
+support is enabled, the handler should honor the parameters indicating the
+subset of objects to return (e.g., ``context.skip`` and ``context.limit``). If
+ID queries are supported (note, ID query support is necessary when supporting
+bulk inserts), a query parameter by the same name as
+:js:attr:`~carbond.collections.Collection.idParameter` will be added and
 ultimately passed to the handler via ``context[this.idParameter]``. The
-following example accommodates both of these options.
+following in-memory cache example accommodates both of these options:
 
-.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
-    :lines: 64-87
     :dedent: 8
+    :start-after: pre-find-memCacheCounterAdvanced
+    :end-before: post-find-memCacheCounterAdvanced
 
 save
 ~~~~
 
-The :js:func:`~carbond.Collection.save` operation handler takes a list of
+The :js:func:`~carbond.collections.Collection.save` operation handler takes a list of
 objects whose ID properties have been populated by the client and replaces the
 entire collection with these objects. This is a dangerous operation and should
 likely only be enabled in development or for super users. It should return the
 list of objects that make up the new collection.
 
-.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
-    :lines: 251-254
     :dedent: 8
+    :start-after: pre-save-memCacheCounterBasic
+    :end-before: post-save-memCacheCounterBasic
+    :caption: Example implementation using in-memory cache:
+
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
+    :language: javascript
+    :linenos:
+    :dedent: 8
+    :start-after: pre-save-mongoCounterBasic
+    :end-before: post-save-mongoCounterBasic
+    :caption: Example implementation using MongoDB:
 
 update
 ~~~~~~
 
-The :js:func:`~carbond.Collection.update` operation handler takes an ``update``
-spec object which should be applied to the collection as a whole. Similar to the
-``insert`` operation, the ``update`` spec object is an EJSON blob that will be
-weakly validated using a default schema. To enforce a particular structure, you
-can specify the update schema using the
-:js:attr:`~carbond.collections.UpdateSchema.updateSchema` property. 
+The :js:func:`~carbond.collections.Collection.update` operation handler takes an
+``update`` spec object which should be applied to the collection as a whole.
+Similar to the ``insert`` operation, the ``update`` spec object is an EJSON blob
+that will be weakly validated using a default schema. To enforce a particular
+structure, you can specify the update schema using the
+:js:attr:`~carbond.collections.UpdateSchema.updateSchema` property.
 
 Unlike other operations (excluding the ``remove`` operation and their ``object``
 variants), the ``update`` operation's return type varies depending on the
@@ -186,6 +224,22 @@ official return type for this handler is an ``object`` with two properties:
 Since upserts are not supported in this scenario, you can always omit
 ``created`` and simply set ``val`` to the number of documents updated.
 
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
+    :language: javascript
+    :linenos:
+    :dedent: 8
+    :start-after: pre-update-memCacheCounterBasic
+    :end-before: post-update-memCacheCounterBasic
+    :caption: Example implementation using in-memory cache:
+
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
+    :language: javascript
+    :linenos:
+    :dedent: 8
+    :start-after: pre-update-mongoCounterBasic
+    :end-before: post-update-mongoCounterBasic
+    :caption: Example implementation using MongoDB:
+
 Scenario 2 is much like scenario 1, except you also have to take the ``created``
 property into consideration. In other words, if an object is upserted, the
 return value should specify the number of objects upserted and the fact that
@@ -197,44 +251,59 @@ To do this, ``val`` should be set to the objects that were upserted and
 ``created`` should be set to ``true`` if objects were upserted. If no objects
 were upserted, then the behavior is the same as the previous two scenarios.
 
-.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
-    :language: javascript
-    :linenos:
-    :lines: 273-280
-    :dedent: 8
-
 remove
 ~~~~~~
 
-The :js:func:`~carbond.Collection.remove` operation handler does not take any
-required arguments. Instead, the ``remove`` operation should simply remove all
-objects in the collection. Similar to ``update`` operation, ``remove`` can be
-configured to return the removed objects. If this is possible given the backing
-datastore, it should return the objects removed (e.g., if five objects were
-removed, the return value should look something like ``[obj1, obj2, obj3, obj4,
-obj4]``). If not, the number of objects removed should be returned.
+The :js:func:`~carbond.collections.Collection.remove` operation handler does not
+take any required arguments. Instead, the ``remove`` operation should simply
+remove all objects in the collection. Similar to ``update`` operation,
+``remove`` can be configured to return the removed objects. If this is possible
+given the backing datastore, it should return the objects removed (e.g., if five
+objects were removed, the return value should look something like ``[obj1, obj2,
+obj3, obj4, obj4]``):
 
-.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
-    :lines: 299-303
     :dedent: 8
+    :start-after: pre-remove-memCacheCounterAdvanced
+    :end-before: post-remove-memCacheCounterAdvanced
+
+If not, as is the case with MongoDB, the number of objects removed should be returned:
+
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
+    :language: javascript
+    :linenos:
+    :dedent: 8
+    :start-after: pre-remove-mongoCounterBasic
+    :end-before: post-remove-mongoCounterBasic
 
 insertObject
 ~~~~~~~~~~~~
 
-The :js:func:`~carbond.Collection.insertObject` operation handler takes a single
-object as its first argument and persists it to the backing datastore. Similar
-to the :js:func:`~carbond.Collection.insert` operation handler, the object will
-be an EJSON blob whose structure will be validated with the appropriate `json
-schema`_ as definded by :js:attr:`~carbond.collections.Collection.schema`. Once
-the object has been persisted, it should be returned with its ID populated.
+The :js:func:`~carbond.collections.Collection.insertObject` operation handler
+takes a single object as its first argument and persists it to the backing
+datastore. Similar to the :js:func:`~carbond.collections.Collection.insert`
+operation handler, the object will be an EJSON blob whose structure will be
+validated with the appropriate `json schema`_ as definded by
+:js:attr:`~carbond.collections.Collection.schema`. Once the object has been
+persisted, it should be returned with its ID populated.
 
-.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
-    :lines: 237-240
     :dedent: 8
+    :start-after: pre-insertObject-memCacheCounterBasic
+    :end-before: post-insertObject-memCacheCounterBasic
+    :caption: Example implementation using in-memory cache:
+
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
+    :language: javascript
+    :linenos:
+    :dedent: 8
+    :start-after: pre-insertObject-mongoCounterBasic
+    :end-before: post-insertObject-mongoCounterBasic
+    :caption: Example implementation using MongoDB:
 
 findObject
 ~~~~~~~~~~
@@ -243,61 +312,105 @@ The :js:func:`~carbond.Colletion.findObject` operation takes an ``id`` parameter
 should return the object from the collection with that ``id`` if it exists and
 ``null`` otherwise.
 
-.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
-    :lines: 248-250
     :dedent: 8
+    :start-after: pre-findObject-memCacheCounterBasic
+    :end-before: post-findObject-memCacheCounterBasic
+    :caption: Example implementation using in-memory cache:
+
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
+    :language: javascript
+    :linenos:
+    :dedent: 8
+    :start-after: pre-findObject-mongoCounterBasic
+    :end-before: post-findObject-mongoCounterBasic
+    :caption: Example implementation using MongoDB:
 
 saveObject
 ~~~~~~~~~~
 
-The :js:func:`~carbond.Collection.saveObject` operation handler takes a single
-object whose ID property has been populated by the client and should replace the
-object in the collection with the same ID. Like ``update``, ``saveObject`` can
-be configured to support inserts. It is left up to the concrete implementation
-of the collection to decide how this is communicated to the operation handler.
-:js:class:`~carbond.mongodb.MongoDBCollection`, for instance, updates the
-``options`` parameter to include ``{upsert: true}`` if inserts are allowed.  If
-inserts are not allowed and there is no object that has a matching ID, ``null``
-should be returned. Otherwise, the object that was saved should be returned and
-``created`` should be set to ``true`` if an insert took place.
+The :js:func:`~carbond.collections.Collection.saveObject` operation handler
+takes a single object whose ID property has been populated by the client and
+should replace the object in the collection with the same ID. Like ``update``,
+``saveObject`` can be configured to support inserts. It is left up to the
+concrete implementation of the collection to decide how this is communicated to
+the operation handler.  :js:class:`~carbond.mongodb.MongoDBCollection`, for
+instance, updates the ``options`` parameter to include ``{upsert: true}`` if
+inserts are allowed (see
+:js:func:`leafnode.collection.Collection.findOneAndReplace`).  If inserts are
+not allowed and there is no object that has a matching ID, ``null`` should be
+returned. Otherwise, the object that was saved should be returned and
+``created`` should be set to ``true``.
 
-.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
-    :lines: 255-258
     :dedent: 8
+    :start-after: pre-saveObject-memCacheCounterBasic
+    :end-before: post-saveObject-memCacheCounterBasic
+    :caption: Example implementation using in-memory cache:
+
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
+    :language: javascript
+    :linenos:
+    :dedent: 8
+    :start-after: pre-saveObject-mongoCounterBasic
+    :end-before: post-saveObject-mongoCounterBasic
+    :caption: Example implementation using MongoDB:
 
 updateObject
 ~~~~~~~~~~~~
 
-The :js:func:`~carbond.Collection.updateObject` operation handler takes an
-``id`` and an ``update`` object and should apply that update to an object in the
-collection with a matching ID. Similar to :js:func:`~carbond.Collection.update`,
-the ``updateObject`` operation can be configured to support upserts and to
-return the upserted document with all the same return value caveats. 
+The :js:func:`~carbond.collections.Collection.updateObject` operation handler
+takes an ``id`` and an ``update`` object and should apply that update to an
+object in the collection with a matching ID. Similar to
+:js:func:`~carbond.collections.Collection.update`, the ``updateObject``
+operation can be configured to support upserts and to return the upserted
+document with all the same return value caveats.
 
-.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
-    :lines: 295-298
     :dedent: 8
+    :start-after: pre-updateObject-memCacheCounterBasic
+    :end-before: post-updateObject-memCacheCounterBasic
+    :caption: Example implementation using in-memory cache:
+
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
+    :language: javascript
+    :linenos:
+    :dedent: 8
+    :start-after: pre-updateObject-mongoCounterBasic
+    :end-before: post-updateObject-mongoCounterBasic
+    :caption: Example implementation using MongoDB:
 
 removeObject
 ~~~~~~~~~~~~
 
-The :js:func:`~carbond.Collection.removeObject` operation handler takes an
-``id`` argument and should remove the object with the matching ID. Similar to
-:js:func:`~carbond.Collection.remove`, the return value for this operation will
-depend on how the concrete implementation of the collection is configured and if
-the underlying datastore supports returning the removed object.
+The :js:func:`~carbond.collections.Collection.removeObject` operation handler
+takes an ``id`` argument and should remove the object with the matching ID.
+Similar to :js:func:`~carbond.collections.Collection.remove`, the return value
+for this operation will depend on how the concrete implementation of the
+collection is configured and if the underlying datastore supports returning the
+removed object.
 
-.. literalinclude:: ../code-frags/cache-col/lib/CacheCol.js
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
-    :lines: 304-307
     :dedent: 8
+    :start-after: pre-removeObject-memCacheCounterBasic
+    :end-before: post-removeObject-memCacheCounterBasic
+    :caption: Example implementation using in-memory cache:
+
+.. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
+    :language: javascript
+    :linenos:
+    :dedent: 8
+    :start-after: pre-removeObject-mongoCounterBasic
+    :end-before: post-removeObject-mongoCounterBasic
+    :caption: Example implementation using MongoDB:
 
 Enabling / Disabling Operations
 -------------------------------
@@ -344,7 +457,7 @@ Collection Configuration
 
 :js:class:`~carbond.collections.Collection`\ s support configuration at multiple
 levels with two types of configuration: ``Collection`` level configuration,
-which may have have implications for certain collection operations, and
+which may have implications for certain collection operations, and
 ``CollectionOperation`` specific configs.
 
 The base ``Collection`` configuration consists of a few properties:
@@ -360,9 +473,10 @@ The base ``Collection`` configuration consists of a few properties:
         documentation.
     :js:attr:`~carbond.collections.Collection.idGenerator`
         If present, this must be an object with at least one method:
-        ``generateId``. This method does not take any parameters and should
-        return a suitable ID for a collection object on ``insert`` or
-        ``insertObject``.
+        ``generateId``.  This method will be passed the
+        :js:class:`~carbond.collections.Collection` instance along with the
+        current :js:class:`~carbond.Request` object and should return a suitable
+        ID for the object being inserted on ``insert`` or ``insertObject``.
     :js:attr:`~carbond.collections.Collection.idPathParameter`
         This is the name of the path parameter used to capture an object ID for
         object specific endpoints (e.g.,
@@ -386,7 +500,7 @@ it will be instantiated as ``o({}, this.InsertConfigClass)``, where
 ``this.InsertConfigClass`` is a class member that allows subclasses of
 :js:class:`carbond.collection.Collection` to override the default config class).
 Operations should be configured with the following properties:
-    
+
 - :js:attr:`~carbond.collections.Collection.insertConfig`
 - :js:attr:`~carbond.collections.Collection.findConfig`
 - :js:attr:`~carbond.collections.Collection.saveConfig`
@@ -464,7 +578,7 @@ not support certain features (e.g., returning removed objects), should subclass
 the individual config classes and override these member properties in the
 subclass. When the subclass is instantiated, it will use these overridden config
 classes instead of the default ones as defined on
-:js:class:`!carbond.collections.Collection`.
+:js:class:`~carbond.collections.Collection`.
 
 CollectionOperationConfig
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -492,10 +606,10 @@ or not inserted objects are returned
 (:js:attr:`~carbond.collection.InsertConfig.returnsInsertedObjects`) in the
 response body and to define a schema separate from the collection level schema
 that will be used to verify incoming objects
-(:js:attr:`~carbond.collection.InsertConfig.insertSchema`). 
+(:js:attr:`~carbond.collection.InsertConfig.insertSchema`).
 
 .. code-block:: js
-    
+
     ...
     insertConfig: {
       description: 'My collection insert operation',
@@ -527,10 +641,10 @@ operation config class and the default for
 :js:class:`~carbond.collections.Collection`. By default, the ``find`` operation
 supports ID queries and pagination. ID queries on the ``find`` operation are
 used by Carbon to communicate the location (i.e., the ``Location`` header) of
-objects when doing a bulk insert. If this is disabled, then the ``insert``
+objects in response to a bulk insert. If this is disabled, then the ``insert``
 operation should likely be disabled as well (note, ``insertObject`` makes use of
 the ID path parameter instead). Enabling pagination adds the ``page`` parameter
-to the list of parameters for the collection operation. Note, ``find`` operation
+to the list of parameters for the collection operation. Note, the ``find`` operation
 parameter list includes two more parameters: ``skip`` and ``limit``. When
 pagination is enabled, it will be transparent to the operation handlers
 themselves. Instead, :js:class:`~carbond.collections.Collection` will update
@@ -551,7 +665,7 @@ enabled or not.
 In the previous example, ID queries and pagination are disabled. This will
 result in the omission of both parameters from the collection operation
 parameters list that are used to support these features (note, ``skip`` and
-``limit`` will still be present).
+``limit`` will still be present, but ``page`` will not be honored).
 
 SaveConfig
 ~~~~~~~~~~
@@ -564,7 +678,7 @@ specify a separate schema for the objects being saved and whether or not the
 objects saved are returned in the response.
 
 .. code-block:: js
-    
+
     ...
     saveConfig: {
       description: 'My collection save operation',
@@ -638,7 +752,7 @@ parameter will be added to the list of parameters for the collection operation.
             }
           }
         ]
-      } 
+      }
     }
     ...
 
@@ -698,7 +812,7 @@ configure a schema specific to this operation and to specify whether the
 inserted object should be returned or not.
 
 .. code-block:: js
-    
+
     ...
     insertObjectConfig: {
       description: 'My collection insertObject operation',
@@ -725,7 +839,7 @@ with the property ``supportsHead``, which allows you to configure whether the
 HEAD operation is allowed (in addition to GET) on this endpoint.
 
 .. code-block:: js
-    
+
     ...
     findObjectConfig: {
       description: 'My collection findObject operation',
@@ -734,7 +848,7 @@ HEAD operation is allowed (in addition to GET) on this endpoint.
     ...
 
 .. .. code-block:: js
-    
+
 ..     ...
 ..     findObjectConfig: {
 ..       description: 'My collection findObject operation',
@@ -768,9 +882,6 @@ HEAD operation is allowed (in addition to GET) on this endpoint.
 .. response schema that will validate the structure of objects returned from the
 .. ``findObject`` handler).
 
-.. todo:: i think this makes more sense when we overhaul responses, since
-          there's not a great way to configure the response body schema here
-
 SaveObjectConfig
 ~~~~~~~~~~~~~~~~
 
@@ -786,7 +897,7 @@ since it is an operation at the collection level. Instead, it "replaces" the
 collection.
 
 .. code-block:: js
-    
+
     ...
     saveObjectConfig: {
       description: 'My collection saveObject operation',
@@ -794,6 +905,8 @@ collection.
       returnsSavedObject: false
     }
     ...
+
+.. todo:: should this be "supportsUpsert" for consistency with update?
 
 
 UpdateObjectConfig
@@ -876,7 +989,7 @@ semantics of each operation. :js:class:`~carbond.collections.Collection`
 endeavors to handle much of the HTTP boilerplate code that you would have to
 implement to build your API. The following sections aim to clarify the behavior
 of :js:class:`~carbond.collection.Collection` operations at the HTTP layer.
-      
+
 POST /<collection>
 ------------------
 
@@ -924,10 +1037,10 @@ In the following tables, ``bulk`` will refer to requests whose body is an
       - Contains the object URL
     * - :js:attr:`~carbond.collections.Collection.idHeader`
       - ``bulk``
-      - Contains the EJSON serialized ID of the inserted object
+      - Contains the EJSON serialized IDs of the inserted objects
     * - :js:attr:`~carbond.collections.Collection.idHeader`
       - ``object``
-      - Contains the EJSON serialized IDs of the inserted objects
+      - Contains the EJSON serialized ID of the inserted object
 
 .. list-table:: Status Codes
     :widths: 3 3 10
@@ -935,7 +1048,7 @@ In the following tables, ``bulk`` will refer to requests whose body is an
 
     * - Status
       - Request Type
-      - Description  
+      - Description
     * - ``201``
       - ``bulk``
       - The objects were successfully inserted. The response body will contain
@@ -964,7 +1077,7 @@ GET /<collection>
     * - Name
       - Location
       - Description
-    * - :js:attr:`carbond.collections.Collection.idParameter`
+    * - <:js:attr:`~carbond.collections.Collection.idParameter`>
       - query
       - Contains the IDs of objects to be retrieved. This parameter is only
         present if :js:attr:`~carbond.collections.FindConfig.supportsIdQuery` is
@@ -986,7 +1099,7 @@ GET /<collection>
     :header-rows: 1
 
     * - Status
-      - Description  
+      - Description
     * - ``200``
       - The response body will contain a list of objects in the collection
         subject to the parameters passed in the request
@@ -1016,7 +1129,7 @@ PUT /<collection>
     :header-rows: 1
 
     * - Status
-      - Description  
+      - Description
     * - ``200``
       - The collection was successfully replaced. The new collection will be
         returned in the response if
@@ -1024,7 +1137,7 @@ PUT /<collection>
         ``true``.
     * - ``204``
       - The collection was successfully replaced. The response body will be
-        empty if 
+        empty if
         :js:attr:`~carbond.collections.SaveConfig.returnsSavedObjects` is
         ``false``.
     * - ``400``
@@ -1071,7 +1184,7 @@ PATCH /<collection>
     :header-rows: 1
 
     * - Status
-      - Description  
+      - Description
     * - ``200``
       - Objects were successfully updated. The number of updated objects will be
         returned in the body.
@@ -1096,11 +1209,17 @@ REMOVE /<collection>
     :header-rows: 1
 
     * - Status
-      - Description  
+      - Description
     * - ``200``
       - Returns the list of objects removed in the response body if
         :js:attr:`~carbond.collections.RemoveConfig.returnsRemovedObjects` is
         ``true`` or the number of objects removed if not.
+    * - ``400``
+      - The request was malformed
+    * - ``403``
+      - The request is not authorized
+    * - ``500``
+      - There was an internal error processing the request
 
 GET /<collection>/:<id>
 -----------------------
@@ -1122,7 +1241,7 @@ GET /<collection>/:<id>
     :header-rows: 1
 
     * - Status
-      - Description  
+      - Description
     * - ``200``
       - The response body will contain the object whose ID matches the value
         passed in :js:attr:`~carbond.collections.Collection.idPathParameter`
@@ -1161,18 +1280,18 @@ PUT /<collection>/:<id>
       - Description
     * - ``Location``
       - Contains the URL of the new object. Note, this is only possible if
-        :js:attr:`~carbond.collections.SaveObjectConfig.supportsInsert is ``true``.
+        :js:attr:`~carbond.collections.SaveObjectConfig.supportsInsert` is ``true``.
     * - :js:attr:`~carbond.collections.Collection.idHeader`
       - Contains the EJSON serialized ID of the new object. Note, this is only
         possible if
-        :js:attr:`~carbond.collections.SaveObjectConfig.supportsInsert is ``true``.
+        :js:attr:`~carbond.collections.SaveObjectConfig.supportsInsert` is ``true``.
 
 .. list-table:: Status Codes
     :widths: 3 10
     :header-rows: 1
 
     * - Status
-      - Description  
+      - Description
     * - ``200``
       - The response body will contain the saved object. This response code is
         only possible if
@@ -1240,7 +1359,7 @@ PATCH /<collection>/:<id>
     :header-rows: 1
 
     * - Status
-      - Description  
+      - Description
     * - ``200``
       - The object was successfully updated. The number of updated objects (1) will be
         returned in the body.
@@ -1281,7 +1400,7 @@ REMOVE /<collection>/:<id>
     :header-rows: 1
 
     * - Status
-      - Description  
+      - Description
     * - ``200``
       - The object was successfully removed. If
         :js:attr:`~carbond.collections.RemoveObjectConfig.returnsRemovedObject`
@@ -1371,7 +1490,7 @@ respectively.  Query support is configurable via the
 :js:attr:`~carbond.mongodb.MongoDBFindConfig.supportsQuery` property. If support
 is enabled, the ``query`` parameter will be added to the list of parameters for
 that query (see: `MongoDB query
-<https://docs.mongodb.com/manual/reference/operator/query/>`_). 
+<https://docs.mongodb.com/manual/reference/operator/query/>`_).
 
 MongoDBUpdateConfig
 ~~~~~~~~~~~~~~~~~~~
@@ -1439,7 +1558,8 @@ pre<OPERATION NAME>Operation
 The base ``pre<OPERATION NAME>Operation`` hooks are responsible for building the
 ``context`` and ``options`` parameters based on the incoming request and config
 for this operation. As such, the return value of these methods should be an
-object consisting of two properties: ``context`` and ``options``. It should be
+object consisting of two properties: ``context`` and ``options`` (see
+:js:class:`~carbond.collections.Collection.PreOperationResult`). It should be
 noted that at this step, ``context`` should contain *all* parameters that will
 be passed to the operation handler (e.g., for the ``updateObject`` operation,
 ``preUpdateObjectOperation`` would return a ``context`` that contained the ID
@@ -1447,13 +1567,12 @@ parameter, ``update`` parameter, along with any other parameters or context that
 may be relevant). In general, ``context`` is simply assigned ``req.parameters``
 and ``options`` is assigned ``config.options``.
 
-The :js:meth:`~carbond.collections.Collection.preInsertObjectOperation` method,
-for instance,
-validates that the ID property is not present in the object to be inserted into
-the collection. Additionally, if
+The :js:func:`~carbond.collections.Collection.preInsertObjectOperation` method,
+for instance, validates that the ID property is not present in the object to be
+inserted into the collection. Additionally, if
 :js:attr:`~carbond.collections.Collection.idGenerator` is present, it will call
 its ``generateId`` method and set the ID for the incoming object that will
-ultimately be passed to the operation handler method. 
+ultimately be passed to the operation handler method.
 
 It should be noted, that required parameters to an operation handler (``object``
 in the case of ``insertObject(object, context, options)``) should remain in the
@@ -1462,7 +1581,7 @@ passed as the leading parameters to the handler.
 
 As an example, let's say that we want objects in a collection belonging to
 separate users to appear as if they share the same IDs (e.g. user "foo" would
-see a different object that user "bar" when making a request to
+see a different object than user "bar" when making a request to
 ``/collection/1``). You could extend ``preFindObjectOperation`` as follows:
 
 .. code-block:: js
@@ -1483,7 +1602,7 @@ simply pass through their arguments. The requirements for return value when
 overriding are loose. You can either augment the parameters by side-effect and
 return nothing or override parameters by returning an object whose keys match
 the parameter names and whose values are the updated parameters. You can omit
-any parameters that you do not intend to override. 
+any parameters that you do not intend to override.
 
 For example, if you were creating an instance of
 :js:class:`~carbond.mongodb.MongoDBCollection` and wanted to add a ``created``
@@ -1542,3 +1661,4 @@ access control policies (see: :ref:`access control <access-control-ref>`).
 
 .. _json schema: http://json-schema.org/
 .. _json patch: http://jsonpatch.com/
+.. _mongo driver: http://jsonpatch.com/

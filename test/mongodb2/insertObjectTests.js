@@ -51,7 +51,7 @@ __(function() {
           context.global.idHeader = this.service.endpoints.insertObject.idHeader
         },
         teardown: function(context) {
-          pong.util.idGenerator.resetId()
+          pong.util.mongoDbCollectionIdGenerator.resetId()
           delete context.global.idHeader
           delete context.global.idParameter
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
