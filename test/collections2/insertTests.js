@@ -93,16 +93,16 @@ __(function() {
             resSpec: {
               statusCode: 201,
               headers: function(headers, context) {
-                assert.deepEqual(
+                assert.deepStrictEqual(
                   headers[context.global.idHeader],
                   ejson.stringify(['0']))
-                assert.deepEqual(
+                assert.deepStrictEqual(
                   headers.location,
                   url.format({pathname: '/insert', query: {[context.global.idParameter]: '0'}}))
               },
               body: function(body, context) {
-                assert.deepEqual(body, [{
-                  [context.global.idParameter]: 0,
+                assert.deepStrictEqual(body, [{
+                  [context.global.idParameter]: '0',
                   foo: 'bar'
                 }])
               }
@@ -129,19 +129,19 @@ __(function() {
             resSpec: {
               statusCode: 201,
               headers: function(headers, context) {
-                assert.deepEqual(
+                assert.deepStrictEqual(
                   headers[context.global.idHeader],
                   ejson.stringify(['0', '1', '2']))
-                assert.deepEqual(
+                assert.deepStrictEqual(
                   headers.location,
                   url.format(
                     {pathname: '/insert', query: {[context.global.idParameter]: ['0', '1', '2']}}))
               },
               body: function(body, context) {
-                assert.deepEqual(body, [
-                  {[context.global.idParameter]: 0, foo: 'bar'},
-                  {[context.global.idParameter]: 1, bar: 'baz'},
-                  {[context.global.idParameter]: 2, baz: 'yaz'}
+                assert.deepStrictEqual(body, [
+                  {[context.global.idParameter]: '0', foo: 'bar'},
+                  {[context.global.idParameter]: '1', bar: 'baz'},
+                  {[context.global.idParameter]: '2', baz: 'yaz'}
                 ])
               }
             }
@@ -184,8 +184,8 @@ __(function() {
                   })
                 },
                 body: [
-                  {[context.global.idParameter]: '0', foo: 'bar'}, 
-                  {[context.global.idParameter]: '1', bar: 'baz'}, 
+                  {[context.global.idParameter]: '0', foo: 'bar'},
+                  {[context.global.idParameter]: '1', bar: 'baz'},
                   {[context.global.idParameter]: '2', baz: 'yaz'}
                 ]
               }
@@ -211,14 +211,14 @@ __(function() {
                   type: 'object',
                   properties: {
                     foo: {
-                      type: 'string', 
+                      type: 'string',
                       pattern: '^(bar|baz|yaz)$'
                     }
                   },
-                  additionalProperties: {
-                    type: 'string',
-                    patter: '^\\d+$'
-                  }
+                  patternProperties: {
+                    '^\\d+$': {type: 'string'}
+                  },
+                  additionalProperties: false
                 }
               }
             })
@@ -241,11 +241,6 @@ __(function() {
             description: 'Test POST of array with malformed object',
             setup: function() {
               pong.util.collectionIdGenerator.resetId()
-              this.preInsertOperationSpy = 
-                sinon.spy(this.parent.service.endpoints.insert, 'preInsertOperation')
-            },
-            teardown: function() {
-              this.preInsertOperationSpy.restore()
             },
             reqSpec: function(context) {
               return {
@@ -273,25 +268,25 @@ __(function() {
                     insert: {$args: 0}
                   })
                 },
-                body: [{foo: 'bar'}, {bar: '666'}, {baz: '666'}]
+                body: [{foo: 'bar'}, {'666': 'bar'}, {'777': 'baz'}]
               }
             },
             resSpec: {
               statusCode: 201,
               headers: function(headers, context) {
-                assert.deepEqual(
+                assert.deepStrictEqual(
                   headers[context.global.idHeader],
                   ejson.stringify(['0', '1', '2']))
-                assert.deepEqual(
+                assert.deepStrictEqual(
                   headers.location,
                   url.format(
                     {pathname: '/insert', query: {[context.global.idParameter]: ['0', '1', '2']}}))
               },
               body: function(body, context) {
-                assert.deepEqual(body, [
-                  {[context.global.idParameter]: 0, foo: 'bar'},
-                  {[context.global.idParameter]: 1, bar: '666'},
-                  {[context.global.idParameter]: 2, baz: '666'}
+                assert.deepStrictEqual(body, [
+                  {[context.global.idParameter]: '0', foo: 'bar'},
+                  {[context.global.idParameter]: '1', '666': 'bar'},
+                  {[context.global.idParameter]: '2', '777': 'baz'}
                 ])
               }
             }
@@ -309,7 +304,7 @@ __(function() {
               idGenerator: pong.util.collectionIdGenerator,
               enabled: {insert: true},
               insertConfig: {
-                returnsInsertedObject: false
+                returnsInsertedObjects: false
               }
             })
           }
@@ -347,16 +342,14 @@ __(function() {
             resSpec: {
               statusCode: 201,
               headers: function(headers, context) {
-                assert.deepEqual(
+                assert.deepStrictEqual(
                   headers[context.global.idHeader],
                   ejson.stringify(['0']))
-                assert.deepEqual(
+                assert.deepStrictEqual(
                   headers.location,
                   url.format({pathname: '/insert', query: {[context.global.idParameter]: '0'}}))
               },
-              body: function(body, context) {
-                debugger
-              }
+              body: undefined
             }
           },
           {
@@ -380,17 +373,15 @@ __(function() {
             resSpec: {
               statusCode: 201,
               headers: function(headers, context) {
-                assert.deepEqual(
+                assert.deepStrictEqual(
                   headers[context.global.idHeader],
                   ejson.stringify(['0', '1', '2']))
-                assert.deepEqual(
+                assert.deepStrictEqual(
                   headers.location,
                   url.format(
                     {pathname: '/insert', query: {[context.global.idParameter]: ['0', '1', '2']}}))
               },
-              body: function(body, context) {
-                debugger
-              }
+              body: undefined
             }
           },
         ]

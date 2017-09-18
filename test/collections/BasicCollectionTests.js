@@ -675,7 +675,10 @@ __(function() {
                     name: '_id',
                     description: 'Id query parameter',
                     schema: {
-                      type: 'string'
+                      oneOf: [
+                        {type: 'string'},
+                        {type: 'array', items: {type: 'string'}}
+                      ]
                     },
                     location: 'query',
                     required: false,

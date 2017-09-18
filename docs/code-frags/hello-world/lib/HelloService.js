@@ -13,6 +13,8 @@ __(function() {
      * implementation...
      */
     port: 8888,
+    // first definition is for presentation, second is for testsing
+    dbUri: "mongodb://localhost:27017/mydb",
     dbUri: _o('env:CARBONIO_TEST_DB_URI') || "mongodb://localhost:27017/mydb",
     endpoints: {
       feedback: o({

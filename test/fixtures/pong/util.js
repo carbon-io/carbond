@@ -56,7 +56,9 @@ function overrideOrSuper(type, object, name, args, reqOrContext, noSuper) {
     var pong = undefined
     var ret = undefined
     if (reqOrContext instanceof IncomingMessage) {
-      pong = ejson.parse(reqOrContext.header('x-pong'))
+      if (!_.isNil(reqOrContext.header('x-pong'))) {
+        pong = ejson.parse(reqOrContext.header('x-pong'))
+      }
     } else {
       pong = reqOrContext.__pong
     }

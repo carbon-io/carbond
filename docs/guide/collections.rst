@@ -49,7 +49,7 @@ For example, here is a collection that only defines and enables the
 .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
     :language: javascript
     :linenos:
-    :lines: 1-11,15-19,30,32-33,54-58,61-
+    :lines: 1-11,15,17,19-21,32,34-35,56-60,63-
 
 Creating Collections
 ====================
@@ -441,7 +441,7 @@ like:
 .. code-block:: js
 
     ...
-    enabled: {'*': true, find: false},
+    enabled: {find: false, '*': true},
     ...
 
 When instantiating a concrete collection implementation, you will likely have to
@@ -451,6 +451,7 @@ exposed to the user:
 .. literalinclude:: ../code-frags/hello-world-mongodb/lib/HelloService.js
     :language: javascript
     :linenos:
+    :lines: 1-12,14,16-
 
 Collection Configuration
 ------------------------
@@ -760,30 +761,6 @@ The example config above disallows upserts and specifies a simple schema that
 allows updates to increment or decrement properties in the collection by an
 arbitrary amount (e.g.  ``{inc: {foo: 5}}`` or ``{dec: {foo: 1}}``).
 
-.. .. code-block:: js
-
-..    ...
-..    updateConfig: {
-..      description: 'My collection update operation',
-..      updateSchema: {
-..        type: 'object',
-..        properties: {
-..          op: {
-..            type: 'string',
-..            enum: ['add', 'remove'],
-..          },
-..          path: {type: 'string'},
-..          value: {}
-..        },
-..        required: ['op', 'path', 'value'],
-..        additionalProperties: false
-..      }
-..    },
-..    ...
-
-.. The example above specifies a simplistic schema for `json patch`_ style updates.
-.. Note, upserts and returning upserted objects are disabled by default.
-
 RemoveConfig
 ~~~~~~~~~~~~
 
@@ -847,41 +824,6 @@ HEAD operation is allowed (in addition to GET) on this endpoint.
     },
     ...
 
-.. .. code-block:: js
-
-..     ...
-..     findObjectConfig: {
-..       description: 'My collection findObject operation',
-..       additionalParameters: {
-..         project: {
-..           name: 'project',
-..           location: 'query',
-..           schema: {
-..             type: 'object',
-..             additionalProperties: {
-..               oneOf: [
-..                 {
-..                   type: 'number',
-..                   minimum: 0,
-..                   maximum: 1,
-..                   multipleOf: 1
-..                 },
-..                 {
-..                   type: 'boolean'
-..                 }
-..               ]
-..             }
-..           }
-..         }
-..       }
-..     },
-..     ...
-
-.. In this example, we add another parameter ``project``, which allows us to return
-.. results with only the fields that we want (note, this has implications for the
-.. response schema that will validate the structure of objects returned from the
-.. ``findObject`` handler).
-
 SaveObjectConfig
 ~~~~~~~~~~~~~~~~
 
@@ -901,13 +843,10 @@ collection.
     ...
     saveObjectConfig: {
       description: 'My collection saveObject operation',
-      supportsInsert: false,
+      supportsUpsert: false,
       returnsSavedObject: false
     }
     ...
-
-.. todo:: should this be "supportsUpsert" for consistency with update?
-
 
 UpdateObjectConfig
 ~~~~~~~~~~~~~~~~~~
@@ -1005,8 +944,8 @@ In the following tables, ``bulk`` will refer to requests whose body is an
 ``object``.
 
 .. list-table:: Request Parameters
-    :widths: 2 2 2 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Name
       - Request Type
@@ -1022,8 +961,8 @@ In the following tables, ``bulk`` will refer to requests whose body is an
       - An ``object``
 
 .. list-table:: Response Headers
-    :widths: 3 3 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Name
       - Request Type
@@ -1043,8 +982,8 @@ In the following tables, ``bulk`` will refer to requests whose body is an
       - Contains the EJSON serialized ID of the inserted object
 
 .. list-table:: Status Codes
-    :widths: 3 3 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Status
       - Request Type
@@ -1070,9 +1009,9 @@ In the following tables, ``bulk`` will refer to requests whose body is an
 GET /<collection>
 -----------------
 
-.. list-table:: Request Parameters
-    :widths: 2 2 10
+.. list-table:: Request Parameters (note, ``<idParameter>`` is configurable on ``Collection``)
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Name
       - Location
@@ -1095,8 +1034,8 @@ GET /<collection>
       - The maximum number of objects to return in a result
 
 .. list-table:: Status Codes
-    :widths: 3 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Status
       - Description
@@ -1114,8 +1053,8 @@ PUT /<collection>
 -----------------
 
 .. list-table:: Request Parameters
-    :widths: 2 2 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Name
       - Location
@@ -1125,8 +1064,8 @@ PUT /<collection>
       - A list of objects to replace to collection
 
 .. list-table:: Status Codes
-    :widths: 3 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Status
       - Description
@@ -1152,8 +1091,8 @@ PATCH /<collection>
 -------------------
 
 .. list-table:: Request Parameters
-    :widths: 2 2 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Name
       - Location
@@ -1168,8 +1107,8 @@ PATCH /<collection>
         :js:attr:`~carbond.collections.UpdateConfig.supportsUpsert` is true.
 
 .. list-table:: Response Headers
-    :widths: 3 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Name
       - Description
@@ -1180,8 +1119,8 @@ PATCH /<collection>
       - Contains the EJSON serialized IDs of the upserted objects
 
 .. list-table:: Status Codes
-    :widths: 3 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Status
       - Description
@@ -1205,8 +1144,8 @@ REMOVE /<collection>
 --------------------
 
 .. list-table:: Status Codes
-    :widths: 3 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Status
       - Description
@@ -1224,27 +1163,27 @@ REMOVE /<collection>
 GET /<collection>/:<id>
 -----------------------
 
-.. list-table:: Request Parameters
-    :widths: 2 2 10
+.. list-table:: Request Parameters (note, ``idPathParameter`` is configurable on ``Collection``)
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Name
       - Location
       - Description
-    * - :js:attr:`~carbond.collections.Collection.idPathParameter`
+    * - <:js:attr:`~carbond.collections.Collection.idPathParameter`>
       - path
       - The ID component of the collection object URL. Identifies a specific
         object in the collection.
 
 .. list-table:: Status Codes
-    :widths: 3 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Status
       - Description
     * - ``200``
       - The response body will contain the object whose ID matches the value
-        passed in :js:attr:`~carbond.collections.Collection.idPathParameter`
+        passed in <:js:attr:`~carbond.collections.Collection.idPathParameter`>
     * - ``400``
       - The request was malformed
     * - ``403``
@@ -1257,14 +1196,14 @@ GET /<collection>/:<id>
 PUT /<collection>/:<id>
 -----------------------
 
-.. list-table:: Request Parameters
-    :widths: 2 2 10
+.. list-table:: Request Parameters (note, ``idPathParameter`` is configurable on ``Collection``)
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Name
       - Location
       - Description
-    * - :js:attr:`~carbond.collections.Collection.idPathParameter`
+    * - <:js:attr:`~carbond.collections.Collection.idPathParameter`>
       - path
       - The ID component of the collection object URL. Identifies a specific
         object in the collection.
@@ -1273,22 +1212,22 @@ PUT /<collection>/:<id>
       - An object to save
 
 .. list-table:: Response Headers
-    :widths: 3 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Name
       - Description
     * - ``Location``
       - Contains the URL of the new object. Note, this is only possible if
-        :js:attr:`~carbond.collections.SaveObjectConfig.supportsInsert` is ``true``.
+        :js:attr:`~carbond.collections.SaveObjectConfig.supportsUpsert` is ``true``.
     * - :js:attr:`~carbond.collections.Collection.idHeader`
       - Contains the EJSON serialized ID of the new object. Note, this is only
         possible if
-        :js:attr:`~carbond.collections.SaveObjectConfig.supportsInsert` is ``true``.
+        :js:attr:`~carbond.collections.SaveObjectConfig.supportsUpsert` is ``true``.
 
 .. list-table:: Status Codes
-    :widths: 3 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Status
       - Description
@@ -1299,7 +1238,7 @@ PUT /<collection>/:<id>
         ``true``.
     * - ``201``
       - This response code is only possible if
-        :js:attr:`~carbond.collections.SaveObjectConfig.supportsInsert` is
+        :js:attr:`~carbond.collections.SaveObjectConfig.supportsUpsert` is
         ``true``. If
         :js:attr:`~carbond.collections.SaveObjectConfig.returnsSavedObject` is
         ``true``, the new object will be returned, otherwise the response body
@@ -1315,7 +1254,7 @@ PUT /<collection>/:<id>
       - The request is not authorized
     * - ``404``
       - The object was not found. This response code is only possible if
-        :js:attr:`~carbond.collections.SaveObjectConfig.supportsInsert` is
+        :js:attr:`~carbond.collections.SaveObjectConfig.supportsUpsert` is
         ``false``.
     * - ``500``
       - There was an internal error processing the request
@@ -1323,14 +1262,14 @@ PUT /<collection>/:<id>
 PATCH /<collection>/:<id>
 -------------------------
 
-.. list-table:: Request Parameters
-    :widths: 2 2 10
+.. list-table:: Request Parameters (note, ``idPathParameter`` is configurable on ``Collection``)
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Name
       - Location
       - Description
-    * - :js:attr:`~carbond.collections.Collection.idPathParameter`
+    * - <:js:attr:`~carbond.collections.Collection.idPathParameter`>
       - path
       - The ID component of the collection object URL. Identifies a specific
         object in the collection.
@@ -1344,8 +1283,8 @@ PATCH /<collection>/:<id>
         :js:attr:`~carbond.collections.UpdateObjectConfig.supportsUpsert` is true.
 
 .. list-table:: Response Headers
-    :widths: 3 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Name
       - Description
@@ -1355,8 +1294,8 @@ PATCH /<collection>/:<id>
       - Contains the EJSON serialized ID of the upserted object
 
 .. list-table:: Status Codes
-    :widths: 3 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Status
       - Description
@@ -1383,21 +1322,21 @@ PATCH /<collection>/:<id>
 REMOVE /<collection>/:<id>
 --------------------------
 
-.. list-table:: Request Parameters
-    :widths: 2 2 10
+.. list-table:: Request Parameters (note, ``idPathParameter`` is configurable on ``Collection``)
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Name
       - Location
       - Description
-    * - :js:attr:`~carbond.collections.Collection.idPathParameter`
+    * - <:js:attr:`~carbond.collections.Collection.idPathParameter`>
       - path
       - The ID component of the collection object URL. Identifies a specific
         object in the collection.
 
 .. list-table:: Status Codes
-    :widths: 3 10
     :header-rows: 1
+    :class: collection-rest-table
 
     * - Status
       - Description
@@ -1414,113 +1353,6 @@ REMOVE /<collection>/:<id>
       - The object was not found
     * - ``500``
       - There was an internal error processing the request
-
-MongoDBCollection
-=================
-
-:js:class:`~carbond.mongodb.MongoDBCollection` is an example of a concrete
-:js:class:`~carbond.collections.Collection` implementation and comes baked into
-Carbon. Unlike :js:class:`~carbond.collections.Collection`, all handler
-operations are implemented. You should only have to configure which operations
-you want enabled along with some extra collection level and collection operation
-level configuration.
-
-MongoDBCollection Configuration
--------------------------------
-
-:js:class:`~carbond.mongodb.MongoDBCollection` extends
-:js:class:`~carbond.collections.Collection` with the following configuration
-properties:
-
-    :js:attr:`~carbond.mongodb.MongoDBCollection.db`
-        This is only necessary if the :js:class:`~carbond.Service` instance
-        connects to multiple databases and should be a key in
-        :js:attr:`~carbond.Service.dbUris`.
-    :js:attr:`~carbond.mongodb.MongoDBCollection.collection`
-        This is the name of th MongoDB collection that the endpoint will operate
-        on.
-    :js:attr:`~carbond.mongodb.MongoDBCollection.querySchema`
-        This is the schema used to validate the query spec for multiple
-        operations (e.g., ``find``, ``update``, etc.). It defaults to ``{type:
-        'object'}``.
-    :js:attr:`~carbond.mongodb.MongoDBCollection.updateSchema`
-        This is the schema used to validate the update spec passed to the
-        ``update`` operation. It defaults to ``{type: 'object'}``.
-    :js:attr:`~carbond.mongodb.MongoDBCollection.updateObjectSchema`
-        This is the schema used to validate the update spec passed to the
-        ``updateObject`` operation. It defaults to ``{type: 'object'}``.
-
-MongoDBCollection Operation Configuration
------------------------------------------
-
-The :js:class:`~carbond.mongodb.MongoDBCollection` implementation overrides
-:js:class:`~carbond.collection.Collection`\ 's configuration class members with
-the following classes:
-
-- :js:class:`~carbond.mongodb.MongoDBInsertConfig`
-- :js:class:`~carbond.mongodb.MongoDBFindConfig`
-- :js:class:`~carbond.mongodb.MongoDBSaveConfig`
-- :js:class:`~carbond.mongodb.MongoDBUpdateConfig`
-- :js:class:`~carbond.mongodb.MongoDBRemoveConfig`
-- :js:class:`~carbond.mongodb.MongoDBInsertObjectConfig`
-- :js:class:`~carbond.mongodb.MongoDBFindObjectConfig`
-- :js:class:`~carbond.mongodb.MongoDBSaveObjectConfig`
-- :js:class:`~carbond.mongodb.MongoDBUpdateConfig`
-- :js:class:`~carbond.mongodb.MongoDBRemoveConfig`
-
-Note, these configuration classes are resolved via the appropriate class
-member (e.g., :js:attr:`~carbond.mongodb.MongoDBCollection.InsertConfigClass`
-resolves to :js:class:`~carbond.mongodb.MongoDBInsertConfig`).
-
-All additions to and/or restrictions placed on individual operation
-configurations will be documented in the following sections. Config classes that
-do not add or remove functionality will be omitted.
-
-MongoDBFindConfig
-~~~~~~~~~~~~~~~~~~~
-
-:js:class:`~carbond.mongodb.MongoDBFindConfig` makes a few additions to the base
-configuration class. It adds three parameters, ``sort``, ``project``, and
-``query``. ``sort`` and ``project`` allow you to specify a sort order for the
-result set (see: `MongoDB sort
-<https://docs.mongodb.com/manual/reference/method/cursor.sort/#cursor.sort>`_)
-and a subset of fields to return for each object (see: `MongoDB projection
-<https://docs.mongodb.com/manual/reference/glossary/#term-projection>`_)
-respectively.  Query support is configurable via the
-:js:attr:`~carbond.mongodb.MongoDBFindConfig.supportsQuery` property. If support
-is enabled, the ``query`` parameter will be added to the list of parameters for
-that query (see: `MongoDB query
-<https://docs.mongodb.com/manual/reference/operator/query/>`_).
-
-MongoDBUpdateConfig
-~~~~~~~~~~~~~~~~~~~
-
-:js:class:`~carbond.mongodb.MongoDBUpdateConfig` removes support for
-:js:attr:`~carbond.collections.UpdateConfig.returnsUpsertedObjects`.
-Additionally, it adds query support via the ``query`` parameter.
-
-.. todo:: should this have "supportsQuery"?
-
-MongoDBRemoveConfig
-~~~~~~~~~~~~~~~~~~~
-
-Similar to :js:class:`~carbond.mongodb.MongoDBFindConfig` and
-:js:class:`~carbond.mongodb.MongoDBUpdateConfig`,
-:js:class:`~carbond.mongodb.MongoDBRemoveConfig` adds support for queries via
-the ``query`` parameter. This support is enabled by default, but can be
-configured via the :js:attr:`~carbond.mongodb.MongoDBRemoveConfig`.
-
-MongoDBUpdateObject
-~~~~~~~~~~~~~~~~~~~
-
-:js:class:`~carbond.mongodb.MongoDBUpdateObjectConfig` removes support for
-:js:attr:`~carbond.collections.UpdateConfig.returnsUpsertedObject`.
-
-MongoDBRemoveObject
-~~~~~~~~~~~~~~~~~~~
-
-:js:class:`~carbond.mongodb.MongoDBRemoveObjectConfig` removes support for
-:js:attr:`~carbond.collections.UpdateConfig.returnsRemovedObject`.
 
 Collection Operation Pre/Post Hooks (Advanced)
 ==============================================
@@ -1628,7 +1460,7 @@ may want to sanitize some fields in a result:
 
     postFindObject(result, id, context, options) {
       if (!_.isNil(result)) {
-        result.apiKey = 'XXX'
+        result.apiKey = 'REDACTED'
       }
       return result
     }
@@ -1652,6 +1484,118 @@ return that in a header in the response:
       res.set('X-Last-Access-Time', lastAccessTime)
       return result
     }
+
+MongoDBCollection
+=================
+
+:js:class:`~carbond.mongodb.MongoDBCollection` is an example of a concrete
+:js:class:`~carbond.collections.Collection` implementation and comes baked into
+Carbon. Unlike :js:class:`~carbond.collections.Collection`, all handler
+operations are implemented. You should only have to configure which operations
+you want enabled along with some extra collection level and collection operation
+level configuration.
+
+.. literalinclude:: ../code-frags/hello-world-mongodb/lib/HelloService.js
+    :language: javascript
+    :linenos:
+    :lines: 1-12,14,16-
+
+MongoDBCollection Configuration
+-------------------------------
+
+:js:class:`~carbond.mongodb.MongoDBCollection` extends
+:js:class:`~carbond.collections.Collection` with the following configuration
+properties:
+
+    :js:attr:`~carbond.mongodb.MongoDBCollection.db`
+        This is only necessary if the :js:class:`~carbond.Service` instance
+        connects to multiple databases and should be a key in
+        :js:attr:`~carbond.Service.dbUris`.
+    :js:attr:`~carbond.mongodb.MongoDBCollection.collection`
+        This is the name of th MongoDB collection that the endpoint will operate
+        on.
+    :js:attr:`~carbond.mongodb.MongoDBCollection.querySchema`
+        This is the schema used to validate the query spec for multiple
+        operations (e.g., ``find``, ``update``, etc.). It defaults to ``{type:
+        'object'}``.
+    :js:attr:`~carbond.mongodb.MongoDBCollection.updateSchema`
+        This is the schema used to validate the update spec passed to the
+        ``update`` operation. It defaults to ``{type: 'object'}``.
+    :js:attr:`~carbond.mongodb.MongoDBCollection.updateObjectSchema`
+        This is the schema used to validate the update spec passed to the
+        ``updateObject`` operation. It defaults to ``{type: 'object'}``.
+
+MongoDBCollection Operation Configuration
+-----------------------------------------
+
+The :js:class:`~carbond.mongodb.MongoDBCollection` implementation overrides
+:js:class:`~carbond.collection.Collection`\ 's configuration class members with
+the following classes:
+
+- :js:class:`~carbond.mongodb.MongoDBInsertConfig`
+- :js:class:`~carbond.mongodb.MongoDBFindConfig`
+- :js:class:`~carbond.mongodb.MongoDBSaveConfig`
+- :js:class:`~carbond.mongodb.MongoDBUpdateConfig`
+- :js:class:`~carbond.mongodb.MongoDBRemoveConfig`
+- :js:class:`~carbond.mongodb.MongoDBInsertObjectConfig`
+- :js:class:`~carbond.mongodb.MongoDBFindObjectConfig`
+- :js:class:`~carbond.mongodb.MongoDBSaveObjectConfig`
+- :js:class:`~carbond.mongodb.MongoDBUpdateConfig`
+- :js:class:`~carbond.mongodb.MongoDBRemoveConfig`
+
+Note, these configuration classes are resolved via the appropriate class
+member (e.g., :js:attr:`~carbond.mongodb.MongoDBCollection.InsertConfigClass`
+resolves to :js:class:`~carbond.mongodb.MongoDBInsertConfig`).
+
+All additions to and/or restrictions placed on individual operation
+configurations will be documented in the following sections. Config classes that
+do not add or remove functionality will be omitted.
+
+MongoDBFindConfig
+~~~~~~~~~~~~~~~~~~~
+
+:js:class:`~carbond.mongodb.MongoDBFindConfig` makes a few additions to the base
+configuration class. It adds three parameters, ``sort``, ``project``, and
+``query``. ``sort`` and ``project`` allow you to specify a sort order for the
+result set (see: `MongoDB sort
+<https://docs.mongodb.com/manual/reference/method/cursor.sort/#cursor.sort>`_)
+and a subset of fields to return for each object (see: `MongoDB projection
+<https://docs.mongodb.com/manual/reference/glossary/#term-projection>`_)
+respectively.  Query support is configurable via the
+:js:attr:`~carbond.mongodb.MongoDBFindConfig.supportsQuery` property. If support
+is enabled, the ``query`` parameter will be added to the list of parameters for
+that query (see: `MongoDB query
+<https://docs.mongodb.com/manual/reference/operator/query/>`_).
+
+MongoDBUpdateConfig
+~~~~~~~~~~~~~~~~~~~
+
+:js:class:`~carbond.mongodb.MongoDBUpdateConfig` removes support for
+:js:attr:`~carbond.collections.UpdateConfig.returnsUpsertedObjects`.
+Additionally, it adds query support via the ``query`` parameter.
+
+.. todo:: should this have "supportsQuery"?
+
+MongoDBRemoveConfig
+~~~~~~~~~~~~~~~~~~~
+
+Similar to :js:class:`~carbond.mongodb.MongoDBFindConfig` and
+:js:class:`~carbond.mongodb.MongoDBUpdateConfig`,
+:js:class:`~carbond.mongodb.MongoDBRemoveConfig` adds support for queries via
+the ``query`` parameter. This support is enabled by default, but can be
+configured via the :js:attr:`~carbond.mongodb.MongoDBRemoveConfig`.
+
+MongoDBUpdateObject
+~~~~~~~~~~~~~~~~~~~
+
+:js:class:`~carbond.mongodb.MongoDBUpdateObjectConfig` removes support for
+:js:attr:`~carbond.collections.UpdateConfig.returnsUpsertedObject`.
+
+MongoDBRemoveObject
+~~~~~~~~~~~~~~~~~~~
+
+:js:class:`~carbond.mongodb.MongoDBRemoveObjectConfig` removes support for
+:js:attr:`~carbond.collections.UpdateConfig.returnsRemovedObject`.
 
 Access Control
 ==============

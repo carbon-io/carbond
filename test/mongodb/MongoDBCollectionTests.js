@@ -789,7 +789,10 @@ __(function() {
                     description: 'Id query parameter',
                     location: 'query',
                     schema: {
-                      type: 'string'
+                      oneOf: [
+                        {type: 'string'},
+                        {type: 'array', items: {type: 'string'}}
+                      ]
                     },
                     required: false,
                     default: undefined
