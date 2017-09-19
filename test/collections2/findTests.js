@@ -574,15 +574,15 @@ __(function() {
             }
           },
           {
-            name: 'noNextLinkPaginationTest',
-            description: 'Test absence of next link on last page',
+            name: 'noNextOrPrevLinkPaginationTest',
+            description: 'Test absence of next and prev link on first and last page',
             setup: function() {
               this.preFindOperationSpy = sinon.spy(this.parent.service.endpoints.find, 'preFindOperation')
               this.findSpy = sinon.spy(this.parent.service.endpoints.find, 'find')
             },
             teardown: function(context) {
               try {
-                assert.equal(this.preFindOperationSpy.firstCall.args[1].parameters.page, 2)
+                assert.equal(this.preFindOperationSpy.firstCall.args[1].parameters.page, 0)
                 assert.equal(
                   _.intersection(
                     ['page', 'skip', 'limit'],
@@ -596,13 +596,10 @@ __(function() {
               return {
                 url: '/find',
                 method: 'GET',
-                parameters: {
-                  page: 2
-                },
                 headers: {
                   'x-pong': ejson.stringify({
                     find: [
-                      {[context.global.idParameter]: '4', foo: 'bar'}
+                      {[context.global.idParameter]: '0', foo: 'bar'}
                     ]
                   })
                 }
@@ -611,15 +608,93 @@ __(function() {
             resSpec: {
               statusCode: 200,
               headers: function(headers) {
-                assert.equal(
-                  headers.link,
-                  '<http://localhost:8888/find?page=1>; rel="prev"')
+                assert(_.isNil(headers.link))
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [
-                  {[context.global.idParameter]: '4', foo: 'bar'},
+                  {[context.global.idParameter]: '0', foo: 'bar'},
                 ])
               }
+            }
+          },
+          {
+            name: 'maxPageSizeTest',
+            description: 'Test maxPageSize is enforced',
+            setup: function() {
+              this.preFindOperationSpy = sinon.spy(this.parent.service.endpoints.find, 'preFindOperation')
+              this.findSpy = sinon.spy(this.parent.service.endpoints.find, 'find')
+            },
+            teardown: function(context) {
+              try {
+                assert.equal(
+                  this.preFindOperationSpy.firstCall.args[1].parameters.limit,
+                  this.parent.service.endpoints.find.findConfig.maxPageSize + 1)
+                assert.equal(
+                  this.findSpy.firstCall.args[0].limit,
+                  this.parent.service.endpoints.find.findConfig.maxPageSize)
+              } finally {
+                this.findSpy.restore()
+                this.preFindOperationSpy.restore()
+              }
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/find',
+                method: 'GET',
+                parameters: {
+                  limit: this.parent.service.endpoints.find.findConfig.maxPageSize + 1
+                },
+                headers: {
+                  'x-pong': ejson.stringify({
+                    find: _.map(_.range(this.parent.service.endpoints.find.findConfig.maxPageSize), function(n) {
+                      return {[context.global.idParameter]: n.toString(), foo: 'bar'}
+                    })
+                  })
+                }
+              }
+            },
+            resSpec: {
+              statusCode: 200
+            }
+          },
+          {
+            name: 'limitEnforcedTest',
+            description: 'Test limit is enforced',
+            setup: function() {
+              this.preFindOperationSpy = sinon.spy(this.parent.service.endpoints.find, 'preFindOperation')
+              this.findSpy = sinon.spy(this.parent.service.endpoints.find, 'find')
+            },
+            teardown: function(context) {
+              try {
+                assert.equal(
+                  this.preFindOperationSpy.firstCall.args[1].parameters.limit,
+                  this.parent.service.endpoints.find.findConfig.maxPageSize + 1)
+                assert.equal(
+                  this.findSpy.firstCall.args[0].limit,
+                  this.parent.service.endpoints.find.findConfig.maxPageSize)
+              } finally {
+                this.findSpy.restore()
+                this.preFindOperationSpy.restore()
+              }
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/find',
+                method: 'GET',
+                parameters: {
+                  limit: this.parent.service.endpoints.find.findConfig.maxPageSize + 1
+                },
+                headers: {
+                  'x-pong': ejson.stringify({
+                    find: _.map(_.range(this.parent.service.endpoints.find.findConfig.maxPageSize) + 1, function(n) {
+                      return {[context.global.idParameter]: n.toString(), foo: 'bar'}
+                    })
+                  })
+                }
+              }
+            },
+            resSpec: {
+              statusCode: 500
             }
           },
         ]

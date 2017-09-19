@@ -82,7 +82,6 @@ module.exports = o.main({
       },
 
       findObject: function(id, context) {
-        debugger
         if (id < 0) {
           return null
         }
