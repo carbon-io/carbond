@@ -811,16 +811,13 @@ FindObjectConfig
 
 The :js:class:`~carbond.collections.FindObjectConfig` class is the base ``findObject``
 operation config class and the default for
-:js:class:`~carbond.collections.Collection`. It extends the base config class
-with the property ``supportsHead``, which allows you to configure whether the
-HEAD operation is allowed (in addition to GET) on this endpoint.
+:js:class:`~carbond.collections.Collection`. 
 
 .. code-block:: js
 
     ...
     findObjectConfig: {
-      description: 'My collection findObject operation',
-      supportsHead: false
+      description: 'My collection findObject operation'
     },
     ...
 

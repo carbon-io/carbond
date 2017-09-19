@@ -41,10 +41,10 @@ function _getPongRet(type, object, name, args, pong) {
     if ('$args' in retDescriptor) {
       ret = args[retDescriptor.$args]
     }
-    if ('$id' in ret) {
-      assert(_.isObjectLike(retDescriptor.$id), 'Bad pong $id descriptor')
-      ret = _.assignIn(retDescriptor.$id)
-    }
+    // if ('$id' in ret) {
+    //   assert(_.isObjectLike(retDescriptor.$id), 'Bad pong $id descriptor')
+    //   ret = _.assignIn(retDescriptor.$id)
+    // }
   }
   return ret
 }
@@ -63,9 +63,10 @@ function overrideOrSuper(type, object, name, args, reqOrContext, noSuper) {
       pong = reqOrContext.__pong
     }
     if (!_.isNil(pong)) {
+      var doReturn = true
       if (!_.isNil(name.match(/^pre.+Operation$/))) {
         // collection
-        if (!_.isNil(pong[name])) {
+        if (_.includes(_.keys(pong), name)) {
           ret = _getPongRet(type, object, name, args, pong)
         } else {
           if (noSuper) {
@@ -74,13 +75,16 @@ function overrideOrSuper(type, object, name, args, reqOrContext, noSuper) {
           ret = type.prototype[name].apply(object, args)
         }
         ret.context.__pong = pong
-      } else if (!_.isNil(name.match(/(pre|post).+/)) ||
-                 _.includes(COLOPS, name) ||
-                 _.includes(ENDOPS, name)) {
+      } else if ((!_.isNil(name.match(/(pre|post).+/)) ||
+                  _.includes(COLOPS, name) ||
+                  _.includes(ENDOPS, name)) &&
+                 _.includes(_.keys(pong), name)) {
         // collection/endpoint
         ret = _getPongRet(type, object, name, args, pong)
+      } else {
+        doReturn = false
       }
-      if (!_.isNil(ret)) {
+      if (doReturn) {
         return ret
       }
     }
