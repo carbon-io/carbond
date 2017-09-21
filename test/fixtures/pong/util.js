@@ -34,17 +34,25 @@ function setNestedProps(object, overrides) {
   }
 }
 
-function _getPongRet(type, object, name, args, pong) {
-  var retDescriptor = pong[name]
-  var ret = _.clone(retDescriptor)
-  if (_.isObjectLike(retDescriptor)) {
-    if ('$args' in retDescriptor) {
-      ret = args[retDescriptor.$args]
+function _replaceArgs(ret, args) {
+  if (_.isObject(ret)) {
+    if (_.keys(ret).length === 1 &&
+        '$args' in ret &&
+        _.isNumber(ret.$args)) {
+      return args[ret.$args]
+    } else {
+      for (var k in ret) {
+        ret[k] = _replaceArgs(ret[k], args)
+      }
     }
-    // if ('$id' in ret) {
-    //   assert(_.isObjectLike(retDescriptor.$id), 'Bad pong $id descriptor')
-    //   ret = _.assignIn(retDescriptor.$id)
-    // }
+  }
+  return ret
+}
+
+function _getPongRet(type, object, name, args, pong) {
+  var ret = _.clone(pong[name])
+  if (_.isObjectLike(ret)) {
+    ret = _replaceArgs(ret, args)
   }
   return ret
 }

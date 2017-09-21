@@ -191,7 +191,7 @@ __(function() {
           },
           {
             name: 'successInsertObjectSchemaTest',
-            description: 'Test POST  with well formed object',
+            description: 'Test POST with well formed object',
             setup: function() {
               pong.util.collectionIdGenerator.resetId()
             },
