@@ -27,7 +27,7 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: 'insertObjectTests',
+    name: 'InsertObjectTests',
 
     /**********************************************************************
      * tests
@@ -35,7 +35,7 @@ __(function() {
     tests: [
       o({
         _type: carbond.test.ServiceTest,
-        name: 'defaultConfigInsertObjectTests',
+        name: 'DefaultConfigInsertObjectTests',
         service: o({
           _type: pong.Service,
           endpoints: {
@@ -134,7 +134,7 @@ __(function() {
       }),
       o({
         _type: carbond.test.ServiceTest,
-        name: 'customSchemaConfigInsertObjectTests',
+        name: 'CustomSchemaConfigInsertObjectTests',
         service: o({
           _type: pong.Service,
           endpoints: {
@@ -173,7 +173,7 @@ __(function() {
         },
         tests: [
           {
-            name: 'failInsertObjectSchemaTest',
+            name: 'FailInsertObjectSchemaTest',
             description: 'Test POST of malformed object',
             setup: function() {
               pong.util.collectionIdGenerator.resetId()
@@ -190,7 +190,7 @@ __(function() {
             }
           },
           {
-            name: 'successInsertObjectSchemaTest',
+            name: 'SuccessInsertObjectSchemaTest',
             description: 'Test POST with well formed object',
             setup: function() {
               pong.util.collectionIdGenerator.resetId()
@@ -227,7 +227,7 @@ __(function() {
       }),
       o({
         _type: carbond.test.ServiceTest,
-        name: 'doesNotReturnInsertedObjectConfigInsertObjectTests',
+        name: 'DoesNotReturnInsertedObjectConfigInsertObjectTests',
         service: o({
           _type: pong.Service,
           endpoints: {

@@ -199,6 +199,7 @@ __(function() {
       o({
         _type: carbond.test.ServiceTest,
         name: 'CustomSchemaConfigInsertTests',
+        description: 'Test custom insert schema',
         service: o({
           _type: pong.Service,
           endpoints: {
