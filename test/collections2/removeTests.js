@@ -27,7 +27,7 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: 'removeTests',
+    name: 'RemoveTests',
 
     /**********************************************************************
      * tests
@@ -35,24 +35,221 @@ __(function() {
     tests: [
       o({
         _type: carbond.test.ServiceTest,
-        name: 'defaultConfigRemoveTests',
+        name: 'DefaultConfigRemoveTests',
         service: o({
           _type: pong.Service,
           endpoints: {
             remove: o({
               _type: pong.Collection,
-              idGenerator: pong.util.collectionIdGenerator,
               enabled: {remove: true}
             })
           }
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
+          context.global.idParameter = this.service.endpoints.remove.idParameter
         },
         teardown: function(context) {
+          delete context.global.idParameter
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
+          {
+            name: 'RemoveTest',
+            description: 'Test DELETE',
+            reqSpec: {
+              url: '/remove',
+              method: 'DELETE',
+              headers: {
+                'x-pong': ejson.stringify({
+                  remove: 666
+                })
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: {n: 666}
+            }
+          },
+          {
+            name: 'RemoveHandlerReturnInvalidCountTest',
+            description: 'Test remove handler returns invalid count',
+            setup: function() {
+              this.postRemoveOperationSpy =
+                sinon.spy(this.parent.service.endpoints.remove, 'postRemoveOperation')
+              this.removeSpy = sinon.spy(this.parent.service.endpoints.remove, 'remove')
+            },
+            teardown: function() {
+              try {
+                assert(this.removeSpy.called)
+                assert(this.postRemoveOperationSpy.threw())
+              } finally {
+                this.removeSpy.restore()
+                this.postRemoveOperationSpy.restore()
+              }
+            },
+            reqSpec: {
+              url: '/remove',
+              method: 'DELETE',
+              headers: {
+                'x-pong': ejson.stringify({
+                  remove: -1
+                })
+              }
+            },
+            resSpec: {
+              statusCode: 500
+            }
+          },
+          {
+            name: 'RemoveHandlerReturnArrayTest',
+            description: 'Test remove handler returns array',
+            setup: function() {
+              this.postRemoveOperationSpy =
+                sinon.spy(this.parent.service.endpoints.remove, 'postRemoveOperation')
+              this.removeSpy = sinon.spy(this.parent.service.endpoints.remove, 'remove')
+            },
+            teardown: function() {
+              try {
+                assert(this.removeSpy.called)
+                assert(this.postRemoveOperationSpy.threw())
+              } finally {
+                this.removeSpy.restore()
+                this.postRemoveOperationSpy.restore()
+              }
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/remove',
+                method: 'DELETE',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    remove: [{[context.global.idParameter]: '0', foo: 'bar'}]
+                  })
+                }
+              }
+            },
+            resSpec: {
+              statusCode: 500
+            }
+          },
+        ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'ReturnsRemovedObjectsRemoveTests',
+        service: o({
+          _type: pong.Service,
+          endpoints: {
+            remove: o({
+              _type: pong.Collection,
+              enabled: {remove: true},
+              removeConfig: {
+                returnsRemovedObjects: true
+              }
+            })
+          }
+        }),
+        setup: function(context) {
+          carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
+          context.global.idParameter = this.service.endpoints.remove.idParameter
+        },
+        teardown: function(context) {
+          delete context.global.idParameter
+          carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
+        },
+        tests: [
+          {
+            name: 'RemoveTest',
+            description: 'Test DELETE',
+            reqSpec: function(context) {
+              return {
+                url: '/remove',
+                method: 'DELETE',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    remove: [
+                      {[context.global.idParameter]: '0', foo: 'bar'},
+                      {[context.global.idParameter]: '1', bar: 'baz'},
+                      {[context.global.idParameter]: '2', baz: 'yaz'}
+                    ]
+                  })
+                }
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: function(body, context) {
+                assert.deepStrictEqual(body, [
+                  {[context.global.idParameter]: '0', foo: 'bar'},
+                  {[context.global.idParameter]: '1', bar: 'baz'},
+                  {[context.global.idParameter]: '2', baz: 'yaz'}
+                ])
+              }
+            }
+          },
+          {
+            name: 'RemoveHandlerReturnObjectsTest',
+            description: 'Test remove handler returns invalid count when objects expected',
+            setup: function() {
+              this.postRemoveOperationSpy =
+                sinon.spy(this.parent.service.endpoints.remove, 'postRemoveOperation')
+              this.removeSpy = sinon.spy(this.parent.service.endpoints.remove, 'remove')
+            },
+            teardown: function() {
+              try {
+                assert(this.removeSpy.called)
+                assert(this.postRemoveOperationSpy.threw())
+              } finally {
+                this.removeSpy.restore()
+                this.postRemoveOperationSpy.restore()
+              }
+            },
+            reqSpec: {
+              url: '/remove',
+              method: 'DELETE',
+              headers: {
+                'x-pong': ejson.stringify({
+                  remove: 1
+                })
+              }
+            },
+            resSpec: {
+              statusCode: 500
+            }
+          },
+          {
+            name: 'RemoveHandlerReturnObjectTest',
+            description: 'Test remove handler returns objects',
+            setup: function() {
+              this.postRemoveOperationSpy =
+                sinon.spy(this.parent.service.endpoints.remove, 'postRemoveOperation')
+              this.removeSpy = sinon.spy(this.parent.service.endpoints.remove, 'remove')
+            },
+            teardown: function() {
+              try {
+                assert(this.removeSpy.called)
+                assert(this.postRemoveOperationSpy.threw())
+              } finally {
+                this.removeSpy.restore()
+                this.postRemoveOperationSpy.restore()
+              }
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/remove',
+                method: 'DELETE',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    remove: {[context.global.idParameter]: '0', foo: 'bar'}
+                  })
+                }
+              }
+            },
+            resSpec: {
+              statusCode: 500
+            }
+          },
         ]
       })
     ]
