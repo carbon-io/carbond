@@ -28,6 +28,10 @@ var ENDOPS = [
   'delete'
 ]
 
+function getObjectId(n) {
+  return new ejson.types.ObjectId(_.padStart(n.toString(16), 24, '0'))
+}
+
 function setNestedProps(object, overrides) {
   for (var key in overrides) {
     _.set(object, key, overrides[key])
@@ -115,18 +119,6 @@ var collectionIdGenerator = o({
   }
 })
 
-var collectionIdGenerator = o({
-  id: 0,
-
-  resetId: function() {
-    this.id = 0
-  },
-
-  generateId: function() {
-    return (this.id++).toString()
-  }
-})
-
 var mongoDbCollectionIdGenerator = o({
   id: 0,
 
@@ -135,12 +127,13 @@ var mongoDbCollectionIdGenerator = o({
   },
 
   generateId: function() {
-    return new ejson.types.ObjectId(_.padStart((this.id++).toString(16), 24, '0'))
+    return getObjectId(this.id++)
   }
 })
 
 module.exports = {
   collectionIdGenerator: collectionIdGenerator,
+  getObjectId: getObjectId,
   mongoDbCollectionIdGenerator: mongoDbCollectionIdGenerator,
   overrideOrSuper: overrideOrSuper,
   setNestedProps: setNestedProps

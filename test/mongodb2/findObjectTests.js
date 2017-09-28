@@ -11,7 +11,11 @@ var _o = require('@carbon-io/carbon-core').bond._o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
 var carbond = require('../..')
+
 var pong = require('../fixtures/pong')
+var getObjectId = pong.util.getObjectId
+var config = require('../Config')
+var MongoDBCollectionHttpTest = require('./MongoDBCollectionHttpTest')
 
 /**************************************************************************
  * findObject tests
@@ -27,31 +31,69 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: 'findObjectTests',
+    name: 'FindObjectTests',
 
     /**********************************************************************
      * tests
      */
     tests: [
       o({
-        _type: carbond.test.ServiceTest,
-        name: 'defaultConfigFindObjectTests',
+        _type: MongoDBCollectionHttpTest,
+        name: 'DefaultConfigFindObjectTests',
         service: o({
           _type: pong.Service,
+          dbUri: config.MONGODB_URI + '/findObject',
           endpoints: {
-            find: o({
+            findObject: o({
               _type: pong.MongoDBCollection,
-              enabled: {findObject: true}
+              enabled: {findObject: true},
+              collection: 'findObject'
             })
           }
         }),
-        setup: function(context) {
-          carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-        },
-        teardown: function(context) {
-          carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
+        fixture: {
+          findObject: [
+            {_id: getObjectId(0), foo: 'bar'},
+            {_id: getObjectId(1), bar: 'baz'},
+            {_id: getObjectId(2), baz: 'yaz'}
+          ]
         },
         tests: [
+          {
+            name: 'HeadTest',
+            description: 'Test HEAD method',
+            reqSpec: {
+              url: '/findObject/' + getObjectId(0).toString(),
+              method: 'HEAD',
+            },
+            resSpec: {
+              statusCode: 200,
+              body: undefined
+            }
+          },
+          {
+            name: 'FindObjectTest',
+            description: 'Test findObject',
+            reqSpec: {
+              url: '/findObject/' + getObjectId(0).toString(),
+              method: 'GET',
+            },
+            resSpec: {
+              statusCode: 200,
+              body: {_id: getObjectId(0), foo: 'bar'}
+            }
+          },
+          {
+            name: 'FindObjectNotFoundTest',
+            description: 'Test findObject for non-existent',
+            reqSpec: {
+              url: '/findObject/' + getObjectId(666),
+              method: 'GET',
+            },
+            resSpec: {
+              statusCode: 404
+            }
+          },
         ]
       })
     ]

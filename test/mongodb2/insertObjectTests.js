@@ -11,7 +11,11 @@ var _o = require('@carbon-io/carbon-core').bond._o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
 var carbond = require('../..')
+
 var pong = require('../fixtures/pong')
+var getObjectId = pong.util.getObjectId
+var config = require('../Config')
+var MongoDBCollectionHttpTest = require('./MongoDBCollectionHttpTest')
 
 /**************************************************************************
  * insertObject tests
@@ -27,36 +31,241 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: 'insertObjectTests',
+    name: 'InsertObjectTests',
 
     /**********************************************************************
      * tests
      */
     tests: [
       o({
-        _type: carbond.test.ServiceTest,
-        name: 'defaultConfigInsertObjectTests',
+        _type: MongoDBCollectionHttpTest,
+        name: 'DefaultConfigInsertObjectTests',
         service: o({
           _type: pong.Service,
+          dbUri: config.MONGODB_URI + '/insertObject',
           endpoints: {
             insertObject: o({
               _type: pong.MongoDBCollection,
-              enabled: {insertObject: true}
+              idGenerator: pong.util.mongoDbCollectionIdGenerator,
+              enabled: {insertObject: true},
+              collection: 'insertObject'
             })
           }
         }),
         setup: function(context) {
-          carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.insertObject.idParameter
+          MongoDBCollectionHttpTest.prototype.setup.apply(this, arguments)
           context.global.idHeader = this.service.endpoints.insertObject.idHeader
         },
         teardown: function(context) {
           pong.util.mongoDbCollectionIdGenerator.resetId()
           delete context.global.idHeader
-          delete context.global.idParameter
-          carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
+          MongoDBCollectionHttpTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
+          {
+            name: 'InsertObjectsResultsInBadRequestTest',
+            description: 'Test POST of array with multiple objects',
+            reqSpec: {
+              url: '/insertObject',
+              method: 'POST',
+              body: [
+                {foo: 'bar'},
+                {bar: 'baz'},
+                {baz: 'yaz'}
+              ]
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'InsertObjectTest',
+            description: 'Test POST of object',
+            setup: function() {
+              pong.util.mongoDbCollectionIdGenerator.resetId()
+              this.parent.dropDb()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/insertObject',
+                method: 'POST',
+                body: {foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 201,
+              headers: function(headers, context) {
+                assert.deepStrictEqual(
+                  headers[context.global.idHeader],
+                  ejson.stringify(getObjectId(0)))
+                assert.deepStrictEqual(
+                  headers.location, '/insertObject/' + getObjectId(0).toString())
+              },
+              body: function(body, context) {
+                assert.deepEqual(body, {
+                  _id: getObjectId(0),
+                  foo: 'bar'
+                })
+              }
+            }
+          },
+          {
+            name: 'InsertObjectWithIdTest',
+            description: 'Test POST of object with ID',
+            reqSpec: function(context) {
+              return {
+                url: '/insertObject',
+                method: 'POST',
+                body: {_id: getObjectId(0), foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 400,
+            }
+          },
+        ]
+      }),
+      o({
+        _type: MongoDBCollectionHttpTest,
+        name: 'CustomSchemaConfigInsertObjectTests',
+        service: o({
+          _type: pong.Service,
+          dbUri: config.MONGODB_URI + '/insertObject',
+          endpoints: {
+            insertObject: o({
+              _type: pong.MongoDBCollection,
+              idGenerator: pong.util.mongoDbCollectionIdGenerator,
+              enabled: {insertObject: true},
+              collection: 'insertObject',
+              insertObjectConfig: {
+                insertObjectSchema: {
+                  type: 'object',
+                  properties: {
+                    foo: {
+                      type: 'string',
+                      pattern: '^(bar|baz|yaz)$'
+                    }
+                  },
+                  patternProperties: {
+                    '^\\d+$': {type: 'string'}
+                  },
+                  additionalProperties: false
+                }
+              }
+            })
+          }
+        }),
+        setup: function(context) {
+          MongoDBCollectionHttpTest.prototype.setup.apply(this, arguments)
+          context.global.idHeader = this.service.endpoints.insertObject.idHeader
+        },
+        teardown: function(context) {
+          pong.util.mongoDbCollectionIdGenerator.resetId()
+          delete context.global.idHeader
+          MongoDBCollectionHttpTest.prototype.teardown.apply(this, arguments)
+        },
+        tests: [
+          {
+            name: 'FailInsertObjectSchemaTest',
+            description: 'Test POST of malformed object',
+            setup: function() {
+              pong.util.mongoDbCollectionIdGenerator.resetId()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/insertObject',
+                method: 'POST',
+                body: {bar: 'baz'}
+              }
+            },
+            resSpec: {
+              statusCode: 400,
+            }
+          },
+          {
+            name: 'SuccessInsertObjectSchemaTest',
+            description: 'Test POST with well formed object',
+            setup: function() {
+              pong.util.mongoDbCollectionIdGenerator.resetId()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/insertObject',
+                method: 'POST',
+                body: {foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 201,
+              headers: function(headers, context) {
+                assert.deepStrictEqual(
+                  headers[context.global.idHeader],
+                  ejson.stringify(getObjectId(0)))
+                assert.deepStrictEqual(
+                  headers.location, '/insertObject/' + getObjectId(0).toString())
+              },
+              body: function(body, context) {
+                assert.deepEqual(body, {
+                  _id: getObjectId(0), foo: 'bar'
+                })
+              }
+            }
+          },
+        ]
+      }),
+      o({
+        _type: MongoDBCollectionHttpTest,
+        name: 'DoesNotReturnInsertedObjectConfigInsertObjectTests',
+        service: o({
+          _type: carbond.Service,
+          dbUri: config.MONGODB_URI + '/insertObject',
+          endpoints: {
+            insertObject: o({
+              _type: pong.MongoDBCollection,
+              idGenerator: pong.util.mongoDbCollectionIdGenerator,
+              enabled: {insertObject: true},
+              collection: 'insertObject',
+              insertObjectConfig: {
+                returnsInsertedObject: false
+              }
+            })
+          }
+        }),
+        setup: function(context) {
+          MongoDBCollectionHttpTest.prototype.setup.apply(this, arguments)
+          context.global.idHeader = this.service.endpoints.insertObject.idHeader
+        },
+        teardown: function(context) {
+          pong.util.mongoDbCollectionIdGenerator.resetId()
+          delete context.global.idHeader
+          MongoDBCollectionHttpTest.prototype.teardown.apply(this, arguments)
+        },
+        tests: [
+          {
+            name: 'InsertObjectTest',
+            description: 'Test POST of object',
+            setup: function() {
+              pong.util.mongoDbCollectionIdGenerator.resetId()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/insertObject',
+                method: 'POST',
+                body: {foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 201,
+              headers: function(headers, context) {
+                assert.deepStrictEqual(
+                  headers[context.global.idHeader],
+                  ejson.stringify(getObjectId(0)))
+                assert.deepStrictEqual(
+                  headers.location, '/insertObject/' + getObjectId(0).toString())
+              },
+              body: undefined
+            }
+          }
         ]
       })
     ]

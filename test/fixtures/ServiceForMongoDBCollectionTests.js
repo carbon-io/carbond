@@ -66,7 +66,8 @@ module.exports = o({
       },
       findConfig: {
         pageSize: 5,
-        maxPageSize: 10
+        maxPageSize: 10,
+        supportsPagination: true
       },
       // idGenerator doesn't really make sense in this context, but is here for tests
       idGenerator: {

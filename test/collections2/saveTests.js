@@ -27,7 +27,7 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: 'saveTests',
+    name: 'SaveTests',
 
     /**********************************************************************
      * tests
@@ -35,7 +35,7 @@ __(function() {
     tests: [
       o({
         _type: carbond.test.ServiceTest,
-        name: 'defaultConfigSaveTests',
+        name: 'DefaultConfigSaveTests',
         service: o({
           _type: pong.Service,
           endpoints: {
@@ -178,7 +178,7 @@ __(function() {
       }),
       o({
         _type: carbond.test.ServiceTest,
-        name: 'customSchemaConfigSaveTests',
+        name: 'CustomSchemaConfigSaveTests',
         service: o({
           _type: pong.Service,
           endpoints: {

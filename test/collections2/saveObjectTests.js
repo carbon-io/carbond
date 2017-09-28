@@ -138,7 +138,7 @@ __(function() {
       }),
       o({
         _type: carbond.test.ServiceTest,
-        name: 'customSchemaConfigSaveObjectTests',
+        name: 'CustomSchemaConfigSaveObjectTests',
         service: o({
           _type: pong.Service,
           endpoints: {
@@ -176,7 +176,7 @@ __(function() {
         },
         tests: [
           {
-            name: 'failSaveObjectSchemaTest',
+            name: 'FailSaveObjectSchemaTest',
             description: 'Test PUT of malformed object',
             setup: function() {
               pong.util.collectionIdGenerator.resetId()
@@ -193,7 +193,7 @@ __(function() {
             }
           },
           {
-            name: 'successSaveObjectSchemaTest',
+            name: 'SuccessSaveObjectSchemaTest',
             description: 'Test PUT with well formed object',
             setup: function() {
               pong.util.collectionIdGenerator.resetId()
@@ -223,7 +223,7 @@ __(function() {
       }),
       o({
         _type: carbond.test.ServiceTest,
-        name: 'doesNotReturnSavedObjectConfigSaveObjectTest',
+        name: 'DoesNotReturnSavedObjectConfigSaveObjectTest',
         service: o({
           _type: pong.Service,
           endpoints: {

@@ -11,7 +11,11 @@ var _o = require('@carbon-io/carbon-core').bond._o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
 var carbond = require('../..')
+
 var pong = require('../fixtures/pong')
+var getObjectId = pong.util.getObjectId
+var config = require('../Config')
+var MongoDBCollectionHttpTest = require('./MongoDBCollectionHttpTest')
 
 /**************************************************************************
  * remove tests
@@ -27,32 +31,139 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: 'removeTests',
+    name: 'RemoveTests',
 
     /**********************************************************************
      * tests
      */
     tests: [
       o({
-        _type: carbond.test.ServiceTest,
-        name: 'defaultConfigRemoveTests',
+        _type: MongoDBCollectionHttpTest,
+        name: 'DefaultConfigRemoveTests',
         service: o({
           _type: pong.Service,
+          dbUri: config.MONGODB_URI + '/remove',
           endpoints: {
             remove: o({
               _type: pong.MongoDBCollection,
-              enabled: {remove: true}
+              enabled: {remove: true},
+              collection: 'remove'
             })
           }
         }),
-        setup: function(context) {
-          carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-        },
-        teardown: function(context) {
-          carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
+        fixture: {
+          remove: [
+            {_id: getObjectId(0), foo: 'bar'},
+            {_id: getObjectId(1), bar: 'baz'},
+            {_id: getObjectId(0), baz: 'yaz'}
+          ]
         },
         tests: [
+          {
+            name: 'RemoveTest',
+            description: 'Test DELETE',
+            setup: function() {
+              this.parent.populateDb()
+            },
+            reqSpec: {
+              url: '/remove',
+              method: 'DELETE',
+            },
+            resSpec: {
+              statusCode: 200,
+              body: {n: 3}
+            }
+          },
+          {
+            name: 'RemoveWithQueryTest',
+            description: 'Test DELETE with query',
+            setup: function() {
+              this.parent.populateDb()
+            },
+            teardown: function() {
+              assert.equal(this.parent.db.getCollection('remove').find().count(), 2)
+            },
+            reqSpec: {
+              url: '/remove',
+              method: 'DELETE',
+              parameters: {
+                query: {foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: {n: 1}
+            }
+          },
         ]
+      }),
+      o({
+        _type: MongoDBCollectionHttpTest,
+        name: 'QueryDisabledConfigRemoveTests',
+        service: o({
+          _type: pong.Service,
+          dbUri: config.MONGODB_URI + '/remove',
+          endpoints: {
+            remove: o({
+              _type: pong.MongoDBCollection,
+              enabled: {remove: true},
+              collection: 'remove',
+              removeConfig: {
+                supportsQuery: false
+              }
+            })
+          }
+        }),
+        fixture: {
+          remove: [
+            {_id: getObjectId(0), foo: 'bar'},
+            {_id: getObjectId(1), bar: 'baz'},
+            {_id: getObjectId(0), baz: 'yaz'}
+          ]
+        },
+        tests: [
+          {
+            name: 'RemoveWithQueryIgnoredTest',
+            description: 'Test DELETE with ignored query parameter',
+            setup: function() {
+              this.parent.populateDb()
+            },
+            reqSpec: {
+              url: '/remove',
+              method: 'DELETE',
+              parameters: {
+                query: {foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: {n: 3}
+            }
+          },
+        ]
+      }),
+      o({
+        _type: testtube.Test,
+        name: 'ReturnsRemovedObjectsConfigThrowsTest',
+        description: 'Test that configuring returns removed objects throws error',
+        doTest: function() {
+          assert.throws(function() {
+            var service = o({
+              _type: pong.Service,
+              dbUri: config.MONGODB_URI + '/remove',
+              endpoints: {
+                remove: o({
+                  _type: pong.MongoDBCollection,
+                  enabled: {remove: true},
+                  collection: 'remove',
+                  removeConfig: {
+                    returnsRemovedObjects: true
+                  }
+                })
+              }
+            })
+          })
+        }
       })
     ]
   })

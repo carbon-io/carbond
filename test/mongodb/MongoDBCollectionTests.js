@@ -173,7 +173,7 @@ __(function() {
             assert('link' in headers)
             assert.equal(
               headers.link,
-              '<http://localhost:8888/zipcodes?page=1&limit=15>; rel="next"')
+              '<http://localhost:8888/zipcodes?page=1&limit=10>; rel="next"')
           }
         }
       },
@@ -194,7 +194,7 @@ __(function() {
             assert('link' in headers)
             assert.equal(
               headers.link,
-              '<http://localhost:8888/zipcodes?page=1&limit=15>; rel="next"')
+              '<http://localhost:8888/zipcodes?page=1&limit=10>; rel="next"')
           }
         }
       },

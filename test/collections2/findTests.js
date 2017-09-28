@@ -27,7 +27,7 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: 'findTests',
+    name: 'FindTests',
 
     /**********************************************************************
      * tests
@@ -35,7 +35,7 @@ __(function() {
     tests: [
       o({
         _type: carbond.test.ServiceTest,
-        name: 'defaultConfigFindTests',
+        name: 'DefaultConfigFindTests',
         service: o({
           _type: pong.Service,
           endpoints: {
@@ -225,7 +225,7 @@ __(function() {
       }),
       o({
         _type: carbond.test.ServiceTest,
-        name: 'noIdQueryConfigFindTests',
+        name: 'NoIdQueryConfigFindTests',
         service: o({
           _type: pong.Service,
           endpoints: {
@@ -249,7 +249,7 @@ __(function() {
         },
         tests: [
           {
-            name: 'idQueryIgnoredTest',
+            name: 'IdQueryIgnoredTest',
             description: 'Test that the id query parameter is ignored',
             setup: function() {
               this.findSpy = sinon.spy(this.parent.service.endpoints.find, 'find')
@@ -289,7 +289,7 @@ __(function() {
       }),
       o({
         _type: carbond.test.ServiceTest,
-        name: 'skipAndLimitConfigFindTests',
+        name: 'SkipAndLimitConfigFindTests',
         service: o({
           _type: pong.Service,
           endpoints: {
@@ -305,7 +305,7 @@ __(function() {
         }),
         tests: [
           {
-            name: 'skipAndLimitTest',
+            name: 'SkipAndLimitTest',
             description: 'Test that skip and limit parameters are honored',
             setup: function() {
               this.findSpy = sinon.spy(this.parent.service.endpoints.find, 'find')
@@ -346,7 +346,7 @@ __(function() {
             }
           },
           {
-            name: 'pageNotHonoredTest',
+            name: 'PageNotHonoredTest',
             description: 'Test that page parameter is not honored',
             setup: function() {
               this.preFindOperationSpy = sinon.spy(this.parent.service.endpoints.find, 'preFindOperation')
@@ -396,7 +396,7 @@ __(function() {
       }),
       o({
         _type: carbond.test.ServiceTest,
-        name: 'pageConfigFindTests',
+        name: 'PageConfigFindTests',
         service: o({
           _type: pong.Service,
           endpoints: {
@@ -422,7 +422,7 @@ __(function() {
         },
         tests: [
           {
-            name: 'basicPaginationTest',
+            name: 'BasicPaginationTest',
             description: 'Test basic pagination',
             setup: function() {
               this.preFindOperationSpy = sinon.spy(this.parent.service.endpoints.find, 'preFindOperation')
@@ -477,7 +477,7 @@ __(function() {
             }
           },
           {
-            name: 'noPrevLinkPaginationTest',
+            name: 'NoPrevLinkPaginationTest',
             description: 'Test absence of prev link on first page',
             setup: function() {
               this.preFindOperationSpy = sinon.spy(this.parent.service.endpoints.find, 'preFindOperation')
@@ -525,7 +525,7 @@ __(function() {
             }
           },
           {
-            name: 'noNextLinkPaginationTest',
+            name: 'NoNextLinkPaginationTest',
             description: 'Test absence of next link on last page',
             setup: function() {
               this.preFindOperationSpy = sinon.spy(this.parent.service.endpoints.find, 'preFindOperation')
@@ -574,7 +574,7 @@ __(function() {
             }
           },
           {
-            name: 'noNextOrPrevLinkPaginationTest',
+            name: 'NoNextOrPrevLinkPaginationTest',
             description: 'Test absence of next and prev link on first and last page',
             setup: function() {
               this.preFindOperationSpy = sinon.spy(this.parent.service.endpoints.find, 'preFindOperation')
@@ -618,7 +618,7 @@ __(function() {
             }
           },
           {
-            name: 'maxPageSizeTest',
+            name: 'MaxPageSizeTest',
             description: 'Test maxPageSize is enforced',
             setup: function() {
               this.preFindOperationSpy = sinon.spy(this.parent.service.endpoints.find, 'preFindOperation')
@@ -658,7 +658,7 @@ __(function() {
             }
           },
           {
-            name: 'limitEnforcedTest',
+            name: 'LimitEnforcedTest',
             description: 'Test limit is enforced',
             setup: function() {
               this.preFindOperationSpy = sinon.spy(this.parent.service.endpoints.find, 'preFindOperation')
