@@ -26,16 +26,16 @@ var _MongoDBCollection = oo({
     return util.overrideOrSuper(MongoDBCollection, this, 'preInsertOperation', arguments, req)
   },
 
-  preInsert: function(objects, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'preInsert', arguments, context)
+  preInsert: function(objects, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'preInsert', arguments, options)
   },
 
-  insert: function(objects, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'insert', arguments, context)
+  insert: function(objects, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'insert', arguments, options)
   },
 
-  postInsert: function(result, objects, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'postInsert', arguments, context)
+  postInsert: function(result, objects, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'postInsert', arguments, options)
   },
 
   postInsertOperation: function(result, config, req, res) {
@@ -46,16 +46,16 @@ var _MongoDBCollection = oo({
     return util.overrideOrSuper(MongoDBCollection, this, 'preInsertObjectOperation', arguments, req)
   },
 
-  preInsertObject: function(object, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'preInsertObject', arguments, context)
+  preInsertObject: function(object, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'preInsertObject', arguments, options)
   },
 
-  insertObject: function(object, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'insertObject', arguments, context)
+  insertObject: function(object, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'insertObject', arguments, options)
   },
 
-  postInsertObject: function(result, object, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'postInsertObject', arguments, context)
+  postInsertObject: function(result, object, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'postInsertObject', arguments, options)
   },
 
   postInsertObjectOperation: function(result, config, req, res) {
@@ -66,16 +66,16 @@ var _MongoDBCollection = oo({
     return util.overrideOrSuper(MongoDBCollection, this, 'preFindOperation', arguments, req)
   },
 
-  preFind: function(context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'preFind', arguments, context)
+  preFind: function(options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'preFind', arguments, options)
   },
 
-  find: function(context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'find', arguments, context)
+  find: function(options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'find', arguments, options)
   },
 
-  postFind: function(result, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'postFind', arguments, context)
+  postFind: function(result, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'postFind', arguments, options)
   },
 
   postFindOperation: function(result, config, req, res) {
@@ -86,16 +86,16 @@ var _MongoDBCollection = oo({
     return util.overrideOrSuper(MongoDBCollection, this, 'preFindObjectOperation', arguments, req)
   },
 
-  preFindObject: function(id, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'preFindObject', arguments, context)
+  preFindObject: function(id, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'preFindObject', arguments, options)
   },
 
-  findObject: function(id, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'findObject', arguments, context)
+  findObject: function(id, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'findObject', arguments, options)
   },
 
-  postFindObject: function(result, id, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'postFindObject', arguments, context)
+  postFindObject: function(result, id, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'postFindObject', arguments, options)
   },
 
   postFindObjectOperation: function(result, config, req, res) {
@@ -106,16 +106,16 @@ var _MongoDBCollection = oo({
     return util.overrideOrSuper(MongoDBCollection, this, 'preSaveOperation', arguments, req)
   },
 
-  preSave: function(objects, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'preSave', arguments, context)
+  preSave: function(objects, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'preSave', arguments, options)
   },
 
-  save: function(objects, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'save', arguments, context)
+  save: function(objects, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'save', arguments, options)
   },
 
-  postSave: function(result, objects, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'postSave', arguments, context)
+  postSave: function(result, objects, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'postSave', arguments, options)
   },
 
   postSaveOperation: function(result, config, req, res) {
@@ -126,16 +126,16 @@ var _MongoDBCollection = oo({
     return util.overrideOrSuper(MongoDBCollection, this, 'preSaveObjectOperation', arguments, req)
   },
 
-  preSaveObject: function(object, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'preSaveObject', arguments, context)
+  preSaveObject: function(object, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'preSaveObject', arguments, options)
   },
 
-  saveObject: function(object, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'saveObject', arguments, context)
+  saveObject: function(object, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'saveObject', arguments, options)
   },
 
-  postSaveObject: function(result, object, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'postSaveObject', arguments, context)
+  postSaveObject: function(result, object, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'postSaveObject', arguments, options)
   },
 
   postSaveObjectOperation: function(result, config, req, res) {
@@ -146,16 +146,16 @@ var _MongoDBCollection = oo({
     return util.overrideOrSuper(MongoDBCollection, this, 'preUpdateOperation', arguments, req)
   },
 
-  preUpdate: function(update, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'preUpdate', arguments, context)
+  preUpdate: function(update, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'preUpdate', arguments, options)
   },
 
-  update: function(update, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'update', arguments, context)
+  update: function(update, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'update', arguments, options)
   },
 
-  postUpdate: function(result, update, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'postUpdate', arguments, context)
+  postUpdate: function(result, update, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'postUpdate', arguments, options)
   },
 
   postUpdateOperation: function(result, config, req, res) {
@@ -166,16 +166,16 @@ var _MongoDBCollection = oo({
     return util.overrideOrSuper(MongoDBCollection, this, 'preUpdateObjectOperation', arguments, req)
   },
 
-  preUpdateObject: function(id, update, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'preUpdateObject', arguments, context)
+  preUpdateObject: function(id, update, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'preUpdateObject', arguments, options)
   },
 
-  updateObject: function(id, update, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'updateObject', arguments, context)
+  updateObject: function(id, update, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'updateObject', arguments, options)
   },
 
-  postUpdateObject: function(result, id, update, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'postUpdateObject', arguments, context)
+  postUpdateObject: function(result, id, update, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'postUpdateObject', arguments, options)
   },
 
   postUpdateObjectOperation: function(result, config, req, res) {
@@ -186,16 +186,16 @@ var _MongoDBCollection = oo({
     return util.overrideOrSuper(MongoDBCollection, this, 'preRemoveOperation', arguments, req)
   },
 
-  preRemove: function(context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'preRemove', arguments, context)
+  preRemove: function(options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'preRemove', arguments, options)
   },
 
-  remove: function(context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'remove', arguments, context)
+  remove: function(options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'remove', arguments, options)
   },
 
-  postRemove: function(result, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'postRemove', arguments, context)
+  postRemove: function(result, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'postRemove', arguments, options)
   },
 
   postRemoveOperation: function(result, config, req, res) {
@@ -206,16 +206,16 @@ var _MongoDBCollection = oo({
     return util.overrideOrSuper(MongoDBCollection, this, 'preRemoveObjectOperation', arguments, req)
   },
 
-  preRemoveObject: function(id, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'preRemoveObject', arguments, context)
+  preRemoveObject: function(id, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'preRemoveObject', arguments, options)
   },
 
-  removeObject: function(id, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'removeObject', arguments, context)
+  removeObject: function(id, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'removeObject', arguments, options)
   },
 
-  postRemoveObject: function(result, id, context, options) {
-    return util.overrideOrSuper(MongoDBCollection, this, 'postRemoveObject', arguments, context)
+  postRemoveObject: function(result, id, options) {
+    return util.overrideOrSuper(MongoDBCollection, this, 'postRemoveObject', arguments, options)
   },
 
   postRemoveObjectOperation: function(result, config, req, res) {

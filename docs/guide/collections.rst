@@ -10,16 +10,16 @@ collection of resources. When you define a
 :js:class:`~carbond.collections.Collection` you may define the following
 operation handler methods:
 
-- ``insert(objects, context, options)``
-- ``find(context, options)``
-- ``save(objects, context, options)``
-- ``update(update, context, options)``
-- ``remove(context, options)``
-- ``insertObject(object, context, options)``
-- ``findObject(id, context, options)``
-- ``saveObject(object, context, options)``
-- ``updateObject(id, update, context, options)``
-- ``removeObject(id, context, options)``
+- ``insert(objects, options)``
+- ``find(options)``
+- ``save(objects, options)``
+- ``update(update, options)``
+- ``remove(options)``
+- ``insertObject(object, options)``
+- ``findObject(id, options)``
+- ``saveObject(object, options)``
+- ``updateObject(id, update, options)``
+- ``removeObject(id, options)``
 
 Which results in the following tree of :js:class:`~carbond.Endpoint`\s and
 :js:class:`~carbond.Operation`\s:
@@ -77,8 +77,8 @@ are required by the operation and those that serve to augment how that operation
 is applied. Required arguments are common to all collection implementations and
 are explicitly passed at the head of the parameter list (e.g., ``id`` and
 ``update`` for the :js:func:`~carbond.collections.Collection..updateObject``
-operation). Additional parameters are passed via the ``context`` and ``options``
-arguments. For example, the :js:func:`~carbond.mongodb.MongoDBCollection.update`
+operation). Additional parameters are passed via the ``options``
+argument. For example, the :js:func:`~carbond.mongodb.MongoDBCollection.update`
 operation supports queries by adding another parameter called ``query`` (not to
 be confused with the query string component of the URL) to the set of parameters
 recognized by the endpoint. When an HTTP request is received, the ``update`` spec

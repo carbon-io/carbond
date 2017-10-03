@@ -86,7 +86,7 @@ function overrideOrSuper(type, object, name, args, reqOrContext, noSuper) {
           }
           ret = type.prototype[name].apply(object, args)
         }
-        ret.context.__pong = pong
+        ret.__pong = pong
       } else if ((!_.isNil(name.match(/(pre|post).+/)) ||
                   _.includes(COLOPS, name) ||
                   _.includes(ENDOPS, name)) &&

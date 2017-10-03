@@ -27,16 +27,16 @@ var _Collection = oo({
     return util.overrideOrSuper(Collection, this, 'preInsertOperation', arguments, req)
   },
 
-  preInsert: function(objects, context, options) {
-    return util.overrideOrSuper(Collection, this, 'preInsert', arguments, context)
+  preInsert: function(objects, options) {
+    return util.overrideOrSuper(Collection, this, 'preInsert', arguments, options)
   },
 
-  insert: function(objects, context, options) {
-    return util.overrideOrSuper(Collection, this, 'insert', arguments, context)
+  insert: function(objects, options) {
+    return util.overrideOrSuper(Collection, this, 'insert', arguments, options)
   },
 
-  postInsert: function(result, objects, context, options) {
-    return util.overrideOrSuper(Collection, this, 'postInsert', arguments, context)
+  postInsert: function(result, objects, options) {
+    return util.overrideOrSuper(Collection, this, 'postInsert', arguments, options)
   },
 
   postInsertOperation: function(result, config, req, res) {
@@ -47,16 +47,16 @@ var _Collection = oo({
     return util.overrideOrSuper(Collection, this, 'preInsertObjectOperation', arguments, req)
   },
 
-  preInsertObject: function(object, context, options) {
-    return util.overrideOrSuper(Collection, this, 'preInsertObject', arguments, context)
+  preInsertObject: function(object, options) {
+    return util.overrideOrSuper(Collection, this, 'preInsertObject', arguments, options)
   },
 
-  insertObject: function(object, context, options) {
-    return util.overrideOrSuper(Collection, this, 'insertObject', arguments, context)
+  insertObject: function(object, options) {
+    return util.overrideOrSuper(Collection, this, 'insertObject', arguments, options)
   },
 
-  postInsertObject: function(result, object, context, options) {
-    return util.overrideOrSuper(Collection, this, 'postInsertObject', arguments, context)
+  postInsertObject: function(result, object, options) {
+    return util.overrideOrSuper(Collection, this, 'postInsertObject', arguments, options)
   },
 
   postInsertObjectOperation: function(result, config, req, res) {
@@ -67,16 +67,16 @@ var _Collection = oo({
     return util.overrideOrSuper(Collection, this, 'preFindOperation', arguments, req)
   },
 
-  preFind: function(context, options) {
-    return util.overrideOrSuper(Collection, this, 'preFind', arguments, context)
+  preFind: function(options) {
+    return util.overrideOrSuper(Collection, this, 'preFind', arguments, options)
   },
 
-  find: function(context, options) {
-    return util.overrideOrSuper(Collection, this, 'find', arguments, context)
+  find: function(options) {
+    return util.overrideOrSuper(Collection, this, 'find', arguments, options)
   },
 
-  postFind: function(result, context, options) {
-    return util.overrideOrSuper(Collection, this, 'postFind', arguments, context)
+  postFind: function(result, options) {
+    return util.overrideOrSuper(Collection, this, 'postFind', arguments, options)
   },
 
   postFindOperation: function(result, config, req, res) {
@@ -87,16 +87,16 @@ var _Collection = oo({
     return util.overrideOrSuper(Collection, this, 'preFindObjectOperation', arguments, req)
   },
 
-  preFindObject: function(id, context, options) {
-    return util.overrideOrSuper(Collection, this, 'preFindObject', arguments, context)
+  preFindObject: function(id, options) {
+    return util.overrideOrSuper(Collection, this, 'preFindObject', arguments, options)
   },
 
-  findObject: function(id, context, options) {
-    return util.overrideOrSuper(Collection, this, 'findObject', arguments, context)
+  findObject: function(id, options) {
+    return util.overrideOrSuper(Collection, this, 'findObject', arguments, options)
   },
 
-  postFindObject: function(result, id, context, options) {
-    return util.overrideOrSuper(Collection, this, 'postFindObject', arguments, context)
+  postFindObject: function(result, id, options) {
+    return util.overrideOrSuper(Collection, this, 'postFindObject', arguments, options)
   },
 
   postFindObjectOperation: function(result, config, req, res) {
@@ -107,16 +107,16 @@ var _Collection = oo({
     return util.overrideOrSuper(Collection, this, 'preSaveOperation', arguments, req)
   },
 
-  preSave: function(objects, context, options) {
-    return util.overrideOrSuper(Collection, this, 'preSave', arguments, context)
+  preSave: function(objects, options) {
+    return util.overrideOrSuper(Collection, this, 'preSave', arguments, options)
   },
 
-  save: function(objects, context, options) {
-    return util.overrideOrSuper(Collection, this, 'save', arguments, context)
+  save: function(objects, options) {
+    return util.overrideOrSuper(Collection, this, 'save', arguments, options)
   },
 
-  postSave: function(result, objects, context, options) {
-    return util.overrideOrSuper(Collection, this, 'postSave', arguments, context)
+  postSave: function(result, objects, options) {
+    return util.overrideOrSuper(Collection, this, 'postSave', arguments, options)
   },
 
   postSaveOperation: function(result, config, req, res) {
@@ -127,16 +127,16 @@ var _Collection = oo({
     return util.overrideOrSuper(Collection, this, 'preSaveObjectOperation', arguments, req)
   },
 
-  preSaveObject: function(object, context, options) {
-    return util.overrideOrSuper(Collection, this, 'preSaveObject', arguments, context)
+  preSaveObject: function(object, options) {
+    return util.overrideOrSuper(Collection, this, 'preSaveObject', arguments, options)
   },
 
-  saveObject: function(object, context, options) {
-    return util.overrideOrSuper(Collection, this, 'saveObject', arguments, context)
+  saveObject: function(object, options) {
+    return util.overrideOrSuper(Collection, this, 'saveObject', arguments, options)
   },
 
-  postSaveObject: function(result, object, context, options) {
-    return util.overrideOrSuper(Collection, this, 'postSaveObject', arguments, context)
+  postSaveObject: function(result, object, options) {
+    return util.overrideOrSuper(Collection, this, 'postSaveObject', arguments, options)
   },
 
   postSaveObjectOperation: function(result, config, req, res) {
@@ -147,16 +147,16 @@ var _Collection = oo({
     return util.overrideOrSuper(Collection, this, 'preUpdateOperation', arguments, req)
   },
 
-  preUpdate: function(update, context, options) {
-    return util.overrideOrSuper(Collection, this, 'preUpdate', arguments, context)
+  preUpdate: function(update, options) {
+    return util.overrideOrSuper(Collection, this, 'preUpdate', arguments, options)
   },
 
-  update: function(update, context, options) {
-    return util.overrideOrSuper(Collection, this, 'update', arguments, context)
+  update: function(update, options) {
+    return util.overrideOrSuper(Collection, this, 'update', arguments, options)
   },
 
-  postUpdate: function(result, update, context, options) {
-    return util.overrideOrSuper(Collection, this, 'postUpdate', arguments, context)
+  postUpdate: function(result, update, options) {
+    return util.overrideOrSuper(Collection, this, 'postUpdate', arguments, options)
   },
 
   postUpdateOperation: function(result, config, req, res) {
@@ -167,16 +167,16 @@ var _Collection = oo({
     return util.overrideOrSuper(Collection, this, 'preUpdateObjectOperation', arguments, req)
   },
 
-  preUpdateObject: function(id, update, context, options) {
-    return util.overrideOrSuper(Collection, this, 'preUpdateObject', arguments, context)
+  preUpdateObject: function(id, update, options) {
+    return util.overrideOrSuper(Collection, this, 'preUpdateObject', arguments, options)
   },
 
-  updateObject: function(id, update, context, options) {
-    return util.overrideOrSuper(Collection, this, 'updateObject', arguments, context)
+  updateObject: function(id, update, options) {
+    return util.overrideOrSuper(Collection, this, 'updateObject', arguments, options)
   },
 
-  postUpdateObject: function(result, id, update, context, options) {
-    return util.overrideOrSuper(Collection, this, 'postUpdateObject', arguments, context)
+  postUpdateObject: function(result, id, update, options) {
+    return util.overrideOrSuper(Collection, this, 'postUpdateObject', arguments, options)
   },
 
   postUpdateObjectOperation: function(result, config, req, res) {
@@ -187,16 +187,16 @@ var _Collection = oo({
     return util.overrideOrSuper(Collection, this, 'preRemoveOperation', arguments, req)
   },
 
-  preRemove: function(context, options) {
-    return util.overrideOrSuper(Collection, this, 'preRemove', arguments, context)
+  preRemove: function(options) {
+    return util.overrideOrSuper(Collection, this, 'preRemove', arguments, options)
   },
 
-  remove: function(context, options) {
-    return util.overrideOrSuper(Collection, this, 'remove', arguments, context)
+  remove: function(options) {
+    return util.overrideOrSuper(Collection, this, 'remove', arguments, options)
   },
 
-  postRemove: function(result, context, options) {
-    return util.overrideOrSuper(Collection, this, 'postRemove', arguments, context)
+  postRemove: function(result, options) {
+    return util.overrideOrSuper(Collection, this, 'postRemove', arguments, options)
   },
 
   postRemoveOperation: function(result, config, req, res) {
@@ -207,16 +207,16 @@ var _Collection = oo({
     return util.overrideOrSuper(Collection, this, 'preRemoveObjectOperation', arguments, req)
   },
 
-  preRemoveObject: function(id, context, options) {
-    return util.overrideOrSuper(Collection, this, 'preRemoveObject', arguments, context)
+  preRemoveObject: function(id, options) {
+    return util.overrideOrSuper(Collection, this, 'preRemoveObject', arguments, options)
   },
 
-  removeObject: function(id, context, options) {
-    return util.overrideOrSuper(Collection, this, 'removeObject', arguments, context)
+  removeObject: function(id, options) {
+    return util.overrideOrSuper(Collection, this, 'removeObject', arguments, options)
   },
 
-  postRemoveObject: function(result, id, context, options) {
-    return util.overrideOrSuper(Collection, this, 'postRemoveObject', arguments, context)
+  postRemoveObject: function(result, id, options) {
+    return util.overrideOrSuper(Collection, this, 'postRemoveObject', arguments, options)
   },
 
   postRemoveObjectOperation: function(result, config, req, res) {
