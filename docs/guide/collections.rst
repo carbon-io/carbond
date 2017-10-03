@@ -83,10 +83,8 @@ operation supports queries by adding another parameter called ``query`` (not to
 be confused with the query string component of the URL) to the set of parameters
 recognized by the endpoint. When an HTTP request is received, the ``update`` spec
 will be passed to the operation handler via the first parameter (``update``),
-while the ``query`` spec will be passed via the ``context`` parameter as a
-property of that object (e.g., ``context.query``).  The ``options`` parameter is
-intended to be used for concrete implementation driver specific options (see:
-`SaveObject`_).
+while the ``query`` spec will be passed via the ``options`` parameter as a
+property of that object (e.g., ``options.query``).
 
 The following sections describe the general semantics of each operation.
 
@@ -157,11 +155,11 @@ Additionally, the ``find`` operation can be configured to support pagination and
 ID queries (see :js:attr:`~carbond.collections.FindConfig.supportsPagination`
 and :js:attr:`~carbond.collections.FindConfig.supportsIdQuery`). If pagination
 support is enabled, the handler should honor the parameters indicating the
-subset of objects to return (e.g., ``context.skip`` and ``context.limit``). If
+subset of objects to return (e.g., ``options.skip`` and ``options.limit``). If
 ID queries are supported (note, ID query support is necessary when supporting
 bulk inserts), a query parameter by the same name as
 :js:attr:`~carbond.collections.Collection.idParameter` will be added and
-ultimately passed to the handler via ``context[this.idParameter]``. The
+ultimately passed to the handler via ``options[this.idParameter]``. The
 following in-memory cache example accommodates both of these options:
 
 .. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
@@ -649,7 +647,7 @@ to the list of parameters for the collection operation. Note, the ``find`` opera
 parameter list includes two more parameters: ``skip`` and ``limit``. When
 pagination is enabled, it will be transparent to the operation handlers
 themselves. Instead, :js:class:`~carbond.collections.Collection` will update
-``context.skip`` and ``context.limit`` to reflect the page start and size. This
+``options.skip`` and ``options.limit`` to reflect the page start and size. This
 allows the handler to be implemented without concern for whether pagination is
 enabled or not.
 
@@ -1365,8 +1363,8 @@ and are called for each operation in the order listed, with the handler
 being called between ``pre<OPERATION NAME>`` and ``post<OPERATION NAME>``.
 
 - ``pre<OPERATION NAME>Operation(config, req, res)``
-- ``pre<OPERATION NAME>(<REQUIRED OPERATION PARAMETERS>, context, options)``
-- ``post<OPERATION NAME>(result, <REQUIRED OPERATION PARAMETERS>, context, options)``
+- ``pre<OPERATION NAME>(<REQUIRED OPERATION PARAMETERS>, options)``
+- ``post<OPERATION NAME>(result, <REQUIRED OPERATION PARAMETERS>, options)``
 - ``post<OPERATION NAME>Operation(result, config, req, res)``
 
 Where ``<OPERATION NAME>`` is the name of the operation with the first letter
@@ -1385,16 +1383,14 @@ pre<OPERATION NAME>Operation
 ----------------------------
 
 The base ``pre<OPERATION NAME>Operation`` hooks are responsible for building the
-``context`` and ``options`` parameters based on the incoming request and config
-for this operation. As such, the return value of these methods should be an
-object consisting of two properties: ``context`` and ``options`` (see
-:js:class:`~carbond.collections.Collection.PreOperationResult`). It should be
-noted that at this step, ``context`` should contain *all* parameters that will
+``options`` parameter based on the incoming request and config
+for this operation. As such, the return value of these methods should be
+the initialized ``options`` parameter that will be passed on to the handler. It should be
+noted that at this step, ``options`` should contain *all* parameters that will
 be passed to the operation handler (e.g., for the ``updateObject`` operation,
-``preUpdateObjectOperation`` would return a ``context`` that contained the ID
+``preUpdateObjectOperation`` would return a ``options`` object that contained the ID
 parameter, ``update`` parameter, along with any other parameters or context that
-may be relevant). In general, ``context`` is simply assigned ``req.parameters``
-and ``options`` is assigned ``config.options``.
+may be relevant). In general, ``options`` is simply assigned ``req.parameters``.
 
 The :js:func:`~carbond.collections.Collection.preInsertObjectOperation` method,
 for instance, validates that the ID property is not present in the object to be
@@ -1404,8 +1400,8 @@ its ``generateId`` method and set the ID for the incoming object that will
 ultimately be passed to the operation handler method.
 
 It should be noted, that required parameters to an operation handler (``object``
-in the case of ``insertObject(object, context, options)``) should remain in the
-``context`` object at this step as they will be extracted from ``context`` and
+in the case of ``insertObject(object, options)``) should remain in the
+``options`` object at this step as they will be extracted from ``options`` and
 passed as the leading parameters to the handler.
 
 As an example, let's say that we want objects in a collection belonging to
@@ -1416,17 +1412,17 @@ see a different object than user "bar" when making a request to
 .. code-block:: js
 
     preFindObjectOperation(config, req, res) {
-      var result = Collection.prototype.preFindObjectOperation.call(this, config, req, res)
+      var options = Collection.prototype.preFindObjectOperation.call(this, config, req, res)
       var idPrefix = getUserIdPrefix(req.user)
-      result.context[this.idPathParameter] = idPrefix + '-' + result.context[this.idPathParameter]
-      return result
+      options[this.idPathParameter] = idPrefix + '-' + options[this.idPathParameter]
+      return options
     }
 
 pre<OPERATION NAME>
 -------------------
 
 The base ``pre<OPERATION NAME>`` hooks have the same signature as the operation
-handler (e.g., ``preInsert(objects, context, options)``) and are no-ops that
+handler (e.g., ``preInsert(objects, options)``) and are no-ops that
 simply pass through their arguments. The requirements for return value when
 overriding are loose. You can either augment the parameters by side-effect and
 return nothing or override parameters by returning an object whose keys match
@@ -1439,7 +1435,7 @@ field to any object being inserted, you might do something like the following:
 
 .. code-block:: js
 
-    preInsertObject(object, context, options) {
+    preInsertObject(object, options) {
       object.created = new Date()
     }
 
@@ -1448,14 +1444,14 @@ post<OPERATION NAME>
 
 The base ``post<OPERATION NAME>`` hooks have the same signature as the operation
 handler with the result of the operation handler prepended to the parameter list
-(e.g., ``postInsert(result, objects, context, options)``) and, similar to their
+(e.g., ``postInsert(result, objects, options)``) and, similar to their
 ``pre<OPERATION NAME>`` counterparts, simply return the result. These hooks are
 useful if you want to augment the result object in some way. For example, you
 may want to sanitize some fields in a result:
 
 .. code-block:: js
 
-    postFindObject(result, id, context, options) {
+    postFindObject(result, id, options) {
       if (!_.isNil(result)) {
         result.apiKey = 'REDACTED'
       }

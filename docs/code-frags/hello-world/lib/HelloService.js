@@ -34,7 +34,7 @@ __(function() {
           find: true
         },
         // POST /feedback
-        insertObject: function(object, context, options) {
+        insertObject: function(object, options) {
           /*
            * implementation...
            */
@@ -54,12 +54,12 @@ __(function() {
           }
         },
         // GET /feedback
-        find: function(context, options) {
+        find: function(options) {
           /*
            * implementation...
            */
           var col = this.service.db.getCollection(path.basename(this.path))
-          return col.find(context.query).toArray()
+          return col.find(options.query).toArray()
         }
       })
     }
