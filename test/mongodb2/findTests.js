@@ -249,7 +249,7 @@ __(function() {
       }),
       o({
         _type: MongoDBCollectionHttpTest,
-        name: 'DefaultConfigFindTests',
+        name: 'DefaultConfigPaginationFindTests',
         service: o({
           _type: pong.Service,
           dbUri: config.MONGODB_URI + '/find',
@@ -259,8 +259,8 @@ __(function() {
               enabled: {find: true},
               collection: 'find',
               findConfig: {
-                pageSize: 5,
-                maxPageSize: 10
+                pageSize: 4,
+                maxPageSize: 8
               }
             })
           }
@@ -285,7 +285,102 @@ __(function() {
             resSpec: {
               statusCode: 200,
               body: function(body) {
-                assert.deepEqual(body, _.map(_.range(10, 15), function(i) {
+                assert.deepEqual(body, _.map(_.range(8, 12), function(i) {
+                  return {_id: getObjectId(i), foo: 'bar', bar: i}
+                }))
+              }
+            }
+          },
+          {
+            name: 'FindPageAndLimitTest',
+            reqSpec: {
+              url: '/find',
+              method: 'GET',
+              parameters: {
+                page: 2,
+                limit: 8
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: function(body) {
+                assert.deepEqual(body, _.map(_.range(8, 16), function(i) {
+                  return {_id: getObjectId(i), foo: 'bar', bar: i}
+                }))
+              }
+            }
+          },
+          {
+            name: 'FindPageSizeTest',
+            reqSpec: {
+              url: '/find',
+              method: 'GET',
+              parameters: {
+                page: 2,
+                pageSize: 2
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: function(body) {
+                assert.deepEqual(body, _.map(_.range(4, 6), function(i) {
+                  return {_id: getObjectId(i), foo: 'bar', bar: i}
+                }))
+              }
+            }
+          },
+          {
+            name: 'FindPageSizeMaxPageSizeEnforcedOnPageSizeTest',
+            reqSpec: {
+              url: '/find',
+              method: 'GET',
+              parameters: {
+                page: 1,
+                pageSize: 10
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: function(body) {
+                assert.deepEqual(body, _.map(_.range(8, 16), function(i) {
+                  return {_id: getObjectId(i), foo: 'bar', bar: i}
+                }))
+              }
+            }
+          },
+          {
+            name: 'FindPageSizeMaxPageSizeEnforcedOnLimitTest',
+            reqSpec: {
+              url: '/find',
+              method: 'GET',
+              parameters: {
+                page: 1,
+                limit: 10
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: function(body) {
+                assert.deepEqual(body, _.map(_.range(4, 12), function(i) {
+                  return {_id: getObjectId(i), foo: 'bar', bar: i}
+                }))
+              }
+            }
+          },
+          {
+            name: 'FindPageAndSkipTest',
+            reqSpec: {
+              url: '/find',
+              method: 'GET',
+              parameters: {
+                page: 2,
+                skip: 10
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: function(body) {
+                assert.deepEqual(body, _.map(_.range(18, 20), function(i) {
                   return {_id: getObjectId(i), foo: 'bar', bar: i}
                 }))
               }

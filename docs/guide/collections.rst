@@ -1021,6 +1021,14 @@ GET /<collection>
       - Contains the page number from which objects are to be retrieved. This
         parameter is only present if
         :js:attr:`~carbond.collections.FindConfig.supportsPagination` is true
+    * - ``pageSize``
+      - query
+      - Specifies the number of objects per page. This is only present if
+        :js:attr:`~carbond.collections.FindConfig.supportsPagination` is true.
+        The default value for page size is configured using 
+        :js:attr:`~carbond.collections.FindConfig.pageSize`
+        (note, if :js:attr:`~carbond.collections.FindConfig.maxPageSize` is
+        specified, then the minimum of the two will be used)
     * - ``skip``
       - query
       - The number of objects in the collection to skip before returning results
