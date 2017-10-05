@@ -249,6 +249,52 @@ __(function() {
       }),
       o({
         _type: MongoDBCollectionHttpTest,
+        name: 'DefaultConfigFindTests',
+        service: o({
+          _type: pong.Service,
+          dbUri: config.MONGODB_URI + '/find',
+          endpoints: {
+            find: o({
+              _type: pong.MongoDBCollection,
+              enabled: {find: true},
+              collection: 'find',
+              findConfig: {
+                pageSize: 5,
+                maxPageSize: 10
+              }
+            })
+          }
+        }),
+        fixture: {
+          find: function() {
+            return _.map(_.range(20), function(i) {
+              return {_id: getObjectId(i), foo: 'bar', bar: i}
+            })
+          }
+        },
+        tests: [
+          {
+            name: 'FindBasicPagingTest',
+            reqSpec: {
+              url: '/find',
+              method: 'GET',
+              parameters: {
+                page: 2
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: function(body) {
+                assert.deepEqual(body, _.map(_.range(10, 15), function(i) {
+                  return {_id: getObjectId(i), foo: 'bar', bar: i}
+                }))
+              }
+            }
+          },
+        ]
+      }),
+      o({
+        _type: MongoDBCollectionHttpTest,
         name: 'NoIdQueryConfigFindTests',
         service: o({
           _type: pong.Service,

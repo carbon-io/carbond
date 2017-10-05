@@ -69,10 +69,11 @@ var MongoDBCollectionHttpTest = oo({
     for(var colName in fixture) {
       var id = 0
       col = db.getCollection(colName)
-      for (var i = 0; i < fixture[colName].length; i++) {
+      var colFixture = _.isFunction(fixture[colName]) ? fixture[colName].call(this) : fixture[colName]
+      for (var i = 0; i < colFixture.length; i++) {
         col.insert(
           _.assignIn(
-            _.clone(fixture[colName][i]),
+            _.clone(colFixture[i]),
             {_id: getObjectId(id++)}))
       }
     }

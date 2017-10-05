@@ -697,6 +697,44 @@ __(function() {
               statusCode: 500
             }
           },
+          {
+            name: 'pageSizeTest',
+            description: 'Test pageSize is enforced',
+            setup: function() {
+              this.preFindOperationSpy = sinon.spy(this.parent.service.endpoints.find, 'preFindOperation')
+              this.findSpy = sinon.spy(this.parent.service.endpoints.find, 'find')
+            },
+            teardown: function(context) {
+              try {
+                assert.equal(
+                  this.preFindOperationSpy.firstCall.args[1].parameters.pageSize, 5)
+                assert.equal(
+                  this.findSpy.firstCall.args[0].limit, 5)
+              } finally {
+                this.findSpy.restore()
+                this.preFindOperationSpy.restore()
+              }
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/find',
+                method: 'GET',
+                parameters: {
+                  pageSize: 5
+                },
+                headers: {
+                  'x-pong': ejson.stringify({
+                    find: _.map(_.range(5), function(n) {
+                      return {[context.global.idParameter]: n.toString(), foo: 'bar'}
+                    })
+                  })
+                }
+              }
+            },
+            resSpec: {
+              statusCode: 200
+            }
+          },
         ]
       }),
     ]

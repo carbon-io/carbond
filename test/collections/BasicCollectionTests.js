@@ -633,11 +633,24 @@ __(function() {
                   '403': this.parent.ForbiddenResponse,
                   '500': this.parent.InternalServerErrorResponse
                 })
+              debugger
               assert.deepEqual(
                 this.parent.ce.getOperation('get').parameters, {
                   page: {
                     name: 'page',
                     description: 'The page to navigate to (skip/limit are derived from this)',
+                    schema: {
+                      type: 'number',
+                      multipleOf: 1,
+                      minimum: 0
+                    },
+                    location: 'query',
+                    required: false,
+                    default: 0
+                  },
+                  pageSize: {
+                    name: 'pageSize',
+                    description: 'The page size used for pagination (skip/limit are derived from this and page)',
                     schema: {
                       type: 'number',
                       multipleOf: 1,
