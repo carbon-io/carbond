@@ -249,7 +249,7 @@ __(function() {
       }),
       o({
         _type: MongoDBCollectionHttpTest,
-        name: 'DefaultConfigPaginationFindTests',
+        name: 'PaginationFindTests',
         service: o({
           _type: pong.Service,
           dbUri: config.MONGODB_URI + '/find',
