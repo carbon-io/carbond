@@ -633,7 +633,6 @@ __(function() {
                   '403': this.parent.ForbiddenResponse,
                   '500': this.parent.InternalServerErrorResponse
                 })
-              debugger
               assert.deepEqual(
                 this.parent.ce.getOperation('get').parameters, {
                   page: {
@@ -658,7 +657,7 @@ __(function() {
                     },
                     location: 'query',
                     required: false,
-                    default: 0
+                    default: null
                   },
                   skip: {
                     name: 'skip',

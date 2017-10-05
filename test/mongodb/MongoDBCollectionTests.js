@@ -820,7 +820,7 @@ __(function() {
                     },
                     location: 'query',
                     required: false,
-                    default: 0
+                    default: null
                   },
                   skip: {
                     name: 'skip',
