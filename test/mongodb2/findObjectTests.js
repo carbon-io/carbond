@@ -54,7 +54,7 @@ __(function() {
         fixture: {
           findObject: [
             {_id: getObjectId(0), foo: 'bar'},
-            {_id: getObjectId(1), bar: 'baz'},
+            {_id: getObjectId(1), bar: 'baz', omit: 'me'},
             {_id: getObjectId(2), baz: 'yaz'}
           ]
         },
@@ -92,6 +92,64 @@ __(function() {
             },
             resSpec: {
               statusCode: 404
+            }
+          },
+          {
+            name: 'FindObjectNegativeProjectionTest',
+            description: 'Test findObject projection',
+            reqSpec: {
+              url: '/findObject/' + getObjectId(1).toString(),
+              method: 'GET',
+              parameters: {
+                projection: {omit: 0}
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: {_id: getObjectId(1), bar: 'baz'}
+            }
+          },
+          {
+            name: 'FindObjectPositiveProjectionTest',
+            description: 'Test findObject projection',
+            reqSpec: {
+              url: '/findObject/' + getObjectId(1).toString(),
+              method: 'GET',
+              parameters: {
+                projection: {bar: 1}
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: {_id: getObjectId(1), bar: 'baz'}
+            }
+          },
+          {
+            name: 'FindObjectProjectionBooleanValidationErrorTest',
+            description: 'Test findObject projection validation',
+            reqSpec: {
+              url: '/findObject/' + getObjectId(1).toString(),
+              method: 'GET',
+              parameters: {
+                projection: {omit: -1}
+              }
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'FindObjectProjectionBooleanValidationErrorTest',
+            description: 'Test findObject projection validation',
+            reqSpec: {
+              url: '/findObject/' + getObjectId(1).toString(),
+              method: 'GET',
+              parameters: {
+                projection: {bar: true}
+              }
+            },
+            resSpec: {
+              statusCode: 400
             }
           },
         ]

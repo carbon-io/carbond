@@ -782,7 +782,6 @@ __(function() {
                   '403': this.parent.ForbiddenResponse,
                   '500': this.parent.InternalServerErrorResponse
                 })
-              debugger
               assert.deepEqual(
                 this.parent.ce.getOperation('get').parameters, {
                   _id: {
@@ -880,7 +879,13 @@ __(function() {
                     description: 'Projection spec (JSON)',
                     location: 'query',
                     schema: {
-                      type: 'object'
+                      type: 'object',
+                      additionalProperties: {
+                        type: 'number',
+                        minimum: 0,
+                        maximum: 1,
+                        multipleOf: 1
+                      }
                     },
                     required: false,
                     default: null
@@ -1012,7 +1017,24 @@ __(function() {
                     required: true,
                     default: null,
                     resolver: null
-                  }})
+                  },
+                  projection: {
+                    name: 'projection',
+                    description: 'Projection spec (JSON)',
+                    location: 'query',
+                    schema: {
+                      type: 'object',
+                      additionalProperties: {
+                        type: 'number',
+                        minimum: 0,
+                        maximum: 1,
+                        multipleOf: 1
+                      }
+                    },
+                    required: false,
+                    default: null
+                  }
+                })
             }
           }),
           o({
