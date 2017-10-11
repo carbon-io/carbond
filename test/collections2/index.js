@@ -23,8 +23,8 @@ __(function() {
      * tests
      */
     tests: [
+      _o('./CollectionAllowUnauthenticatedTests'),
       _o('./insertTests'),
-      _o('./insertConfigTests'),
       _o('./insertObjectTests'),
       _o('./findTests'),
       _o('./findObjectTests'),

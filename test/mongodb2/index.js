@@ -24,7 +24,6 @@ __(function() {
      */
     tests: [
       _o('./insertTests'),
-      _o('./insertConfigTests'),
       _o('./insertObjectTests'),
       _o('./findTests'),
       _o('./findObjectTests'),
