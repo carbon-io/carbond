@@ -69,7 +69,6 @@ module.exports = {
   },
   mongodb: {
     MongoDBCollection: require('./lib/mongodb/MongoDBCollection'),
-    MongoDBCollectionOperationConfig: require('./lib/mongodb/MongoDBCollectionOperationConfig'),
     MongoDBFindConfig: require('./lib/mongodb/MongoDBFindConfig'),
     MongoDBFindObjectConfig: require('./lib/mongodb/MongoDBFindObjectConfig'),
     MongoDBInsertConfig: require('./lib/mongodb/MongoDBInsertConfig'),

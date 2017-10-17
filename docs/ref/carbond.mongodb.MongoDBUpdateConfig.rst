@@ -19,6 +19,14 @@ Properties
     :noindex:
     :hidden:
 
+    .. attribute:: driverOptions
+
+       :type: :class:`~object.<string, \*>`
+       :required:
+
+       Options to be passed to the mongodb driver (XXX: link to leafnode docs)
+
+
     .. attribute:: queryParameter
 
        :type: :class:`~object.<string, carbond.OperationParameter>`

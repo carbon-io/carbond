@@ -1,7 +1,7 @@
-.. _carbond-module-ref:
+.. _collection-module-ref:
 
 ===================
-carbond module reference
+collection module reference
 ===================
 
 .. toctree::
@@ -21,7 +21,6 @@ carbond module reference
     carbond.collections.Collection.rst
     carbond.collections.CollectionOperationConfig.rst
     carbond.collections.FindConfig.rst
-    carbond.collections.FindObjectConfig.rst
     carbond.collections.InsertConfig.rst
     carbond.collections.InsertObjectConfig.rst
     carbond.collections.RemoveConfig.rst
@@ -32,8 +31,15 @@ carbond module reference
     carbond.collections.UpdateObjectConfig.rst
     carbond.mongodb.MongoDBCollection.rst
     carbond.mongodb.MongoDBFindConfig.rst
+    carbond.mongodb.MongoDBFindObjectConfig.rst
+    carbond.mongodb.MongoDBInsertConfig.rst
+    carbond.mongodb.MongoDBInsertObjectConfig.rst
     carbond.mongodb.MongoDBRemoveConfig.rst
+    carbond.mongodb.MongoDBRemoveObjectConfig.rst
+    carbond.mongodb.MongoDBSaveConfig.rst
+    carbond.mongodb.MongoDBSaveObjectConfig.rst
     carbond.mongodb.MongoDBUpdateConfig.rst
+    carbond.mongodb.MongoDBUpdateObjectConfig.rst
     carbond.security.Acl.rst
     carbond.security.ApiKeyAuthenticator.rst
     carbond.security.Authenticator.rst

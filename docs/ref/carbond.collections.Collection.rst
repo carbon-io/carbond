@@ -464,24 +464,20 @@ Methods
 
         Update the operation config using collection level config (e.g., :class:`~carbond.collections.Collection.schema`) and build operation responses. In general, this method should not need to be overridden or extended. Instead, customization should be driven by the operation config and the pre/post handler methods.
 
-    .. function:: find(context, options)
+    .. function:: find(options)
 
-        :param context: The operation parameters (see: :class:`~carbond.collections.Collection.FindConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.collections.Collection.FindConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.FindConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: object[]
 
         Retrieve objects from a collection
 
-    .. function:: findObject(id, context, options)
+    .. function:: findObject(id, options)
 
         :param id: The object id
         :type id: string
-        :param context: The operation parameters (see: :class:`~carbond.collections.Collection.FindObjectConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.collections.Collection.FindObjectConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.FindObjectConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: object | null
@@ -504,52 +500,44 @@ Methods
 
         Get the property name for an operation config by name
 
-    .. function:: insert(objects, context, options)
+    .. function:: insert(objects, options)
 
         :param objects: An array of objects to insert
         :type objects: Array
-        :param context: The operation parameters (see: :class:`~carbond.collections.Collection.InsertConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.collections.Collection.InsertConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.InsertConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: object[]
 
         Bulk insert objects into a collection
 
-    .. function:: insertObject(object, context, options)
+    .. function:: insertObject(object, options)
 
         :param object: An object to insert
         :type object: object
-        :param context: The operation parameters (see: :class:`~carbond.collections.Collection.InsertObjectConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.collections.Collection.InsertObjectConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.InsertObjectConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: object
 
         Insert a single object into a collection
 
-    .. function:: postFind(result, context, options)
+    .. function:: postFind(result, options)
 
         :param result: The found object(s)
         :type result: object[]
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: object[]
 
         Update or transform the operation result before passing it back up to the HTTP layer
 
-    .. function:: postFindObject(result, id, context, options)
+    .. function:: postFindObject(result, id, options)
 
         :param result: The found object
         :type result: object | null
         :param id: The object id
         :type id: string
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: object | null
@@ -584,28 +572,24 @@ Methods
 
         Update the HTTP response to reflect the result of the operation
 
-    .. function:: postInsert(result, objects, context, options)
+    .. function:: postInsert(result, objects, options)
 
         :param result: The inserted object(s)
         :type result: object[]
         :param objects: The object(s) to insert
         :type objects: object[]
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: object[]
 
         Update or transform the operation result before passing it back up to the HTTP layer
 
-    .. function:: postInsertObject(result, object, context, options)
+    .. function:: postInsertObject(result, object, options)
 
         :param result: The inserted object
         :type result: object
         :param object: The object to insert
         :type object: object
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: object
@@ -640,24 +624,20 @@ Methods
 
         Update the HTTP response to reflect the result of the operation
 
-    .. function:: postRemove(result, context, options)
+    .. function:: postRemove(result, options)
 
         :param result: The number of objects (or the object(s) themselves) removed
         :type result: number | array
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: number | array
 
         Update or transform the operation result before passing it back up to the HTTP layer
 
-    .. function:: postRemoveObject(result, context, options)
+    .. function:: postRemoveObject(result, options)
 
         :param result: The number of objects (or the object itself) removed
         :type result: number | object
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: number | array
@@ -692,28 +672,24 @@ Methods
 
         Update the HTTP response to reflect the result of the operation. It should be noted that the result can be either a number or an array of object(s). If the underlying driver does not support returning the removed object(s), then the result will always be a number and :class:`~carbond.collections.RemoveConfig.returnsRemovedObjects` should be configured to reflect this.
 
-    .. function:: postSave(result, objects, context, options)
+    .. function:: postSave(result, objects, options)
 
         :param result: The saved objects
         :type result: object[]
         :param objects: The objects to save
         :type objects: object[]
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: object[]
 
         Update or transform the operation result before passing it back up to the HTTP layer
 
-    .. function:: postSaveObject(result, object, context, options)
+    .. function:: postSaveObject(result, object, options)
 
         :param result: The ``SaveObjectResult``
         :type result: :class:`~carbond.collections.Collection.SaveObjectResult`
         :param object: The object to save
         :type object: object
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: :class:`~carbond.collections.Collection.SaveObjectResult`
@@ -748,21 +724,19 @@ Methods
 
         Update the HTTP response to reflect the result of the operation
 
-    .. function:: postUpdate(result, update, context, options)
+    .. function:: postUpdate(result, update, options)
 
         :param result: The ``UpdateResult``
         :type result: :class:`~carbond.collections.Collection.UpdateResult`
         :param update: The update spec
         :type update: \*
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: :class:`~carbond.collections.Collection.UpdateResult`
 
         Update or transform the operation result before passing it back up to the HTTP layer
 
-    .. function:: postUpdateObject(result, update, update, context, options)
+    .. function:: postUpdateObject(result, update, update, options)
 
         :param result: The ``UpdateResult``
         :type result: :class:`~carbond.collections.Collection.UpdateResult`
@@ -770,8 +744,6 @@ Methods
         :type update: string
         :param update: The update spec
         :type update: \*
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: :class:`~carbond.collections.Collection.UpdateResult`
@@ -806,22 +778,18 @@ Methods
 
         Update the HTTP response to reflect the result of the operation. It should be noted that the result can be either a number or an array of objects. If the underlying driver does not support returning the upserted object(s), then the result will always be a number and :class:`~carbond.collections.UpdateConfig.returnsUpsertedObjects` should be configured to reflect this.
 
-    .. function:: preFind(context, options)
+    .. function:: preFind(options)
 
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: :class:`~carbond.collections.Collection.PreFindResult` | undefined
 
         Update or transform any parameters to be passed to the operation handler
 
-    .. function:: preFindObject(id, context, options)
+    .. function:: preFindObject(id, options)
 
         :param id: The object id
         :type id: string
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: :class:`~carbond.collections.Collection.PreFindObjectResult` | undefined
@@ -838,7 +806,7 @@ Methods
         :type res: :class:`~carbond.Response`
         :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
 
-        Build the context and options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
     .. function:: preFindOperation(config, req, res)
 
@@ -850,26 +818,22 @@ Methods
         :type res: :class:`~carbond.Response`
         :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
 
-        Build the context and options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preInsert(objects, context, options)
+    .. function:: preInsert(objects, options)
 
         :param objects: The objects to insert
         :type objects: object[]
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: :class:`~carbond.collections.Collection.PreInsertResult` | undefined
 
         Update or transform any parameters to be passed to the operation handler
 
-    .. function:: preInsertObject(object, context, options)
+    .. function:: preInsertObject(object, options)
 
         :param object: The object to insert
         :type object: object
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: :class:`~carbond.collections.Collection.PreInsertObjectResult` | undefined
@@ -886,7 +850,7 @@ Methods
         :type res: :class:`~carbond.Response`
         :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
 
-        Build the context and options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
     .. function:: preInsertOperation(config, req, res)
 
@@ -898,24 +862,20 @@ Methods
         :type res: :class:`~carbond.Response`
         :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
 
-        Build the context and options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preRemove(context, options)
+    .. function:: preRemove(options)
 
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: :class:`~carbond.collections.Collection.PreRemoveResult` | undefined
 
         Update or transform any parameters to be passed to the operation handler
 
-    .. function:: preRemoveObject(id, context, options)
+    .. function:: preRemoveObject(id, options)
 
         :param id: The object id
         :type id: string
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: :class:`~carbond.collections.Collection.PreRemoveObjectResult` | undefined
@@ -932,7 +892,7 @@ Methods
         :type res: :class:`~carbond.Response`
         :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
 
-        Build the context and options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
     .. function:: preRemoveOperation(config, req, res)
 
@@ -944,26 +904,22 @@ Methods
         :type res: :class:`~carbond.Response`
         :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
 
-        Build the context and options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preSave(objects, context, options)
+    .. function:: preSave(objects, options)
 
         :param objects: The objects to save
         :type objects: object[]
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: :class:`~carbond.collections.Collection.PreSaveResult` | undefined
 
         Update or transform any parameters to be passed to the operation handler
 
-    .. function:: preSaveObject(object, context, options)
+    .. function:: preSaveObject(object, options)
 
         :param object: The object to save
         :type object: object
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: :class:`~carbond.collections.Collection.PreSaveObjectResult` | undefined
@@ -980,7 +936,7 @@ Methods
         :type res: :class:`~carbond.Response`
         :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
 
-        Build the context and options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
     .. function:: preSaveOperation(config, req, res)
 
@@ -992,28 +948,24 @@ Methods
         :type res: :class:`~carbond.Response`
         :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
 
-        Build the context and options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preUpdate(update, context, options)
+    .. function:: preUpdate(update, options)
 
         :param update: The update spec
         :type update: \*
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: :class:`~carbond.collections.Collection.PreUpdateResult` | undefined
 
         Update or transform any parameters to be passed to the operation handler
 
-    .. function:: preUpdateObject(id, update, context, options)
+    .. function:: preUpdateObject(id, update, options)
 
         :param id: The object id
         :type id: string
         :param update: The update spec
         :type update: \*
-        :param context: The operation handler context
-        :type context: object
         :param options: The operation handler options
         :type options: object
         :rtype: :class:`~carbond.collections.Collection.PreUpdateObjectResult` | undefined
@@ -1030,7 +982,7 @@ Methods
         :type res: :class:`~carbond.Response`
         :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
 
-        Build the context and options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
     .. function:: preUpdateOperation(config, req, res)
 
@@ -1042,80 +994,68 @@ Methods
         :type res: :class:`~carbond.Response`
         :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
 
-        Build the context and options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: remove(context, options)
+    .. function:: remove(options)
 
-        :param context: The operation parameters (see: :class:`~carbond.collections.Collection.RemoveConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.collections.Collection.RemoveConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.RemoveConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: number | array
 
         Remove objects from a collection
 
-    .. function:: removeObject(id, context, options)
+    .. function:: removeObject(id, options)
 
         :param id: The ID of the object to remove
         :type id: String
-        :param context: The operation parameters (see: :class:`~carbond.collections.Collection.RemoveConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.collections.Collection.RemoveConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.RemoveConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: number | object
 
         Remove a specific object from a collection
 
-    .. function:: save(objects, context, options)
+    .. function:: save(objects, options)
 
         :param objects: An array of objects (with IDs) to save
         :type objects: Array
-        :param context: The operation parameters (see: :class:`~carbond.collections.Collection.SaveConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.collections.Collection.SaveConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.SaveConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: object[]
 
         Replace the collection with an array of objects
 
-    .. function:: saveObject(object, context, options)
+    .. function:: saveObject(object, options)
 
         :param object: The object to save (with ID)
         :type object: object
-        :param context: The operation parameters (see: :class:`~carbond.collections.Collection.SaveObjectConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.collections.Collection.SaveObjectConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.SaveObjectConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: :class:`~carbond.collections.Collection.SaveObjectResult`
 
         Replace or insert an object with a known ID
 
-    .. function:: update(update, context, options)
+    .. function:: update(update, options)
 
         :param update: The update to be applied to the collection
         :type update: \*
-        :param context: The operation parameters (see: :class:`~carbond.collections.Collection.UpdateConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.collections.Collection.UpdateConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.UpdateConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: :class:`~carbond.collections.Collection.UpdateResult`
 
         Update (or upsert) a number of objects in a collection
 
-    .. function:: updateObject(id, update, context, options)
+    .. function:: updateObject(id, update, options)
 
         :param id: The ID of the object to update
         :type id: string
         :param update: The update to be applied to the collection
         :type update: \*
-        :param context: The operation parameters (see: :class:`~carbond.collections.Collection.UpdateObjectConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.collections.Collection.UpdateObjectConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.UpdateObjectConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: :class:`~carbond.collections.Collection.UpdateObjectResult`
@@ -1164,14 +1104,6 @@ Properties
        The object id
 
 
-    .. attribute:: context
-
-       :type: object
-       :default: undefined
-
-       The operation handler context
-
-
     .. attribute:: options
 
        :type: object
@@ -1188,14 +1120,6 @@ Typedef: PreFindResult
 
 Properties
 ----------
-
-    .. attribute:: context
-
-       :type: object
-       :default: undefined
-
-       The operation handler context
-
 
     .. attribute:: options
 
@@ -1220,14 +1144,6 @@ Properties
        :default: undefined
 
        The object to insert
-
-
-    .. attribute:: context
-
-       :type: object
-       :default: undefined
-
-       The operation handler context
 
 
     .. attribute:: options
@@ -1255,14 +1171,6 @@ Properties
        The objects to insert
 
 
-    .. attribute:: context
-
-       :type: object
-       :default: undefined
-
-       The operation handler context
-
-
     .. attribute:: options
 
        :type: object
@@ -1280,20 +1188,12 @@ Typedef: PreOperationResult
 Properties
 ----------
 
-    .. attribute:: context
-
-       :type: object
-       :required:
-
-       A map of parameters to be passed to the operation handler. Note, this is generally just ``req.parameters``.
-
-
     .. attribute:: options
 
        :type: object
        :required:
 
-       A map of options to be passed to the underlying driver used to communicate with the backing datastore. Generally, this will be pulled straight from :class:`~carbond.collections.CollectionOperationConfig.options`, however, the pre operation method can be overridden to extend options based on the current request.
+       A map of parameters to be passed to the operation handler. Note, this is generally just ``req.parameters``.
 
 
 .. _carbond.collections.Collection.PreRemoveObjectResult:
@@ -1313,14 +1213,6 @@ Properties
        The object id
 
 
-    .. attribute:: context
-
-       :type: object
-       :default: undefined
-
-       The operation handler context
-
-
     .. attribute:: options
 
        :type: object
@@ -1337,14 +1229,6 @@ Typedef: PreRemoveResult
 
 Properties
 ----------
-
-    .. attribute:: context
-
-       :type: object
-       :default: undefined
-
-       The operation handler context
-
 
     .. attribute:: options
 
@@ -1371,14 +1255,6 @@ Properties
        The object to save
 
 
-    .. attribute:: context
-
-       :type: object
-       :default: undefined
-
-       The operation handler context
-
-
     .. attribute:: options
 
        :type: object
@@ -1402,14 +1278,6 @@ Properties
        :default: undefined
 
        The objects to save
-
-
-    .. attribute:: context
-
-       :type: object
-       :default: undefined
-
-       The operation handler context
 
 
     .. attribute:: options
@@ -1445,14 +1313,6 @@ Properties
        The update spec
 
 
-    .. attribute:: context
-
-       :type: object
-       :default: undefined
-
-       The operation handler context
-
-
     .. attribute:: options
 
        :type: object
@@ -1476,14 +1336,6 @@ Properties
        :default: undefined
 
        The update spec
-
-
-    .. attribute:: context
-
-       :type: object
-       :default: undefined
-
-       The operation handler context
 
 
     .. attribute:: options

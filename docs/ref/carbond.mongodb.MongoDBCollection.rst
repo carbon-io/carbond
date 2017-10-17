@@ -182,55 +182,119 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: find(context, options)
+    .. function:: find(options)
 
-        :param context: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.FindConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.mongodb.MongoDBCollection.FindConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.FindConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: object[]
 
         Retrieve objects from a collection
 
-    .. function:: findObject(id, context, options)
+    .. function:: findObject(id, options)
 
         :param id: The object id
         :type id: string
-        :param context: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.FindObjectConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.mongodb.MongoDBCollection.FindObjectConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.FindObjectConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: object | null
 
         Retrieve a single object from a collection
 
-    .. function:: insert(objects, context, options)
+    .. function:: insert(objects, options)
 
         :param objects: An array of objects to insert
         :type objects: Array
-        :param context: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.InsertConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.mongodb.MongoDBCollection.InsertConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.InsertConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: object[]
 
         Bulk insert objects into a collection
 
-    .. function:: insertObject(object, context, options)
+    .. function:: insertObject(object, options)
 
         :param object: An object to insert
         :type object: object
-        :param context: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.InsertObjectConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.mongodb.MongoDBCollection.InsertObjectConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.InsertObjectConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: object
 
         Insert a single object into a collection
+
+    .. function:: preFindObjectOperation(config, req, res)
+
+        :param config: The find object operation config
+        :type config: :class:`~carbond.collections.FindObjectConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preFindOperation(config, req, res)
+
+        :param config: The find operation config
+        :type config: :class:`~carbond.collections.FindConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preInsertObjectOperation(config, req, res)
+
+        :param config: The insert object operation config
+        :type config: :class:`~carbond.collections.InsertObjectConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preInsertOperation(config, req, res)
+
+        :param config: The insert operation config
+        :type config: :class:`~carbond.collections.InsertConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preRemoveObjectOperation(config, req, res)
+
+        :param config: The remove object operation config
+        :type config: :class:`~carbond.collections.RemoveObjectConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preRemoveOperation(config, req, res)
+
+        :param config: The remove operation config
+        :type config: :class:`~carbond.collections.RemoveConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
     .. function:: preSaveObjectOperation(config, req, res)
 
@@ -243,82 +307,106 @@ Methods
         :type res: :class:`~carbond.Response`
         :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
 
-        Build the context and options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: remove(context, options)
+    .. function:: preSaveOperation(config, req, res)
 
-        :param context: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.RemoveConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.mongodb.MongoDBCollection.RemoveConfigClass.options`)
+        :param config: The save operation config
+        :type config: :class:`~carbond.collections.SaveConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preUpdateObjectOperation(config, req, res)
+
+        :param config: The update object operation config
+        :type config: :class:`~carbond.collections.UpdateObjectConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preUpdateOperation(config, req, res)
+
+        :param config: The update operation config
+        :type config: :class:`~carbond.collections.UpdateConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :class:`~carbond.collections.Collection.PreOperationResult`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: remove(options)
+
+        :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.RemoveConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: number | array
 
         Remove objects from a collection
 
-    .. function:: removeObject(id, context, options)
+    .. function:: removeObject(id, options)
 
         :param id: The ID of the object to remove
         :type id: String
-        :param context: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.RemoveConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.mongodb.MongoDBCollection.RemoveConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.RemoveConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: number | object
 
         Remove a specific object from a collection
 
-    .. function:: save(objects, context, options)
+    .. function:: save(objects, options)
 
         :param objects: An array of objects (with IDs) to save
         :type objects: Array
-        :param context: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.SaveConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.mongodb.MongoDBCollection.SaveConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.SaveConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: object[]
 
         Replace the collection with an array of objects
 
-    .. function:: saveObject(object, context, options)
+    .. function:: saveObject(object, options)
 
         :overrides: :attr:`~carbond.collections.Collection.saveObject`
         :param object: The object to save (with ID)
         :type object: object
-        :param context: The operation parameters (see: :class:`~carbond.mongodb.Collection.SaveObjectConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.mongodb.Collection.SaveObjectConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.mongodb.Collection.SaveObjectConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: :class:`~carbond.collections.Collection.SaveObjectResult`
 
         Replace or insert an object with a known ID
 
-    .. function:: update(update, context, options)
+    .. function:: update(update, options)
 
         :overrides: :attr:`~carbond.collections.Collection.update`
         :param update: The update to be applied to the collection
         :type update: object
-        :param context: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.UpdateConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.mongodb.MongoDBCollection.UpdateConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.UpdateConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: :class:`~carbond.collections.Collection.UpdateResult`
 
         Update (or upsert) a number of objects in a collection
 
-    .. function:: updateObject(id, update, context, options)
+    .. function:: updateObject(id, update, options)
 
         :param id: The ID of the object to update
         :type id: string
         :param update: The update to be applied to the collection
         :type update: object
-        :param context: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.UpdateObjectConfigClass`)
-        :type context: object
-        :param options: A map of backend driver specific options (see: :class:`~carbond.mongodb.MongoDBCollection.UpdateObjectConfigClass.options`)
+        :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.UpdateObjectConfigClass`)
         :type options: object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: :class:`~carbond.collections.Collection.UpdateObjectResult`

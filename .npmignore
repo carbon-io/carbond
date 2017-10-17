@@ -68,3 +68,4 @@ scratch
 # Docs
 /docs/*
 !/docs/code-frags
+.jsdoc-directories

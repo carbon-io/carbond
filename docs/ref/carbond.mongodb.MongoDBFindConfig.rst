@@ -19,6 +19,14 @@ Properties
     :noindex:
     :hidden:
 
+    .. attribute:: driverOptions
+
+       :type: :class:`~object.<string, \*>`
+       :required:
+
+       Options to be passed to the mongodb driver (XXX: link to leafnode docs)
+
+
     .. attribute:: parameters
 
        :type: :class:`~object.<string, carbond.OperationParameter>`
@@ -52,10 +60,26 @@ Properties
 
 
 
+    .. attribute:: supportsPagination
+
+       :type: boolean
+       :required:
+
+       Support pagination
+
+
     .. attribute:: supportsQuery
 
        :type: boolean
        :default: ``true``
 
        Whether or not the query parameter is supported. Note, "query" here refers to a MongoDB query and not the query string component of the URL.
+
+
+    .. attribute:: supportsSkipAndLimit
+
+       :type: boolean
+       :required:
+
+       Support skip and limit
 

@@ -59,7 +59,7 @@ Properties
 
 
 
-    .. attribute:: parameters
+    .. attribute:: skipAndLimitParameters
 
        :type: :class:`~object.<string, carbond.OperationParameter>`
        :required:
@@ -76,14 +76,6 @@ Properties
 
 
 
-    .. attribute:: supportsHead
-
-       :type: boolean
-       :required:
-
-       Support the HEAD operation
-
-
     .. attribute:: supportsIdQuery
 
        :type: boolean
@@ -97,7 +89,15 @@ Properties
        :type: boolean
        :required:
 
-       Support pagination
+       Support pagination (note, if true, overrides ``supportsPagination``)
+
+
+    .. attribute:: supportsSkipAndLimit
+
+       :type: boolean
+       :required:
+
+       Support skip and limit
 
 
 Methods

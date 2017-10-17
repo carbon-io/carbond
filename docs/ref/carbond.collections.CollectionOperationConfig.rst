@@ -18,12 +18,20 @@ Properties
     :noindex:
     :hidden:
 
+    .. attribute:: additionalOptions
+
+       :type: :class:`~object.<string, \*>`
+       :required:
+
+       Any additional options that should be added to options passed down to a handler.
+
+
     .. attribute:: additionalParameters
 
        :type: :class:`~object.<string, carbond.OperationParameter>`
        :required:
 
-       Any additional parameters that should be added to the collection parameters. These can override parameters configured via the :class:`~carbond.collections.CollectionOperationConfig.parameters`. Note, these will all end up being passed down to operation handlers via the "context" parameter.
+       Any additional parameters that should be added to the collection parameters. These can override parameters configured via the :class:`~carbond.collections.CollectionOperationConfig.parameters`. Note, these will all end up being passed down to operation handlers via the "options" parameter.
 
 
     .. attribute:: allowUnauthenticated
@@ -57,14 +65,6 @@ Properties
        :default: undefined
 
        Exclude the operation from "docgen" API documentation
-
-
-    .. attribute:: options
-
-       :type: object
-       :default: ``{}``
-
-       Any options that should be passed down to the operation handler to be used by the underlying driver
 
 
     .. attribute:: responses

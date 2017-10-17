@@ -59,7 +59,7 @@ Properties
        The schema used to validate the request body. If this is undefined, the collection level schema will be used.
 
 
-    .. attribute:: supportsInsert
+    .. attribute:: supportsUpsert
 
        :type: boolean
        :default: ``true``

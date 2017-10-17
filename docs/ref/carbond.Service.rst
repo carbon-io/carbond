@@ -62,9 +62,9 @@ Properties
     .. attribute:: cmdargs
 
        :type: object
-       :required:
+       :default: ``{}``
 
-       xxx
+       Additional command line argument definitions (will be merged into :class:`~carbond.Service.defaultCmdargs`)
 
 
     .. attribute:: corsEnabled
@@ -115,6 +115,14 @@ Properties
        xxx
 
 
+    .. attribute:: defaultCmdargs
+
+       :type: object
+       :default: ``{...}``
+
+       The default command line arguments definition. :class:`~carbond.Service#cmdargs` can be used to extend the default set of command line arguments.
+
+
     .. attribute:: defaultDocgenOptions
 
        :type: xxx
@@ -126,9 +134,9 @@ Properties
     .. attribute:: description
 
        :type: string
-       :default: ``This is a Service``
+       :default: ``'This is a Service'``
 
-       xxx
+       A short description of this service
 
 
     .. attribute:: endpoints
@@ -182,9 +190,9 @@ Properties
     .. attribute:: hostname
 
        :type: string
-       :default: ``0.0.0.0``
+       :default: ``'127.0.0.1'``
 
-       xxx
+       The address that this service should listen on
 
 
     .. attribute:: limiter
@@ -232,7 +240,7 @@ Properties
        :type: number
        :default: ``8888``
 
-       xxx
+       The port that this service should bind
 
 
     .. attribute:: processUser
