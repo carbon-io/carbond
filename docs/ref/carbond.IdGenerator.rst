@@ -18,8 +18,9 @@ Methods
 
     .. function:: generateId()
 
+        :rtype: \*
 
-        undefined
+        Generates an ID, where the definition of ID is left up to the implementor
 
     .. function:: generateId(collection, req)
 

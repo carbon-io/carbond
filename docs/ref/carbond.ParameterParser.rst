@@ -9,7 +9,7 @@
 carbond.ParameterParser
 =======================
 
-ParameterParser class description
+An HTTP parameter parser class that parses any parameters defined on an operation and its parent endpoint on the current request. The parsed parameter values are stored on :class:`~carbond.Request.parameters`.
 
 Methods
 -------
@@ -20,40 +20,40 @@ Methods
 
     .. function:: parseParameterValue(datum, definition)
 
-        :param datum: xxx
-        :type datum: xxx
-        :param definition: xxx
-        :type definition: xxx
-        :rtype: xxx
+        :param datum: The parameter representation as plucked from the current request
+        :type datum: Object | string
+        :param definition: The parameter descriptor
+        :type definition: :class:`~carbond.OperationParameter`
+        :rtype: Object | string | number
 
-        parseParameterValue description
+        Parse a single parameter
 
     .. function:: processParameter(req, definition)
 
-        :param req: xxx
-        :type req: xxx
-        :param definition: xxx
-        :type definition: xxx
+        :param req: The current request
+        :type req: :class:`~carbond.Request`
+        :param definition: The parameter to parse
+        :type definition: :class:`~carbond.OperationParameter`
         :rtype: undefined
 
-        processParameter description
+        Parse a single parameter on the current request as defined by the "definition" parameter
 
     .. function:: processParameters(req, definitions)
 
-        :param req: xxx
-        :type req: xxx
-        :param definitions: xxx
-        :type definitions: xxx
+        :param req: The current request
+        :type req: :class:`~carbond.Request`
+        :param definitions: An array of parameters to parse from the current request
+        :type definitions: :class:`~carbond.OperationParameter[]`
         :rtype: undefined
 
-        processParameters
+        Parse all parameters on the current request that are included in the :class:`~carbond.OperationParameter` definitions list
 
     .. function:: processParameterValue(datum, definition)
 
-        :param datum: xxx
-        :type datum: xxx
-        :param definition: xxx
-        :type definition: xxx
-        :rtype: xxx
+        :param datum: The parameter representation as plucked from the current request
+        :type datum: Object | string
+        :param definition: The parameter descriptor
+        :type definition: :class:`~carbond.OperationParameter`
+        :rtype: Object | string | number
 
-        processParameterValue description
+        Process (i.e., parse and validate) a single parameter

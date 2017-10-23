@@ -10,7 +10,7 @@ carbond.Service
 ===============
 *extends* :class:`~carbond.Endpoint`
 
-Service class description
+Service is the main entry point to a carbond service
 
 Properties
 ----------
@@ -22,33 +22,25 @@ Properties
     .. attribute:: adminRoot
 
        :type: string
-       :default: ``/serviceadmin``
+       :default: ``'/serviceadmin'``
 
-       xxx
+       The "administrative" root URL path component (this is only enabled if the "swagger" command line option is present)
 
 
     .. attribute:: apiRoot
 
-       :type: xxx
-       :required:
+       :type: string
+       :default: undefined
 
-       xxx
+       The root component of the URL path component. This will be prepended to any routes that are yielded by the :class:`~carbond.Endpoint` tree.
 
 
     .. attribute:: authenticator
 
-       :type: xxx
-       :required:
+       :type: :class:`~carbond.security.Authenticator`
+       :default: undefined
 
-       xxx
-
-
-    .. attribute:: busyLimiter
-
-       :type: xxx
-       :required:
-
-       xxx
+       The root authenticator. If present, all requests will be passed through the authenticator resulting in a 401 if authentication fails.
 
 
     .. attribute:: cluster
@@ -56,12 +48,12 @@ Properties
        :type: boolean
        :default: undefined
 
-       xxx
+       Whether or not to use Node's ``cluster`` module
 
 
     .. attribute:: cmdargs
 
-       :type: object
+       :type: Object
        :default: ``{}``
 
        Additional command line argument definitions (will be merged into :class:`~carbond.Service.defaultCmdargs`)
@@ -72,23 +64,23 @@ Properties
        :type: boolean
        :default: ``true``
 
-       xxx
+       Flag determining whether CORS is enabled
 
 
     .. attribute:: db
 
-       :type: xxx
+       :type: Object
        :required:
 
-       xxx
+       The connection object for :attr:`~carbond.Service.dbUri`
 
 
     .. attribute:: dbs
 
-       :type: object
+       :type: :class:`~Object.<string, Object>`
        :required:
 
-       xxx
+       The connection objects for :attr:`~carbond.Service.dbUri`. The keys for this object will mirror those in :attr:`~carbond.Service.dbUri`, while the values will be the connection objects themselves.
 
 
     .. attribute:: dbUri
@@ -96,28 +88,20 @@ Properties
        :type: string
        :required:
 
-       xxx
+       The database URI to connect to at startup (currently restricted to MongoDB)
 
 
     .. attribute:: dbUris
 
-       :type: object
+       :type: :class:`~Object.<string, string>`
        :required:
 
-       xxx
-
-
-    .. attribute:: defaultBusyLimiterClass
-
-       :type: :class:`~carbond.limiter.TooBusyLimiter`
-       :required:
-
-       xxx
+       Database URIs to connect to at startup (currently restricted to MongoDB)
 
 
     .. attribute:: defaultCmdargs
 
-       :type: object
+       :type: Object
        :default: ``{...}``
 
        The default command line arguments definition. :class:`~carbond.Service#cmdargs` can be used to extend the default set of command line arguments.
@@ -125,10 +109,20 @@ Properties
 
     .. attribute:: defaultDocgenOptions
 
-       :type: xxx
-       :required:
+       :type: Object
+       :default: ``{...}``
 
-       xxx
+       Default options for the "aglio" documentation generator
+
+       .. csv-table::
+          :class: details-table
+          :header: "Name", "Type", "Default", "Description"
+          :widths: 10, 10, 10, 10
+
+          defaultDocgenOptions['github-flavored-markdown'], ``Object``, ````{}````, undefined
+          defaultDocgenOptions['api-blueprint'], ``Object``, ````{}````, undefined
+          defaultDocgenOptions['aglio'], ``Object``, ````{}````, undefined
+
 
 
     .. attribute:: description
@@ -141,34 +135,42 @@ Properties
 
     .. attribute:: endpoints
 
-       :type: object
-       :required:
+       :type: Object
+       :default: ``{}``
 
-       xxx
+       The endpoint tree. Note, keys in the endpoint tree will be used to construct routes to the various :class:`~carbond.Operation`s servicing requests for an individual :class:`~carbond.Endpoint`.
 
 
     .. attribute:: env
 
-       :type: xxx
+       :type: string
        :required:
 
-       xxx
+       carbond.DEFAULT_ENV}
 
 
     .. attribute:: errorHandlingMiddleware
 
-       :type: xxx
-       :required:
+       :type: function()[]
+       :default: ``[]``
 
-       xxx
+       Middleware that will be invoked in the event that an error is thrown. Errorhandling middleware function signatures should conform to ``fn(err, req, res, next)``.
+
+
+    .. attribute:: errors
+
+       :type: Object
+       :default: ``HttpErrors``
+
+       A shortcut reference to the ``@carbonio/httperrors`` module to be accessed using the service reference available throughout the ``carbond`` component hierarchy
 
 
     .. attribute:: fiberPoolSize
 
        :type: number
-       :required:
+       :default: ``120``
 
-       xxx
+       Sets the pool size for the underlying ``fibers`` module. Note, a new fiber will be created and destroyed for every fiber created beyond the pool size. If this occurs regularly, it can lead to significant performance degradation. While the default should usually suffice, this parameter should be tuned according to the expected number of concurrent requests.
 
 
     .. attribute:: generateOptionsMethodsInDocs
@@ -176,15 +178,15 @@ Properties
        :type: boolean
        :default: undefined
 
-       xxx
+       Whether or not to include OPTIONS methods in static documentation
 
 
     .. attribute:: gracefulShutdown
 
-       :type: string
-       :default: ``production``
+       :type: boolean
+       :default: ``true``
 
-       xxx
+       Whether or not the service should gracefully shutdown when a stop is requested (i.e., whether or not open sockets should be allowed to timeout or severed immediately). The default for this is computed using :attr:`~carbond.DEFAULT_ENV` (e.g., ``DEFAULT_ENV === 'production'``).
 
 
     .. attribute:: hostname
@@ -195,44 +197,44 @@ Properties
        The address that this service should listen on
 
 
-    .. attribute:: limiter
+    .. attribute:: logger
 
-       :type: xxx
-       :required:
+       :type: :class:`~logging.Logger`
+       :default: ``{...}``
 
-       xxx
+       The logger instance used by service log methods (e.g. undefined)
 
 
     .. attribute:: middleware
 
-       :type: xxx
-       :required:
+       :type: function()[]
+       :default: ``[]``
 
-       xxx
+       Middleware functions that will be executed via express before control is passed on to any :class:`~carbond.Operation`. Middleware function signatures should conform to ``fn(req, res, next)``.
 
 
     .. attribute:: numClusterWorkers
 
        :type: number
-       :required:
+       :default: undefined
 
-       xxx
+       The number of cluster workers to start. If left ``undefined`` or set to ``0``, it will be set to the number of CPUs present.
 
 
     .. attribute:: parameterParser
 
-       :type: xxx
-       :required:
+       :type: :class:`~carbond.ParameterParser`
+       :default: ``o({_type: './ParameterParser'})``
 
-       xxx
+       The parameter parser used to parse all incoming request parameters (i.e., query, header, body, and path). In most cases, the default parser should be sufficient.
 
 
     .. attribute:: path
 
        :type: string
-       :required:
+       :default: ``''``
 
-       xxx
+       Since :class:`~carbond.Service` is itself an :class:`~carbond.Endpoint`, this can be used to set the URL path component that the service endpoint is accessible at
 
 
     .. attribute:: port
@@ -245,42 +247,42 @@ Properties
 
     .. attribute:: processUser
 
-       :type: xxx
-       :required:
+       :type: string
+       :default: undefined
 
-       xxx
+       If set, privileges will be dropped and the effective user for the process will be set to this
 
 
     .. attribute:: publicDirectories
 
-       :type: xxx
-       :required:
+       :type: :class:`~Object.<string, string>`
+       :default: ``{}``
 
-       xxx
+       Directories with static assets that should be exposed by the service. Keys are the URL paths under which these static assests should be served while values are the local filesystem paths at which the assets exist.
 
 
     .. attribute:: serverSocketTimeout
 
-       :type: xxx
-       :required:
+       :type: number
+       :default: undefined
 
-       xxx
+       The socket timeout for all incoming connections. Note, the system default is 2 minutes.
 
 
-    .. attribute:: serviceName
+    .. attribute:: signalHandler
 
-       :type: string
-       :required:
+       :type: :class:`~Object.<string, function()>`
+       :default: ``{...}``
 
-       xxx
+       An object whose keys are signal names (e.g., "SIGINT") and whose values are functions invoked to handle the signal(s) corresponding to their aforementioned keys. Note, keys here can be a string of signal names delineated by spaces (e.g. "SIGINT SIGHUP"). In this case, the corresponding function will be called for any of the signals named in the key.
 
 
     .. attribute:: sslOptions
 
-       :type: xxx
-       :required:
+       :type: :class:`~carbond.SslOptions`
+       :default: ``o({_type: './SslOptions'})``
 
-       xxx
+       SSL options to use if running HTTPS
 
 
 Methods
@@ -292,114 +294,107 @@ Methods
 
     .. function:: doStart(options)
 
-        :param options: xxx
-        :type options: xxx
+        :param options: Parsed command line options
+        :type options: Object
         :rtype: undefined
 
-        doStart description
+        Performs custom startup operations. This method will be called after initialization (e.g., database connections will be established and the endpoint tree will be built) but before the server's socket is bound. Override this method if your app requires further initialization.
 
     .. function:: doStop()
 
         :rtype: undefined
 
-        doStop description
+        Performs custom teardown operations. This method will be called first in the stop sequence.
 
     .. function:: logDebug()
 
         :rtype: undefined
 
-        logDebug description
+        Log a message at the "debug" level
 
     .. function:: logError()
 
         :rtype: undefined
 
-        logError description
+        Log a message at the "error" level
 
     .. function:: logFatal()
 
         :rtype: undefined
 
-        logFatal description
+        Log a message at the "fatal" level
 
     .. function:: logInfo()
 
         :rtype: undefined
 
-        logInfo description
+        Log a message at the "info" level
 
     .. function:: logTrace()
 
         :rtype: undefined
 
-        logTrace description
+        Log a message at the "trace" level
 
     .. function:: logWarning()
 
         :rtype: undefined
 
-        logWarning description
-
-    .. function:: maskSecret(str)
-
-        :param str: xxx
-        :type str: string
-        :rtype: string
-
-        maskSecret description
+        Log a message at the "warn" level
 
     .. function:: on(event, listener)
 
         :param event: [choices: "start", "stop"]
         :type event: String
-        :param listener: callback to fire when `event` occurs
+        :param listener: Callback to fire when ``event`` occurs
         :type listener: function
-        :rtype: function
+        :rtype: EventEmitter
 
-        Register an event callback.
+        Register a service event callback
 
     .. function:: once(event, listener)
 
         :param event: the event type [choices: "start", "stop"]
         :type event: String
-        :param listener: callback to fire when `event` occurs
+        :param listener: callback to fire when ``event`` occurs
         :type listener: function
-        :rtype: function
+        :rtype: EventEmitter
 
-        Register an event callback that executes once.
+        Register a service event callback that executes once
 
-    .. function:: removeAllListeners(event...)
+    .. function:: removeAllListeners(event)
 
-        :param event...: the event type [choices: "start", "stop"]
-        :type event...: String
-        :rtype: xxx
+        :param event: the event type [choices: "start", "stop"]
+        :type event: ...String
+        :rtype: EventEmitter
 
-        Remove all listeners. If `event` is passed, remove all events for that specific event (or events).
+        Remove all listeners. If ``event`` is passed, remove all listeners for that specific event (or events).
 
-    .. function:: removeListener(event.., listener)
+    .. function:: removeListener(event, listener)
 
-        :param event..: the event type [choices: "start", "stop"]
-        :type event..: String
-        :param listener: callback to fire when `event` occurs
+        :param event: the event type [choices: "start", "stop"]
+        :type event: String
+        :param listener: callback to fire when ``event`` occurs
         :type listener: function
-        :rtype: xxx
+        :rtype: EventEmitter
 
         Remove a specific listener for a particular event.
 
     .. function:: start(options, cb)
 
-        :param options: xxx
-        :type options: xxx
-        :param cb: xxx
+        :param options: Parsed command line options
+        :type options: Object
+        :param cb: Async callback (this can be omitted if calling from within a Fiber)
         :type cb: function
+        :throws: Error 
         :rtype: undefined
 
-        start description
+        Initializes and starts the service
 
     .. function:: stop(cb)
 
-        :param cb: xxx
+        :param cb: Async callback (this can be omitted if calling from within a Fiber)
         :type cb: function
         :rtype: undefined
 
-        stop description
+        Stops the service

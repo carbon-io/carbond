@@ -10,7 +10,7 @@ carbond.ObjectIdGenerator
 =========================
 *extends* :class:`~carbond.IdGenerator`
 
-ObjectIdGenerator class description
+Generates :class:`~ejson.types.ObjectId` IDs
 
 Properties
 ----------
@@ -24,7 +24,7 @@ Properties
        :type: boolean
        :default: undefined
 
-       xx
+       Whether or not to return a ``string`` representation of the :class:`~ejson.types.ObjectId`
 
 
 Methods
@@ -37,6 +37,6 @@ Methods
     .. function:: generateId()
 
         :overrides: :attr:`~carbond.IdGenerator.generateId`
-        :rtype: xxx
+        :rtype: :class:`~ejson.types.ObjectId` | string
 
-        generateId description
+        Generates an :class:`~ejson.types.ObjectId`

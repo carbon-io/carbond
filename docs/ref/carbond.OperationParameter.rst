@@ -9,7 +9,7 @@
 carbond.OperationParameter
 ==========================
 
-OperationParameter class description
+Describes an HTTP parameter. Parameter types include: path parameters (e.g., "_id" in "/foo/bar/:_id"), query parameters (e.g., "baz" in "/foo/bar?baz=true"), HTTP header parameters, and HTTP body parameters.
 
 Properties
 ----------
@@ -20,18 +20,18 @@ Properties
 
     .. attribute:: default
 
-       :type: xxx
-       :required:
+       :type: \*
+       :default: undefined
 
-       xxx
+       A default value for the parameter if it is not present in the incoming request
 
 
     .. attribute:: description
 
        :type: string
-       :required:
+       :default: undefined
 
-       xxx
+       A brief description of this parameter This will be displayed in any generated documentation.
 
 
     .. attribute:: location
@@ -39,15 +39,16 @@ Properties
        :type: string
        :required:
 
-       xxx
+       The location of the parameter in an incoming request [choices: "query", "header", "path", "body]
 
 
     .. attribute:: name
 
        :type: string
        :required:
+       :ro:
 
-       xxx
+       The operation parameter name
 
 
     .. attribute:: required
@@ -55,15 +56,15 @@ Properties
        :type: boolean
        :default: undefined
 
-       xxx
+       Flag determining whether the parameter is required
 
 
     .. attribute:: schema
 
-       :type: xxx
-       :required:
+       :type: Object
+       :default: undefined
 
-       xxx
+       A JSON schema used to validate the incoming parameter
 
 
 Methods
@@ -75,8 +76,8 @@ Methods
 
     .. function:: extractParameterValueFromRequest(req)
 
-        :param req: xxx
-        :type req: xxx
-        :rtype: xxx
+        :param req: The incoming request object
+        :type req: :class:`~carbond.Request`
+        :rtype: \*
 
-        extractParameterValueFromRequest description
+        Retrieves the parameter value from a request, returning the default value if it does not exist and a default value is defined. Note, values returned from this method are not parsed.

@@ -17,6 +17,7 @@ collection module reference
     carbond.ParameterParser.rst
     carbond.Service.rst
     carbond.SslOptions.rst
+    carbond.SwaggerDescriptorGenerator.rst
     carbond.UUIDGenerator.rst
     carbond.collections.Collection.rst
     carbond.collections.CollectionOperationConfig.rst

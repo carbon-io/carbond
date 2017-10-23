@@ -8,9 +8,9 @@
 ========================
 carbond.test.ServiceTest
 ========================
-*extends* :class:`~test-tube.HttpTest`
+*extends* :class:`~testtube.HttpTest`
 
-ServiceTest description
+A test harness for testing :class:`~carbond.Service`s. This will automatically startup and shutdown a service as part of the test's setup and teardown phase.
 
 Properties
 ----------
@@ -24,7 +24,15 @@ Properties
        :type: :class:`~carbond.Service`
        :required:
 
-       xxx
+       The service instance to test
+
+
+    .. attribute:: serviceEnv
+
+       :type: string
+       :default: ``'development'``
+
+       Sets the service's :class:`~carbond.Service.env` for testing
 
 
     .. attribute:: suppressServiceLogging
@@ -32,7 +40,7 @@ Properties
        :type: boolean
        :default: ``true``
 
-       xxx
+       Flag to suppress service logging to the console
 
 
 Methods
@@ -46,10 +54,10 @@ Methods
 
         :rtype: undefined
 
-        setup
+        Performs setup operations for this test, namely starting the service to be tested and configuring service logging
 
     .. function:: teardown()
 
         :rtype: undefined
 
-        teardown
+        Performs teardown operations for this test, namely stopping the service

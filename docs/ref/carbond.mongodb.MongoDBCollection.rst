@@ -76,7 +76,7 @@ Properties
        :type: string
        :default: ``'_id'``
 
-       The ID parameter name (XXX: rename to "objectIdName" since this is not a "parameter" name?)
+       The ID parameter name
 
 
     .. attribute:: InsertConfigClass

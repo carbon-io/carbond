@@ -10,7 +10,7 @@ carbond.UUIDGenerator
 =====================
 *extends* :class:`~carbond.IdGenerator`
 
-UUIDGenerator description
+Generates UUIDs
 
 Properties
 ----------
@@ -24,7 +24,7 @@ Properties
        :type: number
        :required:
 
-       xxx
+       The UUID version to to use [choices: 1, 4]
 
 
 Methods
@@ -36,6 +36,6 @@ Methods
 
     .. function:: generateId()
 
-        :rtype: xxx
+        :rtype: string
 
-        generateId description
+        Generates an ID

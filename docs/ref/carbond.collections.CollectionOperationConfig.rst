@@ -59,12 +59,30 @@ Properties
        The parent endpoint/collection that this configuration is a member of
 
 
+    .. attribute:: idParameter
+
+       :type: string
+       :required:
+       :ro:
+
+       The collection object id property name. Note, this is configured on the top level :class:`~carbond.collections.Collection` and set on the configure during initialzation.
+
+
     .. attribute:: noDocument
 
        :type: boolean
        :default: undefined
 
        Exclude the operation from "docgen" API documentation
+
+
+    .. attribute:: parameters
+
+       :type: :class:`~object.<string, carbond.OperationParameter>`
+       :required:
+       :ro:
+
+       Operation specific parameters (e.g., "skip", "limit"). These will be passed down to the operation handlers via the options parameter if they are not explicitly passed via another leading parameter (e.g., "id" and "update" for :class:`~carbond.collections.Collection.updateObject`). Note, this should generally be left alone by instances. Instead, use :class:`~carbond.collections.CollectionOperationConfig.additionalParameters`.
 
 
     .. attribute:: responses
