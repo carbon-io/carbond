@@ -265,15 +265,6 @@ __(function() {
                                    location: 'body',
                                    required: true,
                                    default: undefined
-                                 },
-                                 _id: {
-                                   name: '_id',
-                                   description: 'Object _id',
-                                   location: 'path',
-                                   schema: {type: 'string'},
-                                   required: true,
-                                   default: undefined,
-                                   resolver: null
                                  }
                                })
 
@@ -355,15 +346,6 @@ __(function() {
                                    },
                                    required: false,
                                    default: false
-                                 },
-                                 _id: {
-                                   name: '_id',
-                                   description: 'Object _id',
-                                   location: 'path',
-                                   schema: {type: 'string'},
-                                   required: true,
-                                   default: null,
-                                   resolver: null
                                  }
                                })
               assert.deepEqual(this.parent.oe2.getOperation('patch').responses,
@@ -418,18 +400,7 @@ __(function() {
                   '403': this.parent.ForbiddenResponse,
                   '500': this.parent.InternalServerErrorResponse
                 })
-              assert.deepEqual(this.parent.oe.getOperation('delete').parameters,
-                               {
-                                 _id: {
-                                   name: '_id',
-                                   description: 'Object _id',
-                                   location: 'path',
-                                   schema: {type: 'string'},
-                                   required: true,
-                                   default: null,
-                                   resolver: null
-                                 }
-                               })
+              assert.deepEqual(this.parent.oe.getOperation('delete').parameters, {})
             }
           }),
         ]

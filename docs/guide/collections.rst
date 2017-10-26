@@ -153,14 +153,18 @@ return a list of objects in the collection in natural order.
 
 Additionally, the ``find`` operation can be configured to support pagination and
 ID queries (see :js:attr:`~carbond.collections.FindConfig.supportsPagination`
-and :js:attr:`~carbond.collections.FindConfig.supportsIdQuery`). If pagination
-support is enabled, the handler should honor the parameters indicating the
-subset of objects to return (e.g., ``options.skip`` and ``options.limit``). If
-ID queries are supported (note, ID query support is necessary when supporting
+and :js:attr:`~carbond.collections.FindConfig.supportsIdQuery`). 
+
+If pagination support is enabled, the handler should honor the parameters
+indicating the subset of objects to return (e.g., ``options.skip`` and
+``options.limit``). 
+
+If ID queries are supported (note, ID query support is necessary when supporting
 bulk inserts), a query parameter by the same name as
 :js:attr:`~carbond.collections.Collection.idParameter` will be added and
-ultimately passed to the handler via ``options[this.idParameter]``. The
-following in-memory cache example accommodates both of these options:
+ultimately passed to the handler via ``options[this.idParameter]``. 
+
+The following in-memory cache example accommodates both of these options:
 
 .. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
     :language: javascript

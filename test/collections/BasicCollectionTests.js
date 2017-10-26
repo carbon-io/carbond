@@ -807,17 +807,6 @@ __(function() {
                     schema: this.parent.saveSchema,
                     required: true,
                     default: null
-                  },
-                  _id: {
-                    name: '_id',
-                    description: 'Object _id',
-                    location: 'path',
-                    schema: {
-                      type: 'string'
-                    },
-                    required: true,
-                    default: null,
-                    resolver: null
                   }
                  })
             }
@@ -839,16 +828,7 @@ __(function() {
                 '403': this.parent.ForbiddenResponse,
                 '500': this.parent.InternalServerErrorResponse
               })
-              assert.deepEqual(this.parent.oe.getOperation('get').parameters, {
-                _id: {
-                  name: '_id',
-                  description: 'Object _id',
-                  location: 'path',
-                  schema: { type: 'string' },
-                  required: true,
-                  default: undefined,
-                  resolver: undefined
-                }})
+              assert.deepEqual(this.parent.oe.getOperation('get').parameters, {})
             }
           }),
           o({
@@ -892,17 +872,6 @@ __(function() {
                     location: 'body',
                     required: true,
                     default: null
-                  },
-                  _id: {
-                    name: '_id',
-                    description: 'Object _id',
-                    location: 'path',
-                    schema: {
-                      type: 'string'
-                    },
-                    required: true,
-                    default: null,
-                    resolver: null
                   }
                 })
             }
@@ -938,17 +907,7 @@ __(function() {
                   '500': this.parent.InternalServerErrorResponse
                 })
               assert.deepEqual(
-                this.parent.oe.getOperation('delete').parameters,
-                  {
-                    _id: {
-                      name: '_id',
-                      description: 'Object _id',
-                      location: 'path',
-                      schema: { type: 'string' },
-                      required: true,
-                      default: null,
-                      resolver: null
-                    }})
+                this.parent.oe.getOperation('delete').parameters, {})
             }
           })
         ]

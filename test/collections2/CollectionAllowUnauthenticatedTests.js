@@ -14,7 +14,7 @@ var carbond = require('../..')
 var pong = require('../fixtures/pong')
 
 /**************************************************************************
- * insert tests
+ * allow unauthenticated tests
  */
 __(function() {
   module.exports = o.main({
