@@ -84,7 +84,16 @@ be confused with the query string component of the URL) to the set of parameters
 recognized by the endpoint. When an HTTP request is received, the ``update`` spec
 will be passed to the operation handler via the first parameter (``update``),
 while the ``query`` spec will be passed via the ``options`` parameter as a
-property of that object (e.g., ``options.query``).
+property of that object (e.g., ``options.query``). 
+
+Taking a quick step back, ``options`` can be thought of as simply an object
+derived from the set of all parameters available to a particular operation minus
+the parameters that correspond to required arguments to the handler.
+Additionally, "all parameters" consists of all parameters defined on each
+endpoint in the endpoint tree as well as any that may be defined on the
+operation itself. These are merged from the root (the service) to the leaf 
+(the operation), with parameters defined closer to the leaf overriding any
+that may have been defined closer to the root.
 
 The following sections describe the general semantics of each operation.
 
@@ -173,8 +182,27 @@ The following in-memory cache example accommodates both of these options:
     :start-after: pre-find-memCacheCounterAdvanced
     :end-before: post-find-memCacheCounterAdvanced
 
+.. _queryability-for-custom-collections:
+
+Note, it may seem odd that there is no ``query`` parameter (not to be confused
+with the query string component of a URI) here. The reason for this is that
+:js:class:`~carbond.collections.Collection` implements the core abstraction for
+a generic REST like endpoint whereas the ability to query the objects in a
+collection (outside of lookup by ID, which is accomplished via the `*Object`
+variants) is highly specific to that collection and how its data is stored and
+organized. :js:class:`~carbond.mongodb.MongoDBCollection`, for example, does
+implement queries for the ``find``, ``update``, and ``remove`` operations, as
+you would expect. To implement queryability in a custom collection,
+an additional parameter can be added for the specific operation using
+:js:prop:`~carbond.collections.CollectionOperationConfig.additionalParameters`
+(see :ref:`collection-configuration`). This will be passed down to the handler
+via the ``options`` parameter.
+
 save
 ~~~~
+
+.. warning:: ``save`` is a dangerous operation and should be used with care as it
+             replaces **all** objects in a collection.
 
 The :js:func:`~carbond.collections.Collection.save` operation handler takes a list of
 objects whose ID properties have been populated by the client and replaces the
@@ -206,12 +234,27 @@ The :js:func:`~carbond.collections.Collection.update` operation handler takes an
 Similar to the ``insert`` operation, the ``update`` spec object is an EJSON blob
 that will be weakly validated using a default schema. To enforce a particular
 structure, you can specify the update schema using the
-:js:attr:`~carbond.collections.UpdateSchema.updateSchema` property.
+:js:attr:`~carbond.collections.UpdateSchema.updateSchema` property. 
+
+.. _update-spec-free-form:
+
+Note, there is no default structure or semantics for the ``update`` spec.
+Instead, this is left up to the implementer for custom collections and will
+likely be dictated by the backing datastore (e.g., for MongoDB, the update spec
+and semantics can be found `here
+<https://docs.mongodb.com/manual/reference/method/db.collection.update/#update-parameter>`_)
+in the case that one is being used to persist the data.
 
 Unlike other operations (excluding the ``remove`` operation and their ``object``
-variants), the ``update`` operation's return type varies depending on the
-capabilities of the underlying datastore and the operation config. Essentially,
-there are three scenarios:
+variants), the ``update`` operation's return type varies depending on whether
+the underlying datastore supports "upserts" and whether the ``update`` operation
+is configured to support this feature. An "upsert" can occur when an update is
+issued that does not affect any records in the backing datastore. In some cases,
+it is desirable to have a record created as a side effect in this situation. It
+should be noted, the exact semantics of of an "upsert" can change from datastore
+to datastore (see: `MongoDB's upsert semantics
+<https://docs.mongodb.com/manual/reference/method/db.collection.update/#upsert-behavior>`_).
+This leaves us with the following three scenarios:
 
 1. "upserts" are not supported
 2. "upserts" are supported, but the upserted document(s) can not be returned without
@@ -251,7 +294,13 @@ they were created (e.g., if 2 objects were upserted, the return value should be
 In scenario 3, we have the ability to return any documents that were upserted.
 To do this, ``val`` should be set to the objects that were upserted and
 ``created`` should be set to ``true`` if objects were upserted. If no objects
-were upserted, then the behavior is the same as the previous two scenarios.
+were upserted, then the behavior is the same as the previous two scenarios
+(e.g., the number of updated documents should be returned and ``created`` should
+be omitted or set to ``false``).
+
+Note, see :ref:`queryability-for-custom-collections` to understand why the
+ability to query a set of documents is not explicitly supported by the
+``update`` operation.
 
 remove
 ~~~~~~
@@ -279,6 +328,10 @@ If not, as is the case with MongoDB, the number of objects removed should be ret
     :dedent: 8
     :start-after: pre-remove-mongoCounterBasic
     :end-before: post-remove-mongoCounterBasic
+
+Note, see :ref:`queryability-for-custom-collections` to understand why the
+ability to query a set of documents is not explicitly supported by the
+``remove`` operation.
 
 insertObject
 ~~~~~~~~~~~~
@@ -330,20 +383,24 @@ should return the object from the collection with that ``id`` if it exists and
     :end-before: post-findObject-mongoCounterBasic
     :caption: Example implementation using MongoDB:
 
+Note, when ``null`` or ``undefined`` is returned, this indicates that the object
+does not exist and directs the collection to respond with a ``404``.
+
 saveObject
 ~~~~~~~~~~
 
 The :js:func:`~carbond.collections.Collection.saveObject` operation handler
 takes a single object whose ID property has been populated by the client and
-should replace the object in the collection with the same ID. Like ``update``,
-``saveObject`` can be configured to support inserts. It is left up to the
-concrete implementation of the collection to decide how this is communicated to
-the operation handler.  :js:class:`~carbond.mongodb.MongoDBCollection`, for
-instance, updates the ``options`` parameter to include ``{upsert: true}`` if
-inserts are allowed (see
-:js:func:`leafnode.collection.Collection.findOneAndReplace`).  If inserts are
-not allowed and there is no object that has a matching ID, ``null`` should be
-returned. Otherwise, the object that was saved should be returned and
+should replace the object in the collection with the same ID. 
+
+Like ``update``, ``saveObject`` can be configured to support inserts. It is left
+up to the concrete implementation of the collection to decide how this is
+communicated to the operation handler.
+:js:class:`~carbond.mongodb.MongoDBCollection`, for instance, updates the
+``options`` parameter to include ``{upsert: true}`` if inserts are allowed (see
+:js:func:`leafnode.collection.Collection.findOneAndReplace`). If inserts are not
+allowed and there is no object that has a matching ID, ``null`` or ``undefined``
+should be returned. Otherwise, the object that was saved should be returned and
 ``created`` should be set to ``true``.
 
 .. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
@@ -362,15 +419,22 @@ returned. Otherwise, the object that was saved should be returned and
     :end-before: post-saveObject-mongoCounterBasic
     :caption: Example implementation using MongoDB:
 
+Note, when ``null`` or ``undefined`` is returned, this indicates that the object
+does not exist and directs the collection to respond with a ``404``.
+
 updateObject
 ~~~~~~~~~~~~
 
 The :js:func:`~carbond.collections.Collection.updateObject` operation handler
-takes an ``id`` and an ``update`` object and should apply that update to an
-object in the collection with a matching ID. Similar to
-:js:func:`~carbond.collections.Collection.update`, the ``updateObject``
-operation can be configured to support upserts and to return the upserted
-document with all the same return value caveats.
+takes an ``id`` and an ``update`` spec and should apply that update to an object
+in the collection with a matching ID. 
+
+Similar to :js:func:`~carbond.collections.Collection.update`, the
+``updateObject`` operation can be configured to support "upserts" and to return
+the "upserted" document with all the same return value caveats. Additionally,
+one should keep in mind that the ``update`` spec is free form and has no
+specific semantics defined by :js:class:`~carbond.collections.Collection` itself
+(see :ref:`update-spec-free-form`).
 
 .. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
@@ -387,6 +451,9 @@ document with all the same return value caveats.
     :start-after: pre-updateObject-mongoCounterBasic
     :end-before: post-updateObject-mongoCounterBasic
     :caption: Example implementation using MongoDB:
+
+Note, when ``null``, ``undefined``, or ``0`` is returned, this indicates that
+the object does not exist and directs the collection to respond with a ``404``.
 
 removeObject
 ~~~~~~~~~~~~
@@ -413,6 +480,9 @@ removed object.
     :start-after: pre-removeObject-mongoCounterBasic
     :end-before: post-removeObject-mongoCounterBasic
     :caption: Example implementation using MongoDB:
+
+Note, when ``null``, ``undefined``, or ``0`` is returned, this indicates that
+the object does not exist and directs the collection to respond with a ``404``.
 
 Enabling / Disabling Operations
 -------------------------------
@@ -454,6 +524,9 @@ exposed to the user:
     :language: javascript
     :linenos:
     :lines: 1-12,14,16-
+
+
+.. _collection-configuration:
 
 Collection Configuration
 ------------------------
