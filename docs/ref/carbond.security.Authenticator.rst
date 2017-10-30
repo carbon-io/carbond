@@ -9,6 +9,8 @@
 carbond.security.Authenticator
 ==============================
 
+An abstract class used for authenticating requests. Authenticators should extend this class and implement their own authenticate method.
+
 Methods
 -------
 
@@ -18,47 +20,47 @@ Methods
 
     .. function:: authenticate(req)
 
-        :param req: xxx
-        :type req: xxx
-        :throws: :class:`~Service.errors.Unauthorized` If credentials are present but they fail verification.
-        :throws: :class:`~Service.errors.InternalServerError` If there is an exception on user lookup.
+        :param req: The current request
+        :type req: :class:`~carbond.Request`
+        :throws: :class:`~HttpErrors.Unauthorized` If credentials are present but they fail verification.
+        :throws: :class:`~HttpErrors.InternalServerError` If there is an exception on user lookup.
         :rtype: Object | undefined
 
-        authenticate description
+        Authenticates the user for a request. Should be implemented by subclasses, for example: :class:`~carbond.security.MongoDBHttpBasicAuthenticator`.
 
     .. function:: getAuthenticationHeaders()
 
-        :rtype: xxx
+        :rtype: string[]
 
-        getAuthenticationHeaders description
+        Gets the names of the request headers where authentication details can be found. Should be implemented by subclasses, for example: :attr:`~carbond.security.ApiKeyAuthenticator`
 
     .. function:: getService()
 
-        :rtype: xxx
+        :rtype: :class:`~carbond.Service`
 
-        getService description
+        A getter for the parent Service
 
     .. function:: initialize(service)
 
-        :param service: xxx
-        :type service: xxx
-        :rtype: xxx
+        :param service: The parent Service
+        :type service: :class:`~carbond.Service`
+        :rtype: undefined
 
-        initialize description
+        Initializes the authenticator. Called by :class:`~carbond.Service.start` on the parent Service and sets `this.service` to the parent Service.
 
     .. function:: isRootUser(user)
 
-        :param user: xxx
-        :type user: xxx
+        :param user: An object representing a user
+        :type user: Object
         :rtype: boolean
 
-        isRootUser description
+        Checks if a user is root.
 
     .. function:: throwUnauthenticated(msg)
 
-        :param msg: xxx
-        :type msg: xxx
-        :throws: :class:`~Service.errors.Unauthorized` xxx
+        :param msg: The message returned with the 401 error.
+        :type msg: string
+        :throws: :class:`~HttpErrors.Unauthorized` 
         :rtype: undefined
 
-        throwUnauthenticated description
+        Throws a 401 Unauthorized Error.

@@ -10,7 +10,7 @@ carbond.security.Sha256Hasher
 =============================
 *extends* :class:`~carbond.security.Hasher`
 
-Sha256Hasher description
+A utility class for the SHA256 hash function
 
 Properties
 ----------
@@ -24,7 +24,7 @@ Properties
        :type: string
        :default: ``hex``
 
-       the type of digest to output
+       the type of digest to output. Can be *hex*, *latin1*, or *base64*.
 
 
 Methods
@@ -40,4 +40,4 @@ Methods
         :type data: string
         :rtype: string
 
-        hash description
+        Calculates the SHA256 digest of the input string

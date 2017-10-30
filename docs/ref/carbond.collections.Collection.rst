@@ -410,7 +410,7 @@ Methods
 
         Update the operation config using collection level config (e.g., :class:`~carbond.collections.Collection.schema`) and build operation responses. In general, this method should not need to be overridden or extended. Instead, customization should be driven by the operation config and the pre/post handler methods.
 
-    .. function:: configureFindObjectOperation()
+    .. function:: configureFindOperation()
 
         :rtype: :class:`~carbond.collections.Collection.ConfigureOperationResult`
 

@@ -9,7 +9,7 @@
 carbond.security.Hasher
 =======================
 
-Hasher descripton
+A utility class for cryptographic hash functions
 
 Methods
 -------
@@ -20,25 +20,25 @@ Methods
 
     .. function:: eq(data, digest)
 
-        :param data: the data to compare against in its raw form
+        :param data: the data in its raw form
         :type data: string
         :param digest: the digest to compare against
         :type digest: string
         :rtype: boolean
 
-        eq description
+        Compares data against a digest
 
     .. function:: getHasher(name)
 
-        :param name: the name of a hasher
+        :param name: the name of a hasher. Supported hashers are *noop*, *sha256*, and *bcrypt*.
         :type name: string
-        :rtype: function
+        :rtype: function | undefined
 
-        Get a hasher class by name
+        Get a hasher class by name.
 
     .. function:: getHasherNames()
 
-        :rtype: Array
+        :rtype: string[]
 
         Get the names of all registered hashers.
 
@@ -48,4 +48,4 @@ Methods
         :type data: string
         :rtype: string
 
-        hash description
+        Calculates the hash digest of the input string

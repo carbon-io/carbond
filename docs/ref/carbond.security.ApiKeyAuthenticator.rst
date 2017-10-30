@@ -8,9 +8,9 @@
 ====================================
 carbond.security.ApiKeyAuthenticator
 ====================================
-*extends* :class:`~carbond.security.ApiKeyAuthenticator`
+*extends* :class:`~carbond.security.Authenticator`
 
-ApiKeyAuthenticator
+An abstract class for API key authentication
 
 Properties
 ----------
@@ -19,20 +19,12 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: apiKeyField
-
-       :type: xxx
-       :required:
-
-       xxx
-
-
     .. attribute:: apiKeyLocation
 
        :type: string
        :default: ``header``
 
-       xxx
+       The loaction of the API key, either *header* or *query*.
 
 
     .. attribute:: apiKeyParameterName
@@ -40,47 +32,23 @@ Properties
        :type: string
        :default: ``ApiKey``
 
-       xxx
-
-
-    .. attribute:: db
-
-       :type: xxx
-       :required:
-
-       xxx
-
-
-    .. attribute:: dbName
-
-       :type: xxx
-       :required:
-
-       xxx
+       The name of the API key parameter
 
 
     .. attribute:: idGenerator
 
-       :type: :class:`~carbond.UUIDGenerator`
-       :required:
+       :type: :class:`~carbond.IdGenerator`
+       :default: :class:`~carbond.UUIDGenerator`
 
-       xxx
+       The ID generator to generate API keys.
 
 
     .. attribute:: maskUserObjectKeys
 
-       :type: xxx
-       :required:
+       :type: string[]
+       :default: undefined
 
-       xxx
-
-
-    .. attribute:: userCollection
-
-       :type: xxx
-       :required:
-
-       xxx
+       An array of properties that should be masked on the user object in the logs. Used for masking sensitive information.
 
 
 Methods
@@ -92,37 +60,30 @@ Methods
 
     .. function:: authenticate(req)
 
-        :param req: xxx
-        :type req: xxx
-        :rtype: xxx
+        :param req: The current request
+        :type req: Request
+        :throws: :class:`~HttpErrors.Unauthorized` If no user matching the API key is found
+        :throws: :class:`~HttpErrors.InternalServerError` If :class:`~carbond.security.ApiKeyAuthenticator.apiKeyLocation` is malformed, or if there is an error finding the user.
+        :rtype: Object
 
-        authenticate description
-
-    .. function:: findUser(apiKey)
-
-        :param apiKey: xxx
-        :type apiKey: xxx
-        :rtype: undefined
-
-        findUser description
+        Authenticates the current request using an API key. Returns a user object that matches the API Key sent with the request. If no user matching the API key is found, throws a 401 Unauthorized error.
 
     .. function:: findUser(apiKey)
 
-        :param apiKey: xxx
-        :type apiKey: xxx
-        :throws: Error xxx
-        :rtype: xxx
+        :param apiKey: The API Key that was sent with this request
+        :type apiKey: string
+        :rtype: Object
 
-        findUser description
+        An abstract method for finding the user from an API key. Should be implemented by subclasses. For example, :class:`~carbond.security.MongoDBApiKeyAuthenticator`
 
     .. function:: generateApiKey()
 
-        :rtype: xxx
+        :rtype: string
 
-        generateApiKey description
+        Generates a UUID using :attr:`~carbond.security.ApiKeyAuthenticator.idGenerator`
 
     .. function:: getAuthenticationHeaders()
 
-        :rtype: xxx
+        :rtype: string[]
 
-        getAuthenticationHeaders description
+        Gets an array containing :attr:`~carbond.security.ApiKeyAuthenticator.apiKeyParameterName`

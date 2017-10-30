@@ -10,7 +10,7 @@ carbond.security.NoopHasher
 ===========================
 *extends* :class:`~Hasher`
 
-NOOP hasher (plain text)
+A NOOP "hasher" which just returns the data as the digest. Useful as a placeholder or for testing purposes. This offers no security. A real hash function such as :class:`~carbond.security.BcryptHasher` should be used in production.
 
 Methods
 -------
@@ -21,8 +21,8 @@ Methods
 
     .. function:: hash(data)
 
-        :param data: the data to hash
+        :param data: the data to "hash"
         :type data: string
         :rtype: string
 
-        hash description
+        Returns the input data unchanged

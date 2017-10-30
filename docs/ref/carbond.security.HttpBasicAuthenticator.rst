@@ -10,7 +10,7 @@ carbond.security.HttpBasicAuthenticator
 =======================================
 *extends* :class:`~carbond.security.Authenticator`
 
-HttpBasicAuthenticator description
+An authenticator for the Basic HTTP Authenitcation Scheme.
 
 Properties
 ----------
@@ -24,15 +24,15 @@ Properties
        :type: string
        :required:
 
-       xxx
+       Name of the field that contains the password in the database.
 
 
     .. attribute:: passwordHashFn
 
-       :type: string
+       :type: string | function
        :default: ``noop``
 
-       xxx
+       Either a string representing a :class:`~carbond.security.Hasher` (possible values are *noop*, *sha256*, and *bcrypt*), an instance of :class:`~carbond.security.Hasher` or a constructor function for a :class:`~carbond.security.Hasher`.
 
 
     .. attribute:: usernameField
@@ -40,7 +40,7 @@ Properties
        :type: string
        :required:
 
-       xxx
+       Name of the field that contains the username in the database.
 
 
 Methods
@@ -52,27 +52,28 @@ Methods
 
     .. function:: authenticate(req)
 
-        :param req: xxx
-        :type req: xxx
-        :rtype: xxx
+        :param req: The current request
+        :type req: Request
+        :throws: :class:`~HttpErrors.Unauthorized` If credentials weren't validated
+        :rtype: Object | undefined
 
-        authenticate
+        Authenticates a request using HTTP Baisc. Returns a user object that matches the username and password sent with the request. If no user matching the username and password is found, throws a 401 Unauthorized error.
 
     .. function:: findUser(username)
 
         :param username: The username sent by the client.
         :type username: string
-        :throws: Error xxx
+        :throws: Error If the usernameField or passwordField are undefined.
 
-        findUser NOTE: this should be extended
+        Find a user matching a username. Must be implemented by subcalsses.
 
     .. function:: validateCreds(username, password)
 
-        :param username: xxx
+        :param username: username from the HTTP request
         :type username: string
-        :param password: xxx
+        :param password: password from the HTTP request
         :type password: string
-        :throws: :class:`~Service.errors.InternalServerError` xxx
-        :rtype: xxx
+        :throws: :class:`~Service.errors.InternalServerError` 500 Internal Server Error
+        :rtype: Object | undefined
 
-        validateCreds description
+        Finds a user matching a username and password. The password is checked using the hash function.

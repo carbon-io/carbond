@@ -30,6 +30,7 @@ collection module reference
     carbond.collections.SaveObjectConfig.rst
     carbond.collections.UpdateConfig.rst
     carbond.collections.UpdateObjectConfig.rst
+    carbond.docgen.APIBPGenerator.rst
     carbond.mongodb.MongoDBCollection.rst
     carbond.mongodb.MongoDBFindConfig.rst
     carbond.mongodb.MongoDBFindObjectConfig.rst
@@ -49,6 +50,7 @@ collection module reference
     carbond.security.EndpointAcl.rst
     carbond.security.Hasher.rst
     carbond.security.HttpBasicAuthenticator.rst
+    carbond.security.MongoDBApiKeyAuthenticator.rst
     carbond.security.MongoDBHttpBasicAuthenticator.rst
     carbond.security.NoopHasher.rst
     carbond.security.ObjectAcl.rst

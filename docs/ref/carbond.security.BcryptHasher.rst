@@ -10,7 +10,7 @@ carbond.security.BcryptHasher
 =============================
 *extends* :class:`~carbond.security.Hasher`
 
-BcryptHasher description
+A utility class for the bcrypt hashing function
 
 Properties
 ----------
@@ -22,9 +22,9 @@ Properties
     .. attribute:: rounds
 
        :type: integer
-       :required:
+       :default: ``10``
 
-       the number of rounds to use
+       the number of rounds to use XXX: The underlying bcryptjs library defaults to 10 rounds. Should probably explicitly define that.
 
 
 Methods
@@ -36,13 +36,13 @@ Methods
 
     .. function:: eq(data, digest)
 
-        :param data: the data to compare against in its raw form
+        :param data: the data in its raw form
         :type data: string
         :param digest: the digest to compare against
         :type digest: string
         :rtype: boolean
 
-        eq description
+        Compares data against a bcrypt digest
 
     .. function:: hash(data)
 
@@ -50,4 +50,4 @@ Methods
         :type data: string
         :rtype: string
 
-        hash description
+        Calculates the bcrypt digest of the input string
