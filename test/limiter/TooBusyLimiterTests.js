@@ -34,7 +34,7 @@ var TooBusyLimiterTestServiceBase = function() {
 
       this.hostname = '127.0.0.1'
       this.port = 8888,
-        this.verbosity = 'warn'
+      this.verbosity = 'warn'
       this.enableBusyLimiter = true
 
       this._pauseReq = 0
@@ -270,7 +270,7 @@ var TooBusyLimiterTests = o({
       service: MaxOutstandingReqsLimitedTestService({}),
       setup: function() {
         ServiceTest.prototype.setup.call(this)
-        sinon.stub(this.service.busyLimiter, 'toobusy', function() {
+        sinon.stub(this.service.busyLimiter, 'toobusy').callsFake(function() {
           return false
         })
       },
@@ -382,7 +382,7 @@ var TooBusyLimiterTests = o({
 
             try {
               this.parent.service.passthroughCb = function() {
-                sinon.stub(self.parent.service.busyLimiter, 'toobusy', function() {
+                sinon.stub(self.parent.service.busyLimiter, 'toobusy').callsFake(function() {
                   return true
                 })
                 done()
@@ -430,7 +430,7 @@ var TooBusyLimiterTests = o({
         },
         {
           setup: function() {
-            sinon.stub(this.parent.service.busyLimiter, 'toobusy', function() {
+            sinon.stub(this.parent.service.busyLimiter, 'toobusy').callsFake(function() {
               return false
             })
           },
@@ -449,7 +449,7 @@ var TooBusyLimiterTests = o({
         },
         {
           setup: function() {
-            sinon.stub(this.parent.service.busyLimiter, 'toobusy', function() {
+            sinon.stub(this.parent.service.busyLimiter, 'toobusy').callsFake(function() {
               return false
             })
           },
@@ -467,7 +467,7 @@ var TooBusyLimiterTests = o({
         },
         {
           setup: function() {
-            sinon.stub(this.parent.service.busyLimiter, 'toobusy', function() {
+            sinon.stub(this.parent.service.busyLimiter, 'toobusy').callsFake(function() {
               return false
             })
           },
@@ -502,7 +502,7 @@ var TooBusyLimiterTests = o({
             warnOnUnregistered: false,
             useCleanCache: true
           })
-          sinon.stub(fibers, 'getFiberPoolSize', function() {
+          sinon.stub(fibers, 'getFiberPoolSize').callsFake(function() {
             return 10
           })
           mockery.registerMock('@carbon-io/fibers', fibers)
@@ -514,9 +514,13 @@ var TooBusyLimiterTests = o({
         }
       ),
       setup: function() {
-        sinon.stub(this.service.busyLimiter, 'toobusy', function() {
+        var logging = require('@carbon-io/logging')
+        sinon.stub(this.service.busyLimiter, 'toobusy').callsFake(function() {
           return false
         })
+        // XXX: mockery swaps the module out from underneath us here and this.service.logger ends
+        //      up pointing to a stale logger
+        this.service.logger = logging.getLogger('carbon-io.carbond.Service')
         ServiceTest.prototype.setup.call(this)
       },
       teardown: function() {

@@ -17,7 +17,7 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: "Carbond tests",
+    name: "CarbondTests",
 
     /**********************************************************************
      * tests
@@ -28,15 +28,18 @@ __(function() {
       _o('./EndpointAclTests'),
       _o('./AuthenticatorTests'),
       _o('./collections'),
+      _o('./collections2'),
       _o('./BasicEndpointTests'),
       _o('./docgen'),
       _o('./HasherTests'),
       _o('./IdGeneratorTests'),
       _o('./mongodb'),
+      _o('./mongodb2'),
       _o('./limiter'),
       _o('./ParameterParsingTests'),
       _o('./StartStopTests'),
       _o('./SslTests'),
+      _o('./util'),
       _o('../docs/code-frags/test')
     ],
   })

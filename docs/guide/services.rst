@@ -42,7 +42,7 @@ You can register Express-style middleware for your service via the
 
 .. todo:: document error handling middleware here?
 
-.. _running-services-from-the-command-line-label:
+.. _carbond-running-services-from-the-command-line:
 
 Running Services from the command line
 --------------------------------------
@@ -91,8 +91,8 @@ While you will usually run your :js:class:`~carbond.Service`\s via the command
 line as a top-level application, :js:class:`~carbond.Service` objects can also
 be used as a library (although it is not common). 
 
-By using the :js:meth:`~carbond.Service.start` and
-:js:meth:`~carbond.Service.stop` methods, you can manage the
+By using the :js:func:`~carbond.Service.start` and
+:js:func:`~carbond.Service.stop` methods, you can manage the
 :js:class:`~carbond.Service` lifecyle manually. 
 
 These methods have both an asynchronous and a synchronous interface:
@@ -112,6 +112,6 @@ These methods have both an asynchronous and a synchronous interface:
     :linenos:
 
 Important note: you should not find yourself starting and stopping services like
-this (by manually calling :js:meth:`~carbond.Service.start` and
-:js:meth:`~carbond.Service.stop`) frequently. In most use-cases you will simply
+this (by manually calling :js:func:`~carbond.Service.start` and
+:js:func:`~carbond.Service.stop`) frequently. In most use-cases you will simply
 use the command line invocation described in the previous section.

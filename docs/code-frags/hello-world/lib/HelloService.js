@@ -13,6 +13,8 @@ __(function() {
      * implementation...
      */
     port: 8888,
+    // first definition is for presentation, second is for testsing
+    dbUri: "mongodb://localhost:27017/mydb",
     dbUri: _o('env:CARBONIO_TEST_DB_URI') || "mongodb://localhost:27017/mydb",
     endpoints: {
       feedback: o({
@@ -29,23 +31,35 @@ __(function() {
         },
         enabled: {
           insert: false, // insert is disabled even though it is defined below
-          find: true,
-          '*': false,
+          find: true
         },
         // POST /feedback
-        insert: function(obj) {
+        insertObject: function(object, options) {
           /*
            * implementation...
            */
           var col = this.service.db.getCollection(path.basename(this.path))
           return col.insertObject(obj)
         },
-        find: function(query) {
+        // find operation config (will be instantiated as o(this.findConfig, this.FindConfigClass))
+        findConfig: {
+          additionalParameters: {
+            name: 'query',
+            description: 'A MongoDB query',
+            location: 'query',
+            schema: {
+              type: 'object'
+            },
+            default: {}
+          }
+        },
+        // GET /feedback
+        find: function(options) {
           /*
            * implementation...
            */
           var col = this.service.db.getCollection(path.basename(this.path))
-          return col.find(query).toArray()
+          return col.find(options.query).toArray()
         }
       })
     }

@@ -235,45 +235,36 @@ __(function() {
             doTest: function() {
               // saveObject
               assert.deepEqual(this.parent.oe.getOperation('put').responses,
-                               [
-                                 {
-                                   statusCode: 200,
-                                   description: 'The object was successfully saved. The body will ' +
-                                                'contain the saved object.',
-                                   schema: this.parent.normalizedDefaultObjectSchema,
-                                   headers: []
-                                 },
-                                 {
-                                   statusCode: 201,
-                                   description: 'The object was successfully inserted. The Location ' +
-                                                'header will contain a URL pointing to the newly created ' +
-                                                'resource and the body will contain the inserted object if ' +
-                                                'configured to do so.',
-                                   schema: this.parent.normalizedDefaultObjectSchema,
-                                   headers: ['Location', this.parent.ce.idHeader]
-                                 },
-                                 this.parent.BadRequestResponse,
-                                 this.parent.ForbiddenResponse,
-                                 this.parent.InternalServerErrorResponse
-                               ])
+                {
+                  '200': {
+                    statusCode: 200,
+                    description: 'The object was successfully saved. The body will ' +
+                                 'contain the saved object.',
+                    schema: this.parent.normalizedDefaultObjectSchema,
+                    headers: []
+                  },
+                  '201': {
+                    statusCode: 201,
+                    description: 'The object was successfully inserted. The Location ' +
+                                 'header will contain a URL pointing to the newly created ' +
+                                 'resource and the body will contain the inserted object if ' +
+                                 'configured to do so.',
+                    schema: this.parent.normalizedDefaultObjectSchema,
+                    headers: ['Location', this.parent.ce.idHeader]
+                  },
+                  '400': this.parent.BadRequestResponse,
+                  '403': this.parent.ForbiddenResponse,
+                  '500': this.parent.InternalServerErrorResponse
+                })
               assert.deepEqual(this.parent.oe.getOperation('put').parameters,
                                {
-                                 body: {
-                                   name: 'body',
+                                 object: {
+                                   name: 'object',
                                    description: 'Object to save',
                                    schema:  this.parent.defaultObjectSchema,
                                    location: 'body',
                                    required: true,
                                    default: undefined
-                                 },
-                                 _id: {
-                                   name: '_id',
-                                   description: 'Object _id',
-                                   location: 'path',
-                                   schema: {type: 'string'},
-                                   required: true,
-                                   default: undefined,
-                                   resolver: null
                                  }
                                })
 
@@ -284,51 +275,50 @@ __(function() {
             name: 'UpdateObjectTest',
             doTest: function() {
               assert.deepEqual(this.parent.oe.getOperation('patch').responses,
-                               [
-                                 {
-                                   statusCode: 200,
-                                   description: 'The object was successfully updated',
-                                   schema: {
-                                     type: 'object',
-                                     properties: {
-                                       n: {
-                                         type: 'number',
-                                         minimum: 0,
-                                         maximum: 1,
-                                         multipleOf: 1
-                                       }
-                                     },
-                                     required: ['n'],
-                                     additionalProperties: false
-                                   },
-                                   headers: []
-                                 },
-                                 {
-                                   statusCode: 201,
-                                   description: 'The object was successfully upserted. The Location ' +
-                                                'header will contain a URL pointing to the newly created ' +
-                                                'resource and the body will contain the upserted object if ' +
-                                                'configured to do so.',
-                                   schema: {
-                                     type: 'object',
-                                     properties: {
-                                       n: {
-                                         type: 'number',
-                                         minimum: 0,
-                                         maximum: 1,
-                                         multipleOf: 1
-                                       }
-                                     },
-                                     required: ['n'],
-                                     additionalProperties: false
-                                   },
-                                   headers: ['Location', this.parent.ce.idHeader]
-                                 },
-                                 this.parent.NotFoundResponse,
-                                 this.parent.BadRequestResponse,
-                                 this.parent.ForbiddenResponse,
-                                 this.parent.InternalServerErrorResponse
-                               ])
+                {
+                  '200': {
+                    statusCode: 200,
+                    description: 'The object was successfully updated',
+                    schema: {
+                      type: 'object',
+                      properties: {
+                        n: {
+                          type: 'number',
+                          minimum: 0,
+                          maximum: 1,
+                          multipleOf: 1
+                        }
+                      },
+                      required: ['n'],
+                      additionalProperties: false
+                    },
+                    headers: []
+                  },
+                  '201': {
+                    statusCode: 201,
+                    description: 'The object was successfully upserted. The Location ' +
+                                 'header will contain a URL pointing to the newly created ' +
+                                 'resource and the body will contain the upserted object if ' +
+                                 'configured to do so.',
+                    schema: {
+                      type: 'object',
+                      properties: {
+                        n: {
+                          type: 'number',
+                          minimum: 0,
+                          maximum: 1,
+                          multipleOf: 1
+                        }
+                      },
+                      required: ['n'],
+                      additionalProperties: false
+                    },
+                    headers: ['Location', this.parent.ce.idHeader]
+                  },
+                  '400': this.parent.BadRequestResponse,
+                  '403': this.parent.ForbiddenResponse,
+                  '500': this.parent.InternalServerErrorResponse
+                })
               assert.deepEqual(this.parent.oe.getOperation('patch').parameters,
                                {
                                  update: {
@@ -356,51 +346,41 @@ __(function() {
                                    },
                                    required: false,
                                    default: false
-                                 },
-                                 _id: {
-                                   name: '_id',
-                                   description: 'Object _id',
-                                   location: 'path',
-                                   schema: {type: 'string'},
-                                   required: true,
-                                   default: null,
-                                   resolver: null
                                  }
                                })
               assert.deepEqual(this.parent.oe2.getOperation('patch').responses,
-                               [
-                                 {
-                                   statusCode: 200,
-                                   description: 'The object was successfully updated',
-                                   schema: {
-                                     type: 'object',
-                                     properties: {
-                                       n: {
-                                         type: 'number',
-                                         minimum: 0,
-                                         maximum: 1,
-                                         multipleOf: 1
-                                       }
-                                     },
-                                     required: ['n'],
-                                     additionalProperties: false
-                                   },
-                                   headers: []
-                                 },
-                                 {
-                                   statusCode: 201,
-                                   description: 'The object was successfully upserted. The Location ' +
-                                                'header will contain a URL pointing to the newly created ' +
-                                                'resource and the body will contain the upserted object if ' +
-                                                'configured to do so.',
-                                   schema: this.parent.normalizedDefaultObjectSchema,
-                                   headers: ['Location', this.parent.ce.idHeader]
-                                 },
-                                 this.parent.NotFoundResponse,
-                                 this.parent.BadRequestResponse,
-                                 this.parent.ForbiddenResponse,
-                                 this.parent.InternalServerErrorResponse
-                               ])
+                {
+                  '200': {
+                    statusCode: 200,
+                    description: 'The object was successfully updated',
+                    schema: {
+                      type: 'object',
+                      properties: {
+                        n: {
+                          type: 'number',
+                          minimum: 0,
+                          maximum: 1,
+                          multipleOf: 1
+                        }
+                      },
+                      required: ['n'],
+                      additionalProperties: false
+                    },
+                    headers: []
+                  },
+                  '201': {
+                    statusCode: 201,
+                    description: 'The object was successfully upserted. The Location ' +
+                                 'header will contain a URL pointing to the newly created ' +
+                                 'resource and the body will contain the upserted object if ' +
+                                 'configured to do so.',
+                    schema: this.parent.normalizedDefaultObjectSchema,
+                    headers: ['Location', this.parent.ce.idHeader]
+                  },
+                  '400': this.parent.BadRequestResponse,
+                  '403': this.parent.ForbiddenResponse,
+                  '500': this.parent.InternalServerErrorResponse
+                })
             }
           }),
           o({
@@ -408,29 +388,19 @@ __(function() {
             name: 'RemoveObjectTest',
             doTest: function() {
               assert.deepEqual(this.parent.oe.getOperation('delete').responses,
-                               [
-                                 {
-                                   statusCode: 200,
-                                   description: 'The object was successfully removed',
-                                   schema: this.parent.normalizedDefaultObjectSchema,
-                                   headers: []
-                                 },
-                                 this.parent.NotFoundResponse,
-                                 this.parent.ForbiddenResponse,
-                                 this.parent.InternalServerErrorResponse
-                               ])
-              assert.deepEqual(this.parent.oe.getOperation('delete').parameters,
-                               {
-                                 _id: {
-                                   name: '_id',
-                                   description: 'Object _id',
-                                   location: 'path',
-                                   schema: {type: 'string'},
-                                   required: true,
-                                   default: null,
-                                   resolver: null
-                                 }
-                               })
+                {
+                  '200': {
+                    statusCode: 200,
+                    description: 'The object was successfully removed',
+                    schema: this.parent.normalizedDefaultObjectSchema,
+                    headers: []
+                  },
+                  '404': this.parent.NotFoundResponse,
+                  '400': this.parent.BadRequestResponse,
+                  '403': this.parent.ForbiddenResponse,
+                  '500': this.parent.InternalServerErrorResponse
+                })
+              assert.deepEqual(this.parent.oe.getOperation('delete').parameters, {})
             }
           }),
         ]

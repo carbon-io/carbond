@@ -41,6 +41,7 @@ module.exports = {
     Collection: require('./lib/collections/Collection'),
     CollectionOperationResult: require('./lib/collections/CollectionOperationResult'),
     CollectionOperationConfig: require('./lib/collections/CollectionOperationConfig'),
+    IdGenerator: require('./lib/collections/IdGenerator'),
     InsertConfig: require('./lib/collections/CollectionOperationConfig'),
     FindConfig: require('./lib/collections/FindConfig'),
     FindObjectConfig: require('./lib/collections/FindObjectConfig'),
@@ -68,7 +69,6 @@ module.exports = {
   },
   mongodb: {
     MongoDBCollection: require('./lib/mongodb/MongoDBCollection'),
-    MongoDBCollectionOperationConfig: require('./lib/mongodb/MongoDBCollectionOperationConfig'),
     MongoDBFindConfig: require('./lib/mongodb/MongoDBFindConfig'),
     MongoDBFindObjectConfig: require('./lib/mongodb/MongoDBFindObjectConfig'),
     MongoDBInsertConfig: require('./lib/mongodb/MongoDBInsertConfig'),

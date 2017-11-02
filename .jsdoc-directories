@@ -1,1 +1,1 @@
-{"paths": ["./lib/collections/Collection.js"]}
+{"paths": ["./index.js", "./lib"]}

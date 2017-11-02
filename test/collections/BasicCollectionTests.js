@@ -60,10 +60,10 @@ var OpHttpTest = oo({
    */
   genDoc: function(id, page, skip, limit) {
     return {
-      '_id': (this.config.opConfig.pageSize * page + skip + id).toString(),
+      '_id': (this.config.pageSize * page + skip + id).toString(),
       op: 'find',
       context: {
-        skip: this.config.opConfig.pageSize * page + skip,
+        skip: this.config.pageSize * page + skip,
         limit: limit,
         _id: undefined
       }
@@ -533,8 +533,8 @@ __(function() {
             doTest: function() {
               // insert
               assert.deepEqual(
-                this.parent.ce.getOperation('post').responses, [
-                  {
+                this.parent.ce.getOperation('post').responses, {
+                  '201': {
                     statusCode: 201,
                     description: 'The object(s) were successfully inserted. The Location ' +
                                  'header will contain a URL pointing to the newly created ' +
@@ -559,16 +559,38 @@ __(function() {
                     },
                     headers: ['Location', this.parent.ce.defaultIdHeader]
                   },
-                  this.parent.BadRequestResponse,
-                  this.parent.ForbiddenResponse,
-                  this.parent.InternalServerErrorResponse
-                ])
+                  '400': this.parent.BadRequestResponse,
+                  '403': this.parent.ForbiddenResponse,
+                  '500': this.parent.InternalServerErrorResponse
+                })
               assert.deepEqual(
                 this.parent.ce.getOperation('post').parameters, {
-                  body: {
+                  object: {
+                    description: 'Object to insert',
+                    location: 'body',
+                    name: 'object',
+                    required: true,
+                    schema: {
+                      oneOf: [
+                        {
+                          items: {
+                            properties: {_id: {type: 'string'}},
+                            type: 'object'
+                          },
+                          type: 'array'
+                        },
+                        {
+                          properties: {_id: {type: 'string'}},
+                          type: 'object'
+                        }
+                      ]
+                    },
+                    default: null
+                  },
+                  objects: {
                     description: 'Object(s) to insert',
                     location: 'body',
-                    name: 'body',
+                    name: 'objects',
                     required: true,
                     schema: {
                       oneOf: [
@@ -596,8 +618,8 @@ __(function() {
             doTest: function() {
               // find
               assert.deepEqual(
-                this.parent.ce.getOperation('get').responses, [
-                  {
+                this.parent.ce.getOperation('get').responses, {
+                  '200': {
                     statusCode: 200,
                     description: 'Returns an array of objects. Each object has an _id and possible ' +
                                  'additional properties.',
@@ -607,10 +629,10 @@ __(function() {
                     },
                     headers: []
                   },
-                  this.parent.BadRequestResponse,
-                  this.parent.ForbiddenResponse,
-                  this.parent.InternalServerErrorResponse
-                ])
+                  '400': this.parent.BadRequestResponse,
+                  '403': this.parent.ForbiddenResponse,
+                  '500': this.parent.InternalServerErrorResponse
+                })
               assert.deepEqual(
                 this.parent.ce.getOperation('get').parameters, {
                   page: {
@@ -624,6 +646,18 @@ __(function() {
                     location: 'query',
                     required: false,
                     default: 0
+                  },
+                  pageSize: {
+                    name: 'pageSize',
+                    description: 'The page size used for pagination (skip/limit are derived from this and page)',
+                    schema: {
+                      type: 'number',
+                      multipleOf: 1,
+                      minimum: 0
+                    },
+                    location: 'query',
+                    required: false,
+                    default: null
                   },
                   skip: {
                     name: 'skip',
@@ -653,7 +687,10 @@ __(function() {
                     name: '_id',
                     description: 'Id query parameter',
                     schema: {
-                      type: 'string'
+                      oneOf: [
+                        {type: 'string'},
+                        {type: 'array', items: {type: 'string'}}
+                      ]
                     },
                     location: 'query',
                     required: false,
@@ -668,8 +705,8 @@ __(function() {
             doTest: function() {
               // update
               assert.deepEqual(
-                this.parent.ce.getOperation('patch').responses, [
-                  {
+                this.parent.ce.getOperation('patch').responses, {
+                  '200': {
                     statusCode: 200,
                     description: 'Object(s) in the collection were successfully updated',
                     schema:  {
@@ -686,9 +723,10 @@ __(function() {
                     },
                     headers: []
                   },
-                  this.parent.BadRequestResponse,
-                  this.parent.ForbiddenResponse,
-                  this.parent.InternalServerErrorResponse])
+                  '400': this.parent.BadRequestResponse,
+                  '403': this.parent.ForbiddenResponse,
+                  '500': this.parent.InternalServerErrorResponse
+                })
             assert.deepEqual(
               this.parent.ce.getOperation('patch').parameters, {
                 update: {
@@ -707,8 +745,8 @@ __(function() {
             doTest: function() {
               // remove
               assert.deepEqual(
-                this.parent.ce.getOperation('delete').responses, [
-                  {
+                this.parent.ce.getOperation('delete').responses, {
+                  '200': {
                     statusCode: 200,
                     description: 'Object(s) in collection were successfully removed',
                     schema:  {
@@ -725,9 +763,10 @@ __(function() {
                     },
                     headers: []
                   },
-                  this.parent.BadRequestResponse,
-                  this.parent.ForbiddenResponse,
-                  this.parent.InternalServerErrorResponse])
+                  '400': this.parent.BadRequestResponse,
+                  '403': this.parent.ForbiddenResponse,
+                  '500': this.parent.InternalServerErrorResponse
+                })
               assert.deepEqual(
                 this.parent.ce.getOperation('delete').parameters, {})
             }
@@ -738,15 +777,15 @@ __(function() {
             doTest: function() {
               // saveObject
               assert.deepEqual(
-                this.parent.oe.getOperation('put').responses, [
-                  {
+                this.parent.oe.getOperation('put').responses, {
+                  '200': {
                     statusCode: 200,
                     description: 'The object was successfully saved. The body will ' +
                                  'contain the saved object.',
                     schema: this.parent.normalizedDefaultObjectSchema,
                     headers: []
                   },
-                  {
+                  '201': {
                     statusCode: 201,
                     description: 'The object was successfully inserted. The Location ' +
                                  'header will contain a URL pointing to the newly created ' +
@@ -755,29 +794,19 @@ __(function() {
                     schema: this.parent.normalizedDefaultObjectSchema,
                     headers: ['Location', this.parent.ce.idHeader]
                   },
-                  this.parent.BadRequestResponse,
-                  this.parent.ForbiddenResponse,
-                  this.parent.InternalServerErrorResponse])
+                  '400': this.parent.BadRequestResponse,
+                  '403': this.parent.ForbiddenResponse,
+                  '500': this.parent.InternalServerErrorResponse
+                })
               assert.deepEqual(
                 this.parent.oe.getOperation('put').parameters, {
-                  body: {
-                    name: 'body',
+                  object: {
+                    name: 'object',
                     description: 'Object to save',
                     location: 'body',
                     schema: this.parent.saveSchema,
                     required: true,
                     default: null
-                  },
-                  _id: {
-                    name: '_id',
-                    description: 'Object _id',
-                    location: 'path',
-                    schema: {
-                      type: 'string'
-                    },
-                    required: true,
-                    default: null,
-                    resolver: null
                   }
                  })
             }
@@ -787,27 +816,19 @@ __(function() {
             name: 'FindObjectConfigTest',
             doTest: function() {
               // findObject
-              assert.deepEqual(this.parent.oe.getOperation('get').responses, [
-                {
+              assert.deepEqual(this.parent.oe.getOperation('get').responses, {
+                '200': {
                   statusCode: 200,
                   description: 'Returns the object resource found at this URL specified by id.',
                   schema: this.parent.normalizedDefaultObjectSchema,
                   headers: []
                 },
-                this.parent.NotFoundResponse,
-                this.parent.BadRequestResponse,
-                this.parent.ForbiddenResponse,
-                this.parent.InternalServerErrorResponse])
-              assert.deepEqual(this.parent.oe.getOperation('get').parameters, {
-                _id: {
-                  name: '_id',
-                  description: 'Object _id',
-                  location: 'path',
-                  schema: { type: 'string' },
-                  required: true,
-                  default: undefined,
-                  resolver: undefined
-                }})
+                '404': this.parent.NotFoundResponse,
+                '400': this.parent.BadRequestResponse,
+                '403': this.parent.ForbiddenResponse,
+                '500': this.parent.InternalServerErrorResponse
+              })
+              assert.deepEqual(this.parent.oe.getOperation('get').parameters, {})
             }
           }),
           o({
@@ -816,8 +837,8 @@ __(function() {
             doTest: function() {
               // updateObject
               assert.deepEqual(
-                this.parent.oe.getOperation('patch').responses, [
-                  {
+                this.parent.oe.getOperation('patch').responses, {
+                  '200': {
                     statusCode: 200,
                     description: 'The object was successfully updated',
                     schema: {
@@ -835,10 +856,11 @@ __(function() {
                     },
                     headers: []
                   },
-                  this.parent.NotFoundResponse,
-                  this.parent.BadRequestResponse,
-                  this.parent.ForbiddenResponse,
-                  this.parent.InternalServerErrorResponse])
+                  '404': this.parent.NotFoundResponse,
+                  '400': this.parent.BadRequestResponse,
+                  '403': this.parent.ForbiddenResponse,
+                  '500': this.parent.InternalServerErrorResponse
+                })
               assert.deepEqual(
                 this.parent.oe.getOperation('patch').parameters, {
                   update: {
@@ -850,17 +872,6 @@ __(function() {
                     location: 'body',
                     required: true,
                     default: null
-                  },
-                  _id: {
-                    name: '_id',
-                    description: 'Object _id',
-                    location: 'path',
-                    schema: {
-                      type: 'string'
-                    },
-                    required: true,
-                    default: null,
-                    resolver: null
                   }
                 })
             }
@@ -871,8 +882,8 @@ __(function() {
             doTest: function() {
               // removeObject
               assert.deepEqual(
-                this.parent.oe.getOperation('delete').responses, [
-                  {
+                this.parent.oe.getOperation('delete').responses, {
+                  '200': {
                     statusCode: 200,
                     description: 'The object was successfully removed',
                     schema: {
@@ -890,21 +901,13 @@ __(function() {
                     },
                     headers: []
                   },
-                  this.parent.NotFoundResponse,
-                  this.parent.ForbiddenResponse,
-                  this.parent.InternalServerErrorResponse])
+                  '404': this.parent.NotFoundResponse,
+                  '400': this.parent.BadRequestResponse,
+                  '403': this.parent.ForbiddenResponse,
+                  '500': this.parent.InternalServerErrorResponse
+                })
               assert.deepEqual(
-                this.parent.oe.getOperation('delete').parameters,
-                  {
-                    _id: {
-                      name: '_id',
-                      description: 'Object _id',
-                      location: 'path',
-                      schema: { type: 'string' },
-                      required: true,
-                      default: null,
-                      resolver: null
-                    }})
+                this.parent.oe.getOperation('delete').parameters, {})
             }
           })
         ]
