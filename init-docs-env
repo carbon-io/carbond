@@ -1,0 +1,6 @@
+#!/bin/sh
+
+eval "npm install -g jsdoc@3.5.4"
+eval "npm install -g @carbon-io/carbon-jsdoc"
+eval "git submodule update --init --recursive"
+eval "cp ./docs/common/carbon-module-pre-commit ./.git/hooks/pre-commit"

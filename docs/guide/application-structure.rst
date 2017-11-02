@@ -19,7 +19,7 @@ Your ``package.json`` file should include ``carbon-io``:
     :lines: 1-4,8-
 
 While the ``carbon-io`` dependency shown in the above example will always pull
-in the latest version, you will likely want to to pin it to a specific minor
+in the latest version, you will likely want to pin it to a specific minor
 version. e.g.: 
 
 .. XXX we can't use inline markup with substitutions... so we're using

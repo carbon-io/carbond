@@ -39,7 +39,7 @@
     "toobusy-js": "~0.5.1",
     "uuid": "3.0.x",
     "z-schema": "3.17.0",
-    "@carbon-io/carbon-core": "0.6.x",
+    "@carbon-io/carbon-core": "0.7.x",
     "mongodb-uri": "mongolab/mongodb-uri-node.git#v0.9.7"
   },
   "scripts": {
