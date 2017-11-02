@@ -73,7 +73,7 @@ Methods
         :type username: string
         :param password: password from the HTTP request
         :type password: string
-        :throws: :class:`~Service.errors.InternalServerError` 500 Internal Server Error
+        :throws: Service.errors.InternalServerError 500 Internal Server Error
         :rtype: Object | undefined
 
         Finds a user matching a username and password. The password is checked using the hash function.

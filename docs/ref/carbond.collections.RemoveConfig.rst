@@ -22,7 +22,7 @@ Properties
     .. attribute:: returnsRemovedObjects
 
        :type: boolean
-       :default: undefined
+       :default: false
 
        Whether or not the HTTP layer returns objects removed
 

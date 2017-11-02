@@ -9,6 +9,8 @@
 carbond.IdGenerator
 ===================
 
+IdGenerator base class
+
 Methods
 -------
 
@@ -16,17 +18,8 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: generateId()
+    .. function:: carbond.IdGenerator.generateId()
 
         :rtype: \*
 
         Generates an ID, where the definition of ID is left up to the implementor
-
-    .. function:: generateId(collection, req)
-
-        :param collection: The collection that IDs are being generated for
-        :type collection: :class:`~carbond.collections.Collection`
-        :param req: The incoming request
-        :type req: :class:`~carbond.Request`
-
-        undefined

@@ -34,7 +34,7 @@ Properties
        Skip authentication for the HTTP methods listed on this endpoint
 
 
-    .. attribute:: description
+    .. attribute:: carbond.Endpoint.description
 
        :type: string
        :default: undefined
@@ -44,7 +44,7 @@ Properties
 
     .. attribute:: endpoints
 
-       :type: :class:`~Object.<string, carbond.Endpoint>`
+       :type: Object.<string, carbond.Endpoint>
        :required:
 
        The endpoints that sit below this endpoint in the tree. URL paths to each endpoint are built during a depth first traversal of the tree on initialization using the property names defined on this Object.
@@ -53,14 +53,14 @@ Properties
     .. attribute:: noDocument
 
        :type: boolean
-       :default: undefined
+       :default: false
 
        Controls whether documentation for this endpoint is included in generated static documentation
 
 
     .. attribute:: parameters
 
-       :type: :class:`~Object.<string, carbond.OperationParameter>`
+       :type: Object.<string, carbond.OperationParameter>
        :required:
 
        Operation parameter definitions that apply to all operations supported by this endpoint. Note, these will be merged with any parameter definitions on the operations themselves and their parsed values will be passed to the handler via ``req.parameters[<parameter name>]``.

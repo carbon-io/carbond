@@ -22,7 +22,7 @@ Properties
     .. attribute:: adminRoot
 
        :type: string
-       :default: ``'/serviceadmin'``
+       :default: ``'/service-admin'``
 
        The "administrative" root URL path component (this is only enabled if the "swagger" command line option is present)
 
@@ -46,7 +46,7 @@ Properties
     .. attribute:: cluster
 
        :type: boolean
-       :default: undefined
+       :default: false
 
        Whether or not to use Node's ``cluster`` module
 
@@ -77,7 +77,7 @@ Properties
 
     .. attribute:: dbs
 
-       :type: :class:`~Object.<string, Object>`
+       :type: Object.<string, Object>
        :required:
 
        The connection objects for :attr:`~carbond.Service.dbUri`. The keys for this object will mirror those in :attr:`~carbond.Service.dbUri`, while the values will be the connection objects themselves.
@@ -93,7 +93,7 @@ Properties
 
     .. attribute:: dbUris
 
-       :type: :class:`~Object.<string, string>`
+       :type: Object.<string, string>
        :required:
 
        Database URIs to connect to at startup (currently restricted to MongoDB)
@@ -154,7 +154,7 @@ Properties
        :type: function()[]
        :default: ``[]``
 
-       Middleware that will be invoked in the event that an error is thrown. Errorhandling middleware function signatures should conform to ``fn(err, req, res, next)``.
+       Middleware that will be invoked in the event that an error is thrown. Error-handling middleware function signatures should conform to ``fn(err, req, res, next)``.
 
 
     .. attribute:: errors
@@ -162,7 +162,7 @@ Properties
        :type: Object
        :default: ``HttpErrors``
 
-       A shortcut reference to the ``@carbonio/httperrors`` module to be accessed using the service reference available throughout the ``carbond`` component hierarchy
+       A shortcut reference to the ``@carbon-io/http-errors`` module to be accessed using the service reference available throughout the ``carbond`` component hierarchy
 
 
     .. attribute:: fiberPoolSize
@@ -176,7 +176,7 @@ Properties
     .. attribute:: generateOptionsMethodsInDocs
 
        :type: boolean
-       :default: undefined
+       :default: false
 
        Whether or not to include OPTIONS methods in static documentation
 
@@ -199,7 +199,7 @@ Properties
 
     .. attribute:: logger
 
-       :type: :class:`~logging.Logger`
+       :type: logging.Logger
        :default: ``{...}``
 
        The logger instance used by service log methods (e.g. undefined)
@@ -255,7 +255,7 @@ Properties
 
     .. attribute:: publicDirectories
 
-       :type: :class:`~Object.<string, string>`
+       :type: Object.<string, string>
        :default: ``{}``
 
        Directories with static assets that should be exposed by the service. Keys are the URL paths under which these static assests should be served while values are the local filesystem paths at which the assets exist.
@@ -271,7 +271,7 @@ Properties
 
     .. attribute:: signalHandler
 
-       :type: :class:`~Object.<string, function()>`
+       :type: Object.<string, function()>
        :default: ``{...}``
 
        An object whose keys are signal names (e.g., "SIGINT") and whose values are functions invoked to handle the signal(s) corresponding to their aforementioned keys. Note, keys here can be a string of signal names delineated by spaces (e.g. "SIGINT SIGHUP"). In this case, the corresponding function will be called for any of the signals named in the key.

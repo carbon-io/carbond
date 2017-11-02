@@ -10,7 +10,7 @@ carbond.collections.Collection
 ==============================
 *extends* :class:`~carbond.Endpoint`
 
-Provides a highlevel abstraction for defining Endpoints that behave like a RESTful collection of resources
+Provides a high-level abstraction for defining Endpoints that behave like a RESTful collection of resources
 
 Properties
 ----------

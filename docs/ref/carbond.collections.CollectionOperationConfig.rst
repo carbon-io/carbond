@@ -20,7 +20,7 @@ Properties
 
     .. attribute:: additionalOptions
 
-       :type: :class:`~object.<string, \*>`
+       :type: object.<string, \*>
        :required:
 
        Any additional options that should be added to options passed down to a handler.
@@ -28,7 +28,7 @@ Properties
 
     .. attribute:: additionalParameters
 
-       :type: :class:`~object.<string, carbond.OperationParameter>`
+       :type: object.<string, carbond.OperationParameter>
        :required:
 
        Any additional parameters that should be added to the collection parameters. These can override parameters configured via the :class:`~carbond.collections.CollectionOperationConfig.parameters`. Note, these will all end up being passed down to operation handlers via the "options" parameter.
@@ -37,7 +37,7 @@ Properties
     .. attribute:: allowUnauthenticated
 
        :type: boolean
-       :default: undefined
+       :default: false
 
        Allow unauthenticated requests to the operation
 
@@ -71,14 +71,14 @@ Properties
     .. attribute:: noDocument
 
        :type: boolean
-       :default: undefined
+       :default: false
 
        Exclude the operation from "docgen" API documentation
 
 
     .. attribute:: parameters
 
-       :type: :class:`~object.<string, carbond.OperationParameter>`
+       :type: object.<string, carbond.OperationParameter>
        :required:
        :ro:
 

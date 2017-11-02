@@ -18,7 +18,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: description
+    .. attribute:: carbond.Operation.description
 
        :type: string
        :default: undefined
@@ -45,7 +45,7 @@ Properties
 
     .. attribute:: parameters
 
-       :type: :class:`~Object.<string, carbond.OperationParameter>`
+       :type: Object.<string, carbond.OperationParameter>
        :default: ``{}``
 
        Any parameters that are specific to this operation (as opposed to those defined on the parent endpoint)
@@ -53,7 +53,7 @@ Properties
 
     .. attribute:: responses
 
-       :type: :class:`~Object.<string, carbond.OperationResponse>`
+       :type: Object.<string, carbond.OperationResponse>
        :default: ``{}``
 
        Response definitions for this operation. These will be used for validation purposes as well as generated static documentation.
@@ -76,14 +76,14 @@ Methods
 
     .. function:: getAllParameters()
 
-        :rtype: :class:`~Object.<string, carbond.OperationParameter>`
+        :rtype: Object.<string, carbond.OperationParameter>
 
         Gets all parameters defined for this :class:`~carbond.Operation` which includes all parameters inherited from this.endpoint
 
     .. function:: getSanitizedURL(req)
 
         :param req: the current request
-        :type req: :class:`~http.ClientRequest`
+        :type req: http.ClientRequest
         :rtype: string
 
         Returns a new URL with the query string portion removed

@@ -194,7 +194,7 @@ organized. :js:class:`~carbond.mongodb.MongoDBCollection`, for example, does
 implement queries for the ``find``, ``update``, and ``remove`` operations, as
 you would expect. To implement queryability in a custom collection,
 an additional parameter can be added for the specific operation using
-:js:prop:`~carbond.collections.CollectionOperationConfig.additionalParameters`
+:js:attr:`~carbond.collections.CollectionOperationConfig.additionalParameters`
 (see :ref:`collection-configuration`). This will be passed down to the handler
 via the ``options`` parameter.
 

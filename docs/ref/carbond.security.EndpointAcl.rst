@@ -30,7 +30,7 @@ Properties
     .. attribute:: selfAndBelow
 
        :type: boolean
-       :default: undefined
+       :default: false
 
        xxx
 

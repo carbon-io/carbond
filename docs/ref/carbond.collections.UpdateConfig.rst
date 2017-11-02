@@ -29,7 +29,7 @@ Properties
 
     .. attribute:: parameters
 
-       :type: :class:`~object.<string, carbond.OperationParameter>`
+       :type: object.<string, carbond.OperationParameter>
        :required:
 
        The update parameter definition
@@ -46,7 +46,7 @@ Properties
     .. attribute:: returnsUpsertedObjects
 
        :type: boolean
-       :default: undefined
+       :default: false
 
        Whether or not the HTTP layer returns objects created via an upsert
 
@@ -54,7 +54,7 @@ Properties
     .. attribute:: supportsUpsert
 
        :type: boolean
-       :default: undefined
+       :default: false
 
        Whether of not the client is allowed to create objects in the collection using the PATCH method
 
@@ -69,7 +69,7 @@ Properties
 
     .. attribute:: upsertParameter
 
-       :type: :class:`~object.<string, carbond.OperationParameter>`
+       :type: object.<string, carbond.OperationParameter>
        :required:
 
        The "upsert" parameter definition

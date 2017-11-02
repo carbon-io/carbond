@@ -45,7 +45,7 @@ Properties
 
     .. attribute:: paginationParameters
 
-       :type: :class:`~object.<string, carbond.OperationParameter>`
+       :type: object.<string, carbond.OperationParameter>
        :required:
 
        The "page" parameter definition
@@ -61,7 +61,7 @@ Properties
 
     .. attribute:: skipAndLimitParameters
 
-       :type: :class:`~object.<string, carbond.OperationParameter>`
+       :type: object.<string, carbond.OperationParameter>
        :required:
 
        The "limit" parameter definition

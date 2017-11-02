@@ -22,7 +22,7 @@ Properties
     .. attribute:: generateStrings
 
        :type: boolean
-       :default: undefined
+       :default: false
 
        Whether or not to return a ``string`` representation of the :class:`~ejson.types.ObjectId`
 
@@ -34,7 +34,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: generateId()
+    .. function:: carbond.ObjectIdGenerator.generateId()
 
         :overrides: :attr:`~carbond.IdGenerator.generateId`
         :rtype: :class:`~ejson.types.ObjectId` | string

@@ -77,7 +77,7 @@ Properties
     .. attribute:: rejectUnauthorized
 
        :type: boolean
-       :default: undefined
+       :default: false
 
        Reject connections whose client certificate is not authorized by any of the CAs. This is only applicable if :class:`~carbond.SslOptions.requestCert` is ``true``.
 
@@ -85,7 +85,7 @@ Properties
     .. attribute:: requestCert
 
        :type: boolean
-       :default: undefined
+       :default: false
 
        Whether of not to request and verify the client's certificate
 
@@ -119,7 +119,7 @@ Properties
        :type: string
        :default: undefined
 
-       A string containing an opaque identifier for session resumption. If requestCert is true, the default is a 128 bit truncated SHA1 hash value generated from the commandline. Otherwise, a default is not provided.
+       A string containing an opaque identifier for session resumption. If requestCert is true, the default is a 128 bit truncated SHA1 hash value generated from the command-line. Otherwise, a default is not provided.
 
 
     .. attribute:: sessionTimeout
@@ -143,7 +143,7 @@ Properties
        :type: Buffer
        :default: undefined
 
-       A 48 byte ``Buffer`` instance with a 16byte prefix, a 16byte HMAC key, and a 16byte AES key. This can be used to accept TLS session tickets on multiple instances of the TLS server.
+       A 48 byte ``Buffer`` instance with a 16-byte prefix, a 16-byte HMAC key, and a 16-byte AES key. This can be used to accept TLS session tickets on multiple instances of the TLS server.
 
 
     .. attribute:: trustedCertsPaths

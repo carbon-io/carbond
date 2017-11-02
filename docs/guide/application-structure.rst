@@ -1,3 +1,5 @@
+.. _carbond-application-structure:
+
 =====================
 Application structure
 =====================
@@ -100,6 +102,6 @@ follows:
     :language: sh 
 
 For more details on running ``carbond`` ``Service``\s see the documentation on
-:ref:`running services from the command line <running Services from
-the command line>`.
+:ref:`running services from the command line 
+<carbond-running-services-from-the-command-line>`.
 

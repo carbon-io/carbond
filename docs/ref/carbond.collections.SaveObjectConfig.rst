@@ -29,7 +29,7 @@ Properties
 
     .. attribute:: parameters
 
-       :type: :class:`~object.<string, carbond.OperationParameter>`
+       :type: object.<string, carbond.OperationParameter>
        :required:
 
        The object parameter definition

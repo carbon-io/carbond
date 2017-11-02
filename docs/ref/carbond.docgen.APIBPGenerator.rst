@@ -10,7 +10,7 @@ carbond.docgen.APIBPGenerator
 =============================
 *extends* :class:`~carbond.docgen.StaticDocumentationGenerator`
 
-Generates apiblueprint style static documentation
+Generates api-blueprint style static documentation
 
 Methods
 -------
@@ -23,7 +23,7 @@ Methods
 
         :rtype: string
 
-        Generates apiblueprint text
+        Generates api-blueprint text
 
     .. function:: generateDocs(docsPath, options)
 
@@ -33,4 +33,4 @@ Methods
         :type options: list
         :rtype: int
 
-        Generates apiblueprint docs and writes them to standard out or a file
+        Generates api-blueprint docs and writes them to standard out or a file

@@ -54,7 +54,7 @@ Properties
     .. attribute:: required
 
        :type: boolean
-       :default: undefined
+       :default: false
 
        Flag determining whether the parameter is required
 

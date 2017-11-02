@@ -21,7 +21,7 @@ Properties
 
     .. attribute:: driverOptions
 
-       :type: :class:`~object.<string, \*>`
+       :type: object.<string, \*>
        :required:
 
        Options to be passed to the mongodb driver (XXX: link to leafnode docs)
@@ -29,7 +29,7 @@ Properties
 
     .. attribute:: parameters
 
-       :type: :class:`~object.<string, carbond.OperationParameter>`
+       :type: object.<string, carbond.OperationParameter>
        :required:
 
        The "projection" parameter definition
@@ -46,7 +46,7 @@ Properties
 
     .. attribute:: queryParameter
 
-       :type: :class:`~object.<string, carbond.OperationParameter>`
+       :type: object.<string, carbond.OperationParameter>
        :required:
 
        The "query" parameter definition

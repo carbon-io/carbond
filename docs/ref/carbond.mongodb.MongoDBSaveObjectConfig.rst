@@ -21,7 +21,7 @@ Properties
 
     .. attribute:: driverOptions
 
-       :type: :class:`~object.<string, \*>`
+       :type: object.<string, \*>
        :required:
 
        Options to be passed to the mongodb driver (XXX: link to leafnode docs)

@@ -30,7 +30,7 @@ Properties
     .. attribute:: apiKeyParameterName
 
        :type: string
-       :default: ``ApiKey``
+       :default: ``Api-Key``
 
        The name of the API key parameter
 
