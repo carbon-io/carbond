@@ -19,7 +19,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: hash(data)
+    .. function:: carbond.security.NoopHasher.hash(data)
 
         :param data: the data to "hash"
         :type data: string

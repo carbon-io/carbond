@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: example
+    .. attribute:: carbond.collections.SaveConfig.example
 
        :type: object
        :default: undefined
@@ -27,7 +27,7 @@ Properties
        An example response body used for documentation
 
 
-    .. attribute:: parameters
+    .. attribute:: carbond.collections.SaveConfig.parameters
 
        :type: object.<string, carbond.OperationParameter>
        :required:
@@ -43,7 +43,7 @@ Properties
 
 
 
-    .. attribute:: returnsSavedObjects
+    .. attribute:: carbond.collections.SaveConfig.returnsSavedObjects
 
        :type: boolean
        :default: ``true``
@@ -51,7 +51,7 @@ Properties
        Whether or not the HTTP layer returns the objects saved in the response
 
 
-    .. attribute:: saveSchema
+    .. attribute:: carbond.collections.SaveConfig.saveSchema
 
        :type: object
        :default: undefined

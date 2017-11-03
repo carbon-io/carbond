@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: generateStrings
+    .. attribute:: carbond.ObjectIdGenerator.generateStrings
 
        :type: boolean
        :default: false

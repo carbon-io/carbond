@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: driverOptions
+    .. attribute:: carbond.mongodb.MongoDBRemoveObjectConfig.driverOptions
 
        :type: object.<string, \*>
        :required:

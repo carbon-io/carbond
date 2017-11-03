@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: passwordField
+    .. attribute:: carbond.security.HttpBasicAuthenticator.passwordField
 
        :type: string
        :required:
@@ -27,7 +27,7 @@ Properties
        Name of the field that contains the password in the database.
 
 
-    .. attribute:: passwordHashFn
+    .. attribute:: carbond.security.HttpBasicAuthenticator.passwordHashFn
 
        :type: string | function
        :default: ``noop``
@@ -35,7 +35,7 @@ Properties
        Either a string representing a :class:`~carbond.security.Hasher` (possible values are *noop*, *sha256*, and *bcrypt*), an instance of :class:`~carbond.security.Hasher` or a constructor function for a :class:`~carbond.security.Hasher`.
 
 
-    .. attribute:: usernameField
+    .. attribute:: carbond.security.HttpBasicAuthenticator.usernameField
 
        :type: string
        :required:
@@ -50,7 +50,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: authenticate(req)
+    .. function:: carbond.security.HttpBasicAuthenticator.authenticate(req)
 
         :param req: The current request
         :type req: Request
@@ -59,7 +59,7 @@ Methods
 
         Authenticates a request using HTTP Baisc. Returns a user object that matches the username and password sent with the request. If no user matching the username and password is found, throws a 401 Unauthorized error.
 
-    .. function:: findUser(username)
+    .. function:: carbond.security.HttpBasicAuthenticator.findUser(username)
 
         :param username: The username sent by the client.
         :type username: string
@@ -67,7 +67,7 @@ Methods
 
         Find a user matching a username. Must be implemented by subcalsses.
 
-    .. function:: validateCreds(username, password)
+    .. function:: carbond.security.HttpBasicAuthenticator.validateCreds(username, password)
 
         :param username: username from the HTTP request
         :type username: string

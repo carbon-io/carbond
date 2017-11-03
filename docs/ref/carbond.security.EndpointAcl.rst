@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: permissionDefinitions
+    .. attribute:: carbond.security.EndpointAcl.permissionDefinitions
 
        :type: object
        :required:
@@ -27,7 +27,7 @@ Properties
        mapping of permissions to defaults
 
 
-    .. attribute:: selfAndBelow
+    .. attribute:: carbond.security.EndpointAcl.selfAndBelow
 
        :type: boolean
        :default: false

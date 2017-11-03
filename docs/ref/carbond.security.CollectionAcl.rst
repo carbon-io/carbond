@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: permissionDefinitions
+    .. attribute:: carbond.security.CollectionAcl.permissionDefinitions
 
        :type: object
        :required:
@@ -34,7 +34,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: hasPermission(user, permission, env)
+    .. function:: carbond.security.CollectionAcl.hasPermission(user, permission, env)
 
         :param user: xxx
         :type user: xxx

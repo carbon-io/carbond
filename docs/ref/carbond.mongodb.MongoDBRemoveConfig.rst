@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: driverOptions
+    .. attribute:: carbond.mongodb.MongoDBRemoveConfig.driverOptions
 
        :type: object.<string, \*>
        :required:
@@ -27,7 +27,7 @@ Properties
        Options to be passed to the mongodb driver (XXX: link to leafnode docs)
 
 
-    .. attribute:: queryParameter
+    .. attribute:: carbond.mongodb.MongoDBRemoveConfig.queryParameter
 
        :type: object.<string, carbond.OperationParameter>
        :required:
@@ -43,7 +43,7 @@ Properties
 
 
 
-    .. attribute:: supportsQuery
+    .. attribute:: carbond.mongodb.MongoDBRemoveConfig.supportsQuery
 
        :type: boolean
        :default: ``true``

@@ -19,13 +19,13 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: generateBlueprint()
+    .. function:: carbond.docgen.APIBPGenerator.generateBlueprint()
 
         :rtype: string
 
         Generates api-blueprint text
 
-    .. function:: generateDocs(docsPath, options)
+    .. function:: carbond.docgen.APIBPGenerator.generateDocs(docsPath, options)
 
         :param docsPath: The path to write docs to
         :type docsPath: string

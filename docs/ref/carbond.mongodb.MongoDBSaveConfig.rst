@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: driverOptions
+    .. attribute:: carbond.mongodb.MongoDBSaveConfig.driverOptions
 
        :type: object.<string, \*>
        :required:

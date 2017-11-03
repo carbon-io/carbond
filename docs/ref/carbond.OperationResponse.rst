@@ -18,7 +18,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: description
+    .. attribute:: carbond.OperationResponse.description
 
        :type: string
        :required:
@@ -26,7 +26,7 @@ Properties
        A brief description of the response that will be included generated static documentation
 
 
-    .. attribute:: schema
+    .. attribute:: carbond.OperationResponse.schema
 
        :type: Object
        :required:
@@ -34,7 +34,7 @@ Properties
        A valid JSON schema that describes HTTP response body. This will be used to validate responses returned by operations.
 
 
-    .. attribute:: statusCode
+    .. attribute:: carbond.OperationResponse.statusCode
 
        :type: number
        :default: ``200``

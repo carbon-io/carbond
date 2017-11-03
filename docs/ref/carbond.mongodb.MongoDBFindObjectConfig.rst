@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: driverOptions
+    .. attribute:: carbond.mongodb.MongoDBFindObjectConfig.driverOptions
 
        :type: object.<string, \*>
        :required:
@@ -27,7 +27,7 @@ Properties
        Options to be passed to the mongodb driver (XXX: link to leafnode docs)
 
 
-    .. attribute:: parameters
+    .. attribute:: carbond.mongodb.MongoDBFindObjectConfig.parameters
 
        :type: object.<string, carbond.OperationParameter>
        :required:

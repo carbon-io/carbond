@@ -18,7 +18,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: eq(data, digest)
+    .. function:: carbond.security.Hasher.eq(data, digest)
 
         :param data: the data in its raw form
         :type data: string
@@ -28,7 +28,7 @@ Methods
 
         Compares data against a digest
 
-    .. function:: getHasher(name)
+    .. function:: carbond.security.Hasher.getHasher(name)
 
         :param name: the name of a hasher. Supported hashers are *noop*, *sha256*, and *bcrypt*.
         :type name: string
@@ -36,13 +36,13 @@ Methods
 
         Get a hasher class by name.
 
-    .. function:: getHasherNames()
+    .. function:: carbond.security.Hasher.getHasherNames()
 
         :rtype: string[]
 
         Get the names of all registered hashers.
 
-    .. function:: hash(data)
+    .. function:: carbond.security.Hasher.hash(data)
 
         :param data: the data to hash
         :type data: string

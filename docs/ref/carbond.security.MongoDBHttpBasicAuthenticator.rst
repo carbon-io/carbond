@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: dbName
+    .. attribute:: carbond.security.MongoDBHttpBasicAuthenticator.dbName
 
        :type: string
        :required:
@@ -27,7 +27,7 @@ Properties
        The name of the database to use if there are multiple databases on the parent Service (in :attr:`~carbond.service.dbs`)
 
 
-    .. attribute:: userCollection
+    .. attribute:: carbond.security.MongoDBHttpBasicAuthenticator.userCollection
 
        :type: string
        :required:
@@ -42,7 +42,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: findUser(username)
+    .. function:: carbond.security.MongoDBHttpBasicAuthenticator.findUser(username)
 
         :param username: The username sent by the client.
         :type username: string

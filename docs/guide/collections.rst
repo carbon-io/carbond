@@ -298,7 +298,7 @@ were upserted, then the behavior is the same as the previous two scenarios
 (e.g., the number of updated documents should be returned and ``created`` should
 be omitted or set to ``false``).
 
-Note, see :ref:`queryability-for-custom-collections` to understand why the
+Note, see :ref:`here <queryability-for-custom-collections>` to understand why the
 ability to query a set of documents is not explicitly supported by the
 ``update`` operation.
 
@@ -329,7 +329,7 @@ If not, as is the case with MongoDB, the number of objects removed should be ret
     :start-after: pre-remove-mongoCounterBasic
     :end-before: post-remove-mongoCounterBasic
 
-Note, see :ref:`queryability-for-custom-collections` to understand why the
+Note, see :ref:`here <queryability-for-custom-collections>` to understand why the
 ability to query a set of documents is not explicitly supported by the
 ``remove`` operation.
 
@@ -434,7 +434,7 @@ Similar to :js:func:`~carbond.collections.Collection.update`, the
 the "upserted" document with all the same return value caveats. Additionally,
 one should keep in mind that the ``update`` spec is free form and has no
 specific semantics defined by :js:class:`~carbond.collections.Collection` itself
-(see :ref:`update-spec-free-form`).
+(see :ref:`here <update-spec-free-form>` for an explanation).
 
 .. literalinclude:: ../code-frags/counter-col/lib/CounterCol.js
     :language: javascript

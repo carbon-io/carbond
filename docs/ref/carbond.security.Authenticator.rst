@@ -18,7 +18,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: authenticate(req)
+    .. function:: carbond.security.Authenticator.authenticate(req)
 
         :param req: The current request
         :type req: :class:`~carbond.Request`
@@ -28,19 +28,19 @@ Methods
 
         Authenticates the user for a request. Should be implemented by subclasses, for example: :class:`~carbond.security.MongoDBHttpBasicAuthenticator`.
 
-    .. function:: getAuthenticationHeaders()
+    .. function:: carbond.security.Authenticator.getAuthenticationHeaders()
 
         :rtype: string[]
 
         Gets the names of the request headers where authentication details can be found. Should be implemented by subclasses, for example: :attr:`~carbond.security.ApiKeyAuthenticator`
 
-    .. function:: getService()
+    .. function:: carbond.security.Authenticator.getService()
 
         :rtype: :class:`~carbond.Service`
 
         A getter for the parent Service
 
-    .. function:: initialize(service)
+    .. function:: carbond.security.Authenticator.initialize(service)
 
         :param service: The parent Service
         :type service: :class:`~carbond.Service`
@@ -48,7 +48,7 @@ Methods
 
         Initializes the authenticator. Called by :class:`~carbond.Service.start` on the parent Service and sets `this.service` to the parent Service.
 
-    .. function:: isRootUser(user)
+    .. function:: carbond.security.Authenticator.isRootUser(user)
 
         :param user: An object representing a user
         :type user: Object
@@ -56,7 +56,7 @@ Methods
 
         Checks if a user is root.
 
-    .. function:: throwUnauthenticated(msg)
+    .. function:: carbond.security.Authenticator.throwUnauthenticated(msg)
 
         :param msg: The message returned with the 401 error.
         :type msg: string

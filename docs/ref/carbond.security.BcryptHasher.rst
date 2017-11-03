@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: rounds
+    .. attribute:: carbond.security.BcryptHasher.rounds
 
        :type: integer
        :default: ``10``
@@ -34,7 +34,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: eq(data, digest)
+    .. function:: carbond.security.BcryptHasher.eq(data, digest)
 
         :param data: the data in its raw form
         :type data: string
@@ -44,7 +44,7 @@ Methods
 
         Compares data against a bcrypt digest
 
-    .. function:: hash(data)
+    .. function:: carbond.security.BcryptHasher.hash(data)
 
         :param data: the data to hash
         :type data: string

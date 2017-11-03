@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: example
+    .. attribute:: carbond.collections.InsertConfig.example
 
        :type: object
        :default: undefined
@@ -27,7 +27,7 @@ Properties
        An example response body (201) used for documentation
 
 
-    .. attribute:: insertSchema
+    .. attribute:: carbond.collections.InsertConfig.insertSchema
 
        :type: object
        :default: undefined
@@ -35,7 +35,7 @@ Properties
        The schema used to validate the request body. If this is undefined, the collection level schema (adapted for arrays) will be used.
 
 
-    .. attribute:: parameters
+    .. attribute:: carbond.collections.InsertConfig.parameters
 
        :type: object.<string, carbond.OperationParameter>
        :required:
@@ -51,7 +51,7 @@ Properties
 
 
 
-    .. attribute:: returnsInsertedObjects
+    .. attribute:: carbond.collections.InsertConfig.returnsInsertedObjects
 
        :type: boolean
        :default: ``true``

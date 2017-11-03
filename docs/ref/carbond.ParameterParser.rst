@@ -18,7 +18,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: parseParameterValue(datum, definition)
+    .. function:: carbond.ParameterParser.parseParameterValue(datum, definition)
 
         :param datum: The parameter representation as plucked from the current request
         :type datum: Object | string
@@ -28,7 +28,7 @@ Methods
 
         Parse a single parameter
 
-    .. function:: processParameter(req, definition)
+    .. function:: carbond.ParameterParser.processParameter(req, definition)
 
         :param req: The current request
         :type req: :class:`~carbond.Request`
@@ -38,7 +38,7 @@ Methods
 
         Parse a single parameter on the current request as defined by the "definition" parameter
 
-    .. function:: processParameters(req, definitions)
+    .. function:: carbond.ParameterParser.processParameters(req, definitions)
 
         :param req: The current request
         :type req: :class:`~carbond.Request`
@@ -48,7 +48,7 @@ Methods
 
         Parse all parameters on the current request that are included in the :class:`~carbond.OperationParameter` definitions list
 
-    .. function:: processParameterValue(datum, definition)
+    .. function:: carbond.ParameterParser.processParameterValue(datum, definition)
 
         :param datum: The parameter representation as plucked from the current request
         :type datum: Object | string

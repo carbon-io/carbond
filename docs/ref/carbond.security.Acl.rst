@@ -18,7 +18,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: entries
+    .. attribute:: carbond.security.Acl.entries
 
        :type: :class:`~carbond.security.AclEntry[]`
        :default: ``[]``
@@ -26,7 +26,7 @@ Properties
        description An array of ACL descriptors. Each descriptor provides the mechanism to match against a user object by ID or group membership and determine the whether or not a request is allowed for the user and operation using some predicate.
 
 
-    .. attribute:: groupDefinitions
+    .. attribute:: carbond.security.Acl.groupDefinitions
 
        :type: Object.<string, (function()|string)>
        :default: ``{}``
@@ -34,7 +34,7 @@ Properties
        This is mapping of group names to "extractors". An extractor can be a function or a string. If it is a function, it should take a user object as its sole argument and return the group name as a string. Otherwise, it should be a string in property path notation (e.g., "foo.bar.baz").
 
 
-    .. attribute:: permissionDefinitions
+    .. attribute:: carbond.security.Acl.permissionDefinitions
 
        :type: Object.<string, (boolean|function())>
        :default: ``{}``
@@ -49,7 +49,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: and(acl)
+    .. function:: carbond.security.Acl.and(acl)
 
         :param acl: The second ACL
         :type acl: :class:`~carbond.security.Acl`
@@ -57,7 +57,7 @@ Methods
 
         Generates an ACL that is the logical conjunction of this ACL and a second ACL
 
-    .. function:: hasPermission(user, permission, env)
+    .. function:: carbond.security.Acl.hasPermission(user, permission, env)
 
         :param user: A user object
         :type user: Object
@@ -70,7 +70,7 @@ Methods
 
         Determines whether the current request is allowed based on the current user (as returned by :class:`~carbond.security.Authenticator.authenticate`) and operation
 
-    .. function:: or(acl)
+    .. function:: carbond.security.Acl.or(acl)
 
         :param acl: The second ACL
         :type acl: :class:`~carbond.security.Acl`

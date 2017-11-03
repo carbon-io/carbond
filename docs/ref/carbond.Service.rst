@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: adminRoot
+    .. attribute:: carbond.Service.adminRoot
 
        :type: string
        :default: ``'/service-admin'``
@@ -27,7 +27,7 @@ Properties
        The "administrative" root URL path component (this is only enabled if the "swagger" command line option is present)
 
 
-    .. attribute:: apiRoot
+    .. attribute:: carbond.Service.apiRoot
 
        :type: string
        :default: undefined
@@ -35,7 +35,7 @@ Properties
        The root component of the URL path component. This will be prepended to any routes that are yielded by the :class:`~carbond.Endpoint` tree.
 
 
-    .. attribute:: authenticator
+    .. attribute:: carbond.Service.authenticator
 
        :type: :class:`~carbond.security.Authenticator`
        :default: undefined
@@ -43,7 +43,7 @@ Properties
        The root authenticator. If present, all requests will be passed through the authenticator resulting in a 401 if authentication fails.
 
 
-    .. attribute:: cluster
+    .. attribute:: carbond.Service.cluster
 
        :type: boolean
        :default: false
@@ -51,7 +51,7 @@ Properties
        Whether or not to use Node's ``cluster`` module
 
 
-    .. attribute:: cmdargs
+    .. attribute:: carbond.Service.cmdargs
 
        :type: Object
        :default: ``{}``
@@ -59,7 +59,7 @@ Properties
        Additional command line argument definitions (will be merged into :class:`~carbond.Service.defaultCmdargs`)
 
 
-    .. attribute:: corsEnabled
+    .. attribute:: carbond.Service.corsEnabled
 
        :type: boolean
        :default: ``true``
@@ -67,7 +67,7 @@ Properties
        Flag determining whether CORS is enabled
 
 
-    .. attribute:: db
+    .. attribute:: carbond.Service.db
 
        :type: Object
        :required:
@@ -75,7 +75,7 @@ Properties
        The connection object for :attr:`~carbond.Service.dbUri`
 
 
-    .. attribute:: dbs
+    .. attribute:: carbond.Service.dbs
 
        :type: Object.<string, Object>
        :required:
@@ -83,7 +83,7 @@ Properties
        The connection objects for :attr:`~carbond.Service.dbUri`. The keys for this object will mirror those in :attr:`~carbond.Service.dbUri`, while the values will be the connection objects themselves.
 
 
-    .. attribute:: dbUri
+    .. attribute:: carbond.Service.dbUri
 
        :type: string
        :required:
@@ -91,7 +91,7 @@ Properties
        The database URI to connect to at startup (currently restricted to MongoDB)
 
 
-    .. attribute:: dbUris
+    .. attribute:: carbond.Service.dbUris
 
        :type: Object.<string, string>
        :required:
@@ -99,7 +99,7 @@ Properties
        Database URIs to connect to at startup (currently restricted to MongoDB)
 
 
-    .. attribute:: defaultCmdargs
+    .. attribute:: carbond.Service.defaultCmdargs
 
        :type: Object
        :default: ``{...}``
@@ -107,7 +107,7 @@ Properties
        The default command line arguments definition. :class:`~carbond.Service#cmdargs` can be used to extend the default set of command line arguments.
 
 
-    .. attribute:: defaultDocgenOptions
+    .. attribute:: carbond.Service.defaultDocgenOptions
 
        :type: Object
        :default: ``{...}``
@@ -125,7 +125,7 @@ Properties
 
 
 
-    .. attribute:: description
+    .. attribute:: carbond.Service.description
 
        :type: string
        :default: ``'This is a Service'``
@@ -133,7 +133,7 @@ Properties
        A short description of this service
 
 
-    .. attribute:: endpoints
+    .. attribute:: carbond.Service.endpoints
 
        :type: Object
        :default: ``{}``
@@ -141,7 +141,7 @@ Properties
        The endpoint tree. Note, keys in the endpoint tree will be used to construct routes to the various :class:`~carbond.Operation`s servicing requests for an individual :class:`~carbond.Endpoint`.
 
 
-    .. attribute:: env
+    .. attribute:: carbond.Service.env
 
        :type: string
        :required:
@@ -149,7 +149,7 @@ Properties
        carbond.DEFAULT_ENV}
 
 
-    .. attribute:: errorHandlingMiddleware
+    .. attribute:: carbond.Service.errorHandlingMiddleware
 
        :type: function()[]
        :default: ``[]``
@@ -157,7 +157,7 @@ Properties
        Middleware that will be invoked in the event that an error is thrown. Error-handling middleware function signatures should conform to ``fn(err, req, res, next)``.
 
 
-    .. attribute:: errors
+    .. attribute:: carbond.Service.errors
 
        :type: Object
        :default: ``HttpErrors``
@@ -165,7 +165,7 @@ Properties
        A shortcut reference to the ``@carbon-io/http-errors`` module to be accessed using the service reference available throughout the ``carbond`` component hierarchy
 
 
-    .. attribute:: fiberPoolSize
+    .. attribute:: carbond.Service.fiberPoolSize
 
        :type: number
        :default: ``120``
@@ -173,7 +173,7 @@ Properties
        Sets the pool size for the underlying ``fibers`` module. Note, a new fiber will be created and destroyed for every fiber created beyond the pool size. If this occurs regularly, it can lead to significant performance degradation. While the default should usually suffice, this parameter should be tuned according to the expected number of concurrent requests.
 
 
-    .. attribute:: generateOptionsMethodsInDocs
+    .. attribute:: carbond.Service.generateOptionsMethodsInDocs
 
        :type: boolean
        :default: false
@@ -181,7 +181,7 @@ Properties
        Whether or not to include OPTIONS methods in static documentation
 
 
-    .. attribute:: gracefulShutdown
+    .. attribute:: carbond.Service.gracefulShutdown
 
        :type: boolean
        :default: ``true``
@@ -189,7 +189,7 @@ Properties
        Whether or not the service should gracefully shutdown when a stop is requested (i.e., whether or not open sockets should be allowed to timeout or severed immediately). The default for this is computed using :attr:`~carbond.DEFAULT_ENV` (e.g., ``DEFAULT_ENV === 'production'``).
 
 
-    .. attribute:: hostname
+    .. attribute:: carbond.Service.hostname
 
        :type: string
        :default: ``'127.0.0.1'``
@@ -197,7 +197,7 @@ Properties
        The address that this service should listen on
 
 
-    .. attribute:: logger
+    .. attribute:: carbond.Service.logger
 
        :type: logging.Logger
        :default: ``{...}``
@@ -205,7 +205,7 @@ Properties
        The logger instance used by service log methods (e.g. undefined)
 
 
-    .. attribute:: middleware
+    .. attribute:: carbond.Service.middleware
 
        :type: function()[]
        :default: ``[]``
@@ -213,7 +213,7 @@ Properties
        Middleware functions that will be executed via express before control is passed on to any :class:`~carbond.Operation`. Middleware function signatures should conform to ``fn(req, res, next)``.
 
 
-    .. attribute:: numClusterWorkers
+    .. attribute:: carbond.Service.numClusterWorkers
 
        :type: number
        :default: undefined
@@ -221,7 +221,7 @@ Properties
        The number of cluster workers to start. If left ``undefined`` or set to ``0``, it will be set to the number of CPUs present.
 
 
-    .. attribute:: parameterParser
+    .. attribute:: carbond.Service.parameterParser
 
        :type: :class:`~carbond.ParameterParser`
        :default: ``o({_type: './ParameterParser'})``
@@ -229,7 +229,7 @@ Properties
        The parameter parser used to parse all incoming request parameters (i.e., query, header, body, and path). In most cases, the default parser should be sufficient.
 
 
-    .. attribute:: path
+    .. attribute:: carbond.Service.path
 
        :type: string
        :default: ``''``
@@ -237,7 +237,7 @@ Properties
        Since :class:`~carbond.Service` is itself an :class:`~carbond.Endpoint`, this can be used to set the URL path component that the service endpoint is accessible at
 
 
-    .. attribute:: port
+    .. attribute:: carbond.Service.port
 
        :type: number
        :default: ``8888``
@@ -245,7 +245,7 @@ Properties
        The port that this service should bind
 
 
-    .. attribute:: processUser
+    .. attribute:: carbond.Service.processUser
 
        :type: string
        :default: undefined
@@ -253,7 +253,7 @@ Properties
        If set, privileges will be dropped and the effective user for the process will be set to this
 
 
-    .. attribute:: publicDirectories
+    .. attribute:: carbond.Service.publicDirectories
 
        :type: Object.<string, string>
        :default: ``{}``
@@ -261,7 +261,7 @@ Properties
        Directories with static assets that should be exposed by the service. Keys are the URL paths under which these static assests should be served while values are the local filesystem paths at which the assets exist.
 
 
-    .. attribute:: serverSocketTimeout
+    .. attribute:: carbond.Service.serverSocketTimeout
 
        :type: number
        :default: undefined
@@ -269,7 +269,7 @@ Properties
        The socket timeout for all incoming connections. Note, the system default is 2 minutes.
 
 
-    .. attribute:: signalHandler
+    .. attribute:: carbond.Service.signalHandler
 
        :type: Object.<string, function()>
        :default: ``{...}``
@@ -277,7 +277,7 @@ Properties
        An object whose keys are signal names (e.g., "SIGINT") and whose values are functions invoked to handle the signal(s) corresponding to their aforementioned keys. Note, keys here can be a string of signal names delineated by spaces (e.g. "SIGINT SIGHUP"). In this case, the corresponding function will be called for any of the signals named in the key.
 
 
-    .. attribute:: sslOptions
+    .. attribute:: carbond.Service.sslOptions
 
        :type: :class:`~carbond.SslOptions`
        :default: ``o({_type: './SslOptions'})``
@@ -292,7 +292,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: doStart(options)
+    .. function:: carbond.Service.doStart(options)
 
         :param options: Parsed command line options
         :type options: Object
@@ -300,49 +300,49 @@ Methods
 
         Performs custom startup operations. This method will be called after initialization (e.g., database connections will be established and the endpoint tree will be built) but before the server's socket is bound. Override this method if your app requires further initialization.
 
-    .. function:: doStop()
+    .. function:: carbond.Service.doStop()
 
         :rtype: undefined
 
         Performs custom teardown operations. This method will be called first in the stop sequence.
 
-    .. function:: logDebug()
+    .. function:: carbond.Service.logDebug()
 
         :rtype: undefined
 
         Log a message at the "debug" level
 
-    .. function:: logError()
+    .. function:: carbond.Service.logError()
 
         :rtype: undefined
 
         Log a message at the "error" level
 
-    .. function:: logFatal()
+    .. function:: carbond.Service.logFatal()
 
         :rtype: undefined
 
         Log a message at the "fatal" level
 
-    .. function:: logInfo()
+    .. function:: carbond.Service.logInfo()
 
         :rtype: undefined
 
         Log a message at the "info" level
 
-    .. function:: logTrace()
+    .. function:: carbond.Service.logTrace()
 
         :rtype: undefined
 
         Log a message at the "trace" level
 
-    .. function:: logWarning()
+    .. function:: carbond.Service.logWarning()
 
         :rtype: undefined
 
         Log a message at the "warn" level
 
-    .. function:: on(event, listener)
+    .. function:: carbond.Service.on(event, listener)
 
         :param event: [choices: "start", "stop"]
         :type event: String
@@ -352,7 +352,7 @@ Methods
 
         Register a service event callback
 
-    .. function:: once(event, listener)
+    .. function:: carbond.Service.once(event, listener)
 
         :param event: the event type [choices: "start", "stop"]
         :type event: String
@@ -362,7 +362,7 @@ Methods
 
         Register a service event callback that executes once
 
-    .. function:: removeAllListeners(event)
+    .. function:: carbond.Service.removeAllListeners(event)
 
         :param event: the event type [choices: "start", "stop"]
         :type event: ...String
@@ -370,7 +370,7 @@ Methods
 
         Remove all listeners. If ``event`` is passed, remove all listeners for that specific event (or events).
 
-    .. function:: removeListener(event, listener)
+    .. function:: carbond.Service.removeListener(event, listener)
 
         :param event: the event type [choices: "start", "stop"]
         :type event: String
@@ -380,7 +380,7 @@ Methods
 
         Remove a specific listener for a particular event.
 
-    .. function:: start(options, cb)
+    .. function:: carbond.Service.start(options, cb)
 
         :param options: Parsed command line options
         :type options: Object
@@ -391,7 +391,7 @@ Methods
 
         Initializes and starts the service
 
-    .. function:: stop(cb)
+    .. function:: carbond.Service.stop(cb)
 
         :param cb: Async callback (this can be omitted if calling from within a Fiber)
         :type cb: function

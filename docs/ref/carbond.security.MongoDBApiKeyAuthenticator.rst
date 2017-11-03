@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: apiKeyField
+    .. attribute:: carbond.security.MongoDBApiKeyAuthenticator.apiKeyField
 
        :type: string
        :required:
@@ -27,7 +27,7 @@ Properties
        The name of the field where the API key can be found on the user documents
 
 
-    .. attribute:: db
+    .. attribute:: carbond.security.MongoDBApiKeyAuthenticator.db
 
        :type: :class:`~leafnode.DB`
        :default: undefined
@@ -35,7 +35,7 @@ Properties
        A getter for the database object on the parent Service. If there are multiple databases, it will return the database defined in :attr:`~carbond.security.MongoDBApiKeyAuthenticator.dbName`
 
 
-    .. attribute:: dbName
+    .. attribute:: carbond.security.MongoDBApiKeyAuthenticator.dbName
 
        :type: string
        :default: undefined
@@ -43,7 +43,7 @@ Properties
        The name of the database to use if there are multiple databases on the parent Service (in :attr:`~carbond.Service.dbs`)
 
 
-    .. attribute:: userCollection
+    .. attribute:: carbond.security.MongoDBApiKeyAuthenticator.userCollection
 
        :type: string
        :required:
@@ -58,7 +58,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: findUser(apiKey)
+    .. function:: carbond.security.MongoDBApiKeyAuthenticator.findUser(apiKey)
 
         :param apiKey: The API key from the request
         :type apiKey: string

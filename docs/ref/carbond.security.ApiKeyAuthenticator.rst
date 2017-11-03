@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: apiKeyLocation
+    .. attribute:: carbond.security.ApiKeyAuthenticator.apiKeyLocation
 
        :type: string
        :default: ``header``
@@ -27,7 +27,7 @@ Properties
        The loaction of the API key, either *header* or *query*.
 
 
-    .. attribute:: apiKeyParameterName
+    .. attribute:: carbond.security.ApiKeyAuthenticator.apiKeyParameterName
 
        :type: string
        :default: ``Api-Key``
@@ -35,7 +35,7 @@ Properties
        The name of the API key parameter
 
 
-    .. attribute:: idGenerator
+    .. attribute:: carbond.security.ApiKeyAuthenticator.idGenerator
 
        :type: :class:`~carbond.IdGenerator`
        :default: :class:`~carbond.UUIDGenerator`
@@ -43,7 +43,7 @@ Properties
        The ID generator to generate API keys.
 
 
-    .. attribute:: maskUserObjectKeys
+    .. attribute:: carbond.security.ApiKeyAuthenticator.maskUserObjectKeys
 
        :type: string[]
        :default: undefined
@@ -58,7 +58,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: authenticate(req)
+    .. function:: carbond.security.ApiKeyAuthenticator.authenticate(req)
 
         :param req: The current request
         :type req: Request
@@ -68,7 +68,7 @@ Methods
 
         Authenticates the current request using an API key. Returns a user object that matches the API Key sent with the request. If no user matching the API key is found, throws a 401 Unauthorized error.
 
-    .. function:: findUser(apiKey)
+    .. function:: carbond.security.ApiKeyAuthenticator.findUser(apiKey)
 
         :param apiKey: The API Key that was sent with this request
         :type apiKey: string
@@ -76,13 +76,13 @@ Methods
 
         An abstract method for finding the user from an API key. Should be implemented by subclasses. For example, :class:`~carbond.security.MongoDBApiKeyAuthenticator`
 
-    .. function:: generateApiKey()
+    .. function:: carbond.security.ApiKeyAuthenticator.generateApiKey()
 
         :rtype: string
 
         Generates a UUID using :attr:`~carbond.security.ApiKeyAuthenticator.idGenerator`
 
-    .. function:: getAuthenticationHeaders()
+    .. function:: carbond.security.ApiKeyAuthenticator.getAuthenticationHeaders()
 
         :rtype: string[]
 

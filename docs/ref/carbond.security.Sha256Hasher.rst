@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: digestType
+    .. attribute:: carbond.security.Sha256Hasher.digestType
 
        :type: string
        :default: ``hex``
@@ -34,7 +34,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: hash(data)
+    .. function:: carbond.security.Sha256Hasher.hash(data)
 
         :param data: the data to hash
         :type data: string

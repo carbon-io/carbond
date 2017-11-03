@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: returnsRemovedObject
+    .. attribute:: carbond.collections.RemoveObjectConfig.returnsRemovedObject
 
        :type: boolean
        :default: false

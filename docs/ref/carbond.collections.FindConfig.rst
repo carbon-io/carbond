@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: idParameterDefinition
+    .. attribute:: carbond.collections.FindConfig.idParameterDefinition
 
        :type: boolean
        :required:
@@ -27,7 +27,7 @@ Properties
        The id parameter definition (will use :class:`~carbond.collections.Collection.idParameter` as name). This will be merged into :class:`~carbond.collections.FindConfig.parameters` if configured to support id queries.
 
 
-    .. attribute:: maxPageSize
+    .. attribute:: carbond.collections.FindConfig.maxPageSize
 
        :type: number
        :required:
@@ -35,7 +35,7 @@ Properties
        If set, then the "limit" parameter will be restricted to min(limit, maxPageSize)
 
 
-    .. attribute:: pageSize
+    .. attribute:: carbond.collections.FindConfig.pageSize
 
        :type: boolean
        :required:
@@ -43,7 +43,7 @@ Properties
        The page size
 
 
-    .. attribute:: paginationParameters
+    .. attribute:: carbond.collections.FindConfig.paginationParameters
 
        :type: object.<string, carbond.OperationParameter>
        :required:
@@ -59,7 +59,7 @@ Properties
 
 
 
-    .. attribute:: skipAndLimitParameters
+    .. attribute:: carbond.collections.FindConfig.skipAndLimitParameters
 
        :type: object.<string, carbond.OperationParameter>
        :required:
@@ -76,7 +76,7 @@ Properties
 
 
 
-    .. attribute:: supportsIdQuery
+    .. attribute:: carbond.collections.FindConfig.supportsIdQuery
 
        :type: boolean
        :required:
@@ -84,7 +84,7 @@ Properties
        Support id queries (id query parameter)
 
 
-    .. attribute:: supportsPagination
+    .. attribute:: carbond.collections.FindConfig.supportsPagination
 
        :type: boolean
        :required:
@@ -92,7 +92,7 @@ Properties
        Support pagination (note, if true, overrides ``supportsPagination``)
 
 
-    .. attribute:: supportsSkipAndLimit
+    .. attribute:: carbond.collections.FindConfig.supportsSkipAndLimit
 
        :type: boolean
        :required:
@@ -107,7 +107,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: addIdQueryParameter()
+    .. function:: carbond.collections.FindConfig.addIdQueryParameter()
 
         :rtype: undefined
 

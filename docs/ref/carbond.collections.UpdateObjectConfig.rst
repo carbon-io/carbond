@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: example
+    .. attribute:: carbond.collections.UpdateObjectConfig.example
 
        :type: object
        :default: undefined
@@ -27,7 +27,7 @@ Properties
        An example response body used for documentation
 
 
-    .. attribute:: parameters
+    .. attribute:: carbond.collections.UpdateObjectConfig.parameters
 
        :type: object.<string, carbond.OperationParameter>
        :required:
@@ -35,7 +35,7 @@ Properties
        Update object operation specific parameters
 
 
-    .. attribute:: returnsUpsertedObject
+    .. attribute:: carbond.collections.UpdateObjectConfig.returnsUpsertedObject
 
        :type: boolean
        :default: false
@@ -43,7 +43,7 @@ Properties
        Whether or not the HTTP layer returns the object created via an upsert
 
 
-    .. attribute:: supportsUpsert
+    .. attribute:: carbond.collections.UpdateObjectConfig.supportsUpsert
 
        :type: boolean
        :default: false
@@ -51,7 +51,7 @@ Properties
        Whether of not the client is allowed to create objects in the collection using the PATCH method
 
 
-    .. attribute:: updateObjectSchema
+    .. attribute:: carbond.collections.UpdateObjectConfig.updateObjectSchema
 
        :type: object
        :default: undefined
@@ -59,7 +59,7 @@ Properties
        The schema used to validate the request body. No validation will be performed if this is left undefined.
 
 
-    .. attribute:: upsertParameter
+    .. attribute:: carbond.collections.UpdateObjectConfig.upsertParameter
 
        :type: object.<string, carbond.OperationParameter>
        :required:

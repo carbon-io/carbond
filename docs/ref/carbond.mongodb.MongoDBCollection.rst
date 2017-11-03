@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: collection
+    .. attribute:: carbond.mongodb.MongoDBCollection.collection
 
        :type: string
        :required:
@@ -27,16 +27,15 @@ Properties
        The database collection name
 
 
-    .. attribute:: COLLECTION_QUERY_OPERATIONS
+    .. attribute:: carbond.mongodb.MongoDBCollection.COLLECTION_QUERY_OPERATIONS
 
        :type: Array
-       :required:
        :ro:
 
        The list of operations that support queries
 
 
-    .. attribute:: db
+    .. attribute:: carbond.mongodb.MongoDBCollection.db
 
        :type: string
        :default: undefined
@@ -44,34 +43,31 @@ Properties
        The database name. Note, this is only needed if the :class:`~carbond.Service` instance connects to multiple databases
 
 
-    .. attribute:: defaultSchema
+    .. attribute:: carbond.mongodb.MongoDBCollection.defaultSchema
 
        :type: object
-       :required:
        :ro:
 
        This is the default schema used to validate all objects in this collection. If a schema is not specified explicitly, this schema will be used.
 
 
-    .. attribute:: FindConfigClass
+    .. attribute:: carbond.mongodb.MongoDBCollection.FindConfigClass
 
        :type: :class:`~carbond.mongodb.MongoDBFindConfig`
-       :required:
        :ro:
 
        The config class used to instantiate the :class:`~carbond.mongodb.MongoDBCollection.find` operation config
 
 
-    .. attribute:: FindObjectConfigClass
+    .. attribute:: carbond.mongodb.MongoDBCollection.FindObjectConfigClass
 
        :type: :class:`~carbond.mongodb.MongoDBFindObjectConfig`
-       :required:
        :ro:
 
        The config class used to instantiate the :class:`~carbond.mongodb.MongoDBCollection.findObject` operation config
 
 
-    .. attribute:: idParameter
+    .. attribute:: carbond.mongodb.MongoDBCollection.idParameter
 
        :type: string
        :default: ``'_id'``
@@ -79,25 +75,23 @@ Properties
        The ID parameter name
 
 
-    .. attribute:: InsertConfigClass
+    .. attribute:: carbond.mongodb.MongoDBCollection.InsertConfigClass
 
        :type: :class:`~carbond.mongodb.MongoDBInsertConfig`
-       :required:
        :ro:
 
        The config class used to instantiate the :class:`~carbond.mongodb.MongoDBCollection.insert` operation config
 
 
-    .. attribute:: InsertObjectConfigClass
+    .. attribute:: carbond.mongodb.MongoDBCollection.InsertObjectConfigClass
 
        :type: :class:`~carbond.mongodb.MongoDBInsertObjectConfig`
-       :required:
        :ro:
 
        The config class used to instantiate the :class:`~carbond.mongodb.MongoDBCollection.insertObject` operation config
 
 
-    .. attribute:: querySchema
+    .. attribute:: carbond.mongodb.MongoDBCollection.querySchema
 
        :type: object
        :default: undefined
@@ -105,61 +99,55 @@ Properties
        The JSON schema used to validate the query spec for query enabled operations (e.g., :class:`~carbond.mongodb.MongoDBCollection.find`)
 
 
-    .. attribute:: RemoveConfigClass
+    .. attribute:: carbond.mongodb.MongoDBCollection.RemoveConfigClass
 
        :type: :class:`~carbond.mongodb.MongoDBRemoveConfig`
-       :required:
        :ro:
 
        The config class used to instantiate the :class:`~carbond.mongodb.MongoDBCollection.remove` operation config
 
 
-    .. attribute:: RemoveObjectConfigClass
+    .. attribute:: carbond.mongodb.MongoDBCollection.RemoveObjectConfigClass
 
        :type: :class:`~carbond.mongodb.RemoveObjectConfig`
-       :required:
        :ro:
 
        The config class used to instantiate the :class:`~carbond.mongodb.MongoDBCollection.removeObject` operation config
 
 
-    .. attribute:: MongoDBSaveConfigClass
+    .. attribute:: carbond.mongodb.MongoDBCollection.MongoDBSaveConfigClass
 
        :type: :class:`~carbond.mongodb.MongoDBSaveConfig`
-       :required:
        :ro:
 
        The config class used to instantiate the :class:`~carbond.mongodb.MongoDBCollection.save` operation config
 
 
-    .. attribute:: SaveObjectConfigClass
+    .. attribute:: carbond.mongodb.MongoDBCollection.SaveObjectConfigClass
 
        :type: :class:`~carbond.mongodb.MongoDBSaveObjectConfig`
-       :required:
        :ro:
 
        The config class used to instantiate the :class:`~carbond.mongodb.MongoDBCollection.saveObject` operation config
 
 
-    .. attribute:: UpdateConfigClass
+    .. attribute:: carbond.mongodb.MongoDBCollection.UpdateConfigClass
 
        :type: :class:`~carbond.mongodb.MongoDBUpdateConfig`
-       :required:
        :ro:
 
        The config class used to instantiate the :class:`~carbond.mongodb.MongoDBCollection.update` operation config
 
 
-    .. attribute:: UpdateObjectConfigClass
+    .. attribute:: carbond.mongodb.MongoDBCollection.UpdateObjectConfigClass
 
        :type: :class:`~carbond.mongodb.MongoDBUpdateObjectConfig`
-       :required:
        :ro:
 
        The config class used to instantiate the :class:`~carbond.mongodb.MongoDBCollection.updateObject` operation config
 
 
-    .. attribute:: updateObjectSchema
+    .. attribute:: carbond.mongodb.MongoDBCollection.updateObjectSchema
 
        :type: object
        :default: undefined
@@ -167,7 +155,7 @@ Properties
        The JSON schema used to validate the update spec passed to :class:`~carbond.mongodb.MongoDBCollection.updateObject`
 
 
-    .. attribute:: updateSchema
+    .. attribute:: carbond.mongodb.MongoDBCollection.updateSchema
 
        :type: object
        :default: undefined
@@ -182,7 +170,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: find(options)
+    .. function:: carbond.mongodb.MongoDBCollection.find(options)
 
         :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.FindConfigClass`)
         :type options: object
@@ -191,7 +179,7 @@ Methods
 
         Retrieve objects from a collection
 
-    .. function:: findObject(id, options)
+    .. function:: carbond.mongodb.MongoDBCollection.findObject(id, options)
 
         :param id: The object id
         :type id: string
@@ -202,7 +190,7 @@ Methods
 
         Retrieve a single object from a collection
 
-    .. function:: insert(objects, options)
+    .. function:: carbond.mongodb.MongoDBCollection.insert(objects, options)
 
         :param objects: An array of objects to insert
         :type objects: Array
@@ -213,7 +201,7 @@ Methods
 
         Bulk insert objects into a collection
 
-    .. function:: insertObject(object, options)
+    .. function:: carbond.mongodb.MongoDBCollection.insertObject(object, options)
 
         :param object: An object to insert
         :type object: object
@@ -224,7 +212,7 @@ Methods
 
         Insert a single object into a collection
 
-    .. function:: preFindObjectOperation(config, req, res)
+    .. function:: carbond.mongodb.MongoDBCollection.preFindObjectOperation(config, req, res)
 
         :param config: The find object operation config
         :type config: :class:`~carbond.collections.FindObjectConfig`
@@ -236,7 +224,7 @@ Methods
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preFindOperation(config, req, res)
+    .. function:: carbond.mongodb.MongoDBCollection.preFindOperation(config, req, res)
 
         :param config: The find operation config
         :type config: :class:`~carbond.collections.FindConfig`
@@ -248,7 +236,7 @@ Methods
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preInsertObjectOperation(config, req, res)
+    .. function:: carbond.mongodb.MongoDBCollection.preInsertObjectOperation(config, req, res)
 
         :param config: The insert object operation config
         :type config: :class:`~carbond.collections.InsertObjectConfig`
@@ -260,7 +248,7 @@ Methods
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preInsertOperation(config, req, res)
+    .. function:: carbond.mongodb.MongoDBCollection.preInsertOperation(config, req, res)
 
         :param config: The insert operation config
         :type config: :class:`~carbond.collections.InsertConfig`
@@ -272,7 +260,7 @@ Methods
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preRemoveObjectOperation(config, req, res)
+    .. function:: carbond.mongodb.MongoDBCollection.preRemoveObjectOperation(config, req, res)
 
         :param config: The remove object operation config
         :type config: :class:`~carbond.collections.RemoveObjectConfig`
@@ -284,7 +272,7 @@ Methods
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preRemoveOperation(config, req, res)
+    .. function:: carbond.mongodb.MongoDBCollection.preRemoveOperation(config, req, res)
 
         :param config: The remove operation config
         :type config: :class:`~carbond.collections.RemoveConfig`
@@ -296,7 +284,7 @@ Methods
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preSaveObjectOperation(config, req, res)
+    .. function:: carbond.mongodb.MongoDBCollection.preSaveObjectOperation(config, req, res)
 
         :overrides: :attr:`~carbond.collections.Collection.preSaveObjectOperation`
         :param config: The save object operation config
@@ -309,7 +297,7 @@ Methods
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preSaveOperation(config, req, res)
+    .. function:: carbond.mongodb.MongoDBCollection.preSaveOperation(config, req, res)
 
         :param config: The save operation config
         :type config: :class:`~carbond.collections.SaveConfig`
@@ -321,7 +309,7 @@ Methods
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preUpdateObjectOperation(config, req, res)
+    .. function:: carbond.mongodb.MongoDBCollection.preUpdateObjectOperation(config, req, res)
 
         :param config: The update object operation config
         :type config: :class:`~carbond.collections.UpdateObjectConfig`
@@ -333,7 +321,7 @@ Methods
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preUpdateOperation(config, req, res)
+    .. function:: carbond.mongodb.MongoDBCollection.preUpdateOperation(config, req, res)
 
         :param config: The update operation config
         :type config: :class:`~carbond.collections.UpdateConfig`
@@ -345,7 +333,7 @@ Methods
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: remove(options)
+    .. function:: carbond.mongodb.MongoDBCollection.remove(options)
 
         :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.RemoveConfigClass`)
         :type options: object
@@ -354,7 +342,7 @@ Methods
 
         Remove objects from a collection
 
-    .. function:: removeObject(id, options)
+    .. function:: carbond.mongodb.MongoDBCollection.removeObject(id, options)
 
         :param id: The ID of the object to remove
         :type id: String
@@ -365,7 +353,7 @@ Methods
 
         Remove a specific object from a collection
 
-    .. function:: save(objects, options)
+    .. function:: carbond.mongodb.MongoDBCollection.save(objects, options)
 
         :param objects: An array of objects (with IDs) to save
         :type objects: Array
@@ -376,7 +364,7 @@ Methods
 
         Replace the collection with an array of objects
 
-    .. function:: saveObject(object, options)
+    .. function:: carbond.mongodb.MongoDBCollection.saveObject(object, options)
 
         :overrides: :attr:`~carbond.collections.Collection.saveObject`
         :param object: The object to save (with ID)
@@ -388,7 +376,7 @@ Methods
 
         Replace or insert an object with a known ID
 
-    .. function:: update(update, options)
+    .. function:: carbond.mongodb.MongoDBCollection.update(update, options)
 
         :overrides: :attr:`~carbond.collections.Collection.update`
         :param update: The update to be applied to the collection
@@ -400,7 +388,7 @@ Methods
 
         Update (or upsert) a number of objects in a collection
 
-    .. function:: updateObject(id, update, options)
+    .. function:: carbond.mongodb.MongoDBCollection.updateObject(id, update, options)
 
         :param id: The ID of the object to update
         :type id: string

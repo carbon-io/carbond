@@ -26,7 +26,7 @@ Properties
        A brief description of what this operation does. This will be displayed in any generated documentation.
 
 
-    .. attribute:: endpoint
+    .. attribute:: carbond.Operation.endpoint
 
        :type: :class:`~carbond.Endpoint`
        :required:
@@ -34,16 +34,15 @@ Properties
        xxx
 
 
-    .. attribute:: name
+    .. attribute:: carbond.Operation.name
 
        :type: string
-       :required:
        :ro:
 
        The operation name (i.e., HTTP method)
 
 
-    .. attribute:: parameters
+    .. attribute:: carbond.Operation.parameters
 
        :type: Object.<string, carbond.OperationParameter>
        :default: ``{}``
@@ -51,7 +50,7 @@ Properties
        Any parameters that are specific to this operation (as opposed to those defined on the parent endpoint)
 
 
-    .. attribute:: responses
+    .. attribute:: carbond.Operation.responses
 
        :type: Object.<string, carbond.OperationResponse>
        :default: ``{}``
@@ -59,7 +58,7 @@ Properties
        Response definitions for this operation. These will be used for validation purposes as well as generated static documentation.
 
 
-    .. attribute:: validateOutput
+    .. attribute:: carbond.Operation.validateOutput
 
        :type: boolean
        :default: ``true``
@@ -74,13 +73,13 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: getAllParameters()
+    .. function:: carbond.Operation.getAllParameters()
 
         :rtype: Object.<string, carbond.OperationParameter>
 
         Gets all parameters defined for this :class:`~carbond.Operation` which includes all parameters inherited from this.endpoint
 
-    .. function:: getSanitizedURL(req)
+    .. function:: carbond.Operation.getSanitizedURL(req)
 
         :param req: the current request
         :type req: http.ClientRequest
@@ -88,13 +87,13 @@ Methods
 
         Returns a new URL with the query string portion removed
 
-    .. function:: getService()
+    .. function:: carbond.Operation.getService()
 
         :rtype: :class:`~carbond.Service`
 
         Returns the root :class:`~carbond.Service` instance
 
-    .. function:: service(req, res)
+    .. function:: carbond.Operation.service(req, res)
 
         :param req: The current request object
         :type req: :class:`~carbond.Request`

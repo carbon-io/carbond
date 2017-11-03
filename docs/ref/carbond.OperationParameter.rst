@@ -18,7 +18,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: default
+    .. attribute:: carbond.OperationParameter.default
 
        :type: \*
        :default: undefined
@@ -26,7 +26,7 @@ Properties
        A default value for the parameter if it is not present in the incoming request
 
 
-    .. attribute:: description
+    .. attribute:: carbond.OperationParameter.description
 
        :type: string
        :default: undefined
@@ -34,7 +34,7 @@ Properties
        A brief description of this parameter This will be displayed in any generated documentation.
 
 
-    .. attribute:: location
+    .. attribute:: carbond.OperationParameter.location
 
        :type: string
        :required:
@@ -42,16 +42,15 @@ Properties
        The location of the parameter in an incoming request [choices: "query", "header", "path", "body]
 
 
-    .. attribute:: name
+    .. attribute:: carbond.OperationParameter.name
 
        :type: string
-       :required:
        :ro:
 
        The operation parameter name
 
 
-    .. attribute:: required
+    .. attribute:: carbond.OperationParameter.required
 
        :type: boolean
        :default: false
@@ -59,7 +58,7 @@ Properties
        Flag determining whether the parameter is required
 
 
-    .. attribute:: schema
+    .. attribute:: carbond.OperationParameter.schema
 
        :type: Object
        :default: undefined
@@ -74,7 +73,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: extractParameterValueFromRequest(req)
+    .. function:: carbond.OperationParameter.extractParameterValueFromRequest(req)
 
         :param req: The incoming request object
         :type req: :class:`~carbond.Request`

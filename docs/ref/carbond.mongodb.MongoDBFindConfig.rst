@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: driverOptions
+    .. attribute:: carbond.mongodb.MongoDBFindConfig.driverOptions
 
        :type: object.<string, \*>
        :required:
@@ -27,7 +27,7 @@ Properties
        Options to be passed to the mongodb driver (XXX: link to leafnode docs)
 
 
-    .. attribute:: parameters
+    .. attribute:: carbond.mongodb.MongoDBFindConfig.parameters
 
        :type: object.<string, carbond.OperationParameter>
        :required:
@@ -44,7 +44,7 @@ Properties
 
 
 
-    .. attribute:: queryParameter
+    .. attribute:: carbond.mongodb.MongoDBFindConfig.queryParameter
 
        :type: object.<string, carbond.OperationParameter>
        :required:
@@ -60,7 +60,7 @@ Properties
 
 
 
-    .. attribute:: supportsPagination
+    .. attribute:: carbond.mongodb.MongoDBFindConfig.supportsPagination
 
        :type: boolean
        :required:
@@ -68,7 +68,7 @@ Properties
        Support pagination
 
 
-    .. attribute:: supportsQuery
+    .. attribute:: carbond.mongodb.MongoDBFindConfig.supportsQuery
 
        :type: boolean
        :default: ``true``
@@ -76,7 +76,7 @@ Properties
        Whether or not the query parameter is supported. Note, "query" here refers to a MongoDB query and not the query string component of the URL.
 
 
-    .. attribute:: supportsSkipAndLimit
+    .. attribute:: carbond.mongodb.MongoDBFindConfig.supportsSkipAndLimit
 
        :type: boolean
        :required:

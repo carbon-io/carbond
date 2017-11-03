@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: object
+    .. attribute:: carbond.security.ObjectAcl.object
 
        :type: xxx
        :required:
@@ -27,7 +27,7 @@ Properties
        xxx
 
 
-    .. attribute:: ownerField
+    .. attribute:: carbond.security.ObjectAcl.ownerField
 
        :type: xxx
        :required:
@@ -35,7 +35,7 @@ Properties
        xxx
 
 
-    .. attribute:: permissionDefinitions
+    .. attribute:: carbond.security.ObjectAcl.permissionDefinitions
 
        :type: xxx
        :required:
@@ -50,7 +50,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: doSanitize(value, user, filterArrays, acl)
+    .. function:: carbond.security.ObjectAcl.doSanitize(value, user, filterArrays, acl)
 
         :param value: xxx
         :type value: xxx
@@ -64,7 +64,7 @@ Methods
 
         doSanitize description
 
-    .. function:: doSanitizeArray(arr, user, filterArrays, acl)
+    .. function:: carbond.security.ObjectAcl.doSanitizeArray(arr, user, filterArrays, acl)
 
         :param arr: xxx
         :type arr: xxx
@@ -79,7 +79,7 @@ Methods
 
         doSanitizeArray
 
-    .. function:: doSanitizeObject(obj, user, filterArrays, acl)
+    .. function:: carbond.security.ObjectAcl.doSanitizeObject(obj, user, filterArrays, acl)
 
         :param obj: xxx
         :type obj: xxx
@@ -93,7 +93,7 @@ Methods
 
         doSanitizeObject description
 
-    .. function:: isOwner(user, object)
+    .. function:: carbond.security.ObjectAcl.isOwner(user, object)
 
         :param user: xxx
         :type user: xxx
@@ -103,7 +103,7 @@ Methods
 
         isOwner description
 
-    .. function:: sanitize(user, filterSingleValue, filterArrays, acl)
+    .. function:: carbond.security.ObjectAcl.sanitize(user, filterSingleValue, filterArrays, acl)
 
         :param user: xxx
         :type user: xxx
@@ -117,7 +117,7 @@ Methods
 
         sanitize
 
-    .. function:: sanitize(value, user, filterSingleValue, filterArrays, acl)
+    .. function:: carbond.security.ObjectAcl.sanitize(value, user, filterSingleValue, filterArrays, acl)
 
         :param value: xxx
         :type value: xxx

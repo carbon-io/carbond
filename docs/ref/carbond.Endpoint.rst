@@ -18,7 +18,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: ALL_METHODS
+    .. attribute:: carbond.Endpoint.ALL_METHODS
 
        :type: object
        :required:
@@ -26,7 +26,7 @@ Properties
        A list of all HTTP methods recognized by carbond
 
 
-    .. attribute:: allowUnauthenticated
+    .. attribute:: carbond.Endpoint.allowUnauthenticated
 
        :type: string[]
        :required:
@@ -42,7 +42,7 @@ Properties
        A brief description of what this endpoint does. This will be displayed in any generated documentation.
 
 
-    .. attribute:: endpoints
+    .. attribute:: carbond.Endpoint.endpoints
 
        :type: Object.<string, carbond.Endpoint>
        :required:
@@ -50,7 +50,7 @@ Properties
        The endpoints that sit below this endpoint in the tree. URL paths to each endpoint are built during a depth first traversal of the tree on initialization using the property names defined on this Object.
 
 
-    .. attribute:: noDocument
+    .. attribute:: carbond.Endpoint.noDocument
 
        :type: boolean
        :default: false
@@ -58,7 +58,7 @@ Properties
        Controls whether documentation for this endpoint is included in generated static documentation
 
 
-    .. attribute:: parameters
+    .. attribute:: carbond.Endpoint.parameters
 
        :type: Object.<string, carbond.OperationParameter>
        :required:
@@ -66,34 +66,31 @@ Properties
        Operation parameter definitions that apply to all operations supported by this endpoint. Note, these will be merged with any parameter definitions on the operations themselves and their parsed values will be passed to the handler via ``req.parameters[<parameter name>]``.
 
 
-    .. attribute:: parent
+    .. attribute:: carbond.Endpoint.parent
 
        :type: :class:`~carbond.Endpoint`
-       :required:
        :ro:
 
        The parent endpoint for this endpoint in the endpoint tree
 
 
-    .. attribute:: path
+    .. attribute:: carbond.Endpoint.path
 
        :type: string
-       :required:
        :ro:
 
        The URI path that routes to this endpoint. This is built during service initialization and will overwrite any value specified on instantiation.
 
 
-    .. attribute:: service
+    .. attribute:: carbond.Endpoint.service
 
        :type: :class:`~carbond.Service`
-       :required:
        :ro:
 
        The root service object managing the endpoint tree. Getting a reference to this object is sometimes necessary or just convenient (i.e., HTTP error classes can be accessed via :attr:`~carbond.Service.errors`).
 
 
-    .. attribute:: validateOutput
+    .. attribute:: carbond.Endpoint.validateOutput
 
        :type: boolean
        :default: ``true``
@@ -108,7 +105,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: getOperation(method)
+    .. function:: carbond.Endpoint.getOperation(method)
 
         :param method: The HTTP method corresponding to the operation to retrieve
         :type method: string
@@ -116,13 +113,13 @@ Methods
 
         Retrieves the operation instance corresponding to the passed HTTP method
 
-    .. function:: getService()
+    .. function:: carbond.Endpoint.getService()
 
         :rtype: :class:`~carbond.Service`
 
         Returns the root :class:`~carbond.Service` instance (note, this is preferred over accessing the ``service`` property itself)
 
-    .. function:: isOperationAuthorized(method, user, req)
+    .. function:: carbond.Endpoint.isOperationAuthorized(method, user, req)
 
         :param method: The HTTP method corresponding to the operation that we are attempting to authorize
         :type method: string
@@ -134,13 +131,13 @@ Methods
 
         Tests whether an operation is authorized given a user (as returned by the root authenticator) and any :class:`~carbond.security.Acl` that may apply to this endpoint
 
-    .. function:: operations()
+    .. function:: carbond.Endpoint.operations()
 
         :rtype: :class:`~carbond.Operation[]`
 
         Gathers all operations defined on this endpoint
 
-    .. function:: options(req, res)
+    .. function:: carbond.Endpoint.options(req, res)
 
         :param req: The request object
         :type req: :class:`~carbond.Request`
@@ -150,7 +147,7 @@ Methods
 
         Implements the OPTIONS method handler
 
-    .. function:: supportedMethods()
+    .. function:: carbond.Endpoint.supportedMethods()
 
         :rtype: string[]
 

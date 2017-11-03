@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: example
+    .. attribute:: carbond.collections.SaveObjectConfig.example
 
        :type: object
        :default: undefined
@@ -27,7 +27,7 @@ Properties
        An example response body used for documentation
 
 
-    .. attribute:: parameters
+    .. attribute:: carbond.collections.SaveObjectConfig.parameters
 
        :type: object.<string, carbond.OperationParameter>
        :required:
@@ -43,7 +43,7 @@ Properties
 
 
 
-    .. attribute:: returnsSavedObject
+    .. attribute:: carbond.collections.SaveObjectConfig.returnsSavedObject
 
        :type: boolean
        :default: ``true``
@@ -51,7 +51,7 @@ Properties
        Whether or not the HTTP layer returns the object saved in the response
 
 
-    .. attribute:: saveObjectSchema
+    .. attribute:: carbond.collections.SaveObjectConfig.saveObjectSchema
 
        :type: object
        :default: undefined
@@ -59,7 +59,7 @@ Properties
        The schema used to validate the request body. If this is undefined, the collection level schema will be used.
 
 
-    .. attribute:: supportsUpsert
+    .. attribute:: carbond.collections.SaveObjectConfig.supportsUpsert
 
        :type: boolean
        :default: ``true``

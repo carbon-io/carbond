@@ -19,7 +19,7 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: version
+    .. attribute:: carbond.UUIDGenerator.version
 
        :type: number
        :required:
@@ -34,7 +34,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: generateId()
+    .. function:: carbond.UUIDGenerator.generateId()
 
         :rtype: string
 
