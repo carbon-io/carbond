@@ -84,14 +84,14 @@ be confused with the query string component of the URL) to the set of parameters
 recognized by the endpoint. When an HTTP request is received, the ``update`` spec
 will be passed to the operation handler via the first parameter (``update``),
 while the ``query`` spec will be passed via the ``options`` parameter as a
-property of that object (e.g., ``options.query``). 
+property of that object (e.g., ``options.query``).
 
 Taking a quick step back, ``options`` can be thought of as simply an object
 derived from the set of all parameters available to a particular operation minus
 the parameters that correspond to required arguments to the handler.
 Additionally, "all parameters" consists of all parameters defined on each
 endpoint in the endpoint tree as well as any that may be defined on the
-operation itself. These are merged from the root (the service) to the leaf 
+operation itself. These are merged from the root (the service) to the leaf
 (the operation), with parameters defined closer to the leaf overriding any
 that may have been defined closer to the root.
 
@@ -162,16 +162,16 @@ return a list of objects in the collection in natural order.
 
 Additionally, the ``find`` operation can be configured to support pagination and
 ID queries (see :js:attr:`~carbond.collections.FindConfig.supportsPagination`
-and :js:attr:`~carbond.collections.FindConfig.supportsIdQuery`). 
+and :js:attr:`~carbond.collections.FindConfig.supportsIdQuery`).
 
 If pagination support is enabled, the handler should honor the parameters
 indicating the subset of objects to return (e.g., ``options.skip`` and
-``options.limit``). 
+``options.limit``).
 
 If ID queries are supported (note, ID query support is necessary when supporting
 bulk inserts), a query parameter by the same name as
 :js:attr:`~carbond.collections.Collection.idParameter` will be added and
-ultimately passed to the handler via ``options[this.idParameter]``. 
+ultimately passed to the handler via ``options[this.idParameter]``.
 
 The following in-memory cache example accommodates both of these options:
 
@@ -234,7 +234,7 @@ The :js:func:`~carbond.collections.Collection.update` operation handler takes an
 Similar to the ``insert`` operation, the ``update`` spec object is an EJSON blob
 that will be weakly validated using a default schema. To enforce a particular
 structure, you can specify the update schema using the
-:js:attr:`~carbond.collections.UpdateSchema.updateSchema` property. 
+:js:attr:`~carbond.collections.UpdateSchema.updateSchema` property.
 
 .. _update-spec-free-form:
 
@@ -391,7 +391,7 @@ saveObject
 
 The :js:func:`~carbond.collections.Collection.saveObject` operation handler
 takes a single object whose ID property has been populated by the client and
-should replace the object in the collection with the same ID. 
+should replace the object in the collection with the same ID.
 
 Like ``update``, ``saveObject`` can be configured to support inserts. It is left
 up to the concrete implementation of the collection to decide how this is
@@ -427,7 +427,7 @@ updateObject
 
 The :js:func:`~carbond.collections.Collection.updateObject` operation handler
 takes an ``id`` and an ``update`` spec and should apply that update to an object
-in the collection with a matching ID. 
+in the collection with a matching ID.
 
 Similar to :js:func:`~carbond.collections.Collection.update`, the
 ``updateObject`` operation can be configured to support "upserts" and to return
@@ -886,7 +886,7 @@ FindObjectConfig
 
 The :js:class:`~carbond.collections.FindObjectConfig` class is the base ``findObject``
 operation config class and the default for
-:js:class:`~carbond.collections.Collection`. 
+:js:class:`~carbond.collections.Collection`.
 
 .. code-block:: js
 
@@ -1102,7 +1102,7 @@ GET /<collection>
       - query
       - Specifies the number of objects per page. This is only present if
         :js:attr:`~carbond.collections.FindConfig.supportsPagination` is true.
-        The default value for page size is configured using 
+        The default value for page size is configured using
         :js:attr:`~carbond.collections.FindConfig.pageSize`
         (note, if :js:attr:`~carbond.collections.FindConfig.maxPageSize` is
         specified, then the minimum of the two will be used)
@@ -1220,7 +1220,7 @@ PATCH /<collection>
     * - ``500``
       - There was an internal error processing the request
 
-REMOVE /<collection>
+DELETE /<collection>
 --------------------
 
 .. list-table:: Status Codes
@@ -1590,7 +1590,7 @@ properties:
         connects to multiple databases and should be a key in
         :js:attr:`~carbond.Service.dbUris`.
     :js:attr:`~carbond.mongodb.MongoDBCollection.collection`
-        This is the name of th MongoDB collection that the endpoint will operate
+        This is the name of the MongoDB collection that the endpoint will operate
         on.
     :js:attr:`~carbond.mongodb.MongoDBCollection.querySchema`
         This is the schema used to validate the query spec for multiple
@@ -1683,4 +1683,4 @@ access control policies (see: :ref:`access control <access-control-ref>`).
 
 .. _json schema: http://json-schema.org/
 .. _json patch: http://jsonpatch.com/
-.. _mongo driver: http://jsonpatch.com/
+.. _mongo driver: http://mongodb.github.io/node-mongodb-native/2.2/api/Collection.html
