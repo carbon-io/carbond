@@ -7,7 +7,7 @@ Access Control
 .. toctree::
 
 :js:class:`~carbond.Service`\'s accomplish access control by way of ACLs or
-*Access Control Lists*. 
+*Access Control Lists*.
 
 ACLs
 ----
@@ -20,8 +20,8 @@ In practice you will use one of the pre-packaged ACL types to gate access to
 your :js:class:`~carbond.Endpoint`\'s and their
 :js:class:`~carbond.Operation`\'s.
 
-Endpoint ACLs 
-------------- 
+Endpoint ACLs
+-------------
 
 All :js:class:`~carbond.Endpoint`\'s can be configured with an
 :js:class:`~carbond.security.EndpointAcl` to govern which endpoint
@@ -51,7 +51,7 @@ Here is an example of a :js:class:`~carbond.Service` using an
     :dedent: 2
     :emphasize-lines: 16-53
 
-Collection ACLs 
+Collection ACLs
 ---------------
 
 ``CollectionAcl``\s are similar to ``EndpointAcl``\s except that they
@@ -103,4 +103,4 @@ use that ACL:
 .. literalinclude:: ../../code-frags/standalone-examples/ServiceExternalACLExample.js
     :language: javascript
     :linenos:
-    :emphasize-lines: 3, 22
+    :emphasize-lines: 23
