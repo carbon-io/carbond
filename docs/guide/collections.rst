@@ -1399,7 +1399,7 @@ PATCH /<collection>/:<id>
     * - ``500``
       - There was an internal error processing the request
 
-REMOVE /<collection>/:<id>
+DELETE /<collection>/:<id>
 --------------------------
 
 .. list-table:: Request Parameters (note, ``idPathParameter`` is configurable on ``Collection``)
