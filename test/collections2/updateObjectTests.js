@@ -220,6 +220,25 @@ __(function() {
                   additionalProperties: false
                 }
               }
+            }),
+            updateObject1: o({
+              _type: pong.Collection,
+              enabled: {updateObject: true},
+              updateObjectConfig: {
+                '$parameters.update.schema': {
+                  type: 'object',
+                  properties: {
+                    foo: {
+                      type: 'string',
+                      pattern: '^(bar|baz|yaz)$'
+                    }
+                  },
+                  patternProperties: {
+                    '^\\d+$': {type: 'string'}
+                  },
+                  additionalProperties: false
+                }
+              }
             })
           }
         }),
@@ -265,6 +284,34 @@ __(function() {
               body: {n: 1}
             }
           },
+          {
+            name: 'FailUpdateObject1SchemaTest',
+            description: 'Test PATCH with malformed body',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(_.clone(this.history.getReqSpec('FailUpdateObjectSchemaTest')),
+                              {url: '/updateObject1/0'})
+            },
+            resSpec: {
+              $property: {get: function() {return this.history.getResSpec('FailUpdateObjectSchemaTest')}}
+            }
+          },
+          {
+            name: 'SuccessUpdateObject1SchemaTest',
+            description: 'Test PATCH with well formed body',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(_.clone(this.history.getReqSpec('SuccessUpdateObjectSchemaTest')),
+                              {url: '/updateObject1/0'})
+            },
+            resSpec: {
+              $property: {get: function() {return this.history.getResSpec('SuccessUpdateObjectSchemaTest')}}
+            }
+          }
         ]
       }),
       o({
@@ -510,6 +557,122 @@ __(function() {
               statusCode: 500
             }
           },
+        ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'CustomConfigParameterTests',
+        service: o({
+          _type: pong.Service,
+          endpoints: {
+            updateObject: o({
+              _type: pong.Collection,
+              idGenerator: pong.util.collectionIdGenerator,
+              enabled: {updateObject: true},
+              updateObjectConfig: {
+                parameters: {
+                  $merge: {
+                    foo: {
+                      location: 'header',
+                      schema: {
+                        type: 'number',
+                        minimum: 0,
+                        multipleOf: 2
+                      }
+                    }
+                  }
+                }
+              }
+            })
+          }
+        }),
+        setup: function(context) {
+          carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
+          context.global.idParameter = this.service.endpoints.updateObject.idParameter
+        },
+        teardown: function(context) {
+          delete context.global.idParameter
+          carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
+        },
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'UpdateObjectConfigCustomParameterInitializationTest',
+            doTest: function(context) {
+              let updateObjectOperation =
+                this.parent.service.endpoints.updateObject.endpoints[`:${context.global.idParameter}`].patch
+              assert.deepEqual(updateObjectOperation.parameters, {
+                update: {
+                  name: 'update',
+                  location: 'body',
+                  description: carbond.collections.UpdateObjectConfig._STRINGS.parameters.update.description,
+                  schema: { type: 'object' },
+                  required: true,
+                  default: undefined
+                },
+                foo: {
+                  name: 'foo',
+                  location: 'header',
+                  description: undefined,
+                  schema: {type: 'number', minimum: 0, multipleOf: 2},
+                  required: false,
+                  default: undefined
+                },
+              })
+            }
+          }),
+          {
+            name: 'UpdateObjectConfigCustomParameterPassedViaOptionsFailTest',
+            setup: function(context) {
+              context.local.updateObjectSpy = sinon.spy(this.parent.service.endpoints.updateObject, 'updateObject')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.updateObjectSpy.called, false)
+              context.local.updateObjectSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/updateObject/0',
+                method: 'PATCH',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    updateObject: 1
+                  }),
+                  foo: 3
+                },
+                body: {foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'UpdateObjectConfigCustomParameterPassedViaOptionsSuccessTest',
+            setup: function(context) {
+              context.local.updateObjectSpy = sinon.spy(this.parent.service.endpoints.updateObject, 'updateObject')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.updateObjectSpy.firstCall.args[2].foo, 4)
+              context.local.updateObjectSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/updateObject/0',
+                method: 'PATCH',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    updateObject: 1
+                  }),
+                  foo: 4
+                },
+                body: {foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 200
+            }
+          }
         ]
       })
     ]

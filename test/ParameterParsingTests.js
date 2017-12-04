@@ -73,6 +73,7 @@ __(function() {
         datum: undefined,
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'Undefined' }
         },
         result: undefined
@@ -82,6 +83,7 @@ __(function() {
         datum: '{ "$undefined": true }',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'Undefined' }
         },
         result: undefined
@@ -91,6 +93,7 @@ __(function() {
         datum: undefined,
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'number' },
         default: 2
         },
@@ -101,6 +104,7 @@ __(function() {
         datum: '',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'number' },
         default: 2
         },
@@ -111,6 +115,7 @@ __(function() {
         datum: null, // XXX I think this is right but might interact strangely with qs parser so revisit this
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'number' },
         default: 2
         },
@@ -121,6 +126,7 @@ __(function() {
         datum: "null",
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'null' },
         },
         result: null
@@ -130,6 +136,7 @@ __(function() {
         datum: 3,
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'number' }
         },
         error: true // should error since 3 is not a string
@@ -139,6 +146,7 @@ __(function() {
         datum: '3',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'number' }
         },
         result: 3
@@ -148,6 +156,7 @@ __(function() {
         datum: '3',
         definition: {
           name: 'x',
+          location: 'body',
           schema: undefined
         },
         result: '3' // if no schema we do not do any conversions
@@ -157,6 +166,7 @@ __(function() {
         datum: '"3"',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'string' }
         },
         result: "3"
@@ -166,6 +176,7 @@ __(function() {
         datum: 'true',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'boolean' }
         },
         result: true
@@ -175,6 +186,7 @@ __(function() {
         datum: 'hello',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'string'}
         },
         result: "hello"
@@ -184,6 +196,7 @@ __(function() {
         datum: '"hello"',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'string'}
         },
         result: "hello"
@@ -193,6 +206,7 @@ __(function() {
         datum: '{"hello": "world"}',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'string'}
         },
         result: '{"hello": "world"}'
@@ -202,6 +216,7 @@ __(function() {
         datum: '      {"hello": "world"} ',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'string'}
         },
         result: '      {"hello": "world"} '
@@ -211,6 +226,7 @@ __(function() {
         datum: '["hello", "world"]',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'string'}
         },
         result: '["hello", "world"]'
@@ -220,6 +236,7 @@ __(function() {
         datum: '["hello", "world"]     ',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'string'}
         },
         result: '["hello", "world"]     '
@@ -229,6 +246,7 @@ __(function() {
         datum: '    "hello" ',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'string'}
         },
         result: '    "hello" '
@@ -238,6 +256,7 @@ __(function() {
         datum: '{ "a": 1 }',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'object'}
         },
         result: { a:1 }
@@ -247,6 +266,7 @@ __(function() {
         datum: '[{ "a": 1 }]',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'array'}
         },
         result: [{ a:1 }]
@@ -256,6 +276,7 @@ __(function() {
         datum: '{ "$date": "1970-01-01T00:00:00.000Z" }',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'Date'}
         },
         result: new Date(0)
@@ -265,6 +286,7 @@ __(function() {
         datum: '{ "$oid": "c2c48257aa5a56df131db1e4" }',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'ObjectId'}
         },
         result: new ObjectId("c2c48257aa5a56df131db1e4")
@@ -274,6 +296,7 @@ __(function() {
         datum: 'c2c48257aa5a56df131db1e4',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'ObjectId'}
         },
         result: new ObjectId("c2c48257aa5a56df131db1e4")
@@ -283,6 +306,7 @@ __(function() {
         datum: { a: '1' },
         definition: {
           name: 'x',
+          location: 'header',
           schema: {
             type: 'object',
             properties: {
@@ -290,14 +314,14 @@ __(function() {
             }
           }
         },
-        result: { a: 1 }
+        result: { a: 1 }  // Will not fail validation -- coerced since not in body
       },
 
       {
         datum: { a: '1' },
         definition: {
           name: 'x',
-          location: "body",
+          location: 'body',
           schema: {
             type: 'object',
             properties: {
@@ -312,6 +336,7 @@ __(function() {
         datum: { a: 'true' },
         definition: {
           name: 'x',
+          location: 'header',
           schema: {
             type: 'object',
             properties: {
@@ -326,6 +351,7 @@ __(function() {
         datum: { a: ['true'] },
         definition: {
           name: 'x',
+          location: 'header',
           schema: {
             type: 'object',
             properties: {
@@ -343,6 +369,7 @@ __(function() {
         datum: { a: { $timestamp: { t: "0", i: "0" }}},
         definition: {
           name: 'x',
+          location: 'body',
           schema: {
             type: 'object',
             properties: {

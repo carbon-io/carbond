@@ -18,7 +18,7 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: "BasicEndpointTests",
+    name: 'BasicEndpointTests',
 
     /**********************************************************************
      * service
@@ -26,7 +26,7 @@ __(function() {
      * NOTE: looks weird because Service1 is a template that we're instantiating
      */
     service: o(_o('./fixtures/Service1')),
-    
+
     /**********************************************************************
      * tests
      */
@@ -45,7 +45,7 @@ __(function() {
           }
         }
       },
-      
+
       // Test POST
       {
         reqSpec: {
@@ -62,13 +62,13 @@ __(function() {
             methodCalled: "post",
             reqParams: {},
             reqBody:  {
-              x: 1, 
+              x: 1,
               y: 2
             }
           }
         }
       },
-      
+
       // Test PUT
       {
         reqSpec: {
@@ -85,7 +85,7 @@ __(function() {
             methodCalled: "put",
             reqParams: {},
             reqBody:  {
-              x: [1], 
+              x: [1],
               y: 2
             }
           }
@@ -130,7 +130,7 @@ __(function() {
           body: {
             methodCalled: "delete",
             reqParams: {
-              n: '3', 
+              n: '3',
               m: '{"x":"hello"}'
             },
             middlewareCalled: true
@@ -138,7 +138,7 @@ __(function() {
         }
       },
     ]
-    
-    
+
+
   })
 })

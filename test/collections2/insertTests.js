@@ -222,6 +222,26 @@ __(function() {
                   additionalProperties: false
                 }
               }
+            }),
+            insert1: o({
+              _type: pong.Collection,
+              idGenerator: pong.util.collectionIdGenerator,
+              enabled: {insert: true},
+              insertConfig: {
+                '$parameters.objects.schema': {
+                  type: 'object',
+                  properties: {
+                    foo: {
+                      type: 'string',
+                      pattern: '^(bar|baz|yaz)$'
+                    }
+                  },
+                  patternProperties: {
+                    '^\\d+$': {type: 'string'}
+                  },
+                  additionalProperties: false
+                }
+              }
             })
           }
         }),
@@ -243,12 +263,10 @@ __(function() {
             setup: function() {
               pong.util.collectionIdGenerator.resetId()
             },
-            reqSpec: function(context) {
-              return {
-                url: '/insert',
-                method: 'POST',
-                body: [{foo: 'bar'}, {bar: 'baz'}, {foo: 'bur'}]
-              }
+            reqSpec: {
+              url: '/insert',
+              method: 'POST',
+              body: [{foo: 'bar'}, {bar: 'baz'}, {foo: 'bur'}]
             },
             resSpec: {
               statusCode: 400,
@@ -281,7 +299,7 @@ __(function() {
                 assert.deepStrictEqual(
                   headers.location,
                   url.format(
-                    {pathname: '/insert', query: {[context.global.idParameter]: ['0', '1', '2']}}))
+                    {pathname: this.reqSpec.url, query: {[context.global.idParameter]: ['0', '1', '2']}}))
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [
@@ -290,6 +308,36 @@ __(function() {
                   {[context.global.idParameter]: '2', '777': 'baz'}
                 ])
               }
+            }
+          },
+          {
+            name: 'FailInsert1SchemaTest',
+            description: 'Test POST of array with malformed object',
+            setup: function(context) {
+              pong.util.collectionIdGenerator.resetId()
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(_.clone(this.history.getReqSpec('FailInsertSchemaTest')),
+                              {url: '/insert1'})
+            },
+            resSpec: {
+              $property: {get: function() {return this.history.getResSpec('FailInsertSchemaTest')}}
+            }
+          },
+          {
+            name: 'SuccessInsert1SchemaTest',
+            description: 'Test POST of array with well formed objects',
+            setup: function(context) {
+              pong.util.collectionIdGenerator.resetId()
+              this.history = context.httpHistory
+            },
+            reqSpec: function(context) {
+              return _.assign(_.clone(this.history.getReqSpec('SuccessInsertSchemaTest')),
+                              {url: '/insert1'})
+            },
+            resSpec: {
+              $property: {get: function() {return this.history.getResSpec('SuccessInsertSchemaTest')}}
             }
           },
         ]
@@ -387,6 +435,129 @@ __(function() {
           },
         ]
       }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'CustomConfigParameterTests',
+        service: o({
+          _type: pong.Service,
+          endpoints: {
+            insert: o({
+              _type: pong.Collection,
+              idGenerator: pong.util.collectionIdGenerator,
+              enabled: {insert: true},
+              insertConfig: {
+                parameters: {
+                  $merge: {
+                    foo: {
+                      location: 'header',
+                      schema: {
+                        type: 'number',
+                        minimum: 0,
+                        multipleOf: 2
+                      }
+                    }
+                  }
+                }
+              }
+            })
+          }
+        }),
+        setup: function(context) {
+          carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
+          context.global.idParameter = this.service.endpoints.insert.idParameter
+          context.global.idHeader = this.service.endpoints.insert.idHeader
+        },
+        teardown: function(context) {
+          pong.util.collectionIdGenerator.resetId()
+          delete context.global.idHeader
+          delete context.global.idParameter
+          carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
+        },
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'InsertConfigCustomParameterInitializationTest',
+            doTest: function() {
+              let insertOperation = this.parent.service.endpoints.insert.post
+              assert.deepEqual(insertOperation.parameters, {
+                objects: {
+                  name: 'objects',
+                  description: carbond.collections.InsertConfig._STRINGS.parameters.objects.description,
+                  location: 'body',
+                  schema: {
+                    type: 'array',
+                    items: {type: 'object', properties: {_id: {type: 'string'}}}
+                  },
+                  required: true,
+                  default: undefined,
+                },
+                foo: {
+                  name: 'foo',
+                  description: undefined,
+                  location: 'header',
+                  schema: {type: 'number', minimum: 0, multipleOf: 2},
+                  required: false,
+                  default: undefined
+                }
+              })
+            }
+          }),
+          {
+            name: 'InsertConfigCustomParameterPassedViaOptionsFailTest',
+            setup: function(context) {
+              pong.util.collectionIdGenerator.resetId()
+              context.local.insertSpy = sinon.spy(this.parent.service.endpoints.insert, 'insert')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.insertSpy.called, false)
+              context.local.insertSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/insert',
+                method: 'POST',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    insert: {$args: 0}
+                  }),
+                  foo: 3
+                },
+                body: [{foo: 'bar'}]
+              }
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'InsertConfigCustomParameterPassedViaOptionsSuccessTest',
+            setup: function(context) {
+              pong.util.collectionIdGenerator.resetId()
+              context.local.insertSpy = sinon.spy(this.parent.service.endpoints.insert, 'insert')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.insertSpy.firstCall.args[1].foo, 4)
+              context.local.insertSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/insert',
+                method: 'POST',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    insert: {$args: 0}
+                  }),
+                  foo: 4
+                },
+                body: [{foo: 'bar'}]
+              }
+            },
+            resSpec: {
+              statusCode: 201
+            }
+          },
+        ]
+      })
     ],
   })
 })

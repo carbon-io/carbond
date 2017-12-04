@@ -251,6 +251,103 @@ __(function() {
             }
           },
         ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'CustomConfigParameterTests',
+        service: o({
+          _type: pong.Service,
+          endpoints: {
+            remove: o({
+              _type: pong.Collection,
+              idGenerator: pong.util.collectionIdGenerator,
+              enabled: {remove: true},
+              removeConfig: {
+                parameters: {
+                  $merge: {
+                    foo: {
+                      location: 'header',
+                      schema: {
+                        type: 'number',
+                        minimum: 0,
+                        multipleOf: 2
+                      }
+                    }
+                  }
+                }
+              }
+            })
+          }
+        }),
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'RemoveConfigCustomParameterInitializationTest',
+            doTest: function(context) {
+              let removeOperation = this.parent.service.endpoints.remove.delete
+              assert.deepEqual(removeOperation.parameters, {
+                foo: {
+                  name: 'foo',
+                  location: 'header',
+                  description: undefined,
+                  schema: {type: 'number', minimum: 0, multipleOf: 2},
+                  required: false,
+                  default: undefined
+                },
+              })
+            }
+          }),
+          {
+            name: 'RemoveConfigCustomParameterPassedViaOptionsFailTest',
+            setup: function(context) {
+              context.local.removeSpy = sinon.spy(this.parent.service.endpoints.remove, 'remove')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.removeSpy.called, false)
+              context.local.removeSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/remove',
+                method: 'DELETE',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    remove: 1
+                  }),
+                  foo: 3
+                }
+              }
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'RemoveConfigCustomParameterPassedViaOptionsSuccessTest',
+            setup: function(context) {
+              context.local.removeSpy = sinon.spy(this.parent.service.endpoints.remove, 'remove')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.removeSpy.firstCall.args[0].foo, 4)
+              context.local.removeSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/remove',
+                method: 'DELETE',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    remove: 1
+                  }),
+                  foo: 4
+                },
+              }
+            },
+            resSpec: {
+              statusCode: 200
+            }
+          }
+        ]
       })
     ]
   })

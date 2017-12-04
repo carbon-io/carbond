@@ -55,13 +55,15 @@ __(function() {
                 }
               },
               findConfig: {
-                additionalParameters: {
-                  bar: {
-                    location: 'header',
-                    schema: {
-                      type: 'string',
-                    },
-                    required: false
+                parameters: {
+                  $merge: {
+                    bar: {
+                      location: 'header',
+                      schema: {
+                        type: 'string',
+                      },
+                      required: false
+                    }
                   }
                 }
               },

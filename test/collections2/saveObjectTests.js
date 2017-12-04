@@ -163,6 +163,28 @@ __(function() {
                   additionalProperties: false
                 }
               }
+            }),
+            saveObject1: o({
+              _type: pong.Collection,
+              idGenerator: pong.util.collectionIdGenerator,
+              enabled: {saveObject: true},
+              saveObjectConfig: {
+                '$parameters.object.schema': {
+                  type: 'object',
+                  properties: {
+                    _id: {type: 'string'},
+                    foo: {
+                      type: 'string',
+                      pattern: '^(bar|baz|yaz)$'
+                    }
+                  },
+                  required: ['_id'],
+                  patternProperties: {
+                    '^\\d+$': {type: 'string'}
+                  },
+                  additionalProperties: false
+                }
+              }
             })
           }
         }),
@@ -219,6 +241,34 @@ __(function() {
               }
             }
           },
+          {
+            name: 'FailSaveObject1SchemaTest',
+            description: 'Test PUT with malformed body',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(_.clone(this.history.getReqSpec('FailSaveObjectSchemaTest')),
+                              {url: '/saveObject1/0'})
+            },
+            resSpec: {
+              $property: {get: function() {return this.history.getResSpec('FailSaveObjectSchemaTest')}}
+            }
+          },
+          {
+            name: 'SuccessSaveObject1SchemaTest',
+            description: 'Test PUT with well formed body',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(_.clone(this.history.getReqSpec('SuccessSaveObjectSchemaTest')),
+                              {url: '/saveObject1/0'})
+            },
+            resSpec: {
+              $property: {get: function() {return this.history.getResSpec('SuccessSaveObjectSchemaTest')}}
+            }
+          }
         ]
       }),
       o({
@@ -266,6 +316,128 @@ __(function() {
             resSpec: {
               statusCode: 204,
               body: undefined
+            }
+          }
+        ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'CustomConfigParameterTests',
+        service: o({
+          _type: pong.Service,
+          endpoints: {
+            saveObject: o({
+              _type: pong.Collection,
+              idGenerator: pong.util.collectionIdGenerator,
+              enabled: {saveObject: true},
+              saveObjectConfig: {
+                parameters: {
+                  $merge: {
+                    foo: {
+                      location: 'header',
+                      schema: {
+                        type: 'number',
+                        minimum: 0,
+                        multipleOf: 2
+                      }
+                    }
+                  }
+                }
+              }
+            })
+          }
+        }),
+        setup: function(context) {
+          carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
+          context.global.idParameter = this.service.endpoints.saveObject.idParameter
+        },
+        teardown: function(context) {
+          delete context.global.idParameter
+          carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
+        },
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'SaveObjectConfigCustomParameterInitializationTest',
+            doTest: function(context) {
+              let saveObjectOperation =
+                this.parent.service.endpoints.saveObject.endpoints[`:${context.global.idParameter}`].put
+              assert.deepEqual(saveObjectOperation.parameters, {
+                object: {
+                  name: 'object',
+                  location: 'body',
+                  description: 'Object to save',
+                  schema:
+                  {
+                    type: 'object',
+                    properties: {_id: {type: 'string'}},
+                    required: ['_id'],
+                    additionalProperties: true
+                  },
+                  required: true,
+                  default: undefined
+                },
+                foo: {
+                  name: 'foo',
+                  location: 'header',
+                  description: undefined,
+                  schema: {type: 'number', minimum: 0, multipleOf: 2},
+                  required: false,
+                  default: undefined
+                },
+              })
+            }
+          }),
+          {
+            name: 'SaveObjectConfigCustomParameterPassedViaOptionsFailTest',
+            setup: function(context) {
+              context.local.saveObjectSpy = sinon.spy(this.parent.service.endpoints.saveObject, 'saveObject')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.saveObjectSpy.called, false)
+              context.local.saveObjectSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/saveObject/0',
+                method: 'PUT',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    saveObject: {$args: 0}
+                  }),
+                  foo: 3
+                },
+                body: {[context.global.idParameter]: '0', foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'SaveObjectConfigCustomParameterPassedViaOptionsSuccessTest',
+            setup: function(context) {
+              context.local.saveObjectSpy = sinon.spy(this.parent.service.endpoints.saveObject, 'saveObject')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.saveObjectSpy.firstCall.args[1].foo, 4)
+              context.local.saveObjectSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/saveObject/0',
+                method: 'PUT',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    saveObject: {$args: 0}
+                  }),
+                  foo: 4
+                },
+                body: {[context.global.idParameter]: '0', foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 200
             }
           }
         ]
