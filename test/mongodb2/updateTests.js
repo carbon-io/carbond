@@ -307,6 +307,447 @@ __(function() {
         _type: testtube.util.SkipTest,
         name: 'QueryDisabledTests',
         description: 'Implement me'
+      }),
+      o({
+        _type: MongoDBCollectionHttpTest,
+        name: 'QuerySchemaConfigUpdateTests',
+        service: o({
+          _type: pong.Service,
+          dbUri: config.MONGODB_URI + '/update',
+          endpoints: {
+            update: o({
+              _type: pong.MongoDBCollection,
+              enabled: {update: true},
+              collection: 'update',
+              querySchema: {
+                type: 'object',
+                properties: {
+                  foo: {
+                    type: 'string'
+                  }
+                },
+                required: ['foo'],
+                additionalProperties: false
+              }
+            }),
+            update1: o({
+              _type: pong.MongoDBCollection,
+              enabled: {update: true},
+              collection: 'update',
+              updateConfig: {
+                '$parameters.query.schema': {
+                  type: 'object',
+                  properties: {
+                    foo: {
+                      type: 'string'
+                    }
+                  },
+                  required: ['foo'],
+                  additionalProperties: false
+                }
+              }
+            }),
+            update2: o({
+              _type: pong.MongoDBCollection,
+              enabled: {update: true},
+              collection: 'update',
+              querySchema: {
+                type: 'object',
+                properties: {
+                  foo: {
+                    type: 'string'
+                  }
+                },
+                required: ['foo'],
+                additionalProperties: false
+              },
+              updateConfig: {
+                '$parameters.query.schema': {
+                  type: 'object',
+                  properties: {
+                    bar: {
+                      type: 'string'
+                    }
+                  },
+                  required: ['bar'],
+                  additionalProperties: false
+                }
+              }
+            })
+          }
+        }),
+        fixture: {
+          update: [
+            {_id: getObjectId(0), foo: 'bar', val: 0},
+            {_id: getObjectId(1), bar: 'baz', val: 0},
+            {_id: getObjectId(2), baz: 'yaz', val: 0}
+          ]
+        },
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'CollectionQuerySchemaOverrideTest',
+            doTest: function() {
+              assert.deepEqual(this.parent.service.endpoints.update2.patch.parameters.query.schema, {
+                type: 'object',
+                properties: {
+                  foo: {
+                    type: 'string'
+                  }
+                },
+                required: ['foo'],
+                additionalProperties: false
+              })
+            }
+          }),
+          {
+            name: 'CollectionQuerySchemaFailTest',
+            reqSpec: {
+              url: '/update',
+              method: 'PATCH',
+              parameters: {
+                query: {bar: 'baz'},
+              },
+              body: {
+                $inc: {val: 1}
+              }
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'CollectionQuerySchemaSuccessTest',
+            teardown: function() {
+              let collection = this.parent.db.getCollection('update')
+              assert.deepEqual(
+                collection.findOne({_id: getObjectId(0)}),
+                {_id: getObjectId(0), foo: 'bar', val: 1})
+              assert.equal(collection.find({val: 0}).count(), 2)
+            },
+            reqSpec: {
+              url: '/update',
+              method: 'PATCH',
+              parameters: {
+                query: {foo: 'bar'}
+              },
+              body: {
+                $inc: {val: 1}
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: {n: 1}
+            }
+          },
+          {
+            name: 'ConfigQuerySchemaFailTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionQuerySchemaFailTest'),
+                              {url: '/update1'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionQuerySchemaFailTest') }
+              }
+            }
+          },
+          {
+            name: 'ConfigQuerySchemaSuccessTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            teardown: function() {
+              let collection = this.parent.db.getCollection('update')
+              assert.deepEqual(
+                collection.findOne({_id: getObjectId(0)}),
+                {_id: getObjectId(0), foo: 'bar', val: 2})
+              assert.equal(collection.find({val: 0}).count(), 2)
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionQuerySchemaSuccessTest'),
+                              {url: '/update1'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionQuerySchemaSuccessTest') }
+              }
+            }
+          },
+          {
+            name: 'CollectionQuerySchemaOverrideConfigQuerySchemaFailTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionQuerySchemaFailTest'),
+                              {url: '/update2'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionQuerySchemaFailTest') }
+              }
+            }
+          },
+          {
+            name: 'CollectionQuerySchemaOverrideConfigQuerySchemaSuccessTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            teardown: function() {
+              let collection = this.parent.db.getCollection('update')
+              assert.deepEqual(
+                collection.findOne({_id: getObjectId(0)}),
+                {_id: getObjectId(0), foo: 'bar', val: 3})
+              assert.equal(collection.find({val: 0}).count(), 2)
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionQuerySchemaSuccessTest'),
+                              {url: '/update2'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionQuerySchemaSuccessTest') }
+              }
+            }
+          }
+        ]
+      }),
+      o({
+        _type: MongoDBCollectionHttpTest,
+        name: 'UpdateSchemaConfigUpdateTests',
+        service: o({
+          _type: pong.Service,
+          dbUri: config.MONGODB_URI + '/update',
+          endpoints: {
+            update: o({
+              _type: pong.MongoDBCollection,
+              enabled: {update: true},
+              collection: 'update',
+              updateSchema: {
+                type: 'object',
+                properties: {
+                  $inc: {
+                    type: 'object',
+                    properties: {
+                      val: {type: 'number', multipleOf: 2, minimum: 2}
+                    },
+                    required: ['val'],
+                    additionalProperties: false
+                  }
+                },
+                required: ['$inc'],
+                additionalProperties: false
+              }
+            }),
+            update1: o({
+              _type: pong.MongoDBCollection,
+              enabled: {update: true},
+              collection: 'update',
+              updateConfig: {
+                '$parameters.update.schema': {
+                  type: 'object',
+                  properties: {
+                    $inc: {
+                      type: 'object',
+                      properties: {
+                        val: {type: 'number', multipleOf: 2, minimum: 2}
+                      },
+                      required: ['val'],
+                      additionalProperties: false
+                    }
+                  },
+                  required: ['$inc'],
+                  additionalProperties: false
+                }
+              }
+            }),
+            update2: o({
+              _type: pong.MongoDBCollection,
+              enabled: {update: true},
+              collection: 'update',
+              updateSchema: {
+                type: 'object',
+                properties: {
+                  $inc: {
+                    type: 'object',
+                    properties: {
+                      val: {type: 'number', multipleOf: 2, minimum: 2}
+                    },
+                    required: ['val'],
+                    additionalProperties: false
+                  }
+                },
+                required: ['$inc'],
+                additionalProperties: false
+              },
+              updateConfig: {
+                '$parameters.update.schema': {
+                  type: 'object',
+                  properties: {
+                    $inc: {
+                      type: 'object',
+                      properties: {
+                        val: {type: 'number', multipleOf: 3, minimum: 3}
+                      },
+                      required: ['val'],
+                      additionalProperties: false
+                    }
+                  },
+                  required: ['$inc'],
+                  additionalProperties: false
+                }
+              }
+            })
+          }
+        }),
+        fixture: {
+          update: [
+            {_id: getObjectId(0), foo: 'bar', val: 0},
+            {_id: getObjectId(1), bar: 'baz', val: 0},
+            {_id: getObjectId(2), baz: 'yaz', val: 0}
+          ]
+        },
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'CollectionUpdateSchemaOverrideTest',
+            doTest: function() {
+              assert.deepEqual(this.parent.service.endpoints.update2.patch.parameters.update.schema, {
+                type: 'object',
+                properties: {
+                  $inc: {
+                    type: 'object',
+                    properties: {
+                      val: {type: 'number', multipleOf: 2, minimum: 2}
+                    },
+                    required: ['val'],
+                    additionalProperties: false
+                  }
+                },
+                required: ['$inc'],
+                additionalProperties: false
+              })
+            }
+          }),
+          {
+            name: 'CollectionUpdateSchemaFailTest',
+            reqSpec: {
+              url: '/update',
+              method: 'PATCH',
+              parameters: {
+                query: {foo: 'bar'},
+              },
+              body: {
+                $inc: {value: 1}
+              }
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'CollectionUpdateSchemaSuccessTest',
+            teardown: function() {
+              let collection = this.parent.db.getCollection('update')
+              assert.deepEqual(
+                collection.findOne({_id: getObjectId(0)}),
+                {_id: getObjectId(0), foo: 'bar', val: 2})
+              assert.equal(collection.find({val: 0}).count(), 2)
+            },
+            reqSpec: {
+              url: '/update',
+              method: 'PATCH',
+              parameters: {
+                query: {foo: 'bar'}
+              },
+              body: {
+                $inc: {val: 2}
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: {n: 1}
+            }
+          },
+          {
+            name: 'ConfigUpdateSchemaFailTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionUpdateSchemaFailTest'),
+                              {url: '/update1'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionUpdateSchemaFailTest') }
+              }
+            }
+          },
+          {
+            name: 'ConfigUpdateSchemaSuccessTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            teardown: function() {
+              let collection = this.parent.db.getCollection('update')
+              assert.deepEqual(
+                collection.findOne({_id: getObjectId(0)}),
+                {_id: getObjectId(0), foo: 'bar', val: 4})
+              assert.equal(collection.find({val: 0}).count(), 2)
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionUpdateSchemaSuccessTest'),
+                              {url: '/update1'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionUpdateSchemaSuccessTest') }
+              }
+            }
+          },
+          {
+            name: 'CollectionUpdateSchemaOverrideConfigUpdateSchemaFailTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionUpdateSchemaFailTest'),
+                              {url: '/update2'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionUpdateSchemaFailTest') }
+              }
+            }
+          },
+          {
+            name: 'CollectionUpdateSchemaOverrideConfigUpdateSchemaSuccessTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            teardown: function() {
+              let collection = this.parent.db.getCollection('update')
+              assert.deepEqual(
+                collection.findOne({_id: getObjectId(0)}),
+                {_id: getObjectId(0), foo: 'bar', val: 6})
+              assert.equal(collection.find({val: 0}).count(), 2)
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionUpdateSchemaSuccessTest'),
+                              {url: '/update2'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionUpdateSchemaSuccessTest') }
+              }
+            }
+          }
+        ]
       })
     ]
   })

@@ -164,6 +164,194 @@ __(function() {
             })
           })
         }
+      }),
+      o({
+        _type: MongoDBCollectionHttpTest,
+        name: 'QuerySchemaConfigRemoveTests',
+        service: o({
+          _type: pong.Service,
+          dbUri: config.MONGODB_URI + '/remove',
+          endpoints: {
+            remove: o({
+              _type: pong.MongoDBCollection,
+              enabled: {remove: true},
+              collection: 'remove',
+              querySchema: {
+                type: 'object',
+                properties: {
+                  foo: {
+                    type: 'string'
+                  }
+                },
+                required: ['foo'],
+                additionalProperties: false
+              }
+            }),
+            remove1: o({
+              _type: pong.MongoDBCollection,
+              enabled: {remove: true},
+              collection: 'remove',
+              removeConfig: {
+                '$parameters.query.schema': {
+                  type: 'object',
+                  properties: {
+                    foo: {
+                      type: 'string'
+                    }
+                  },
+                  required: ['foo'],
+                  additionalProperties: false
+                }
+              }
+            }),
+            remove2: o({
+              _type: pong.MongoDBCollection,
+              enabled: {remove: true},
+              collection: 'remove',
+              querySchema: {
+                type: 'object',
+                properties: {
+                  foo: {
+                    type: 'string'
+                  }
+                },
+                required: ['foo'],
+                additionalProperties: false
+              },
+              removeConfig: {
+                '$parameters.query.schema': {
+                  type: 'object',
+                  properties: {
+                    bar: {
+                      type: 'string'
+                    }
+                  },
+                  required: ['bar'],
+                  additionalProperties: false
+                }
+              }
+            })
+          }
+        }),
+        fixture: {
+          remove: [
+            {_id: getObjectId(0), foo: 'bar'},
+            {_id: getObjectId(1), bar: 'baz'},
+            {_id: getObjectId(2), baz: 'yaz'}
+          ]
+        },
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'CollectionQuerySchemaOverrideTest',
+            doTest: function() {
+              assert.deepEqual(this.parent.service.endpoints.remove2.delete.parameters.query.schema, {
+                type: 'object',
+                properties: {
+                  foo: {
+                    type: 'string'
+                  }
+                },
+                required: ['foo'],
+                additionalProperties: false
+              })
+            }
+          }),
+          {
+            name: 'CollectionQuerySchemaFailTest',
+            reqSpec: {
+              url: '/remove',
+              method: 'DELETE',
+              parameters: {
+                query: {bar: 'baz'},
+              }
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'CollectionQuerySchemaSuccessTest',
+            teardown: function() {
+              let collection = this.parent.db.getCollection('remove')
+              assert.ok(_.isNil(collection.findOne({_id: getObjectId(0)})))
+              assert.equal(collection.find({}).count(), 2)
+            },
+            reqSpec: {
+              url: '/remove',
+              method: 'DELETE',
+              parameters: {
+                query: {foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: {n: 1}
+            }
+          },
+          {
+            name: 'ConfigQuerySchemaFailTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionQuerySchemaFailTest'),
+                              {url: '/remove1'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionQuerySchemaFailTest') }
+              }
+            }
+          },
+          {
+            name: 'ConfigQuerySchemaSuccessTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+              this.parent.populateDb()
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionQuerySchemaSuccessTest'),
+                              {url: '/remove1'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionQuerySchemaSuccessTest') }
+              }
+            }
+          },
+          {
+            name: 'CollectionQuerySchemaOverrideConfigQuerySchemaFailTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionQuerySchemaFailTest'),
+                              {url: '/remove2'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionQuerySchemaFailTest') }
+              }
+            }
+          },
+          {
+            name: 'CollectionQuerySchemaOverrideConfigQuerySchemaSuccessTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+              this.parent.populateDb()
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionQuerySchemaSuccessTest'),
+                              {url: '/remove2'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionQuerySchemaSuccessTest') }
+              }
+            }
+          }
+        ]
       })
     ]
   })
