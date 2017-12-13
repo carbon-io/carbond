@@ -4,7 +4,7 @@ Welcome to carbond's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3 
 
    guide/index
    ref/index
