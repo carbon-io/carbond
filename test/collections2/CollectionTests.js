@@ -220,7 +220,7 @@ __(function() {
                 }
               },
               findConfig: {
-                results: {
+                responses: {
                   '$200.headers[0]': 'foo'
                 }
               },
