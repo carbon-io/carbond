@@ -42,13 +42,13 @@ When responding to HTTP requests, two styles are supported:
     :language: javascript
     :linenos:
     :dedent: 8
-    :lines: 13-15
+    :named-sections: operations-asyncFunc
 
 .. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleEndpointOperationExample.js
     :language: javascript
     :linenos:
     :dedent: 8
-    :lines: 19-25
+    :named-sections: operations-asyncObj
 
 **Examples (synchronous)**
 
@@ -56,13 +56,13 @@ When responding to HTTP requests, two styles are supported:
     :language: javascript
     :linenos:
     :dedent: 8
-    :lines: 29-31
+    :named-sections: operations-syncFunc
 
 .. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleEndpointOperationExample.js
     :language: javascript
     :linenos:
     :dedent: 8
-    :lines: 35-41
+    :named-sections: operations-syncObj
 
 Operation parameters
 --------------------
@@ -91,25 +91,25 @@ interactive administration tools.
     :language: javascript
     :linenos:
     :dedent: 8
-    :lines: 45-58
+    :named-sections: operations-queryParam
 
 .. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleEndpointOperationExample.js
     :language: javascript
     :linenos:
     :dedent: 8
-    :lines: 62-82
+    :named-sections: operations-bodyParam
 
-Parameter schemas 
+Parameter schemas
 -----------------
 
 TODO
 
-Parameter parsing 
+Parameter parsing
 -----------------
 
 TODO
 
-Operation responses 
+Operation responses
 -------------------
 
 TODO

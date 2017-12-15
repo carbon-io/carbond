@@ -45,7 +45,7 @@ method.
 .. literalinclude:: ../../code-frags/standalone-examples/ServiceSimpleAuthenticationExample.js
     :language: javascript
     :linenos:
-    :lines: 24-30
+    :lines: authentication-customAuthenticator
     :dedent: 6
     :emphasize-lines: 3
 
@@ -68,7 +68,7 @@ Examples
 .. literalinclude:: ../../code-frags/standalone-examples/ServiceSimpleAuthenticationExample.js
     :language: javascript
     :linenos:
-    :lines: 45-65
+    :named-sections: authentication-HTTPBasicAuth
     :dedent: 2
     :emphasize-lines: 6-11, 16
 
@@ -99,7 +99,7 @@ Examples
 .. literalinclude:: ../../code-frags/standalone-examples/ServiceSimpleAuthenticationExample.js
     :language: javascript
     :linenos:
-    :lines: 69-90
+    :named-sections: authentication-APIKeyAuth
     :dedent: 2
     :emphasize-lines: 6-12, 17
 
@@ -131,7 +131,7 @@ Examples
 .. literalinclude:: ../../code-frags/standalone-examples/ServiceSimpleAuthenticationExample.js
     :language: javascript
     :linenos:
-    :lines: 9,21-40
+    :named-sections: authentication-customAuthHeader,authentication-customAuthFooter
     :dedent: 2
     :emphasize-lines: 5-11, 16
 

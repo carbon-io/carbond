@@ -82,16 +82,14 @@ objects with IDs populated should be returned.
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-insert-memCacheCounterBasic
-    :end-before: post-insert-memCacheCounterBasic
+    :named-sections: insert-memCacheCounterBasic
     :caption: Example implementation using in-memory cache:
 
 .. literalinclude:: ../../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-insert-mongoCounterBasic
-    :end-before: post-insert-mongoCounterBasic
+    :named-sections: insert-mongoCounterBasic
     :caption: Example implementation using MongoDB:
 
 find
@@ -105,16 +103,14 @@ return a list of objects in the collection in natural order.
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-find-memCacheCounterBasic
-    :end-before: post-find-memCacheCounterBasic
+    :named-sections: find-memCacheCounterBasic
     :caption: Example implementation using in-memory cache:
 
 .. literalinclude:: ../../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-find-mongoCounterBasic
-    :end-before: post-find-mongoCounterBasic
+    :named-sections: find-mongoCounterBasic
     :caption: Example implementation using MongoDB:
 
 Additionally, the ``find`` operation can be configured to support pagination and
@@ -136,8 +132,7 @@ The following in-memory cache example accommodates both of these options:
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-find-memCacheCounterAdvanced
-    :end-before: post-find-memCacheCounterAdvanced
+    :named-sections: find-memCacheCounterAdvanced
 
 .. _queryability-for-custom-collections:
 
@@ -171,16 +166,14 @@ list of objects that make up the new collection.
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-save-memCacheCounterBasic
-    :end-before: post-save-memCacheCounterBasic
-    :caption: Example implementation using in-memory cache:
+    :named-sections: save-memCacheCounterBasic
+    :caption: Example implementation using in-memory cache
 
 .. literalinclude:: ../../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-save-mongoCounterBasic
-    :end-before: post-save-mongoCounterBasic
+    :named-sections: save-mongoCounterBasic
     :caption: Example implementation using MongoDB:
 
 update
@@ -230,16 +223,14 @@ Since upserts are not supported in this scenario, you can always omit
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-update-memCacheCounterBasic
-    :end-before: post-update-memCacheCounterBasic
+    :named-sections: update-memCacheCounterBasic
     :caption: Example implementation using in-memory cache:
 
 .. literalinclude:: ../../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-update-mongoCounterBasic
-    :end-before: post-update-mongoCounterBasic
+    :named-sections: update-mongoCounterBasic
     :caption: Example implementation using MongoDB:
 
 Scenario 2 is much like scenario 1, except you also have to take the ``created``
@@ -274,8 +265,7 @@ obj3, obj4, obj4]``):
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-remove-memCacheCounterAdvanced
-    :end-before: post-remove-memCacheCounterAdvanced
+    :named-sections: remove-memCacheCounterAdvanced
 
 If not, as is the case with MongoDB, the number of objects removed should be returned:
 
@@ -283,8 +273,7 @@ If not, as is the case with MongoDB, the number of objects removed should be ret
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-remove-mongoCounterBasic
-    :end-before: post-remove-mongoCounterBasic
+    :named-sections: remove-mongoCounterBasic
 
 Note, see :ref:`here <queryability-for-custom-collections>` to understand why the
 ability to query a set of documents is not explicitly supported by the
@@ -305,16 +294,14 @@ persisted, it should be returned with its ID populated.
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-insertObject-memCacheCounterBasic
-    :end-before: post-insertObject-memCacheCounterBasic
+    :named-sections: insertObject-memCacheCounterBasic
     :caption: Example implementation using in-memory cache:
 
 .. literalinclude:: ../../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-insertObject-mongoCounterBasic
-    :end-before: post-insertObject-mongoCounterBasic
+    :named-sections: insertObject-mongoCounterBasic
     :caption: Example implementation using MongoDB:
 
 findObject
@@ -328,16 +315,14 @@ should return the object from the collection with that ``id`` if it exists and
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-findObject-memCacheCounterBasic
-    :end-before: post-findObject-memCacheCounterBasic
+    :named-sections: findObject-memCacheCounterBasic
     :caption: Example implementation using in-memory cache:
 
 .. literalinclude:: ../../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-findObject-mongoCounterBasic
-    :end-before: post-findObject-mongoCounterBasic
+    :named-sections: findObject-mongoCounterBasic
     :caption: Example implementation using MongoDB:
 
 Note, when ``null`` or ``undefined`` is returned, this indicates that the object
@@ -364,16 +349,14 @@ should be returned. Otherwise, the object that was saved should be returned and
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-saveObject-memCacheCounterBasic
-    :end-before: post-saveObject-memCacheCounterBasic
+    :named-sections: saveObject-memCacheCounterBasic
     :caption: Example implementation using in-memory cache:
 
 .. literalinclude:: ../../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-saveObject-mongoCounterBasic
-    :end-before: post-saveObject-mongoCounterBasic
+    :named-sections: saveObject-mongoCounterBasic
     :caption: Example implementation using MongoDB:
 
 Note, when ``null`` or ``undefined`` is returned, this indicates that the object
@@ -397,16 +380,14 @@ specific semantics defined by :js:class:`~carbond.collections.Collection` itself
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-updateObject-memCacheCounterBasic
-    :end-before: post-updateObject-memCacheCounterBasic
+    :named-sections: updateObject-memCacheCounterBasic
     :caption: Example implementation using in-memory cache:
 
 .. literalinclude:: ../../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-updateObject-mongoCounterBasic
-    :end-before: post-updateObject-mongoCounterBasic
+    :named-sections: updateObject-mongoCounterBasic
     :caption: Example implementation using MongoDB:
 
 Note, when ``null``, ``undefined``, or ``0`` is returned, this indicates that
@@ -426,16 +407,14 @@ removed object.
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-removeObject-memCacheCounterBasic
-    :end-before: post-removeObject-memCacheCounterBasic
+    :named-sections: removeObject-memCacheCounterBasic
     :caption: Example implementation using in-memory cache:
 
 .. literalinclude:: ../../code-frags/counter-col/lib/CounterCol.js
     :language: javascript
     :linenos:
     :dedent: 8
-    :start-after: pre-removeObject-mongoCounterBasic
-    :end-before: post-removeObject-mongoCounterBasic
+    :named-sections: removeObject-mongoCounterBasic
     :caption: Example implementation using MongoDB:
 
 Note, when ``null``, ``undefined``, or ``0`` is returned, this indicates that

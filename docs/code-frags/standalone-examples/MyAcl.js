@@ -1,3 +1,4 @@
+// pre-access-control-aclReuseExampleHeader
 var carbon = require('carbon-io')
 var o  = carbon.atom.o(module)
 
@@ -6,6 +7,7 @@ module.exports = o({
   /*
    * Your ACL definition
    */
+  // post-access-control-aclReuseExampleHeader
   groupDefinitions: { // This ACL defined two groups, 'role' and
                       // 'title'.
     role: 'role', // We define a group called 'role' based on the
@@ -42,5 +44,7 @@ module.exports = o({
       }
     }
   ]
+  // pre-access-control-aclReuseExampleFooter
 })
+// post-access-control-aclReuseExampleFooter
 

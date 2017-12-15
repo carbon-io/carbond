@@ -3,6 +3,7 @@ var o  = carbon.atom.o(module)
 var __ = carbon.fibers.__(module)
 
 __(function() {
+  // pre-access-control-endpointACLExample
   __(function() {
     module.exports = o.main({
       _type: carbon.carbond.Service,
@@ -69,10 +70,12 @@ __(function() {
       }
     })
   })
+  // post-access-control-endpointACLExample
 
   // just playing this game for presentation's sake in the docs
   var Service1 = module.exports
 
+  // pre-access-control-collectionACLExample
   __(function() {
     module.exports = o.main({
       _type: carbon.carbond.Service,
@@ -133,6 +136,7 @@ __(function() {
       }
     })
   })
+  // post-access-control-collectionACLExample
 
   var Service2 = module.exports
 

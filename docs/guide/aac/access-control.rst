@@ -47,7 +47,7 @@ Here is an example of a :js:class:`~carbond.Service` using an
 .. literalinclude:: ../../code-frags/standalone-examples/ServiceSimpleAuthorizationExample.js
     :language: javascript
     :linenos:
-    :lines: 6-71
+    :named-sections: access-control-endpointACLExample
     :dedent: 2
     :emphasize-lines: 16-53
 
@@ -77,9 +77,9 @@ Here is an example of a ``Service`` using a ``CollectionAcl`` on a ``MongoDBColl
 .. literalinclude:: ../../code-frags/standalone-examples/ServiceSimpleAuthorizationExample.js
     :language: javascript
     :linenos:
-    :lines: 76-134
+    :named-sections: access-control-collectionACLExample
     :dedent: 2
-    :emphasize-lines: 17-55
+    :emphasize-lines: 18-55
 
 Re-using ACLs across multiple Endpoints
 ---------------------------------------
@@ -95,7 +95,7 @@ MyAcl.js:
 .. literalinclude:: ../../code-frags/standalone-examples/MyAcl.js
     :language: javascript
     :linenos:
-    :lines: 1-8, 45
+    :named-sections: access-control-aclReuseExampleHeader,access-control-aclReuseExampleFooter
 
 Now you can reference this ACL from any ``Endpoint`` that wished to
 use that ACL:

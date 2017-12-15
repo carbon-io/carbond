@@ -24,7 +24,7 @@ Consider the following :js:class:`~carbond.Service`:
 
 .. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleEndpointExample.js
     :language: javascript
-    :lines: 1-9, 11-
+    :named-sections: testingHeader,testingFooter
     :linenos:
 
 You can test your :js:class:`~carbond.Service` like so:
