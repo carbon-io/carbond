@@ -228,6 +228,25 @@ __(function() {
                 result = pong.Collection.prototype.postFindOperation.apply(this, arguments)
                 res.append('foo', 'bar')
                 return result
+              },
+              findObjectConfig: {
+                responses: {
+                  $merge: {
+                    '200': {
+                      statusCode: 200,
+                      description: 'foo bar baz',
+                      schema: {
+                        type: 'object',
+                        properties: {
+                          _id: {type: 'string'}
+                        },
+                        required: ['_id'],
+                        additionalProperties: false
+                      },
+                      headers: ['Location', this.idHeader]
+                    }
+                  }
+                }
               }
             })
           }
@@ -394,6 +413,53 @@ __(function() {
               statusCode: 200,
               headers: function(headers) {
                 assert.equal(headers['foo'], 'bar')
+              }
+            }
+          },
+          {
+            name: 'FindObject200ExplicitMergeSuccessTest',
+            reqSpec: function(context) {
+              return {
+                url: '/foo/0',
+                method: 'GET',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    findObject: {
+                      [context.global.idParameter]: '0'
+                    }
+                  })
+                }
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: function(body, context) {
+                assert.deepEqual(body, {
+                  [context.global.idParameter]: '0'
+                })
+              }
+            }
+          },
+          {
+            name: 'FindObject200ExplicitMergeFailTest',
+            reqSpec: function(context) {
+              return {
+                url: '/foo/0',
+                method: 'GET',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    findObject: {
+                      [context.global.idParameter]: '0',
+                      foo: 'bar'
+                    }
+                  })
+                }
+              }
+            },
+            resSpec: {
+              statusCode: 500,
+              body: function(body) {
+                assert.ok(body.message.match(/^Output did not validate against:.+/))
               }
             }
           }
