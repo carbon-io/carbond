@@ -5,17 +5,64 @@ var _ = require('lodash')
 var sinon = require('sinon')
 
 var __ = require('@carbon-io/carbon-core').fibers.__(module)
+var _o = require('@carbon-io/carbon-core').bond._o(module)
 var ejson = require('@carbon-io/carbon-core').ejson
 var o = require('@carbon-io/carbon-core').atom.o(module)
-var _o = require('@carbon-io/carbon-core').bond._o(module)
+var oo = require('@carbon-io/carbon-core').atom.oo(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
 var carbond = require('../..')
 var pong = require('../fixtures/pong')
 
-/**************************************************************************
- * integration tests
- */
+var PongCollectionSubclass = oo({
+  _type: pong.Collection,
+  _init: function() {
+    pong.Collection.prototype._init.apply(this, arguments)
+  },
+  FindConfigClass: oo({
+    _type: carbond.collections.FindConfig,
+    _C: function() {
+      this.parameters = _.assignIn({
+        foo: {
+          location: 'header',
+          schema: {
+            type: 'string',
+          },
+          required: false
+        },
+        yaz: {
+          location: 'header',
+          schema: {
+            type: 'string',
+          },
+          required: false
+        },
+      }, this.parameters)
+    }
+  }),
+  FindObjectConfigClass: oo({
+    _type: carbond.collections.FindObjectConfig,
+    _C: function() {
+      this.parameters = _.assignIn({
+        foo: {
+          location: 'header',
+          schema: {
+            type: 'string',
+          },
+          required: false
+        },
+        yaz: {
+          location: 'header',
+          schema: {
+            type: 'string',
+          },
+          required: false
+        },
+      }, this.parameters)
+    }
+  }),
+})
+
 __(function() {
   module.exports = o.main({
     _type: testtube.Test,
@@ -170,6 +217,305 @@ __(function() {
       }),
       o({
         _type: carbond.test.ServiceTest,
+        name: 'CollectionLevelParameterTests',
+        service: o({
+          _type: pong.Service,
+          endpoints: {
+            foo: o({
+              _type: pong.Collection,
+              enabled: {
+                find: true,
+                findObject: true,
+              },
+              idParameter: 'foo',
+              idPathParameter: 'foo',
+              schema: {
+                type: 'object',
+                properties: {
+                  foo: {
+                    type: 'string'
+                  }
+                },
+                required: ['foo']
+              },
+              findConfig: {
+                parameters: {
+                  bar: {
+                    location: 'header',
+                    schema: {
+                      type: 'string',
+                    },
+                    required: false
+                  }
+                }
+              },
+              findObjectConfig: {
+                parameters: {
+                  $merge: {
+                    bar: {
+                      location: 'header',
+                      schema: {
+                        type: 'string',
+                      },
+                      required: false
+                    }
+                  }
+                }
+              },
+            }),
+            bar: o({
+              _type: PongCollectionSubclass,
+              enabled: {
+                find: true,
+                findObject: true,
+              },
+              idParameter: 'bar',
+              idPathParameter: 'bar',
+              schema: {
+                type: 'object',
+                properties: {
+                  bar: {
+                    type: 'string'
+                  }
+                },
+                required: ['bar']
+              },
+              findConfig: {
+                parameters: {
+                  $delete: 'foo'
+                }
+              },
+              findObjectConfig: {
+                parameters: {
+                  $multiop: [
+                    {$delete: 'foo'},
+                    {
+                      $merge: {
+                        baz: {
+                          location: 'header',
+                          schema: {
+                            type: 'string',
+                          },
+                          required: false
+                        }
+                      }
+                    }
+                  ],
+                }
+              },
+            }),
+          }
+        }),
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'ParametersUpdateTest',
+            doTest: function(context) {
+              let collections = this.parent.service.endpoints
+              assert.deepEqual(collections.foo.get.parameters, {
+                bar: {
+                  name: 'bar',
+                  location: 'header',
+                  description: undefined,
+                  schema: {type: 'string'},
+                  required: false,
+                  default: undefined
+                },
+                foo: {
+                  name: 'foo',
+                  location: 'query',
+                  description: 'Id query parameter',
+                  schema: {
+                    oneOf: [
+                      {type: 'string'},
+                      {type: 'array', items: {type: 'string'}}
+                    ]
+                  },
+                  required: false,
+                  default: undefined
+                }
+              })
+              assert.deepEqual(collections.foo.endpoints[':foo'].get.parameters, {
+                bar: {
+                  name: 'bar',
+                  location: 'header',
+                  description: undefined,
+                  schema: { type: 'string' },
+                  required: false,
+                  default: undefined
+                }
+              })
+              assert.deepEqual(collections.bar.get.parameters, {
+                yaz: {
+                  name: 'yaz',
+                  location: 'header',
+                  description: undefined,
+                  schema: {type: 'string'},
+                  required: false,
+                  default: undefined
+                },
+                bar: {
+                  name: 'bar',
+                  location: 'query',
+                  description: 'Id query parameter',
+                  schema: {
+                    oneOf: [
+                      {type: 'string'},
+                      {type: 'array', items: {type: 'string'}}
+                    ]
+                  },
+                  required: false,
+                  default: undefined
+                }
+              })
+              assert.deepEqual(collections.bar.endpoints[':bar'].get.parameters, {
+                yaz: {
+                  name: 'yaz',
+                  location: 'header',
+                  description: undefined,
+                  schema: {type: 'string'},
+                  required: false,
+                  default: undefined
+                },
+                baz: {
+                  name: 'baz',
+                  location: 'header',
+                  description: undefined,
+                  schema: {type: 'string'},
+                  required: false,
+                  default: undefined
+                }
+              })
+            }
+          }),
+          {
+            name: 'ImplicitMergeParamTest',
+            setup: function() {
+              this.handlerSpy = sinon.spy(this.parent.service.endpoints.foo, 'find')
+            },
+            teardown: function() {
+              try {
+                assert(this.handlerSpy.called)
+                assert.ok(!_.includes(_.keys(this.handlerSpy.args[0][0]), 'baz'))
+              } finally {
+                this.handlerSpy.restore()
+              }
+            },
+            reqSpec: {
+              url: '/foo',
+              method: 'GET',
+              headers: {
+                'x-pong': ejson.stringify({
+                  find: [{ foo: '0'}]
+                }),
+                bar: 0,
+                baz: 1
+              },
+              parameters: {
+                foo: '"0"'
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: [{foo: '0'}]
+            }
+          },
+          {
+            name: 'ExplicitMergeParamTest',
+            setup: function() {
+              this.handlerSpy = sinon.spy(this.parent.service.endpoints.foo, 'findObject')
+            },
+            teardown: function() {
+              try {
+                assert(this.handlerSpy.called)
+                assert.ok(!_.includes(_.keys(this.handlerSpy.args[0][1]), 'baz'))
+              } finally {
+                this.handlerSpy.restore()
+              }
+            },
+            reqSpec: {
+              url: '/foo/0',
+              method: 'GET',
+              headers: {
+                'x-pong': ejson.stringify({
+                  findObject: {foo: '0'}
+                }),
+                bar: 0,
+                baz: 1
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: {foo: '0'}
+            }
+          },
+          {
+            name: 'DeleteParamTest',
+            setup: function() {
+              this.handlerSpy = sinon.spy(this.parent.service.endpoints.bar, 'find')
+            },
+            teardown: function() {
+              try {
+                assert(this.handlerSpy.called)
+                assert.ok(!_.includes(_.keys(this.handlerSpy.args[0][0]), 'foo'))
+              } finally {
+                this.handlerSpy.restore()
+              }
+            },
+            reqSpec: {
+              url: '/bar',
+              method: 'GET',
+              headers: {
+                'x-pong': ejson.stringify({
+                  find: [{bar: '0'}]
+                }),
+                foo: 0,
+                yaz: 1
+              },
+              parameters: {
+                bar: '"0"'
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: [{bar: '0'}]
+            }
+          },
+          {
+            name: 'MultiopParamTest',
+            setup: function() {
+              this.handlerSpy = sinon.spy(this.parent.service.endpoints.bar, 'findObject')
+            },
+            teardown: function() {
+              try {
+                assert(this.handlerSpy.called)
+                assert.ok(!_.includes(_.keys(this.handlerSpy.args[0][1]), 'foo'))
+                assert.ok(_.includes(_.keys(this.handlerSpy.args[0][1]), 'baz'))
+              } finally {
+                this.handlerSpy.restore()
+              }
+            },
+            reqSpec: {
+              url: '/bar/0',
+              method: 'GET',
+              headers: {
+                'x-pong': ejson.stringify({
+                  findObject: {bar: '0'}
+                }),
+                foo: 0,
+                yaz: 1,
+                baz: 2
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: {bar: '0'}
+            }
+          },
+        ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
         name: 'CollectionConfigResponseMutationTests',
         service: o({
           _type: pong.Service,
@@ -195,10 +541,9 @@ __(function() {
               insertConfig: {
                 responses: {
                   '$201.schema.items.required': ['_id', 'foo', 'bar'],
-                  // XXX: add when $delete merged into atom
-                  // '$201.schema.items.properties': {
-                  //   $delete: 'baz'
-                  // },
+                  '$201.schema.items.properties': {
+                    $delete: 'baz'
+                  },
                   '$400.description': 'Whoopsie-daisy!'
                 }
               },
@@ -215,7 +560,7 @@ __(function() {
                       required: ['_id'],
                       additionalProperties: false
                     },
-                    headers: ['Location', this.idHeader]
+                    headers: ['Location', 'carbonio-id']
                   }
                 }
               },
@@ -243,7 +588,7 @@ __(function() {
                         required: ['_id'],
                         additionalProperties: false
                       },
-                      headers: ['Location', this.idHeader]
+                      headers: ['Location', 'carbonio-id']
                     }
                   }
                 }
@@ -254,12 +599,51 @@ __(function() {
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
           context.global.idParameter = this.service.endpoints.foo.idParameter
+          context.global.idHeader = this.service.endpoints.foo.idHeader
         },
         teardown: function(context) {
           delete context.global.idParameter
+          delete context.global.idHeader
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
+          o({
+            _type: testtube.Test,
+            name: 'ResponsesUpdateTest',
+            doTest: function(context) {
+              let collection = this.parent.service.endpoints.foo
+              assert.deepEqual(collection.post.responses[201].schema.oneOf[0].items.required,
+                               ['_id', 'foo', 'bar'])
+              assert.deepEqual(collection.post.responses[201].schema.oneOf[0].items.properties, {
+                  _id: {type: 'string'},
+                  foo: {type: 'string'},
+                  bar: {type: 'string'}
+              })
+              assert.equal(collection.post.responses[400].description, 'Whoopsie-daisy!')
+              assert.deepEqual(collection.post.responses[201].schema.oneOf[1], {
+                type: 'object',
+                properties: {
+                  _id: {type: 'string'}
+                },
+                required: ['_id'],
+                additionalProperties: false
+              })
+              assert.equal(collection.get.responses[200].headers[0], 'foo')
+              assert.deepEqual(collection.endpoints[`:${context.global.idParameter}`].get.responses[200], {
+                statusCode: 200,
+                description: 'foo bar baz',
+                schema: {
+                  type: 'object',
+                  properties: {
+                    _id: {type: 'string'}
+                  },
+                  required: ['_id'],
+                  additionalProperties: false
+                },
+                headers: ['Location', context.global.idHeader]
+              })
+            }
+          }),
           {
             name: 'Insert201UnrequireBazSuccessTest',
             reqSpec: function(context) {
@@ -275,7 +659,7 @@ __(function() {
                     }]
                   })
                 },
-                body: [{foo: 'bar', bar: 'baz', baz: 'yaz'}]
+                body: [{foo: 'bar', bar: 'baz', baz: '666'}]
               }
             },
             resSpec: {
@@ -301,40 +685,11 @@ __(function() {
                       [context.global.idParameter]: '0',
                       foo: 'bar',
                       bar: 'baz',
-                      barf: 666
+                      baz: '666'
                     }]
                   })
                 },
-                body: [{foo: 'bar', bar: 'baz', baz: 'yaz'}]
-              }
-            },
-            resSpec: {
-              statusCode: 500,
-              body: function(body) {
-                assert.ok(body.message.match(/^Output did not validate against: .+/))
-              }
-            }
-          },
-          {
-            name: 'Insert201UnrequireBazFailDeletedParameterTest',
-            setup: function() {
-              throw new testtube.errors.SkipTestError('Implement when $delete merged into atom')
-            },
-            reqSpec: function(context) {
-              return {
-                url: '/foo',
-                method: 'POST',
-                headers: {
-                  'x-pong': ejson.stringify({
-                    insert: [{
-                      [context.global.idParameter]: '0',
-                      foo: 'bar',
-                      bar: 'baz',
-                      baz: 'yaz'
-                    }]
-                  })
-                },
-                body: [{foo: 'bar', bar: 'baz', baz: 'yaz'}]
+                body: [{foo: 'bar', bar: 'baz', baz: '666'}]
               }
             },
             resSpec: {
