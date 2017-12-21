@@ -217,7 +217,7 @@ __(function() {
       }),
       o({
         _type: carbond.test.ServiceTest,
-        name: 'CollectionLevelParameterTests',
+        name: 'CollectionOperationParameterTests',
         service: o({
           _type: pong.Service,
           endpoints: {
@@ -511,7 +511,7 @@ __(function() {
               statusCode: 200,
               body: {bar: '0'}
             }
-          },
+          }
         ]
       }),
       o({
