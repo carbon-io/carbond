@@ -40,7 +40,7 @@ instantiate a config instance using the appropriate config class (e.g.,
     insertConfig: o({
       _type: carbond.collections.MyCustomInsertConfig,
       description: "My collection's insert operation",
-      additionalParameters: {
+      parameters: {
         foo: {
           name: "foo",
           location: "query",
@@ -60,7 +60,7 @@ config class for that operation (in this case,
 
     insertConfig: {
       description: "My collection's insert operation",
-      additionalParameters: {
+      parameters: {
         foo: {
           name: "foo",
           location: "query",
@@ -93,7 +93,6 @@ operation configs like:
 - :js:attr:`~carbond.collections.CollectionOperationConfig.noDocument`
 - :js:attr:`~carbond.collections.CollectionOperationConfig.allowUnauthenticated`
 - :js:attr:`~carbond.collections.CollectionOperationConfig.parameters`
-- :js:attr:`~carbond.collections.CollectionOperationConfig.additionalParameters`
 - :js:attr:`~carbond.collections.CollectionOperationConfig.responses`
 - :js:attr:`~carbond.collections.CollectionOperationConfig.endpoint`
 - :js:attr:`~carbond.collections.CollectionOperationConfig.options`

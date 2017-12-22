@@ -243,6 +243,112 @@ __(function() {
             }
           },
         ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'CustomConfigParameterTests',
+        service: o({
+          _type: pong.Service,
+          endpoints: {
+            removeObject: o({
+              _type: pong.Collection,
+              idGenerator: pong.util.collectionIdGenerator,
+              enabled: {removeObject: true},
+              removeObjectConfig: {
+                parameters: {
+                  $merge: {
+                    foo: {
+                      location: 'header',
+                      schema: {
+                        type: 'number',
+                        minimum: 0,
+                        multipleOf: 2
+                      }
+                    }
+                  }
+                }
+              }
+            })
+          }
+        }),
+        setup: function(context) {
+          carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
+          context.global.idParameter = this.service.endpoints.removeObject.idParameter
+        },
+        teardown: function(context) {
+          delete context.global.idParameter
+          carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
+        },
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'RemoveObjectConfigCustomParameterInitializationTest',
+            doTest: function(context) {
+              let removeObjectOperation = 
+                this.parent.service.endpoints.removeObject.endpoints[`:${context.global.idParameter}`].delete
+              assert.deepEqual(removeObjectOperation.parameters, {
+                foo: {
+                  name: 'foo',
+                  location: 'header',
+                  description: undefined,
+                  schema: {type: 'number', minimum: 0, multipleOf: 2},
+                  required: false,
+                  default: undefined
+                },
+              })
+            }
+          }),
+          {
+            name: 'RemoveObjectConfigCustomParameterPassedViaOptionsFailTest',
+            setup: function(context) {
+              context.local.removeObjectSpy = sinon.spy(this.parent.service.endpoints.removeObject, 'removeObject')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.removeObjectSpy.called, false)
+              context.local.removeObjectSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/removeObject/0',
+                method: 'DELETE',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    removeObject: 1
+                  }),
+                  foo: 3
+                }
+              }
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'RemoveObjectConfigCustomParameterPassedViaOptionsSuccessTest',
+            setup: function(context) {
+              context.local.removeObjectSpy = sinon.spy(this.parent.service.endpoints.removeObject, 'removeObject')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.removeObjectSpy.firstCall.args[1].foo, 4)
+              context.local.removeObjectSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/removeObject/0',
+                method: 'DELETE',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    removeObject: 1
+                  }),
+                  foo: 4
+                },
+              }
+            },
+            resSpec: {
+              statusCode: 200
+            }
+          }
+        ]
       })
     ]
   })

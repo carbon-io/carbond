@@ -552,8 +552,187 @@ __(function() {
           }
         ]
       }),
+      o({
+        _type: MongoDBCollectionHttpTest,
+        name: 'QuerySchemaConfigFindTests',
+        service: o({
+          _type: pong.Service,
+          dbUri: config.MONGODB_URI + '/find',
+          endpoints: {
+            find: o({
+              _type: pong.MongoDBCollection,
+              enabled: {find: true},
+              collection: 'find',
+              querySchema: {
+                type: 'object',
+                properties: {
+                  foo: {
+                    type: 'string'
+                  }
+                },
+                required: ['foo'],
+                additionalProperties: false
+              }
+            }),
+            find1: o({
+              _type: pong.MongoDBCollection,
+              enabled: {find: true},
+              collection: 'find',
+              findConfig: {
+                '$parameters.query.schema': {
+                  type: 'object',
+                  properties: {
+                    foo: {
+                      type: 'string'
+                    }
+                  },
+                  required: ['foo'],
+                  additionalProperties: false
+                }
+              }
+            }),
+            find2: o({
+              _type: pong.MongoDBCollection,
+              enabled: {find: true},
+              collection: 'find',
+              querySchema: {
+                type: 'object',
+                properties: {
+                  foo: {
+                    type: 'string'
+                  }
+                },
+                required: ['foo'],
+                additionalProperties: false
+              },
+              findConfig: {
+                '$parameters.query.schema': {
+                  type: 'object',
+                  properties: {
+                    bar: {
+                      type: 'string'
+                    }
+                  },
+                  required: ['bar'],
+                  additionalProperties: false
+                }
+              }
+            })
+          }
+        }),
+        fixture: {
+          find: [
+            {_id: getObjectId(0), foo: 'bar'},
+            {_id: getObjectId(1), bar: 'baz'},
+            {_id: getObjectId(2), baz: 'yaz'}
+          ]
+        },
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'CollectionQuerySchemaOverrideTest',
+            doTest: function() {
+              assert.deepEqual(this.parent.service.endpoints.find2.get.parameters.query.schema, {
+                type: 'object',
+                properties: {
+                  foo: {
+                    type: 'string'
+                  }
+                },
+                required: ['foo'],
+                additionalProperties: false
+              })
+            }
+          }),
+          {
+            name: 'CollectionQuerySchemaFailTest',
+            reqSpec: {
+              url: '/find',
+              method: 'GET',
+              parameters: {
+                query: {bar: 'baz'}
+              },
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'CollectionQuerySchemaSuccessTest',
+            reqSpec: {
+              url: '/find',
+              method: 'GET',
+              parameters: {
+                query: {foo: 'bar'}
+              },
+            },
+            resSpec: {
+              statusCode: 200,
+              body: [{_id: getObjectId(0), foo: 'bar'}]
+            }
+          },
+          {
+            name: 'ConfigQuerySchemaFailTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionQuerySchemaFailTest'),
+                              {url: '/find1'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionQuerySchemaFailTest') }
+              }
+            }
+          },
+          {
+            name: 'ConfigQuerySchemaSuccessTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionQuerySchemaSuccessTest'),
+                              {url: '/find1'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionQuerySchemaSuccessTest') }
+              }
+            }
+          },
+          {
+            name: 'CollectionQuerySchemaOverrideConfigQuerySchemaFailTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionQuerySchemaFailTest'),
+                              {url: '/find2'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionQuerySchemaFailTest') }
+              }
+            }
+          },
+          {
+            name: 'CollectionQuerySchemaOverrideConfigQuerySchemaSuccessTest',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(this.history.getReqSpec('CollectionQuerySchemaSuccessTest'),
+                              {url: '/find2'})
+            },
+            resSpec: {
+              $property: {
+                get: function() { return this.history.getResSpec('CollectionQuerySchemaSuccessTest') }
+              }
+            }
+          }
+        ]
+      })
     ]
   })
 })
-
-

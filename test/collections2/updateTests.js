@@ -181,6 +181,25 @@ __(function() {
                   additionalProperties: false
                 }
               }
+            }),
+            update1: o({
+              _type: pong.Collection,
+              enabled: {update: true},
+              updateConfig: {
+                '$parameters.update.schema': {
+                  type: 'object',
+                  properties: {
+                    foo: {
+                      type: 'string',
+                      pattern: '^(bar|baz|yaz)$'
+                    }
+                  },
+                  patternProperties: {
+                    '^\\d+$': {type: 'string'}
+                  },
+                  additionalProperties: false
+                }
+              }
             })
           }
         }),
@@ -226,6 +245,34 @@ __(function() {
               body: {n: 1}
             }
           },
+          {
+            name: 'FailUpdate1SchemaTest',
+            description: 'Test PATCH with malformed body',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(_.clone(this.history.getReqSpec('FailUpdateSchemaTest')),
+                              {url: '/update1'})
+            },
+            resSpec: {
+              $property: {get: function() {return this.history.getResSpec('FailUpdateSchemaTest')}}
+            }
+          },
+          {
+            name: 'SuccessUpdate1SchemaTest',
+            description: 'Test PATCH with well formed body',
+            setup: function(context) {
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(_.clone(this.history.getReqSpec('SuccessUpdateSchemaTest')),
+                              {url: '/update1'})
+            },
+            resSpec: {
+              $property: {get: function() {return this.history.getResSpec('SuccessUpdateSchemaTest')}}
+            }
+          }
         ]
       }),
       o({
@@ -449,6 +496,113 @@ __(function() {
               statusCode: 500
             }
           },
+        ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'CustomConfigParameterTests',
+        service: o({
+          _type: pong.Service,
+          endpoints: {
+            update: o({
+              _type: pong.Collection,
+              idGenerator: pong.util.collectionIdGenerator,
+              enabled: {update: true},
+              updateConfig: {
+                parameters: {
+                  $merge: {
+                    foo: {
+                      location: 'header',
+                      schema: {
+                        type: 'number',
+                        minimum: 0,
+                        multipleOf: 2
+                      }
+                    }
+                  }
+                }
+              }
+            })
+          }
+        }),
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'UpdateConfigCustomParameterInitializationTest',
+            doTest: function(context) {
+              let updateOperation = this.parent.service.endpoints.update.patch
+              assert.deepEqual(updateOperation.parameters, {
+                update: {
+                  name: 'update',
+                  location: 'body',
+                  description: carbond.collections.UpdateConfig._STRINGS.parameters.update.description,
+                  schema: { type: 'object' },
+                  required: true,
+                  default: undefined
+                },
+                foo: {
+                  name: 'foo',
+                  location: 'header',
+                  description: undefined,
+                  schema: {type: 'number', minimum: 0, multipleOf: 2},
+                  required: false,
+                  default: undefined
+                },
+              })
+            }
+          }),
+          {
+            name: 'UpdateConfigCustomParameterPassedViaOptionsFailTest',
+            setup: function(context) {
+              context.local.updateSpy = sinon.spy(this.parent.service.endpoints.update, 'update')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.updateSpy.called, false)
+              context.local.updateSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/update',
+                method: 'PATCH',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    update: 1
+                  }),
+                  foo: 3
+                },
+                body: {foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'UpdateConfigCustomParameterPassedViaOptionsSuccessTest',
+            setup: function(context) {
+              context.local.updateSpy = sinon.spy(this.parent.service.endpoints.update, 'update')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.updateSpy.firstCall.args[1].foo, 4)
+              context.local.updateSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/update',
+                method: 'PATCH',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    update: 1
+                  }),
+                  foo: 4
+                },
+                body: {foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 200
+            }
+          }
         ]
       })
     ]

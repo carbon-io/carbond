@@ -36,6 +36,7 @@ __(function() {
       _o('./mongodb'),
       _o('./mongodb2'),
       _o('./limiter'),
+      _o('./OperationParameterTests'),
       _o('./ParameterParsingTests'),
       _o('./StartStopTests'),
       _o('./SslTests'),

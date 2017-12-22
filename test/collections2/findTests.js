@@ -737,6 +737,124 @@ __(function() {
           },
         ]
       }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'CustomConfigParameterTests',
+        service: o({
+          _type: pong.Service,
+          endpoints: {
+            find: o({
+              _type: pong.Collection,
+              idGenerator: pong.util.collectionIdGenerator,
+              enabled: {find: true},
+              findConfig: {
+                parameters: {
+                  $merge: {
+                    foo: {
+                      location: 'header',
+                      schema: {
+                        type: 'number',
+                        minimum: 0,
+                        multipleOf: 2
+                      }
+                    }
+                  }
+                }
+              }
+            })
+          }
+        }),
+        setup: function(context) {
+          carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
+          context.global.idParameter = this.service.endpoints.find.idParameter
+        },
+        teardown: function(context) {
+          delete context.global.idParameter
+          carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
+        },
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'FindConfigCustomParameterInitializationTest',
+            doTest: function(context) {
+              let findOperation = this.parent.service.endpoints.find.get
+              assert.deepEqual(findOperation.parameters, {
+                foo: {
+                  name: 'foo',
+                  location: 'header',
+                  description: undefined,
+                  schema: {type: 'number', minimum: 0, multipleOf: 2},
+                  required: false,
+                  default: undefined
+                },
+                [context.global.idParameter]: {
+                  name: context.global.idParameter,
+                  location: 'query',
+                  description: carbond.collections.FindConfig._STRINGS.parameters.idParameterDefinition.description,
+                  schema: {
+                    oneOf: [
+                      {type: 'string'},
+                      {type: 'array', items: {type: 'string'}}
+                    ]
+                  },
+                  required: false,
+                  default: undefined
+                }
+              })
+            }
+          }),
+          {
+            name: 'FindConfigCustomParameterPassedViaOptionsFailTest',
+            setup: function(context) {
+              context.local.findSpy = sinon.spy(this.parent.service.endpoints.find, 'find')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.findSpy.called, false)
+              context.local.findSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/find',
+                method: 'GET',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    find: [{[context.global.idParameter]: '0', foo: 'bar'}]
+                  }),
+                  foo: 3
+                }
+              }
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'FindConfigCustomParameterPassedViaOptionsSuccessTest',
+            setup: function(context) {
+              context.local.findSpy = sinon.spy(this.parent.service.endpoints.find, 'find')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.findSpy.firstCall.args[0].foo, 4)
+              context.local.findSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/find',
+                method: 'GET',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    find: [{[context.global.idParameter]: '0', foo: 'bar'}]
+                  }),
+                  foo: 4
+                }
+              }
+            },
+            resSpec: {
+              statusCode: 200
+            }
+          }
+        ]
+      })
     ]
   })
 })

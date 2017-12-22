@@ -15,9 +15,9 @@ Below is a simple :js:class:`~carbond.Endpoint` at the path ``/hello`` that
 defines two operations, ``get`` and ``post``:
 
 .. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleEndpointExample.js
-    :language: javascript 
+    :language: javascript
     :linenos:
-    :lines: 5-
+    :named-sections: endpoints
     :emphasize-lines: 7-15
 
 Endpoints with named path parameters
@@ -27,40 +27,40 @@ Endpoints with named path parameters
 parameters. Bound template variables values can then be accessed via
 ``req.params``:
 
-.. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleEndpointsExample.js 
-    :language: javascript 
+.. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleEndpointsExample.js
+    :language: javascript
     :linenos:
-    :lines: 17-44
+    :named-sections: endpoints
     :emphasize-lines: 14, 18
 
 .. todo:: add role to display external doc links with same styling as js xrefs
 
 In this example, a request for the path ``/users/jonny16`` will route to the
 ``/users/:id`` :js:class:`~carbond.Endpoint` and :express4:`req.params` will
-have the value ``"jonny16"``. 
+have the value ``"jonny16"``.
 
-Sub-endpoints 
+Sub-endpoints
 -------------
 
 :js:class:`~carbond.Endpoints`\s may contain sub-endpoints. Here is an example that is
 similar to the API as above, but that uses a sub-endpoint to define an
 :js:class:`~carbond.Endpoint` at the path ``/users/:id``.
 
-.. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleSubEndpointExample.js 
-    :language: javascript 
+.. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleSubEndpointExample.js
+    :language: javascript
     :linenos:
-    :lines: 17-
+    :named-sections: endpoints
     :emphasize-lines: 15, 19
 
-Accessing Service properties from within Endpoints 
+Accessing Service properties from within Endpoints
 --------------------------------------------------
 
 Properties of the top-level :js:class:`~carbond.Service` can be accessed via the
 :js:func:`~carbond.Endpoint.getService` property of your :js:class:`~carbond.Endpoint`:
 
-.. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleEndpointServiceReferenceExample.js 
-    :language: javascript 
+.. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleEndpointServiceReferenceExample.js
+    :language: javascript
     :linenos:
-    :lines: 5-
+    :named-sections: endpoints
     :emphasize-lines: 11
 

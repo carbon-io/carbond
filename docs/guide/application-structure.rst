@@ -47,7 +47,7 @@ Next you create your app / service. Continuing with the example above,
 .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
     :language: javascript
     :linenos:
-    :lines: 3-14, 51-
+    :named-sections: definingYourServiceHeader,definingYourServiceFooter
 
 Using __, _o, and o
 -------------------
@@ -58,7 +58,7 @@ The preamble requires the main ``carbon-io`` package as well and defines the
 .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
     :language: javascript
     :linenos:
-    :lines: 3-7
+    :named-sections: preamble
 
 The :js:func:`~fibers.__` operator is used to run this service inside of a `Fiber
 <https://github.com/carbon-io/fibers>`_ when this module is invoked as the main
@@ -90,7 +90,7 @@ in subsequent sections.
 .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
     :language: javascript
     :linenos:
-    :lines: 9-14, 51-
+    :named-sections: exportsHeader,exportsFooter
 
 Running your Service 
 --------------------

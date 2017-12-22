@@ -54,14 +54,14 @@ For example, here is a Collection that enables the
 .. literalinclude:: ../../code-frags/hello-world/lib/HelloService.js
     :language: javascript
     :linenos:
-    :lines: 3-11,15,19-21,32,34-35,56-60,63-
+    :named-sections: collections-simpleCollection1,collections-simpleCollection2,collections-simpleCollection3,collections-simpleCollection4,collections-simpleCollection5,collections-simpleCollection6,collections-simpleCollection7
 
 The Collection class handles much of the HTTP boilerplate code you would
 typically have to implement to build an API. See
 :doc:`collection-operation-rest-interface` for more information.
 
 Collection Endpoints and operations - XX remove from left nav
-===================================
+=============================================================
 
 :js:class:`~carbond.collections.Collection` Endpoints can be created either by 
 creating an instance of a :js:class:`~carbond.collections.Collection` (most 
@@ -121,7 +121,7 @@ exposed to the user:
 .. literalinclude:: ../../code-frags/hello-world-mongodb/lib/HelloService.js
     :language: javascript
     :linenos:
-    :lines: 1-12,16-
+    :named-sections: collections-concreteInstantiationHeader,collections-concreteInstantiationFooter
 
 
 .. _collection-configuration:

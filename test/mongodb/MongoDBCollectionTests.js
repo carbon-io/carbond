@@ -689,9 +689,30 @@ __(function() {
                     },
                     headers: ['Location', this.parent.ce.idHeader]
                   },
-                  '400': this.parent.BadRequestResponse,
-                  '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
+                  '400': _.assign(_.clone(this.parent.BadRequestResponse), {
+                    schema: {
+                      oneOf: [
+                        this.parent.BadRequestResponse.schema,
+                        this.parent.BadRequestResponse.schema
+                      ]
+                    }
+                  }),
+                  '403': _.assign(_.clone(this.parent.ForbiddenResponse), {
+                    schema: {
+                      oneOf: [
+                        this.parent.ForbiddenResponse.schema,
+                        this.parent.ForbiddenResponse.schema
+                      ]
+                    }
+                  }),
+                  '500': _.assign(_.clone(this.parent.InternalServerErrorResponse), {
+                    schema: {
+                      oneOf: [
+                        this.parent.InternalServerErrorResponse.schema,
+                        this.parent.InternalServerErrorResponse.schema
+                      ]
+                    }
+                  }),
                 })
               assert.deepEqual(
                 this.parent.ce.getOperation('post').parameters, {

@@ -24,7 +24,7 @@ __(function() {
      */
     tests: [
       _o('./CollectionAllowUnauthenticatedTests'),
-      _o('./CollectionIntegrationTests'),
+      _o('./CollectionTests'),
       _o('./insertTests'),
       _o('./insertObjectTests'),
       _o('./findTests'),

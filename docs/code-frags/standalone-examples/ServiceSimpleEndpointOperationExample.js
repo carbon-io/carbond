@@ -10,12 +10,15 @@ __(function() {
     endpoints: {
       hello1: o({
         _type: carbon.carbond.Endpoint,
-        get: function(req, res) {
+        // pre-operations-asyncFunc
+        get: function(req, res) {// 1
           res.send({msg: 'Hello World!'})
         }
+        // post-operations-asyncFunc
       }),
       hello2: o({
         _type: carbon.carbond.Endpoint,
+        // pre-operations-asyncObj
         get: {
           description: 'My hello world operation',
           parameters: {},
@@ -23,15 +26,19 @@ __(function() {
             res.send({msg: 'Hello World!'})
           }
         }
+        // post-operations-asyncObj
       }),
       hello3: o({
         _type: carbon.carbond.Endpoint,
+        // pre-operations-syncFunc
         get: function(req) {
           return {msg: 'Hello World!'}
         }
+        // post-operations-syncFunc
       }),
       hello4: o({
         _type: carbon.carbond.Endpoint,
+        // pre-operations-syncObj
         get: {
           description: 'My hello world operation',
           parameters: {},
@@ -39,16 +46,18 @@ __(function() {
             return {msg: 'Hello World!'}
           }
         }
+        // post-operations-syncObj
       }),
       hello5: o({
         _type: carbon.carbond.Endpoint,
+        // pre-operations-queryParam
         get: {
           description: 'My hello world operation',
           parameters: {
             message: {
               description: 'A message to say to the world',
               location: 'query',
-              required: true,  
+              required: true,
               schema: {type: 'string'}
             }
           },
@@ -56,9 +65,11 @@ __(function() {
             return {msg: 'Hello World! ' + req.parameters.message}
           }
         }
+        // post-operations-queryParam
       }),
       zipcodes: o({
         _type: carbon.carbond.collections.Collection,
+        // pre-operations-bodyParam
         post: {
           description: 'Adds a Zipcode object to the zipcodes collection',
           parameters: {
@@ -66,7 +77,7 @@ __(function() {
               description: 'A Zipcode object',
               location: 'body',
               required: true,
-              schema: { 
+              schema: {
                 type: 'object',
                 properties: {
                   _id: {type: 'number'},
@@ -78,9 +89,10 @@ __(function() {
           service: function(req) {
             this.getService().db.getCollection('zipcodes').insert(req.parameters.body)
             return null
-          } 
+          }
         }
+        // post-operations-bodyParam
       })
     }
-  }) 
+  })
 })

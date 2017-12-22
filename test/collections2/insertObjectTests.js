@@ -156,7 +156,27 @@ __(function() {
                   },
                   additionalProperties: false
                 }
-              }
+              },
+            }),
+            insertObject1: o({
+              _type: pong.Collection,
+              idGenerator: pong.util.collectionIdGenerator,
+              enabled: {insertObject: true},
+              insertObjectConfig: {
+                '$parameters.object.schema': {
+                  type: 'object',
+                  properties: {
+                    foo: {
+                      type: 'string',
+                      pattern: '^(bar|baz|yaz)$'
+                    }
+                  },
+                  patternProperties: {
+                    '^\\d+$': {type: 'string'}
+                  },
+                  additionalProperties: false
+                }
+              },
             })
           }
         }),
@@ -175,15 +195,13 @@ __(function() {
           {
             name: 'FailInsertObjectSchemaTest',
             description: 'Test POST of malformed object',
-            setup: function() {
+            setup: function(context) {
               pong.util.collectionIdGenerator.resetId()
             },
-            reqSpec: function(context) {
-              return {
-                url: '/insertObject',
-                method: 'POST',
-                body: {bar: 'baz'}
-              }
+            reqSpec: {
+              url: '/insertObject',
+              method: 'POST',
+              body: {bar: 'baz'}
             },
             resSpec: {
               statusCode: 400,
@@ -214,13 +232,45 @@ __(function() {
                   headers[context.global.idHeader],
                   ejson.stringify('0'))
                 assert.deepStrictEqual(
-                  headers.location, '/insertObject/0')
+                  headers.location, this.reqSpec.url + '/0')
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, {
                   [context.global.idParameter]: '0', foo: 'bar'
                 })
               }
+            }
+          },
+          {
+            name: 'FailInsertObject1SchemaTest',
+            description: 'Test POST of malformed object',
+            setup: function(context) {
+              pong.util.collectionIdGenerator.resetId()
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(
+                _.clone(this.history.getReqSpec('FailInsertObjectSchemaTest')),
+                {url: '/insertObject1'})
+            },
+            resSpec: {
+              $property: {get: function() {return this.history.getResSpec('FailInsertObjectSchemaTest')}}
+            }
+          },
+          {
+            name: 'SuccessInsertObject1SchemaTest',
+            description: 'Test POST with well formed object',
+            setup: function(context) {
+              pong.util.collectionIdGenerator.resetId()
+              this.history = context.httpHistory
+            },
+            reqSpec: function() {
+              return _.assign(
+                _.clone(this.history.getReqSpec('SuccessInsertObjectSchemaTest')),
+                {url: '/insertObject1'})
+            },
+            resSpec: {
+              $property: {get: function() {return this.history.getResSpec('SuccessInsertObjectSchemaTest')}}
             }
           },
         ]
@@ -283,6 +333,133 @@ __(function() {
               body: undefined
             }
           }
+        ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'CustomConfigParameterTests',
+        service: o({
+          _type: pong.Service,
+          endpoints: {
+            insertObject: o({
+              _type: pong.Collection,
+              idGenerator: pong.util.collectionIdGenerator,
+              enabled: {insertObject: true},
+              insertObjectConfig: {
+                parameters: {
+                  $merge: {
+                    foo: {
+                      location: 'header',
+                      schema: {
+                        type: 'number',
+                        minimum: 0,
+                        multipleOf: 2
+                      }
+                    }
+                  }
+                }
+              }
+            })
+          }
+        }),
+        setup: function(context) {
+          carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
+          context.global.idParameter = this.service.endpoints.insertObject.idParameter
+          context.global.idHeader = this.service.endpoints.insertObject.idHeader
+        },
+        teardown: function(context) {
+          pong.util.collectionIdGenerator.resetId()
+          delete context.global.idHeader
+          delete context.global.idParameter
+          carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
+        },
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'InsertObjectConfigCustomParameterInitializationTest',
+            doTest: function(context) {
+              let insertObjectOperation = this.parent.service.endpoints.insertObject.post
+              assert.deepEqual(insertObjectOperation.parameters, {
+                object: {
+                  name: 'object',
+                  location: 'body',
+                  description: carbond.collections.InsertObjectConfig._STRINGS.parameters.object.description,
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      _id: {
+                        type: 'string'
+                      }
+                    }
+                  },
+                  required: true,
+                  default: undefined
+                },
+                foo: {
+                  name: 'foo',
+                  description: undefined,
+                  location: 'header',
+                  schema: {type: 'number', minimum: 0, multipleOf: 2},
+                  required: false,
+                  default: undefined
+                }
+              })
+            }
+          }),
+          {
+            name: 'InsertObjectConfigCustomParameterPassedViaOptionsFailTest',
+            setup: function(context) {
+              pong.util.collectionIdGenerator.resetId()
+              context.local.insertObjectSpy = sinon.spy(this.parent.service.endpoints.insertObject, 'insertObject')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.insertObjectSpy.called, false)
+              context.local.insertObjectSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/insertObject',
+                method: 'POST',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    insertObject: {$args: 0}
+                  }),
+                  foo: 3
+                },
+                body: {foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'InsertObjectConfigCustomParameterPassedViaOptionsSuccessTest',
+            setup: function(context) {
+              pong.util.collectionIdGenerator.resetId()
+              context.local.insertObjectSpy = sinon.spy(this.parent.service.endpoints.insertObject, 'insertObject')
+            },
+            teardown: function(context) {
+              assert.equal(context.local.insertObjectSpy.firstCall.args[1].foo, 4)
+              context.local.insertObjectSpy.restore()
+            },
+            reqSpec: function(context) {
+              return {
+                url: '/insertObject',
+                method: 'POST',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    insertObject: {$args: 0}
+                  }),
+                  foo: 4
+                },
+                body: {foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 201
+            }
+          },
         ]
       })
     ]
