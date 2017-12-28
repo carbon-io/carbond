@@ -331,12 +331,12 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.updateObject.idParameter
+          context.global.idParameterName = this.service.endpoints.updateObject.idParameterName
           context.global.idHeader = this.service.endpoints.updateObject.idHeader
         },
         teardown: function(context) {
           delete context.global.idHeader
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -375,7 +375,7 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     updateObject: {
-                      val: {[context.global.idParameter]: '0'},
+                      val: {[context.global.idParameterName]: '0'},
                       created: true
                     }
                   })
@@ -452,12 +452,12 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.updateObject.idParameter
+          context.global.idParameterName = this.service.endpoints.updateObject.idParameterName
           context.global.idHeader = this.service.endpoints.updateObject.idHeader
         },
         teardown: function(context) {
           delete context.global.idHeader
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -471,7 +471,7 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     updateObject: {
-                      val: {[context.global.idParameter]: '0', foo: 'bar'},
+                      val: {[context.global.idParameterName]: '0', foo: 'bar'},
                       created: true
                     }
                   })
@@ -498,7 +498,7 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     updateObject: {
-                      val: {[context.global.idParameter]: '0', foo: 'bar'},
+                      val: {[context.global.idParameterName]: '0', foo: 'bar'},
                       created: true
                     }
                   })
@@ -515,7 +515,7 @@ __(function() {
                 assert.deepStrictEqual(headers[context.global.idHeader], '"0"')
               },
               body: function(body, context) {
-                assert.deepStrictEqual(body, {[context.global.idParameter]: '0', foo: 'bar'})
+                assert.deepStrictEqual(body, {[context.global.idParameterName]: '0', foo: 'bar'})
               }
             }
           },
@@ -588,10 +588,10 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.updateObject.idParameter
+          context.global.idParameterName = this.service.endpoints.updateObject.idParameterName
         },
         teardown: function(context) {
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -600,7 +600,7 @@ __(function() {
             name: 'UpdateObjectConfigCustomParameterInitializationTest',
             doTest: function(context) {
               let updateObjectOperation =
-                this.parent.service.endpoints.updateObject.endpoints[`:${context.global.idParameter}`].patch
+                this.parent.service.endpoints.updateObject.endpoints[`:${context.global.idParameterName}`].patch
               assert.deepEqual(updateObjectOperation.parameters, {
                 update: {
                   name: 'update',

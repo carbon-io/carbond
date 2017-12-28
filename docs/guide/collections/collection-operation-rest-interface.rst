@@ -87,14 +87,14 @@ In the following tables, ``bulk`` will refer to requests whose body is an
 GET /<collection>
 -----------------
 
-.. list-table:: Request Parameters (note, ``<idParameter>`` is configurable on ``Collection``)
+.. list-table:: Request Parameters (note, ``<idParameterName>`` is configurable on ``Collection``)
     :header-rows: 1
     :class: collection-rest-table
 
     * - Name
       - Location
       - Description
-    * - <:js:attr:`~carbond.collections.Collection.idParameter`>
+    * - <:js:attr:`~carbond.collections.Collection.idParameterName`>
       - query
       - Contains the IDs of objects to be retrieved. This parameter is only
         present if :js:attr:`~carbond.collections.FindConfig.supportsIdQuery` is
@@ -249,14 +249,14 @@ DELETE /<collection>
 GET /<collection>/:<id>
 -----------------------
 
-.. list-table:: Request Parameters (note, ``idPathParameter`` is configurable on ``Collection``)
+.. list-table:: Request Parameters (note, ``idPathParameterName`` is configurable on ``Collection``)
     :header-rows: 1
     :class: collection-rest-table
 
     * - Name
       - Location
       - Description
-    * - <:js:attr:`~carbond.collections.Collection.idPathParameter`>
+    * - <:js:attr:`~carbond.collections.Collection.idPathParameterName`>
       - path
       - The ID component of the Collection object URL. Identifies a specific
         object in the Collection.
@@ -269,7 +269,7 @@ GET /<collection>/:<id>
       - Description
     * - ``200``
       - The response body will contain the object whose ID matches the value
-        passed in <:js:attr:`~carbond.collections.Collection.idPathParameter`>
+        passed in <:js:attr:`~carbond.collections.Collection.idPathParameterName`>
     * - ``400``
       - The request was malformed
     * - ``403``
@@ -282,14 +282,14 @@ GET /<collection>/:<id>
 PUT /<collection>/:<id>
 -----------------------
 
-.. list-table:: Request Parameters (note, ``idPathParameter`` is configurable on ``Collection``)
+.. list-table:: Request Parameters (note, ``idPathParameterName`` is configurable on ``Collection``)
     :header-rows: 1
     :class: collection-rest-table
 
     * - Name
       - Location
       - Description
-    * - <:js:attr:`~carbond.collections.Collection.idPathParameter`>
+    * - <:js:attr:`~carbond.collections.Collection.idPathParameterName`>
       - path
       - The ID component of the Collection object URL. Identifies a specific
         object in the Collection.
@@ -348,14 +348,14 @@ PUT /<collection>/:<id>
 PATCH /<collection>/:<id>
 -------------------------
 
-.. list-table:: Request Parameters (note, ``idPathParameter`` is configurable on ``Collection``)
+.. list-table:: Request Parameters (note, ``idPathParameterName`` is configurable on ``Collection``)
     :header-rows: 1
     :class: collection-rest-table
 
     * - Name
       - Location
       - Description
-    * - <:js:attr:`~carbond.collections.Collection.idPathParameter`>
+    * - <:js:attr:`~carbond.collections.Collection.idPathParameterName`>
       - path
       - The ID component of the Collection object URL. Identifies a specific
         object in the Collection.
@@ -408,14 +408,14 @@ PATCH /<collection>/:<id>
 DELETE /<collection>/:<id>
 --------------------------
 
-.. list-table:: Request Parameters (note, ``idPathParameter`` is configurable on ``Collection``)
+.. list-table:: Request Parameters (note, ``idPathParameterName`` is configurable on ``Collection``)
     :header-rows: 1
     :class: collection-rest-table
 
     * - Name
       - Location
       - Description
-    * - <:js:attr:`~carbond.collections.Collection.idPathParameter`>
+    * - <:js:attr:`~carbond.collections.Collection.idPathParameterName`>
       - path
       - The ID component of the Collection object URL. Identifies a specific
         object in the Collection.

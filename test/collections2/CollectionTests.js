@@ -80,8 +80,8 @@ __(function() {
                 find: true,
                 insert: true
               },
-              idParameter: 'foo',
-              idPathParameter: 'foo',
+              idParameterName: 'foo',
+              idPathParameterName: 'foo',
               schema: {
                 type: 'object',
                 properties: {
@@ -227,8 +227,8 @@ __(function() {
                 find: true,
                 findObject: true,
               },
-              idParameter: 'foo',
-              idPathParameter: 'foo',
+              idParameterName: 'foo',
+              idPathParameterName: 'foo',
               schema: {
                 type: 'object',
                 properties: {
@@ -269,8 +269,8 @@ __(function() {
                 find: true,
                 findObject: true,
               },
-              idParameter: 'bar',
-              idPathParameter: 'bar',
+              idParameterName: 'bar',
+              idPathParameterName: 'bar',
               schema: {
                 type: 'object',
                 properties: {
@@ -526,7 +526,7 @@ __(function() {
                 '*': true
               },
               idGenerator: pong.util.collectionIdGenerator,
-              idParameter: '_id',
+              idParameterName: '_id',
               schema: {
                 type: 'object',
                 properties: {
@@ -598,11 +598,11 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.foo.idParameter
+          context.global.idParameterName = this.service.endpoints.foo.idParameterName
           context.global.idHeader = this.service.endpoints.foo.idHeader
         },
         teardown: function(context) {
-          delete context.global.idParameter
+          delete context.global.idParameterName
           delete context.global.idHeader
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
@@ -629,7 +629,7 @@ __(function() {
                 additionalProperties: false
               })
               assert.equal(collection.get.responses[200].headers[0], 'foo')
-              assert.deepEqual(collection.endpoints[`:${context.global.idParameter}`].get.responses[200], {
+              assert.deepEqual(collection.endpoints[`:${context.global.idParameterName}`].get.responses[200], {
                 statusCode: 200,
                 description: 'foo bar baz',
                 schema: {
@@ -653,7 +653,7 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     insert: [{
-                      [context.global.idParameter]: '0',
+                      [context.global.idParameterName]: '0',
                       foo: 'bar',
                       bar: 'baz'
                     }]
@@ -666,7 +666,7 @@ __(function() {
               statusCode: 201,
               body: function(body, context) {
                 assert.deepEqual(body, [{
-                  [context.global.idParameter]: '0',
+                  [context.global.idParameterName]: '0',
                   foo: 'bar',
                   bar: 'baz'
                 }])
@@ -682,7 +682,7 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     insert: [{
-                      [context.global.idParameter]: '0',
+                      [context.global.idParameterName]: '0',
                       foo: 'bar',
                       bar: 'baz',
                       baz: '666'
@@ -707,7 +707,7 @@ __(function() {
                 method: 'POST',
                 headers: {
                   'x-pong': ejson.stringify({
-                    insertObject: {[context.global.idParameter]: '0'}
+                    insertObject: {[context.global.idParameterName]: '0'}
                   })
                 },
                 body: {foo: 'bar', bar: 'baz', baz: 'yaz'}
@@ -716,7 +716,7 @@ __(function() {
             resSpec: {
               statusCode: 201,
               body: function(body, context) {
-                assert.deepEqual(body, {[context.global.idParameter]: '0'})
+                assert.deepEqual(body, {[context.global.idParameterName]: '0'})
               }
             }
           },
@@ -729,7 +729,7 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     insertObject: {
-                      [context.global.idParameter]: '0',
+                      [context.global.idParameterName]: '0',
                       foo: 'bar',
                       bar: 'baz',
                       baz: 'yaz'
@@ -755,7 +755,7 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     find: [{
-                      [context.global.idParameter]: '0',
+                      [context.global.idParameterName]: '0',
                       foo: 'bar',
                       bar: 'baz',
                       baz: 'yaz'
@@ -780,7 +780,7 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     findObject: {
-                      [context.global.idParameter]: '0'
+                      [context.global.idParameterName]: '0'
                     }
                   })
                 }
@@ -790,7 +790,7 @@ __(function() {
               statusCode: 200,
               body: function(body, context) {
                 assert.deepEqual(body, {
-                  [context.global.idParameter]: '0'
+                  [context.global.idParameterName]: '0'
                 })
               }
             }
@@ -804,7 +804,7 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     findObject: {
-                      [context.global.idParameter]: '0',
+                      [context.global.idParameterName]: '0',
                       foo: 'bar'
                     }
                   })

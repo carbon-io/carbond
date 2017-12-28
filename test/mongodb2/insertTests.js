@@ -55,7 +55,7 @@ __(function() {
               _type: pong.MongoDBCollection,
               idGenerator: pong.util.mongoDbCollectionIdGenerator,
               enabled: {insert: true},
-              collection: 'insert'
+              collectionName: 'insert'
             })
           }
         }),
@@ -205,7 +205,7 @@ __(function() {
               dbUri: config.MONGODB_URI + '/insert',
               idGenerator: pong.util.mongoDbCollectionIdGenerator,
               enabled: {insert: true},
-              collection: 'insert',
+              collectionName: 'insert',
               insertConfig: {
                 insertSchema: {
                   type: 'object',
@@ -300,7 +300,7 @@ __(function() {
               _type: pong.MongoDBCollection,
               idGenerator: pong.util.mongoDbCollectionIdGenerator,
               enabled: {insert: true},
-              collection: 'insert',
+              collectionName: 'insert',
               insertConfig: {
                 returnsInsertedObjects: false
               }

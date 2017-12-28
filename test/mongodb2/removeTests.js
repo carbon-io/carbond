@@ -47,7 +47,7 @@ __(function() {
             remove: o({
               _type: pong.MongoDBCollection,
               enabled: {remove: true},
-              collection: 'remove'
+              collectionName: 'remove'
             })
           }
         }),
@@ -107,7 +107,7 @@ __(function() {
             remove: o({
               _type: pong.MongoDBCollection,
               enabled: {remove: true},
-              collection: 'remove',
+              collectionName: 'remove',
               removeConfig: {
                 supportsQuery: false
               }
@@ -155,7 +155,7 @@ __(function() {
                 remove: o({
                   _type: pong.MongoDBCollection,
                   enabled: {remove: true},
-                  collection: 'remove',
+                  collectionName: 'remove',
                   removeConfig: {
                     returnsRemovedObjects: true
                   }
@@ -175,7 +175,7 @@ __(function() {
             remove: o({
               _type: pong.MongoDBCollection,
               enabled: {remove: true},
-              collection: 'remove',
+              collectionName: 'remove',
               querySchema: {
                 type: 'object',
                 properties: {
@@ -190,7 +190,7 @@ __(function() {
             remove1: o({
               _type: pong.MongoDBCollection,
               enabled: {remove: true},
-              collection: 'remove',
+              collectionName: 'remove',
               removeConfig: {
                 '$parameters.query.schema': {
                   type: 'object',
@@ -207,7 +207,7 @@ __(function() {
             remove2: o({
               _type: pong.MongoDBCollection,
               enabled: {remove: true},
-              collection: 'remove',
+              collectionName: 'remove',
               querySchema: {
                 type: 'object',
                 properties: {

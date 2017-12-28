@@ -48,13 +48,13 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.insertObject.idParameter
+          context.global.idParameterName = this.service.endpoints.insertObject.idParameterName
           context.global.idHeader = this.service.endpoints.insertObject.idHeader
         },
         teardown: function(context) {
           pong.util.collectionIdGenerator.resetId()
           delete context.global.idHeader
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -102,7 +102,7 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, {
-                  [context.global.idParameter]: '0',
+                  [context.global.idParameterName]: '0',
                   foo: 'bar'
                 })
               }
@@ -123,7 +123,7 @@ __(function() {
                     insertObject: {$args: 0}
                   })
                 },
-                body: {[context.global.idParameter]: '0', foo: 'bar'}
+                body: {[context.global.idParameterName]: '0', foo: 'bar'}
               }
             },
             resSpec: {
@@ -182,13 +182,13 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.insertObject.idParameter
+          context.global.idParameterName = this.service.endpoints.insertObject.idParameterName
           context.global.idHeader = this.service.endpoints.insertObject.idHeader
         },
         teardown: function(context) {
           pong.util.collectionIdGenerator.resetId()
           delete context.global.idHeader
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -236,7 +236,7 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, {
-                  [context.global.idParameter]: '0', foo: 'bar'
+                  [context.global.idParameterName]: '0', foo: 'bar'
                 })
               }
             }
@@ -293,13 +293,13 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.insertObject.idParameter
+          context.global.idParameterName = this.service.endpoints.insertObject.idParameterName
           context.global.idHeader = this.service.endpoints.insertObject.idHeader
         },
         teardown: function(context) {
           pong.util.collectionIdGenerator.resetId()
           delete context.global.idHeader
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -364,13 +364,13 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.insertObject.idParameter
+          context.global.idParameterName = this.service.endpoints.insertObject.idParameterName
           context.global.idHeader = this.service.endpoints.insertObject.idHeader
         },
         teardown: function(context) {
           pong.util.collectionIdGenerator.resetId()
           delete context.global.idHeader
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [

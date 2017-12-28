@@ -48,7 +48,7 @@ __(function() {
               _type: pong.MongoDBCollection,
               idGenerator: pong.util.mongoDbCollectionIdGenerator,
               enabled: {insertObject: true},
-              collection: 'insertObject'
+              collectionName: 'insertObject'
             })
           }
         }),
@@ -136,7 +136,7 @@ __(function() {
               _type: pong.MongoDBCollection,
               idGenerator: pong.util.mongoDbCollectionIdGenerator,
               enabled: {insertObject: true},
-              collection: 'insertObject',
+              collectionName: 'insertObject',
               insertObjectConfig: {
                 insertObjectSchema: {
                   type: 'object',
@@ -224,7 +224,7 @@ __(function() {
               _type: pong.MongoDBCollection,
               idGenerator: pong.util.mongoDbCollectionIdGenerator,
               enabled: {insertObject: true},
-              collection: 'insertObject',
+              collectionName: 'insertObject',
               insertObjectConfig: {
                 returnsInsertedObject: false
               }

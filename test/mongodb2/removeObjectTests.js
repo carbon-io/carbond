@@ -47,7 +47,7 @@ __(function() {
             removeObject: o({
               _type: pong.MongoDBCollection,
               enabled: {removeObject: true},
-              collection: 'removeObject'
+              collectionName: 'removeObject'
             })
           }
         }),
@@ -86,7 +86,7 @@ __(function() {
                 removeObject: o({
                   _type: pong.MongoDBCollection,
                   enabled: {removeObject: true},
-                  collection: 'removeObject',
+                  collectionName: 'removeObject',
                   removeObjectConfig: {
                     returnsRemovedObject: true
                   }

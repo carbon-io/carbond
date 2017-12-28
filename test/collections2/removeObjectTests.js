@@ -47,10 +47,10 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.removeObject.idParameter
+          context.global.idParameterName = this.service.endpoints.removeObject.idParameterName
         },
         teardown: function(context) {
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -124,7 +124,7 @@ __(function() {
                 method: 'DELETE',
                 headers: {
                   'x-pong': ejson.stringify({
-                    removeObject: {[context.global.idParameter]: '0', foo: 'bar'}
+                    removeObject: {[context.global.idParameterName]: '0', foo: 'bar'}
                   })
                 }
               }
@@ -152,10 +152,10 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.removeObject.idParameter
+          context.global.idParameterName = this.service.endpoints.removeObject.idParameterName
         },
         teardown: function(context) {
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -168,7 +168,7 @@ __(function() {
                 method: 'DELETE',
                 headers: {
                   'x-pong': ejson.stringify({
-                    removeObject: {[context.global.idParameter]: '0', foo: 'bar'}
+                    removeObject: {[context.global.idParameterName]: '0', foo: 'bar'}
                   })
                 }
               }
@@ -176,7 +176,7 @@ __(function() {
             resSpec: {
               statusCode: 200,
               body: function(body, context) {
-                assert.deepStrictEqual(body, {[context.global.idParameter]: '0', foo: 'bar'})
+                assert.deepStrictEqual(body, {[context.global.idParameterName]: '0', foo: 'bar'})
               }
             }
           },
@@ -233,7 +233,7 @@ __(function() {
                 method: 'DELETE',
                 headers: {
                   'x-pong': ejson.stringify({
-                    removeObject: [{[context.global.idParameter]: '0', foo: 'bar'}]
+                    removeObject: [{[context.global.idParameterName]: '0', foo: 'bar'}]
                   })
                 }
               }
@@ -273,10 +273,10 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.removeObject.idParameter
+          context.global.idParameterName = this.service.endpoints.removeObject.idParameterName
         },
         teardown: function(context) {
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -285,7 +285,7 @@ __(function() {
             name: 'RemoveObjectConfigCustomParameterInitializationTest',
             doTest: function(context) {
               let removeObjectOperation = 
-                this.parent.service.endpoints.removeObject.endpoints[`:${context.global.idParameter}`].delete
+                this.parent.service.endpoints.removeObject.endpoints[`:${context.global.idParameterName}`].delete
               assert.deepEqual(removeObjectOperation.parameters, {
                 foo: {
                   name: 'foo',

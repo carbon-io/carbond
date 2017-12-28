@@ -263,7 +263,7 @@ __(function() {
           try {
             var collection = this.parent.service.endpoints.zipcodes
             var dbObject =
-              collection._db.getCollection(collection.collection).findOne({
+              collection.collection.findOne({
                 _id: '94114'
               })
             assert(!_.isNil(dbObject))

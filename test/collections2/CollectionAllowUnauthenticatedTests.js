@@ -104,8 +104,8 @@ __(function() {
     },
     setup: function(context) {
       carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-      context.global.rejectUnauthenticatedId = this.service.endpoints.rejectUnauthenticated.idParameter
-      context.global.allowUnauthenticatedId = this.service.endpoints.allowUnauthenticated.idParameter
+      context.global.rejectUnauthenticatedId = this.service.endpoints.rejectUnauthenticated.idParameterName
+      context.global.allowUnauthenticatedId = this.service.endpoints.allowUnauthenticated.idParameterName
     },
     teardown: function(context) {
       delete context.global.rejectUnauthenticatedId
@@ -114,7 +114,7 @@ __(function() {
       carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
     },
     doTest: function() {
-      var idParameter = this.service.endpoints.allowUnauthenticated.idParameter
+      var idParameterName = this.service.endpoints.allowUnauthenticated.idParameterName
       var allMethods = _.without(carbond.Endpoint.prototype.ALL_METHODS, 'options')
       assert(_.isNil(this.service.endpoints.rejectUnauthenticated.allowUnauthenticated))
       for (var i = 0; i < allMethods; i++) {
@@ -124,7 +124,7 @@ __(function() {
       }
       for (var i = 0; i < allMethods; i++) {
         assert(_.includes(
-          this.service.endpoints.allowUnauthenticated.endpoints[idParameter].allowUnauthenticated,
+          this.service.endpoints.allowUnauthenticated.endpoints[idParameterName].allowUnauthenticated,
           allMethods[i]
         ))
       }

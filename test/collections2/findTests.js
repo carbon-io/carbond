@@ -48,10 +48,10 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.find.idParameter
+          context.global.idParameterName = this.service.endpoints.find.idParameterName
         },
         teardown: function(context) {
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -65,9 +65,9 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     find: [
-                      {[context.global.idParameter]: '0', foo: 'bar'},
-                      {[context.global.idParameter]: '1', bar: 'baz'},
-                      {[context.global.idParameter]: '2', baz: 'yaz'}
+                      {[context.global.idParameterName]: '0', foo: 'bar'},
+                      {[context.global.idParameterName]: '1', bar: 'baz'},
+                      {[context.global.idParameterName]: '2', baz: 'yaz'}
                     ]
                   })
                 }
@@ -90,7 +90,7 @@ __(function() {
                 method: 'GET',
                 headers: {
                   'x-pong': ejson.stringify({
-                    find: {[context.global.idParameter]: '0', foo: 'bar'}
+                    find: {[context.global.idParameterName]: '0', foo: 'bar'}
                   })
                 }
               }
@@ -109,9 +109,9 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     find: [
-                      {[context.global.idParameter]: '0', foo: 'bar'},
-                      {[context.global.idParameter]: '1', bar: 'baz'},
-                      {[context.global.idParameter]: '2', baz: 'yaz'}
+                      {[context.global.idParameterName]: '0', foo: 'bar'},
+                      {[context.global.idParameterName]: '1', bar: 'baz'},
+                      {[context.global.idParameterName]: '2', baz: 'yaz'}
                     ]
                   })
                 }
@@ -124,9 +124,9 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [
-                  {[context.global.idParameter]: '0', foo: 'bar'},
-                  {[context.global.idParameter]: '1', bar: 'baz'},
-                  {[context.global.idParameter]: '2', baz: 'yaz'}
+                  {[context.global.idParameterName]: '0', foo: 'bar'},
+                  {[context.global.idParameterName]: '1', bar: 'baz'},
+                  {[context.global.idParameterName]: '2', baz: 'yaz'}
                 ])
               }
             }
@@ -141,7 +141,7 @@ __(function() {
               try {
                 assert(this.findSpy.called)
                 assert.deepEqual(
-                  this.findSpy.firstCall.args[0][context.global.idParameter],
+                  this.findSpy.firstCall.args[0][context.global.idParameterName],
                   ['0', '1', '2'])
               } finally {
                 this.findSpy.restore()
@@ -152,14 +152,14 @@ __(function() {
                 url: '/find',
                 method: 'GET',
                 parameters: {
-                  [context.global.idParameter]: ['0', '1', '2']
+                  [context.global.idParameterName]: ['0', '1', '2']
                 },
                 headers: {
                   'x-pong': ejson.stringify({
                     find: [
-                      {[context.global.idParameter]: '0', foo: 'bar'},
-                      {[context.global.idParameter]: '1', bar: 'baz'},
-                      {[context.global.idParameter]: '2', baz: 'yaz'}
+                      {[context.global.idParameterName]: '0', foo: 'bar'},
+                      {[context.global.idParameterName]: '1', bar: 'baz'},
+                      {[context.global.idParameterName]: '2', baz: 'yaz'}
                     ]
                   })
                 }
@@ -172,9 +172,9 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [
-                  {[context.global.idParameter]: '0', foo: 'bar'},
-                  {[context.global.idParameter]: '1', bar: 'baz'},
-                  {[context.global.idParameter]: '2', baz: 'yaz'}
+                  {[context.global.idParameterName]: '0', foo: 'bar'},
+                  {[context.global.idParameterName]: '1', bar: 'baz'},
+                  {[context.global.idParameterName]: '2', baz: 'yaz'}
                 ])
               }
             }
@@ -206,7 +206,7 @@ __(function() {
                 },
                 headers: {
                   'x-pong': ejson.stringify({
-                    find: [{[context.global.idParameter]: '0', foo: 'bar'}]
+                    find: [{[context.global.idParameterName]: '0', foo: 'bar'}]
                   })
                 }
               }
@@ -217,7 +217,7 @@ __(function() {
                 assert(_.isNil(headers.link))
               },
               body: function(body, context) {
-                assert.deepStrictEqual(body, [{[context.global.idParameter]: '0', foo: 'bar'}])
+                assert.deepStrictEqual(body, [{[context.global.idParameterName]: '0', foo: 'bar'}])
               }
             }
           },
@@ -241,10 +241,10 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.find.idParameter
+          context.global.idParameterName = this.service.endpoints.find.idParameterName
         },
         teardown: function(context) {
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -256,7 +256,7 @@ __(function() {
             },
             teardown: function(context) {
               try {
-                assert(!(context.global.idParameter in this.findSpy.firstCall.args[0]))
+                assert(!(context.global.idParameterName in this.findSpy.firstCall.args[0]))
               } finally {
                 this.findSpy.restore()
               }
@@ -266,7 +266,7 @@ __(function() {
                 url: '/find',
                 method: 'GET',
                 parameters: {
-                  [context.global.idParameter]: 0
+                  [context.global.idParameterName]: 0
                 },
                 headers: {
                   'x-pong': ejson.stringify({
@@ -414,10 +414,10 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.find.idParameter
+          context.global.idParameterName = this.service.endpoints.find.idParameterName
         },
         teardown: function(context) {
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -454,8 +454,8 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     find: [
-                      {[context.global.idParameter]: '6', foo: 'bar'},
-                      {[context.global.idParameter]: '7', bar: 'baz'}
+                      {[context.global.idParameterName]: '6', foo: 'bar'},
+                      {[context.global.idParameterName]: '7', bar: 'baz'}
                     ]
                   })
                 }
@@ -470,8 +470,8 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [
-                  {[context.global.idParameter]: '6', foo: 'bar'},
-                  {[context.global.idParameter]: '7', bar: 'baz'}
+                  {[context.global.idParameterName]: '6', foo: 'bar'},
+                  {[context.global.idParameterName]: '7', bar: 'baz'}
                 ])
               }
             }
@@ -502,8 +502,8 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     find: [
-                      {[context.global.idParameter]: '0', foo: 'bar'},
-                      {[context.global.idParameter]: '1', bar: 'baz'}
+                      {[context.global.idParameterName]: '0', foo: 'bar'},
+                      {[context.global.idParameterName]: '1', bar: 'baz'}
                     ]
                   })
                 }
@@ -518,8 +518,8 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [
-                  {[context.global.idParameter]: '0', foo: 'bar'},
-                  {[context.global.idParameter]: '1', bar: 'baz'}
+                  {[context.global.idParameterName]: '0', foo: 'bar'},
+                  {[context.global.idParameterName]: '1', bar: 'baz'}
                 ])
               }
             }
@@ -553,7 +553,7 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     find: [
-                      {[context.global.idParameter]: '4', foo: 'bar'}
+                      {[context.global.idParameterName]: '4', foo: 'bar'}
                     ]
                   })
                 }
@@ -568,7 +568,7 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [
-                  {[context.global.idParameter]: '4', foo: 'bar'},
+                  {[context.global.idParameterName]: '4', foo: 'bar'},
                 ])
               }
             }
@@ -599,7 +599,7 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     find: [
-                      {[context.global.idParameter]: '0', foo: 'bar'}
+                      {[context.global.idParameterName]: '0', foo: 'bar'}
                     ]
                   })
                 }
@@ -612,7 +612,7 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [
-                  {[context.global.idParameter]: '0', foo: 'bar'},
+                  {[context.global.idParameterName]: '0', foo: 'bar'},
                 ])
               }
             }
@@ -647,7 +647,7 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     find: _.map(_.range(this.parent.service.endpoints.find.findConfig.maxPageSize), function(n) {
-                      return {[context.global.idParameter]: n.toString(), foo: 'bar'}
+                      return {[context.global.idParameterName]: n.toString(), foo: 'bar'}
                     })
                   })
                 }
@@ -687,7 +687,7 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     find: _.map(_.range(this.parent.service.endpoints.find.findConfig.maxPageSize) + 1, function(n) {
-                      return {[context.global.idParameter]: n.toString(), foo: 'bar'}
+                      return {[context.global.idParameterName]: n.toString(), foo: 'bar'}
                     })
                   })
                 }
@@ -725,7 +725,7 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     find: _.map(_.range(5), function(n) {
-                      return {[context.global.idParameter]: n.toString(), foo: 'bar'}
+                      return {[context.global.idParameterName]: n.toString(), foo: 'bar'}
                     })
                   })
                 }
@@ -766,10 +766,10 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.find.idParameter
+          context.global.idParameterName = this.service.endpoints.find.idParameterName
         },
         teardown: function(context) {
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -787,8 +787,8 @@ __(function() {
                   required: false,
                   default: undefined
                 },
-                [context.global.idParameter]: {
-                  name: context.global.idParameter,
+                [context.global.idParameterName]: {
+                  name: context.global.idParameterName,
                   location: 'query',
                   description: carbond.collections.FindConfig._STRINGS.parameters.idParameterDefinition.description,
                   schema: {
@@ -818,7 +818,7 @@ __(function() {
                 method: 'GET',
                 headers: {
                   'x-pong': ejson.stringify({
-                    find: [{[context.global.idParameter]: '0', foo: 'bar'}]
+                    find: [{[context.global.idParameterName]: '0', foo: 'bar'}]
                   }),
                   foo: 3
                 }
@@ -843,7 +843,7 @@ __(function() {
                 method: 'GET',
                 headers: {
                   'x-pong': ejson.stringify({
-                    find: [{[context.global.idParameter]: '0', foo: 'bar'}]
+                    find: [{[context.global.idParameterName]: '0', foo: 'bar'}]
                   }),
                   foo: 4
                 }

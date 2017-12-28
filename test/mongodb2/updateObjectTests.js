@@ -47,7 +47,7 @@ __(function() {
             updateObject: o({
               _type: pong.MongoDBCollection,
               enabled: {updateObject: true},
-              collection: 'updateObject'
+              collectionName: 'updateObject'
             })
           }
         }),
@@ -122,7 +122,7 @@ __(function() {
             updateObject: o({
               _type: pong.MongoDBCollection,
               enabled: {updateObject: true},
-              collection: 'updateObject',
+              collectionName: 'updateObject',
               updateObjectConfig: {
                 supportsUpsert: true
               }
@@ -172,7 +172,7 @@ __(function() {
             updateObject: o({
               _type: pong.MongoDBCollection,
               enabled: {updateObject: true},
-              collection: 'updateObject',
+              collectionName: 'updateObject',
               updateObjectSchema: {
                 type: 'object',
                 properties: {
@@ -192,7 +192,7 @@ __(function() {
             updateObject1: o({
               _type: pong.MongoDBCollection,
               enabled: {updateObject: true},
-              collection: 'updateObject',
+              collectionName: 'updateObject',
               updateObjectConfig: {
                 '$parameters.update.schema': {
                   type: 'object',
@@ -214,7 +214,7 @@ __(function() {
             updateObject2: o({
               _type: pong.MongoDBCollection,
               enabled: {updateObject: true},
-              collection: 'updateObject',
+              collectionName: 'updateObject',
               updateObjectSchema: {
                 type: 'object',
                 properties: {

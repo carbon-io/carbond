@@ -65,7 +65,7 @@ see a different object than user "bar" when making a request to
     preFindObjectOperation(config, req, res) {
       var options = Collection.prototype.preFindObjectOperation.call(this, config, req, res)
       var idPrefix = getUserIdPrefix(req.user)
-      options[this.idPathParameter] = idPrefix + '-' + options[this.idPathParameter]
+      options[this.idPathParameterName] = idPrefix + '-' + options[this.idPathParameterName]
       return options
     }
 

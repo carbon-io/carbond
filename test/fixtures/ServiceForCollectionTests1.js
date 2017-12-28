@@ -52,7 +52,7 @@ module.exports = o.main({
         var self = this
         return _.map(_.range(context.limit), function(id) {
           return {
-            [self.idParameter]: (context.skip + id).toString(),
+            [self.idParameterName]: (context.skip + id).toString(),
             op: 'find',
             context: context
           }

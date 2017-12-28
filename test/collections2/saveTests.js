@@ -48,10 +48,10 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.save.idParameter
+          context.global.idParameterName = this.service.endpoints.save.idParameterName
         },
         teardown: function(context) {
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -67,7 +67,7 @@ __(function() {
                     save: {$args: 0}
                   })
                 },
-                body: {[context.global.idParameter]: '0', foo: 'bar'}
+                body: {[context.global.idParameterName]: '0', foo: 'bar'}
               }
             },
             resSpec: {
@@ -87,7 +87,7 @@ __(function() {
                   })
                 },
                 body: [
-                  {[context.global.idParameter]: '0', foo: 'bar'},
+                  {[context.global.idParameterName]: '0', foo: 'bar'},
                 ]
               }
             },
@@ -95,7 +95,7 @@ __(function() {
               statusCode: 200,
               body: function(body, context) {
                 assert.deepStrictEqual(body, [
-                  {[context.global.idParameter]: '0', foo: 'bar'},
+                  {[context.global.idParameterName]: '0', foo: 'bar'},
                 ])
               }
             }
@@ -113,9 +113,9 @@ __(function() {
                   })
                 },
                 body: [
-                  {[context.global.idParameter]: '0', foo: 'bar'},
-                  {[context.global.idParameter]: '1', bar: 'baz'},
-                  {[context.global.idParameter]: '2', baz: 'yaz'}
+                  {[context.global.idParameterName]: '0', foo: 'bar'},
+                  {[context.global.idParameterName]: '1', bar: 'baz'},
+                  {[context.global.idParameterName]: '2', baz: 'yaz'}
                 ]
               }
             },
@@ -123,9 +123,9 @@ __(function() {
               statusCode: 200,
               body: function(body, context) {
                 assert.deepStrictEqual(body, [
-                  {[context.global.idParameter]: '0', foo: 'bar'},
-                  {[context.global.idParameter]: '1', bar: 'baz'},
-                  {[context.global.idParameter]: '2', baz: 'yaz'}
+                  {[context.global.idParameterName]: '0', foo: 'bar'},
+                  {[context.global.idParameterName]: '1', bar: 'baz'},
+                  {[context.global.idParameterName]: '2', baz: 'yaz'}
                 ])
               }
             }
@@ -230,10 +230,10 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.save.idParameter
+          context.global.idParameterName = this.service.endpoints.save.idParameterName
         },
         teardown: function(context) {
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -245,9 +245,9 @@ __(function() {
                 url: '/save',
                 method: 'PUT',
                 body: [
-                  {[context.global.idParameter]: '0', foo: 'bar'},
-                  {[context.global.idParameter]: '1', bar: 'baz'},
-                  {[context.global.idParameter]: '2', foo: 'bur'},
+                  {[context.global.idParameterName]: '0', foo: 'bar'},
+                  {[context.global.idParameterName]: '1', bar: 'baz'},
+                  {[context.global.idParameterName]: '2', foo: 'bur'},
                 ]
               }
             },
@@ -268,9 +268,9 @@ __(function() {
                   })
                 },
                 body: [
-                  {[context.global.idParameter]: '0', foo: 'bar'},
-                  {[context.global.idParameter]: '1', '666': 'bar'},
-                  {[context.global.idParameter]: '2', '777': 'baz'}
+                  {[context.global.idParameterName]: '0', foo: 'bar'},
+                  {[context.global.idParameterName]: '1', '666': 'bar'},
+                  {[context.global.idParameterName]: '2', '777': 'baz'}
                 ]
               }
             },
@@ -278,9 +278,9 @@ __(function() {
               statusCode: 200,
               body: function(body, context) {
                 assert.deepStrictEqual(body, [
-                  {[context.global.idParameter]: '0', foo: 'bar'},
-                  {[context.global.idParameter]: '1', '666': 'bar'},
-                  {[context.global.idParameter]: '2', '777': 'baz'}
+                  {[context.global.idParameterName]: '0', foo: 'bar'},
+                  {[context.global.idParameterName]: '1', '666': 'bar'},
+                  {[context.global.idParameterName]: '2', '777': 'baz'}
                 ])
               }
             }
@@ -333,10 +333,10 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.save.idParameter
+          context.global.idParameterName = this.service.endpoints.save.idParameterName
         },
         teardown: function(context) {
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -353,7 +353,7 @@ __(function() {
                   })
                 },
                 body: [
-                  {[context.global.idParameter]: '0', foo: 'bar'},
+                  {[context.global.idParameterName]: '0', foo: 'bar'},
                 ]
               }
             },
@@ -375,9 +375,9 @@ __(function() {
                   })
                 },
                 body: [
-                  {[context.global.idParameter]: '0', foo: 'bar'},
-                  {[context.global.idParameter]: '1', bar: 'baz'},
-                  {[context.global.idParameter]: '2', baz: 'yaz'}
+                  {[context.global.idParameterName]: '0', foo: 'bar'},
+                  {[context.global.idParameterName]: '1', bar: 'baz'},
+                  {[context.global.idParameterName]: '2', baz: 'yaz'}
                 ]
               }
             },
@@ -417,10 +417,10 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idParameter = this.service.endpoints.save.idParameter
+          context.global.idParameterName = this.service.endpoints.save.idParameterName
         },
         teardown: function(context) {
-          delete context.global.idParameter
+          delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -439,11 +439,11 @@ __(function() {
                     items: {
                       type: 'object',
                       properties: {
-                        [context.global.idParameter]: {
+                        [context.global.idParameterName]: {
                           type: 'string'
                         }
                       },
-                      required: [context.global.idParameter],
+                      required: [context.global.idParameterName],
                       additionalProperties: true
                     }
                   },
@@ -480,7 +480,7 @@ __(function() {
                   }),
                   foo: 3
                 },
-                body: [{[context.global.idParameter]: '0', foo: 'bar'}]
+                body: [{[context.global.idParameterName]: '0', foo: 'bar'}]
               }
             },
             resSpec: {
@@ -506,7 +506,7 @@ __(function() {
                   }),
                   foo: 4
                 },
-                body: [{[context.global.idParameter]: '0', foo: 'bar'}]
+                body: [{[context.global.idParameterName]: '0', foo: 'bar'}]
               }
             },
             resSpec: {

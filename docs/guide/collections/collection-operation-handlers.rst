@@ -123,8 +123,8 @@ indicating the subset of objects to return (e.g., ``options.skip`` and
 
 If ID queries are supported (note, ID query support is necessary when supporting
 bulk inserts), a query parameter by the same name as
-:js:attr:`~carbond.collections.Collection.idParameter` will be added and
-ultimately passed to the handler via ``options[this.idParameter]``.
+:js:attr:`~carbond.collections.Collection.idParameterName` will be added and
+ultimately passed to the handler via ``options[this.idParameterName]``.
 
 The following in-memory cache example accommodates both of these options:
 

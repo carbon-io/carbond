@@ -14,7 +14,7 @@ they were initialized as ``{}`` using the appropriate
 :js:attr:`~carbond.collections.Collection.insertConfig` is left as ``undefined``,
 it will be instantiated as ``o({}, this.InsertConfigClass)``, where
 ``this.InsertConfigClass`` is a class member that allows subclasses of
-:js:class:`carbond.collection.Collection` to override the default config class).
+:js:class:`~carbond.collections.Collection` to override the default config class).
 Operations should be configured with the following properties:
 
 - :js:attr:`~carbond.collections.Collection.insertConfig`
@@ -104,10 +104,10 @@ The :js:class:`~carbond.collections.InsertConfig` class is the base ``insert``
 operation config class and the default for
 :js:class:`~carbond.collections.Collection`. It can be used to configure whether
 or not inserted objects are returned
-(:js:attr:`~carbond.collection.InsertConfig.returnsInsertedObjects`) in the
+(:js:attr:`~carbond.collections.InsertConfig.returnsInsertedObjects`) in the
 response body and to define a schema separate from the collection level schema
 that will be used to verify incoming objects
-(:js:attr:`~carbond.collection.InsertConfig.insertSchema`).
+(:js:attr:`~carbond.collections.InsertConfig.insertSchema`).
 
 .. code-block:: js
 
@@ -200,7 +200,7 @@ objects saved are returned in the response.
 Note, unlike :js:attr:`~carbond.collections.InsertConfig.insertSchema`, it is
 necessary to specify the ID parameter (``_id`` in this case) on ``saveSchema``.
 Note, it should have the same name as
-:js:attr:`~carbond.collections.Collection.idParameter` or an error will be thrown
+:js:attr:`~carbond.collections.Collection.idParameterName` or an error will be thrown
 on initialization.
 
 UpdateConfig
