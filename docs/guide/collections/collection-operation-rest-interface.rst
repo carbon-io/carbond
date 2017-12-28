@@ -52,10 +52,10 @@ In the following tables, ``bulk`` will refer to requests whose body is an
     * - ``Location``
       - ``object``
       - Contains the object URL
-    * - :js:attr:`~carbond.collections.Collection.idHeader`
+    * - :js:attr:`~carbond.collections.Collection.idHeaderName`
       - ``bulk``
       - Contains the EJSON serialized IDs of the inserted objects
-    * - :js:attr:`~carbond.collections.Collection.idHeader`
+    * - :js:attr:`~carbond.collections.Collection.idHeaderName`
       - ``object``
       - Contains the EJSON serialized ID of the inserted object
 
@@ -201,7 +201,7 @@ PATCH /<collection>
     * - ``Location``
       - Contains the URL to retrieve all upserted objects in ID query format
         (see: `FindConfig`_)
-    * - :js:attr:`~carbond.collections.Collection.idHeader`
+    * - :js:attr:`~carbond.collections.Collection.idHeaderName`
       - Contains the EJSON serialized IDs of the upserted objects
 
 .. list-table:: Status Codes
@@ -306,7 +306,7 @@ PUT /<collection>/:<id>
     * - ``Location``
       - Contains the URL of the new object. Note, this is only possible if
         :js:attr:`~carbond.collections.SaveObjectConfig.supportsUpsert` is ``true``.
-    * - :js:attr:`~carbond.collections.Collection.idHeader`
+    * - :js:attr:`~carbond.collections.Collection.idHeaderName`
       - Contains the EJSON serialized ID of the new object. Note, this is only
         possible if
         :js:attr:`~carbond.collections.SaveObjectConfig.supportsUpsert` is ``true``.
@@ -376,7 +376,7 @@ PATCH /<collection>/:<id>
       - Description
     * - ``Location``
       - Contains the URL of the upserted object
-    * - :js:attr:`~carbond.collections.Collection.idHeader`
+    * - :js:attr:`~carbond.collections.Collection.idHeaderName`
       - Contains the EJSON serialized ID of the upserted object
 
 .. list-table:: Status Codes

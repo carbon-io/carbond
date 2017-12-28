@@ -53,10 +53,10 @@ __(function() {
         }),
         setup: function(context) {
           MongoDBCollectionHttpTest.prototype.setup.apply(this, arguments)
-          context.global.idHeader = this.service.endpoints.saveObject.idHeader
+          context.global.idHeaderName = this.service.endpoints.saveObject.idHeaderName
         },
         teardown: function(context) {
-          delete context.global.idHeader
+          delete context.global.idHeaderName
           MongoDBCollectionHttpTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -109,7 +109,7 @@ __(function() {
               statusCode: 201,
               headers: function(headers, context) {
                 assert.deepStrictEqual(
-                  headers[context.global.idHeader],
+                  headers[context.global.idHeaderName],
                   ejson.stringify(getObjectId(0)))
                 assert.deepStrictEqual(
                   headers.location, '/saveObject/' + getObjectId(0).toString())

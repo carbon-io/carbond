@@ -134,10 +134,10 @@ __(function() {
         }),
         setup: function(context) {
           MongoDBCollectionHttpTest.prototype.setup.apply(this, arguments)
-          context.global.idHeader = this.service.endpoints.update.idHeader
+          context.global.idHeaderName = this.service.endpoints.update.idHeaderName
         },
         teardown: function(context) {
-          delete context.global.idHeader
+          delete context.global.idHeaderName
           MongoDBCollectionHttpTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -174,7 +174,7 @@ __(function() {
                   context.local._id = new ejson.types.ObjectId(parsedLocation.query._id)
                 })
                 assert.deepEqual(
-                  ejson.parse(headers[context.global.idHeader]),
+                  ejson.parse(headers[context.global.idHeaderName]),
                   [context.local._id])
               },
               body: {n: 1}
@@ -231,10 +231,10 @@ __(function() {
         },
         setup: function(context) {
           MongoDBCollectionHttpTest.prototype.setup.apply(this, arguments)
-          context.global.idHeader = this.service.endpoints.update.idHeader
+          context.global.idHeaderName = this.service.endpoints.update.idHeaderName
         },
         teardown: function(context) {
-          delete context.global.idHeader
+          delete context.global.idHeaderName
           MongoDBCollectionHttpTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -296,7 +296,7 @@ __(function() {
             resSpec: {
               statusCode: 201,
               headers: function(headers, context) {
-                context.local._id = ejson.parse(headers[context.global.idHeader])[0]
+                context.local._id = ejson.parse(headers[context.global.idHeaderName])[0]
               },
               body: {n: 1}
             }

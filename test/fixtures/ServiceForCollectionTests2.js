@@ -141,7 +141,7 @@ module.exports = o({
                 additionalProperties: true
               }
             },
-            headers: ['Location', this.idHeader]
+            headers: ['Location', this.idHeaderName]
           }
         ],
         returnsInsertedObjects: true

@@ -293,10 +293,10 @@ __(function() {
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
           context.global.idParameterName = this.service.endpoints.update.idParameterName
-          context.global.idHeader = this.service.endpoints.update.idHeader
+          context.global.idHeaderName = this.service.endpoints.update.idHeaderName
         },
         teardown: function(context) {
-          delete context.global.idHeader
+          delete context.global.idHeaderName
           delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
@@ -350,7 +350,7 @@ __(function() {
               statusCode: 201,
               headers: function(headers, context) {
                 assert.deepStrictEqual(headers.location, '/update?' + context.global.idParameterName + '=0')
-                assert.deepStrictEqual(headers[context.global.idHeader], '["0"]')
+                assert.deepStrictEqual(headers[context.global.idHeaderName], '["0"]')
               },
               body: {n: 1}
             }
@@ -403,10 +403,10 @@ __(function() {
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
           context.global.idParameterName = this.service.endpoints.update.idParameterName
-          context.global.idHeader = this.service.endpoints.update.idHeader
+          context.global.idHeaderName = this.service.endpoints.update.idHeaderName
         },
         teardown: function(context) {
-          delete context.global.idHeader
+          delete context.global.idHeaderName
           delete context.global.idParameterName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
@@ -462,7 +462,7 @@ __(function() {
               statusCode: 201,
               headers: function(headers, context) {
                 assert.deepStrictEqual(headers.location, '/update?' + context.global.idParameterName + '=0')
-                assert.deepStrictEqual(headers[context.global.idHeader], '["0"]')
+                assert.deepStrictEqual(headers[context.global.idHeaderName], '["0"]')
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [{[context.global.idParameterName]: '0', foo: 'bar'}])

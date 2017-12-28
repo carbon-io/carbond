@@ -38,8 +38,8 @@ __(function() {
      */
     setup: function(ctx) {
       carbond.test.ServiceTest.prototype.setup.call(this, ctx)
-      this.idHeader = ctx.global.idHeader
-      ctx.global.idHeader = this.service.endpoints.zipcodes.idHeader
+      this.idHeaderName = ctx.global.idHeaderName
+      ctx.global.idHeaderName = this.service.endpoints.zipcodes.idHeaderName
       this.initializeDatabase(this.service.db)
     },
 
@@ -48,7 +48,7 @@ __(function() {
      */
     teardown: function(ctx) {
       this.clearDatabase(this.service.db)
-      ctx.global.idHeader = this.idHeader
+      ctx.global.idHeaderName = this.idHeaderName
       carbond.test.ServiceTest.prototype.teardown.call(this, ctx)
     },
 
@@ -286,7 +286,7 @@ __(function() {
           statusCode: 201,
           headers: function(headers, ctx) {
             assert.equal(headers.location, '/zipcodes?_id=94114')
-            assert.deepStrictEqual(ejson.parse(headers[ctx.global.idHeader]), ['94114'])
+            assert.deepStrictEqual(ejson.parse(headers[ctx.global.idHeaderName]), ['94114'])
           },
           body: [{
             _id: '94114',
@@ -400,7 +400,7 @@ __(function() {
           statusCode: 201,
           headers: function(headers, ctx) {
             assert.equal(headers.location, '/zipcodes/94114')
-            assert.equal(ejson.parse(headers[ctx.global.idHeader]), '94114')
+            assert.equal(ejson.parse(headers[ctx.global.idHeaderName]), '94114')
           },
           body: {_id: '94114', state: 'CA'}
         }
@@ -415,7 +415,7 @@ __(function() {
           statusCode: 200,
           headers: function(headers, ctx) {
             assert(_.isUndefined(headers.location))
-            assert(_.isUndefined(headers[ctx.global.idHeader]))
+            assert(_.isUndefined(headers[ctx.global.idHeaderName]))
           },
           body: {_id: '94114', state: 'CA'}
         }
@@ -432,7 +432,7 @@ __(function() {
           statusCode: 200,
           headers: function(headers, ctx) {
             assert(_.isUndefined(headers.location))
-            assert(_.isUndefined(headers[ctx.global.idHeader]))
+            assert(_.isUndefined(headers[ctx.global.idHeaderName]))
           },
           body: {n: 1}
         }
@@ -687,7 +687,7 @@ __(function() {
                         }
                       ]
                     },
-                    headers: ['Location', this.parent.ce.idHeader]
+                    headers: ['Location', this.parent.ce.idHeaderName]
                   },
                   '400': _.assign(_.clone(this.parent.BadRequestResponse), {
                     schema: {
@@ -1070,7 +1070,7 @@ __(function() {
                                  'resource and the body will contain the inserted object if ' +
                                  'configured to do so.',
                     schema: this.parent.schema,
-                    headers: ['Location', this.parent.ce.idHeader]
+                    headers: ['Location', this.parent.ce.idHeaderName]
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,

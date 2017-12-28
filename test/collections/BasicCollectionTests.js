@@ -557,7 +557,7 @@ __(function() {
                         }
                       ]
                     },
-                    headers: ['Location', this.parent.ce.defaultIdHeader]
+                    headers: ['Location', this.parent.ce.defaultIdHeaderName]
                   },
                   '400': _.assign(_.clone(this.parent.BadRequestResponse), {
                     schema: {
@@ -813,7 +813,7 @@ __(function() {
                                  'resource and the body will contain the inserted object if ' +
                                  'configured to do so.',
                     schema: this.parent.normalizedDefaultObjectSchema,
-                    headers: ['Location', this.parent.ce.idHeader]
+                    headers: ['Location', this.parent.ce.idHeaderName]
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,

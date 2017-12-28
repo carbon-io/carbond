@@ -599,11 +599,11 @@ __(function() {
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
           context.global.idParameterName = this.service.endpoints.foo.idParameterName
-          context.global.idHeader = this.service.endpoints.foo.idHeader
+          context.global.idHeaderName = this.service.endpoints.foo.idHeaderName
         },
         teardown: function(context) {
           delete context.global.idParameterName
-          delete context.global.idHeader
+          delete context.global.idHeaderName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -640,7 +640,7 @@ __(function() {
                   required: ['_id'],
                   additionalProperties: false
                 },
-                headers: ['Location', context.global.idHeader]
+                headers: ['Location', context.global.idHeaderName]
               })
             }
           }),

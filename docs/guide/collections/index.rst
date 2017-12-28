@@ -156,7 +156,7 @@ The base ``Collection`` configuration consists of a few properties:
 * :js:attr:`~carbond.collections.Collection.idParameterName` - this is the name
   of the ID property of a Collection object (e.g. ``{<idParameterName>: "foo",
   "bar": "baz"}``).
-* :js:attr:`~carbond.collections.Collection.idHeader` - this is the name of the
+* :js:attr:`~carbond.collections.Collection.idHeaderName` - this is the name of the
   HTTP response header that will contain the EJSON serialized object ID or IDs
   when objects are created in the Collection.
 
