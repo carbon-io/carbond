@@ -15,7 +15,7 @@ Each operation is represented as either:
 - A function of the form ``function(req, res)``.
 - An :js:class:`~carbond.Operation` object. This is a more elaborate definition
   which allows for a description, parameter definitions, and other useful
-  metadata as well as a :js:func:`~carbond.Operation.service`` method of the
+  metadata as well as a :js:func:`~carbond.Operation.handle`` method of the
   form ``function(req, res)``.
 
 When responding to HTTP requests, two styles are supported:
