@@ -37,7 +37,7 @@ var CountDownLimiter = oo({
 
 var SimpleOperation = oo({
   _type: Operation,
-  service: function() {
+  handle: function() {
     return this.endpoint.path + '::' + this.name
   }
 })
