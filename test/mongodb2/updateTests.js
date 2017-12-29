@@ -47,7 +47,7 @@ __(function() {
             update: o({
               _type: pong.MongoDBCollection,
               enabled: {update: true},
-              collection: 'update'
+              collectionName: 'update'
             })
           }
         }),
@@ -125,7 +125,7 @@ __(function() {
             update: o({
               _type: pong.MongoDBCollection,
               enabled: {update: true},
-              collection: 'update',
+              collectionName: 'update',
               updateConfig: {
                 supportsUpsert: true
               }
@@ -134,10 +134,10 @@ __(function() {
         }),
         setup: function(context) {
           MongoDBCollectionHttpTest.prototype.setup.apply(this, arguments)
-          context.global.idHeader = this.service.endpoints.update.idHeader
+          context.global.idHeaderName = this.service.endpoints.update.idHeaderName
         },
         teardown: function(context) {
-          delete context.global.idHeader
+          delete context.global.idHeaderName
           MongoDBCollectionHttpTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -174,7 +174,7 @@ __(function() {
                   context.local._id = new ejson.types.ObjectId(parsedLocation.query._id)
                 })
                 assert.deepEqual(
-                  ejson.parse(headers[context.global.idHeader]),
+                  ejson.parse(headers[context.global.idHeaderName]),
                   [context.local._id])
               },
               body: {n: 1}
@@ -194,7 +194,7 @@ __(function() {
                 update: o({
                   _type: pong.MongoDBCollection,
                   enabled: {update: true},
-                  collection: 'update',
+                  collectionName: 'update',
                   updateConfig: {
                     supportsUpsert: true,
                     returnsUpsertedObjects: true
@@ -215,7 +215,7 @@ __(function() {
             update: o({
               _type: pong.MongoDBCollection,
               enabled: {update: true},
-              collection: 'update',
+              collectionName: 'update',
               updateConfig: {
                 supportsUpsert: true
               }
@@ -231,10 +231,10 @@ __(function() {
         },
         setup: function(context) {
           MongoDBCollectionHttpTest.prototype.setup.apply(this, arguments)
-          context.global.idHeader = this.service.endpoints.update.idHeader
+          context.global.idHeaderName = this.service.endpoints.update.idHeaderName
         },
         teardown: function(context) {
-          delete context.global.idHeader
+          delete context.global.idHeaderName
           MongoDBCollectionHttpTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -296,7 +296,7 @@ __(function() {
             resSpec: {
               statusCode: 201,
               headers: function(headers, context) {
-                context.local._id = ejson.parse(headers[context.global.idHeader])[0]
+                context.local._id = ejson.parse(headers[context.global.idHeaderName])[0]
               },
               body: {n: 1}
             }
@@ -318,7 +318,7 @@ __(function() {
             update: o({
               _type: pong.MongoDBCollection,
               enabled: {update: true},
-              collection: 'update',
+              collectionName: 'update',
               querySchema: {
                 type: 'object',
                 properties: {
@@ -333,7 +333,7 @@ __(function() {
             update1: o({
               _type: pong.MongoDBCollection,
               enabled: {update: true},
-              collection: 'update',
+              collectionName: 'update',
               updateConfig: {
                 '$parameters.query.schema': {
                   type: 'object',
@@ -350,7 +350,7 @@ __(function() {
             update2: o({
               _type: pong.MongoDBCollection,
               enabled: {update: true},
-              collection: 'update',
+              collectionName: 'update',
               querySchema: {
                 type: 'object',
                 properties: {
@@ -526,7 +526,7 @@ __(function() {
             update: o({
               _type: pong.MongoDBCollection,
               enabled: {update: true},
-              collection: 'update',
+              collectionName: 'update',
               updateSchema: {
                 type: 'object',
                 properties: {
@@ -546,7 +546,7 @@ __(function() {
             update1: o({
               _type: pong.MongoDBCollection,
               enabled: {update: true},
-              collection: 'update',
+              collectionName: 'update',
               updateConfig: {
                 '$parameters.update.schema': {
                   type: 'object',
@@ -568,7 +568,7 @@ __(function() {
             update2: o({
               _type: pong.MongoDBCollection,
               enabled: {update: true},
-              collection: 'update',
+              collectionName: 'update',
               updateSchema: {
                 type: 'object',
                 properties: {

@@ -47,7 +47,7 @@ __(function() {
             findObject: o({
               _type: pong.MongoDBCollection,
               enabled: {findObject: true},
-              collection: 'findObject'
+              collectionName: 'findObject'
             })
           }
         }),

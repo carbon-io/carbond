@@ -47,7 +47,7 @@ __(function() {
             updateObject: o({
               _type: pong.MongoDBCollection,
               enabled: {updateObject: true},
-              collection: 'updateObject'
+              collectionName: 'updateObject'
             })
           }
         }),
@@ -122,7 +122,7 @@ __(function() {
             updateObject: o({
               _type: pong.MongoDBCollection,
               enabled: {updateObject: true},
-              collection: 'updateObject',
+              collectionName: 'updateObject',
               updateObjectConfig: {
                 supportsUpsert: true
               }
@@ -131,10 +131,10 @@ __(function() {
         }),
         setup: function(context) {
           MongoDBCollectionHttpTest.prototype.setup.apply(this, arguments)
-          context.global.idHeader = this.service.endpoints.updateObject.idHeader
+          context.global.idHeaderName = this.service.endpoints.updateObject.idHeaderName
         },
         teardown: function(context) {
-          delete context.global.idHeader
+          delete context.global.idHeaderName
           MongoDBCollectionHttpTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -155,7 +155,7 @@ __(function() {
               statusCode: 201,
               headers: function(headers, context) {
                 assert.deepStrictEqual(headers.location, '/updateObject/' + getObjectId(666).toString())
-                assert.deepStrictEqual(headers[context.global.idHeader], ejson.stringify(getObjectId(666)))
+                assert.deepStrictEqual(headers[context.global.idHeaderName], ejson.stringify(getObjectId(666)))
               },
               body: {n: 1}
             }
@@ -172,7 +172,7 @@ __(function() {
             updateObject: o({
               _type: pong.MongoDBCollection,
               enabled: {updateObject: true},
-              collection: 'updateObject',
+              collectionName: 'updateObject',
               updateObjectSchema: {
                 type: 'object',
                 properties: {
@@ -192,7 +192,7 @@ __(function() {
             updateObject1: o({
               _type: pong.MongoDBCollection,
               enabled: {updateObject: true},
-              collection: 'updateObject',
+              collectionName: 'updateObject',
               updateObjectConfig: {
                 '$parameters.update.schema': {
                   type: 'object',
@@ -214,7 +214,7 @@ __(function() {
             updateObject2: o({
               _type: pong.MongoDBCollection,
               enabled: {updateObject: true},
-              collection: 'updateObject',
+              collectionName: 'updateObject',
               updateObjectSchema: {
                 type: 'object',
                 properties: {

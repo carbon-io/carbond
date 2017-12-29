@@ -55,17 +55,17 @@ __(function() {
               _type: pong.MongoDBCollection,
               idGenerator: pong.util.mongoDbCollectionIdGenerator,
               enabled: {insert: true},
-              collection: 'insert'
+              collectionName: 'insert'
             })
           }
         }),
         setup: function(context) {
           MongoDBCollectionHttpTest.prototype.setup.apply(this, arguments)
-          context.global.idHeader = this.service.endpoints.insert.idHeader
+          context.global.idHeaderName = this.service.endpoints.insert.idHeaderName
         },
         teardown: function(context) {
           pong.util.mongoDbCollectionIdGenerator.resetId()
-          delete context.global.idHeader
+          delete context.global.idHeaderName
           MongoDBCollectionHttpTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -101,7 +101,7 @@ __(function() {
               statusCode: 201,
               headers: function(headers, context) {
                 assert.deepEqual(
-                  headers[context.global.idHeader],
+                  headers[context.global.idHeaderName],
                   ejson.stringify([getObjectId(0)]))
                 assert.deepEqual(
                   headers.location,
@@ -133,7 +133,7 @@ __(function() {
               statusCode: 201,
               headers: function(headers, context) {
                 assert.deepEqual(
-                  headers[context.global.idHeader],
+                  headers[context.global.idHeaderName],
                   ejson.stringify([getObjectId(0), getObjectId(1), getObjectId(2)]))
                 assert.deepEqual(
                   headers.location,
@@ -205,7 +205,7 @@ __(function() {
               dbUri: config.MONGODB_URI + '/insert',
               idGenerator: pong.util.mongoDbCollectionIdGenerator,
               enabled: {insert: true},
-              collection: 'insert',
+              collectionName: 'insert',
               insertConfig: {
                 insertSchema: {
                   type: 'object',
@@ -226,11 +226,11 @@ __(function() {
         }),
         setup: function(context) {
           MongoDBCollectionHttpTest.prototype.setup.apply(this, arguments)
-          context.global.idHeader = this.service.endpoints.insert.idHeader
+          context.global.idHeaderName = this.service.endpoints.insert.idHeaderName
         },
         teardown: function(context) {
           pong.util.mongoDbCollectionIdGenerator.resetId()
-          delete context.global.idHeader
+          delete context.global.idHeaderName
           MongoDBCollectionHttpTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -268,7 +268,7 @@ __(function() {
               statusCode: 201,
               headers: function(headers, context) {
                 assert.deepStrictEqual(
-                  headers[context.global.idHeader],
+                  headers[context.global.idHeaderName],
                   ejson.stringify([getObjectId(0), getObjectId(1), getObjectId(2)]))
                 assert.deepStrictEqual(
                   headers.location,
@@ -300,7 +300,7 @@ __(function() {
               _type: pong.MongoDBCollection,
               idGenerator: pong.util.mongoDbCollectionIdGenerator,
               enabled: {insert: true},
-              collection: 'insert',
+              collectionName: 'insert',
               insertConfig: {
                 returnsInsertedObjects: false
               }
@@ -309,11 +309,11 @@ __(function() {
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
-          context.global.idHeader = this.service.endpoints.insert.idHeader
+          context.global.idHeaderName = this.service.endpoints.insert.idHeaderName
         },
         teardown: function(context) {
           pong.util.mongoDbCollectionIdGenerator.resetId()
-          delete context.global.idHeader
+          delete context.global.idHeaderName
           carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
         },
         tests: [
@@ -339,7 +339,7 @@ __(function() {
               statusCode: 201,
               headers: function(headers, context) {
                 assert.deepStrictEqual(
-                  headers[context.global.idHeader],
+                  headers[context.global.idHeaderName],
                   ejson.stringify([getObjectId(0)]))
                 assert.deepStrictEqual(
                   headers.location,
@@ -365,7 +365,7 @@ __(function() {
               statusCode: 201,
               headers: function(headers, context) {
                 assert.deepStrictEqual(
-                  headers[context.global.idHeader],
+                  headers[context.global.idHeaderName],
                   ejson.stringify([getObjectId(0), getObjectId(1), getObjectId(2)]))
                 assert.deepStrictEqual(
                   headers.location,

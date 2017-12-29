@@ -250,7 +250,7 @@ __(function() {
                                  'resource and the body will contain the inserted object if ' +
                                  'configured to do so.',
                     schema: this.parent.normalizedDefaultObjectSchema,
-                    headers: ['Location', this.parent.ce.idHeader]
+                    headers: ['Location', this.parent.ce.idHeaderName]
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
@@ -313,7 +313,7 @@ __(function() {
                       required: ['n'],
                       additionalProperties: false
                     },
-                    headers: ['Location', this.parent.ce.idHeader]
+                    headers: ['Location', this.parent.ce.idHeaderName]
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
@@ -375,7 +375,7 @@ __(function() {
                                  'resource and the body will contain the upserted object if ' +
                                  'configured to do so.',
                     schema: this.parent.normalizedDefaultObjectSchema,
-                    headers: ['Location', this.parent.ce.idHeader]
+                    headers: ['Location', this.parent.ce.idHeaderName]
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,

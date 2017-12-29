@@ -52,10 +52,10 @@ In the following tables, ``bulk`` will refer to requests whose body is an
     * - ``Location``
       - ``object``
       - Contains the object URL
-    * - :js:attr:`~carbond.collections.Collection.idHeader`
+    * - :js:attr:`~carbond.collections.Collection.idHeaderName`
       - ``bulk``
       - Contains the EJSON serialized IDs of the inserted objects
-    * - :js:attr:`~carbond.collections.Collection.idHeader`
+    * - :js:attr:`~carbond.collections.Collection.idHeaderName`
       - ``object``
       - Contains the EJSON serialized ID of the inserted object
 
@@ -87,14 +87,14 @@ In the following tables, ``bulk`` will refer to requests whose body is an
 GET /<collection>
 -----------------
 
-.. list-table:: Request Parameters (note, ``<idParameter>`` is configurable on ``Collection``)
+.. list-table:: Request Parameters (note, ``<idParameterName>`` is configurable on ``Collection``)
     :header-rows: 1
     :class: collection-rest-table
 
     * - Name
       - Location
       - Description
-    * - <:js:attr:`~carbond.collections.Collection.idParameter`>
+    * - <:js:attr:`~carbond.collections.Collection.idParameterName`>
       - query
       - Contains the IDs of objects to be retrieved. This parameter is only
         present if :js:attr:`~carbond.collections.FindConfig.supportsIdQuery` is
@@ -201,7 +201,7 @@ PATCH /<collection>
     * - ``Location``
       - Contains the URL to retrieve all upserted objects in ID query format
         (see: `FindConfig`_)
-    * - :js:attr:`~carbond.collections.Collection.idHeader`
+    * - :js:attr:`~carbond.collections.Collection.idHeaderName`
       - Contains the EJSON serialized IDs of the upserted objects
 
 .. list-table:: Status Codes
@@ -249,14 +249,14 @@ DELETE /<collection>
 GET /<collection>/:<id>
 -----------------------
 
-.. list-table:: Request Parameters (note, ``idPathParameter`` is configurable on ``Collection``)
+.. list-table:: Request Parameters (note, ``idPathParameterName`` is configurable on ``Collection``)
     :header-rows: 1
     :class: collection-rest-table
 
     * - Name
       - Location
       - Description
-    * - <:js:attr:`~carbond.collections.Collection.idPathParameter`>
+    * - <:js:attr:`~carbond.collections.Collection.idPathParameterName`>
       - path
       - The ID component of the Collection object URL. Identifies a specific
         object in the Collection.
@@ -269,7 +269,7 @@ GET /<collection>/:<id>
       - Description
     * - ``200``
       - The response body will contain the object whose ID matches the value
-        passed in <:js:attr:`~carbond.collections.Collection.idPathParameter`>
+        passed in <:js:attr:`~carbond.collections.Collection.idPathParameterName`>
     * - ``400``
       - The request was malformed
     * - ``403``
@@ -282,14 +282,14 @@ GET /<collection>/:<id>
 PUT /<collection>/:<id>
 -----------------------
 
-.. list-table:: Request Parameters (note, ``idPathParameter`` is configurable on ``Collection``)
+.. list-table:: Request Parameters (note, ``idPathParameterName`` is configurable on ``Collection``)
     :header-rows: 1
     :class: collection-rest-table
 
     * - Name
       - Location
       - Description
-    * - <:js:attr:`~carbond.collections.Collection.idPathParameter`>
+    * - <:js:attr:`~carbond.collections.Collection.idPathParameterName`>
       - path
       - The ID component of the Collection object URL. Identifies a specific
         object in the Collection.
@@ -306,7 +306,7 @@ PUT /<collection>/:<id>
     * - ``Location``
       - Contains the URL of the new object. Note, this is only possible if
         :js:attr:`~carbond.collections.SaveObjectConfig.supportsUpsert` is ``true``.
-    * - :js:attr:`~carbond.collections.Collection.idHeader`
+    * - :js:attr:`~carbond.collections.Collection.idHeaderName`
       - Contains the EJSON serialized ID of the new object. Note, this is only
         possible if
         :js:attr:`~carbond.collections.SaveObjectConfig.supportsUpsert` is ``true``.
@@ -348,14 +348,14 @@ PUT /<collection>/:<id>
 PATCH /<collection>/:<id>
 -------------------------
 
-.. list-table:: Request Parameters (note, ``idPathParameter`` is configurable on ``Collection``)
+.. list-table:: Request Parameters (note, ``idPathParameterName`` is configurable on ``Collection``)
     :header-rows: 1
     :class: collection-rest-table
 
     * - Name
       - Location
       - Description
-    * - <:js:attr:`~carbond.collections.Collection.idPathParameter`>
+    * - <:js:attr:`~carbond.collections.Collection.idPathParameterName`>
       - path
       - The ID component of the Collection object URL. Identifies a specific
         object in the Collection.
@@ -376,7 +376,7 @@ PATCH /<collection>/:<id>
       - Description
     * - ``Location``
       - Contains the URL of the upserted object
-    * - :js:attr:`~carbond.collections.Collection.idHeader`
+    * - :js:attr:`~carbond.collections.Collection.idHeaderName`
       - Contains the EJSON serialized ID of the upserted object
 
 .. list-table:: Status Codes
@@ -408,14 +408,14 @@ PATCH /<collection>/:<id>
 DELETE /<collection>/:<id>
 --------------------------
 
-.. list-table:: Request Parameters (note, ``idPathParameter`` is configurable on ``Collection``)
+.. list-table:: Request Parameters (note, ``idPathParameterName`` is configurable on ``Collection``)
     :header-rows: 1
     :class: collection-rest-table
 
     * - Name
       - Location
       - Description
-    * - <:js:attr:`~carbond.collections.Collection.idPathParameter`>
+    * - <:js:attr:`~carbond.collections.Collection.idPathParameterName`>
       - path
       - The ID component of the Collection object URL. Identifies a specific
         object in the Collection.

@@ -91,7 +91,7 @@ __(function() {
       endpoints: {
         hello: o({
           _type: carbon.carbond.mongodb.MongoDBCollection,
-          collection: 'hello',
+          collectionName: 'hello',
           enabled: {'*': true},
           acl: o({
             _type: carbon.carbond.security.CollectionAcl,

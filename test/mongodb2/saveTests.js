@@ -47,7 +47,7 @@ __(function() {
             save: o({
               _type: pong.MongoDBCollection,
               enabled: {save: true},
-              collection: 'save'
+              collectionName: 'save'
             })
           }
         }),
@@ -134,7 +134,7 @@ __(function() {
             save: o({
               _type: pong.MongoDBCollection,
               enabled: {save: true},
-              collection: 'save',
+              collectionName: 'save',
               saveConfig: {
                 saveSchema: {
                   type: 'object',
@@ -206,7 +206,7 @@ __(function() {
             save: o({
               _type: pong.MongoDBCollection,
               enabled: {save: true},
-              collection: 'save',
+              collectionName: 'save',
               saveConfig: {
                 returnsSavedObjects: false
               }

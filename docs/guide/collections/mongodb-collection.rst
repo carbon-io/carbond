@@ -21,11 +21,11 @@ MongoDBCollection Configuration
 :js:class:`~carbond.collections.Collection` with the following configuration
 properties:
 
-    :js:attr:`~carbond.mongodb.MongoDBCollection.db`
+    :js:attr:`~carbond.mongodb.MongoDBCollection.dbName`
         This is only necessary if the :js:class:`~carbond.Service` instance
         connects to multiple databases and should be a key in
         :js:attr:`~carbond.Service.dbUris`.
-    :js:attr:`~carbond.mongodb.MongoDBCollection.collection`
+    :js:attr:`~carbond.mongodb.MongoDBCollection.collectionName`
         This is the name of the MongoDB collection that the endpoint will operate
         on.
     :js:attr:`~carbond.mongodb.MongoDBCollection.querySchema`

@@ -21,7 +21,7 @@ module.exports = o({
     // Simple endpoint with Collection operations defined as functions
     zipcodes: o({
       _type: carbond.mongodb.MongoDBCollection,
-      collection: 'zipcodes',
+      collectionName: 'zipcodes',
       enabled: {
         '*': true
       },
@@ -78,7 +78,7 @@ module.exports = o({
     }),
     'bag-of-props': o({
       _type: carbond.mongodb.MongoDBCollection,
-      collection: 'bag-of-props',
+      collectionName: 'bag-of-props',
 
       enabled: {
         '*': true

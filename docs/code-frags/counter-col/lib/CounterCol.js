@@ -369,7 +369,7 @@ __(function() {
       mongoCounterBasic: o({
         _type: carbon.carbond.collections.Collection,
         enabled: {'*': true},
-        collection: {
+        collectionName: {
           $property: {
             get: function() {
               return this.service.db.getCollection('mongo-counter')

@@ -139,12 +139,26 @@ which may have implications for certain Collection operations, and
 The base ``Collection`` configuration consists of a few properties:
 
 * :js:attr:`~carbond.collections.Collection.enabled` - see `Enabling / Disabling Operations`_
-* :js:attr:`~carbond.collections.Collection.schema` - this is the schema for all objects in the Collection. It must be of type ``object`` and contain an ID property whose name is the same as the value of :js:attr:`~carbond.collections.Collection.idParameter`.
-* :js:attr:`~carbond.collections.Collection.example` - this is an example object in the Collection and is used for documentation.
-* :js:attr:`~carbond.collections.Collection.idGenerator` - if present, this must be an object with at least one method: ``generateId``.  This method will be passed the :js:class:`~carbond.collections.Collection` instance along with the current :js:class:`~carbond.Request` object and should return a suitable ID for the object being inserted on ``insert`` or ``insertObject``.
-* :js:attr:`~carbond.collections.Collection.idPathParameter`- this is the name of the path parameter used to capture an object ID for object specific endpoints (e.g. ``/<someCollectionName>/:<idPathParameter>``).
-* :js:attr:`~carbond.collections.Collection.idParameter` - this is the name of the ID property of a Collection object (e.g. ``{<idParameter>: "foo", "bar": "baz"}``).
-* :js:attr:`~carbond.collections.Collection.idHeader` - this is the name of the HTTP response header that will contain the EJSON serialized object ID or IDs when objects are created in the Collection.
+* :js:attr:`~carbond.collections.Collection.schema` - this is the schema for all
+  objects in the Collection. It must be of type ``object`` and contain an ID
+  property whose name is the same as the value of
+  :js:attr:`~carbond.collections.Collection.idParameterName`.
+* :js:attr:`~carbond.collections.Collection.example` - this is an example object
+  in the Collection and is used for documentation.
+* :js:attr:`~carbond.collections.Collection.idGenerator` - if present, this must
+  be an object with at least one method: ``generateId``.  This method will be
+  passed the :js:class:`~carbond.collections.Collection` instance along with the
+  current :js:class:`~carbond.Request` object and should return a suitable ID
+  for the object being inserted on ``insert`` or ``insertObject``.
+* :js:attr:`~carbond.collections.Collection.idPathParameterName`- this is the
+  name of the path parameter used to capture an object ID for object specific
+  endpoints (e.g. ``/<someCollectionName>/:<idPathParameterName>``).
+* :js:attr:`~carbond.collections.Collection.idParameterName` - this is the name
+  of the ID property of a Collection object (e.g. ``{<idParameterName>: "foo",
+  "bar": "baz"}``).
+* :js:attr:`~carbond.collections.Collection.idHeaderName` - this is the name of the
+  HTTP response header that will contain the EJSON serialized object ID or IDs
+  when objects are created in the Collection.
 
 Note: most of these properties already have sane defaults (see
 the :js:class:`~carbond.collections.Collection` class reference for more details).

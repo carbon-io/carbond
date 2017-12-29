@@ -47,7 +47,7 @@ __(function() {
             find: o({
               _type: pong.MongoDBCollection,
               enabled: {find: true},
-              collection: 'find'
+              collectionName: 'find'
             })
           }
         }),
@@ -257,7 +257,7 @@ __(function() {
             find: o({
               _type: pong.MongoDBCollection,
               enabled: {find: true},
-              collection: 'find',
+              collectionName: 'find',
               findConfig: {
                 pageSize: 4,
                 maxPageSize: 8
@@ -398,7 +398,7 @@ __(function() {
             find: o({
               _type: pong.MongoDBCollection,
               enabled: {find: true},
-              collection: 'find',
+              collectionName: 'find',
               findConfig: {
                 supportsIdQuery: false
               }
@@ -442,7 +442,7 @@ __(function() {
             find: o({
               _type: pong.MongoDBCollection,
               enabled: {find: true},
-              collection: 'find',
+              collectionName: 'find',
               findConfig: {
                 supportsSkipAndLimit: false
               }
@@ -492,7 +492,7 @@ __(function() {
             find: o({
               _type: pong.MongoDBCollection,
               enabled: {find: true},
-              collection: 'find',
+              collectionName: 'find',
               findConfig: {
                 supportsPagination: false
               }
@@ -562,7 +562,7 @@ __(function() {
             find: o({
               _type: pong.MongoDBCollection,
               enabled: {find: true},
-              collection: 'find',
+              collectionName: 'find',
               querySchema: {
                 type: 'object',
                 properties: {
@@ -577,7 +577,7 @@ __(function() {
             find1: o({
               _type: pong.MongoDBCollection,
               enabled: {find: true},
-              collection: 'find',
+              collectionName: 'find',
               findConfig: {
                 '$parameters.query.schema': {
                   type: 'object',
@@ -594,7 +594,7 @@ __(function() {
             find2: o({
               _type: pong.MongoDBCollection,
               enabled: {find: true},
-              collection: 'find',
+              collectionName: 'find',
               querySchema: {
                 type: 'object',
                 properties: {

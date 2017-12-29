@@ -3,7 +3,7 @@ MongoDBCollection Operation Configuration
 =========================================
 
 The :js:class:`~carbond.mongodb.MongoDBCollection` implementation overrides
-:js:class:`~carbond.collection.Collection`\ 's configuration class members with
+:js:class:`~carbond.collections.Collection`\ 's configuration class members with
 the following classes:
 
 - :js:class:`~carbond.mongodb.MongoDBInsertConfig`
