@@ -202,6 +202,7 @@ __(function() {
                 })
               }
             })
+            service.start()
           })
         }
       }),

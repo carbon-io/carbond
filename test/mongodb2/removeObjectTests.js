@@ -93,6 +93,7 @@ __(function() {
                 })
               }
             })
+            service.start()
           })
         }
       })

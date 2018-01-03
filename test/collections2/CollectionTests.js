@@ -12,6 +12,7 @@ var oo = require('@carbon-io/carbon-core').atom.oo(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
 var carbond = require('../..')
+var errors = require('../../lib/util/errors')
 var pong = require('../fixtures/pong')
 
 var PongCollectionSubclass = oo({
@@ -818,6 +819,43 @@ __(function() {
               }
             }
           }
+        ]
+      }),
+      o({
+        _type: testtube.Test,
+        name: 'CollectionConfigurationTests',
+        tests: [
+          o({
+            _type: testtube.Test,
+            name: 'RootSchemaValidationTest',
+            setup: function() {
+              this.schema = {
+                type: 'object',
+                properties: {
+                  bar: {type: 'string'},
+                  baz: {type: 'string'}
+                },
+                required: ['bar'],
+                additionalProperties: false
+              }
+            },
+            doTest: function() {
+              assert.throws(() => {
+                let service = o({
+                  _type: carbond.Service,
+                  endpoints: {
+                    foo: o({
+                      _type: carbond.collections.Collection,
+                      idParameterName: 'foo',
+                      schema: this.schema
+                    })
+                  }
+                })
+                // XXX: start throws, 2nd pass initialization should happen before start
+                service.start()
+              }, errors.CollectionInitError)
+            }
+          })
         ]
       })
     ]

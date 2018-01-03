@@ -162,6 +162,7 @@ __(function() {
                 })
               }
             })
+            service.start()
           })
         }
       }),
