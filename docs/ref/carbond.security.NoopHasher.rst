@@ -19,10 +19,11 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: carbond.security.NoopHasher.hash(data)
+    .. function:: hash(data)
 
         :param data: the data to "hash"
         :type data: string
+        :returns: the digest (which is just the input data)
         :rtype: string
 
         Returns the input data unchanged

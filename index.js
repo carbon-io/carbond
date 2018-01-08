@@ -4,7 +4,7 @@ var o = core.atom.o(module)
 /***************************************************************************************************
  * @external express
  * @description The express namespace
- * @see {@link https://expressjs.com/en/4x/api.html}
+ * @see https://expressjs.com/en/4x/api.html
  */
 
 /***************************************************************************************************

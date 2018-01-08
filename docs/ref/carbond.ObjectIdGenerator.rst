@@ -12,14 +12,14 @@ carbond.ObjectIdGenerator
 
 Generates :class:`~ejson.types.ObjectId` IDs
 
-Properties
-----------
+Instance Properties
+-------------------
 
 .. class:: carbond.ObjectIdGenerator
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.ObjectIdGenerator.generateStrings
+    .. attribute:: generateStrings
 
        :type: boolean
        :default: false
@@ -34,9 +34,10 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: carbond.ObjectIdGenerator.generateId()
+    .. function:: generateId()
 
         :overrides: :attr:`~carbond.IdGenerator.generateId`
+        :returns: Returns the :class:`~ejson.types.ObjectId` instance of a ``string`` if configured to do so
         :rtype: :class:`~ejson.types.ObjectId` | string
 
         Generates an :class:`~ejson.types.ObjectId`

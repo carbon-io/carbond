@@ -1,21 +1,21 @@
-.. class:: carbond.collections.SaveConfig
+.. class:: carbond.collections.FindObjectConfig
     :heading:
 
 .. |br| raw:: html
 
    <br />
 
-==============================
-carbond.collections.SaveConfig
-==============================
+====================================
+carbond.collections.FindObjectConfig
+====================================
 *extends* :class:`~carbond.collections.CollectionOperationConfig`
 
-The save operation config
+The find object config
 
 Instance Properties
 -------------------
 
-.. class:: carbond.collections.SaveConfig
+.. class:: carbond.collections.FindObjectConfig
     :noindex:
     :hidden:
 
@@ -64,14 +64,6 @@ Instance Properties
        The parent endpoint/collection that this configuration is a member of
 
 
-    .. attribute:: example
-
-       :type: object
-       :default: undefined
-
-       An example response body used for documentation
-
-
     .. attribute:: idParameter
 
        :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
@@ -92,18 +84,11 @@ Instance Properties
 
     .. attribute:: parameters
 
+       :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
        :type: object.<string, carbond.OperationParameter>
-       :required:
+       :ro:
 
-       The objects parameter definition
-
-       .. csv-table::
-          :class: details-table
-          :header: "Name", "Type", "Default", "Description"
-          :widths: 10, 10, 10, 10
-
-          objects, :class:`~carbond.OperationParameter`, ``undefined``, undefined
-
+       Operation specific parameters (e.g., "skip", "limit"). These will be passed down to the operation handlers via the options parameter if they are not explicitly passed via another leading parameter (e.g., "id" and "update" for :class:`~carbond.collections.Collection.updateObject`). Note, this should generally be left alone by instances. Instead, use :class:`~carbond.collections.CollectionOperationConfig.additionalParameters`.
 
 
     .. attribute:: responses
@@ -113,20 +98,4 @@ Instance Properties
        :required:
 
        Add custom responses for an operation. Note, this will override all default responses.
-
-
-    .. attribute:: returnsSavedObjects
-
-       :type: boolean
-       :default: ``true``
-
-       Whether or not the HTTP layer returns the objects saved in the response
-
-
-    .. attribute:: saveSchema
-
-       :type: Object
-       :default: undefined
-
-       The schema used to validate the request body. If this is undefined, the collection level schema (adapted for arrays) will be used.
 

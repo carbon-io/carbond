@@ -12,19 +12,20 @@ carbond.collections.IdGenerator
 
 Generates :class:`~ejson.types.ObjectId` IDs
 
-Methods
--------
+Abstract Methods
+----------------
 
 .. class:: carbond.collections.IdGenerator
     :noindex:
     :hidden:
 
-    .. function:: carbond.collections.IdGenerator.generateId(collection, req)
+    .. function:: generateId(collection, req)
 
         :param collection: The collection that IDs are being generated for
         :type collection: :class:`~carbond.collections.Collection`
         :param req: The incoming request
         :type req: :class:`~carbond.Request`
+        :returns: The ID
         :rtype: \*
 
         Generates an ID, where the definition of ID is left up to the implementor

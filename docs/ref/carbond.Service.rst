@@ -12,14 +12,30 @@ carbond.Service
 
 Service is the main entry point to a carbond service
 
-Properties
-----------
+Static Properties
+-----------------
 
 .. class:: carbond.Service
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.Service.adminRoot
+    .. attribute:: ALL_METHODS
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: Object
+       :required:
+
+       A list of all HTTP methods recognized by carbond
+
+
+Instance Properties
+-------------------
+
+.. class:: carbond.Service
+    :noindex:
+    :hidden:
+
+    .. attribute:: adminRoot
 
        :type: string
        :default: ``'/service-admin'``
@@ -27,7 +43,16 @@ Properties
        The "administrative" root URL path component (this is only enabled if the "swagger" command line option is present)
 
 
-    .. attribute:: carbond.Service.apiRoot
+    .. attribute:: allowUnauthenticated
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: string[]
+       :required:
+
+       Skip authentication for the HTTP methods listed on this endpoint
+
+
+    .. attribute:: apiRoot
 
        :type: string
        :default: undefined
@@ -35,7 +60,7 @@ Properties
        The root component of the URL path component. This will be prepended to any routes that are yielded by the :class:`~carbond.Endpoint` tree.
 
 
-    .. attribute:: carbond.Service.authenticator
+    .. attribute:: authenticator
 
        :type: :class:`~carbond.security.Authenticator`
        :default: undefined
@@ -43,7 +68,7 @@ Properties
        The root authenticator. If present, all requests will be passed through the authenticator resulting in a 401 if authentication fails.
 
 
-    .. attribute:: carbond.Service.cluster
+    .. attribute:: cluster
 
        :type: boolean
        :default: false
@@ -51,7 +76,7 @@ Properties
        Whether or not to use Node's ``cluster`` module
 
 
-    .. attribute:: carbond.Service.cmdargs
+    .. attribute:: cmdargs
 
        :type: Object
        :default: ``{}``
@@ -59,7 +84,7 @@ Properties
        Additional command line argument definitions (will be merged into :class:`~carbond.Service.defaultCmdargs`)
 
 
-    .. attribute:: carbond.Service.corsEnabled
+    .. attribute:: corsEnabled
 
        :type: boolean
        :default: ``true``
@@ -67,7 +92,7 @@ Properties
        Flag determining whether CORS is enabled
 
 
-    .. attribute:: carbond.Service.db
+    .. attribute:: db
 
        :type: Object
        :required:
@@ -75,7 +100,7 @@ Properties
        The connection object for :attr:`~carbond.Service.dbUri`
 
 
-    .. attribute:: carbond.Service.dbs
+    .. attribute:: dbs
 
        :type: Object.<string, Object>
        :required:
@@ -83,7 +108,7 @@ Properties
        The connection objects for :attr:`~carbond.Service.dbUri`. The keys for this object will mirror those in :attr:`~carbond.Service.dbUri`, while the values will be the connection objects themselves.
 
 
-    .. attribute:: carbond.Service.dbUri
+    .. attribute:: dbUri
 
        :type: string
        :required:
@@ -91,7 +116,7 @@ Properties
        The database URI to connect to at startup (currently restricted to MongoDB)
 
 
-    .. attribute:: carbond.Service.dbUris
+    .. attribute:: dbUris
 
        :type: Object.<string, string>
        :required:
@@ -99,7 +124,7 @@ Properties
        Database URIs to connect to at startup (currently restricted to MongoDB)
 
 
-    .. attribute:: carbond.Service.defaultCmdargs
+    .. attribute:: defaultCmdargs
 
        :type: Object
        :default: ``{...}``
@@ -107,7 +132,7 @@ Properties
        The default command line arguments definition. :class:`~carbond.Service#cmdargs` can be used to extend the default set of command line arguments.
 
 
-    .. attribute:: carbond.Service.defaultDocgenOptions
+    .. attribute:: defaultDocgenOptions
 
        :type: Object
        :default: ``{...}``
@@ -125,7 +150,7 @@ Properties
 
 
 
-    .. attribute:: carbond.Service.description
+    .. attribute:: description
 
        :type: string
        :default: ``'This is a Service'``
@@ -133,7 +158,7 @@ Properties
        A short description of this service
 
 
-    .. attribute:: carbond.Service.endpoints
+    .. attribute:: endpoints
 
        :type: Object
        :default: ``{}``
@@ -141,7 +166,7 @@ Properties
        The endpoint tree. Note, keys in the endpoint tree will be used to construct routes to the various :class:`~carbond.Operation`s servicing requests for an individual :class:`~carbond.Endpoint`.
 
 
-    .. attribute:: carbond.Service.env
+    .. attribute:: env
 
        :type: string
        :required:
@@ -149,7 +174,7 @@ Properties
        carbond.DEFAULT_ENV}
 
 
-    .. attribute:: carbond.Service.errorHandlingMiddleware
+    .. attribute:: errorHandlingMiddleware
 
        :type: function()[]
        :default: ``[]``
@@ -157,7 +182,7 @@ Properties
        Middleware that will be invoked in the event that an error is thrown. Error-handling middleware function signatures should conform to ``fn(err, req, res, next)``.
 
 
-    .. attribute:: carbond.Service.errors
+    .. attribute:: errors
 
        :type: Object
        :default: ``HttpErrors``
@@ -165,7 +190,7 @@ Properties
        A shortcut reference to the ``@carbon-io/http-errors`` module to be accessed using the service reference available throughout the ``carbond`` component hierarchy
 
 
-    .. attribute:: carbond.Service.fiberPoolSize
+    .. attribute:: fiberPoolSize
 
        :type: number
        :default: ``120``
@@ -173,7 +198,7 @@ Properties
        Sets the pool size for the underlying ``fibers`` module. Note, a new fiber will be created and destroyed for every fiber created beyond the pool size. If this occurs regularly, it can lead to significant performance degradation. While the default should usually suffice, this parameter should be tuned according to the expected number of concurrent requests.
 
 
-    .. attribute:: carbond.Service.generateOptionsMethodsInDocs
+    .. attribute:: generateOptionsMethodsInDocs
 
        :type: boolean
        :default: false
@@ -181,7 +206,7 @@ Properties
        Whether or not to include OPTIONS methods in static documentation
 
 
-    .. attribute:: carbond.Service.gracefulShutdown
+    .. attribute:: gracefulShutdown
 
        :type: boolean
        :default: ``true``
@@ -189,7 +214,7 @@ Properties
        Whether or not the service should gracefully shutdown when a stop is requested (i.e., whether or not open sockets should be allowed to timeout or severed immediately). The default for this is computed using :attr:`~carbond.DEFAULT_ENV` (e.g., ``DEFAULT_ENV === 'production'``).
 
 
-    .. attribute:: carbond.Service.hostname
+    .. attribute:: hostname
 
        :type: string
        :default: ``'127.0.0.1'``
@@ -197,7 +222,7 @@ Properties
        The address that this service should listen on
 
 
-    .. attribute:: carbond.Service.logger
+    .. attribute:: logger
 
        :type: logging.Logger
        :default: ``{...}``
@@ -205,7 +230,7 @@ Properties
        The logger instance used by service log methods (e.g. undefined)
 
 
-    .. attribute:: carbond.Service.middleware
+    .. attribute:: middleware
 
        :type: function()[]
        :default: ``[]``
@@ -213,7 +238,16 @@ Properties
        Middleware functions that will be executed via express before control is passed on to any :class:`~carbond.Operation`. Middleware function signatures should conform to ``fn(req, res, next)``.
 
 
-    .. attribute:: carbond.Service.numClusterWorkers
+    .. attribute:: noDocument
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: boolean
+       :default: false
+
+       Controls whether documentation for this endpoint is included in generated static documentation
+
+
+    .. attribute:: numClusterWorkers
 
        :type: number
        :default: undefined
@@ -221,7 +255,7 @@ Properties
        The number of cluster workers to start. If left ``undefined`` or set to ``0``, it will be set to the number of CPUs present.
 
 
-    .. attribute:: carbond.Service.parameterParser
+    .. attribute:: parameterParser
 
        :type: :class:`~carbond.ParameterParser`
        :default: ``o({_type: './ParameterParser'})``
@@ -229,7 +263,25 @@ Properties
        The parameter parser used to parse all incoming request parameters (i.e., query, header, body, and path). In most cases, the default parser should be sufficient.
 
 
-    .. attribute:: carbond.Service.path
+    .. attribute:: parameters
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: Object.<string, carbond.OperationParameter>
+       :required:
+
+       Operation parameter definitions that apply to all operations supported by this endpoint. Note, these will be merged with any parameter definitions on the operations themselves and their parsed values will be passed to the handler via ``req.parameters[<parameter name>]``.
+
+
+    .. attribute:: parent
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: :class:`~carbond.Endpoint`
+       :ro:
+
+       The parent endpoint for this endpoint in the endpoint tree
+
+
+    .. attribute:: path
 
        :type: string
        :default: ``''``
@@ -237,7 +289,7 @@ Properties
        Since :class:`~carbond.Service` is itself an :class:`~carbond.Endpoint`, this can be used to set the URL path component that the service endpoint is accessible at
 
 
-    .. attribute:: carbond.Service.port
+    .. attribute:: port
 
        :type: number
        :default: ``8888``
@@ -245,7 +297,7 @@ Properties
        The port that this service should bind
 
 
-    .. attribute:: carbond.Service.processUser
+    .. attribute:: processUser
 
        :type: string
        :default: undefined
@@ -253,7 +305,7 @@ Properties
        If set, privileges will be dropped and the effective user for the process will be set to this
 
 
-    .. attribute:: carbond.Service.publicDirectories
+    .. attribute:: publicDirectories
 
        :type: Object.<string, string>
        :default: ``{}``
@@ -261,7 +313,7 @@ Properties
        Directories with static assets that should be exposed by the service. Keys are the URL paths under which these static assests should be served while values are the local filesystem paths at which the assets exist.
 
 
-    .. attribute:: carbond.Service.serverSocketTimeout
+    .. attribute:: serverSocketTimeout
 
        :type: number
        :default: undefined
@@ -269,7 +321,17 @@ Properties
        The socket timeout for all incoming connections. Note, the system default is 2 minutes.
 
 
-    .. attribute:: carbond.Service.signalHandler
+    .. attribute:: service
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: :class:`~carbond.Service`
+       :ro:
+       :deprecated:
+
+       The root service object managing the endpoint tree. Getting a reference to this object is sometimes necessary or just convenient (i.e., HTTP error classes can be accessed via :attr:`~carbond.Service.errors`).
+
+
+    .. attribute:: signalHandler
 
        :type: Object.<string, function()>
        :default: ``{...}``
@@ -277,13 +339,43 @@ Properties
        An object whose keys are signal names (e.g., "SIGINT") and whose values are functions invoked to handle the signal(s) corresponding to their aforementioned keys. Note, keys here can be a string of signal names delineated by spaces (e.g. "SIGINT SIGHUP"). In this case, the corresponding function will be called for any of the signals named in the key.
 
 
-    .. attribute:: carbond.Service.sslOptions
+    .. attribute:: sslOptions
 
        :type: :class:`~carbond.SslOptions`
        :default: ``o({_type: './SslOptions'})``
 
        SSL options to use if running HTTPS
 
+
+    .. attribute:: validateOutput
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: boolean
+       :default: ``true``
+
+       Controls whether or not response bodies are validated using the response :class:`~carbond.OperationResponse.schema` corresponding to the current response code
+
+
+Abstract Methods
+----------------
+
+.. class:: carbond.Service
+    :noindex:
+    :hidden:
+
+    .. function:: doStart(options)
+
+        :param options: Parsed command line options
+        :type options: Object
+        :rtype: undefined
+
+        Performs custom startup operations. This method will be called after initialization (e.g., database connections will be established and the endpoint tree will be built) but before the server's socket is bound. Override this method if your app requires further initialization.
+
+    .. function:: doStop()
+
+        :rtype: undefined
+
+        Performs custom teardown operations. This method will be called first in the stop sequence.
 
 Methods
 -------
@@ -292,57 +384,73 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: carbond.Service.doStart(options)
+    .. function:: getOperation(method)
 
-        :param options: Parsed command line options
-        :type options: Object
-        :rtype: undefined
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :param method: The HTTP method corresponding to the operation to retrieve
+        :type method: string
+        :rtype: :class:`~carbond.Operation`
 
-        Performs custom startup operations. This method will be called after initialization (e.g., database connections will be established and the endpoint tree will be built) but before the server's socket is bound. Override this method if your app requires further initialization.
+        Retrieves the operation instance corresponding to the passed HTTP method
 
-    .. function:: carbond.Service.doStop()
+    .. function:: getService()
 
-        :rtype: undefined
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :rtype: :class:`~carbond.Service`
 
-        Performs custom teardown operations. This method will be called first in the stop sequence.
+        Returns the root :class:`~carbond.Service` instance (note, this is preferred over accessing the ``service`` property itself)
 
-    .. function:: carbond.Service.logDebug()
+    .. function:: isOperationAuthorized(method, user, req)
+
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :param method: The HTTP method corresponding to the operation that we are attempting to authorize
+        :type method: string
+        :param user: The user object
+        :type user: Object
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :returns: Whether of not the operation is authorized
+        :rtype: boolean
+
+        Tests whether an operation is authorized given a user (as returned by the root authenticator) and any :class:`~carbond.security.Acl` that may apply to this endpoint
+
+    .. function:: logDebug()
 
         :rtype: undefined
 
         Log a message at the "debug" level
 
-    .. function:: carbond.Service.logError()
+    .. function:: logError()
 
         :rtype: undefined
 
         Log a message at the "error" level
 
-    .. function:: carbond.Service.logFatal()
+    .. function:: logFatal()
 
         :rtype: undefined
 
         Log a message at the "fatal" level
 
-    .. function:: carbond.Service.logInfo()
+    .. function:: logInfo()
 
         :rtype: undefined
 
         Log a message at the "info" level
 
-    .. function:: carbond.Service.logTrace()
+    .. function:: logTrace()
 
         :rtype: undefined
 
         Log a message at the "trace" level
 
-    .. function:: carbond.Service.logWarning()
+    .. function:: logWarning()
 
         :rtype: undefined
 
         Log a message at the "warn" level
 
-    .. function:: carbond.Service.on(event, listener)
+    .. function:: on(event, listener)
 
         :param event: [choices: "start", "stop"]
         :type event: String
@@ -352,7 +460,7 @@ Methods
 
         Register a service event callback
 
-    .. function:: carbond.Service.once(event, listener)
+    .. function:: once(event, listener)
 
         :param event: the event type [choices: "start", "stop"]
         :type event: String
@@ -362,7 +470,25 @@ Methods
 
         Register a service event callback that executes once
 
-    .. function:: carbond.Service.removeAllListeners(event)
+    .. function:: operations()
+
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :rtype: :class:`~carbond.Operation[]`
+
+        Gathers all operations defined on this endpoint
+
+    .. function:: options(req, res)
+
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: undefined
+
+        Implements the OPTIONS method handler
+
+    .. function:: removeAllListeners(event)
 
         :param event: the event type [choices: "start", "stop"]
         :type event: ...String
@@ -370,7 +496,7 @@ Methods
 
         Remove all listeners. If ``event`` is passed, remove all listeners for that specific event (or events).
 
-    .. function:: carbond.Service.removeListener(event, listener)
+    .. function:: removeListener(event, listener)
 
         :param event: the event type [choices: "start", "stop"]
         :type event: String
@@ -380,7 +506,7 @@ Methods
 
         Remove a specific listener for a particular event.
 
-    .. function:: carbond.Service.start(options, cb)
+    .. function:: start(options, cb)
 
         :param options: Parsed command line options
         :type options: Object
@@ -391,10 +517,17 @@ Methods
 
         Initializes and starts the service
 
-    .. function:: carbond.Service.stop(cb)
+    .. function:: stop(cb)
 
         :param cb: Async callback (this can be omitted if calling from within a Fiber)
         :type cb: function
         :rtype: undefined
 
         Stops the service
+
+    .. function:: supportedMethods()
+
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :rtype: string[]
+
+        Returns a list of HTTP methods supported by this endpoint

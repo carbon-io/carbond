@@ -18,7 +18,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: carbond.SwaggerDescriptorGenerator.generateSwaggerDescriptor(service, req)
+    .. function:: generateSwaggerDescriptor(service, req)
 
         :param service: The service instance to generate a descriptor for
         :type service: :class:`~carbond.Service`

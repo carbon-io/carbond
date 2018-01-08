@@ -12,14 +12,14 @@ carbond.test.ServiceTest
 
 A test harness for testing :class:`~carbond.Service`\ s. This will automatically startup and shutdown a service as part of the test's setup and teardown phase.
 
-Properties
-----------
+Instance Properties
+-------------------
 
 .. class:: carbond.test.ServiceTest
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.test.ServiceTest.service
+    .. attribute:: service
 
        :type: :class:`~carbond.Service`
        :required:
@@ -27,7 +27,7 @@ Properties
        The service instance to test
 
 
-    .. attribute:: carbond.test.ServiceTest.serviceEnv
+    .. attribute:: serviceEnv
 
        :type: string
        :default: ``'development'``
@@ -35,7 +35,7 @@ Properties
        Sets the service's :class:`~carbond.Service.env` for testing
 
 
-    .. attribute:: carbond.test.ServiceTest.suppressServiceLogging
+    .. attribute:: suppressServiceLogging
 
        :type: boolean
        :default: ``true``
@@ -50,13 +50,13 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: carbond.test.ServiceTest.setup()
+    .. function:: setup()
 
         :rtype: undefined
 
         Performs setup operations for this test, namely starting the service to be tested and configuring service logging
 
-    .. function:: carbond.test.ServiceTest.teardown()
+    .. function:: teardown()
 
         :rtype: undefined
 

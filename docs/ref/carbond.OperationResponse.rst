@@ -11,14 +11,14 @@ carbond.OperationResponse
 
 Describes what an HTTP response should look like along with some metadata to be used when generating static documentation
 
-Properties
-----------
+Instance Properties
+-------------------
 
 .. class:: carbond.OperationResponse
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.OperationResponse.description
+    .. attribute:: description
 
        :type: string
        :required:
@@ -26,7 +26,7 @@ Properties
        A brief description of the response that will be included generated static documentation
 
 
-    .. attribute:: carbond.OperationResponse.schema
+    .. attribute:: schema
 
        :type: Object
        :required:
@@ -34,7 +34,7 @@ Properties
        A valid JSON schema that describes HTTP response body. This will be used to validate responses returned by operations.
 
 
-    .. attribute:: carbond.OperationResponse.statusCode
+    .. attribute:: statusCode
 
        :type: number
        :default: ``200``

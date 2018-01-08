@@ -11,14 +11,14 @@ carbond.Operation
 
 Handles HTTP requests for a specific method (e.g., "GET") to a specific :class:`~carbond.Endpoint` by assigning to a property on the endpoint that corresponds to that HTTP method (e.g. :class:`~carbond.Endpoint.get`). This can be instantiated explicitly in the context of an :class:`~carbond.Endpoint` or implicitly if just a handler method is provided. In the latter case, the operation object will be built and instantiated for you.
 
-Properties
-----------
+Instance Properties
+-------------------
 
 .. class:: carbond.Operation
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.Operation.description
+    .. attribute:: description
 
        :type: string
        :default: undefined
@@ -26,7 +26,7 @@ Properties
        A brief description of what this operation does. This will be displayed in any generated documentation.
 
 
-    .. attribute:: carbond.Operation.endpoint
+    .. attribute:: endpoint
 
        :type: :class:`~carbond.Endpoint`
        :required:
@@ -34,7 +34,7 @@ Properties
        xxx
 
 
-    .. attribute:: carbond.Operation.name
+    .. attribute:: name
 
        :type: string
        :ro:
@@ -42,7 +42,7 @@ Properties
        The operation name (i.e., HTTP method)
 
 
-    .. attribute:: carbond.Operation.parameters
+    .. attribute:: parameters
 
        :type: Object.<string, carbond.OperationParameter>
        :default: ``{}``
@@ -50,7 +50,7 @@ Properties
        Any parameters that are specific to this operation (as opposed to those defined on the parent endpoint)
 
 
-    .. attribute:: carbond.Operation.responses
+    .. attribute:: responses
 
        :type: Object.<string, carbond.OperationResponse>
        :default: ``{}``
@@ -58,7 +58,7 @@ Properties
        Response definitions for this operation. These will be used for validation purposes as well as generated static documentation.
 
 
-    .. attribute:: carbond.Operation.validateOutput
+    .. attribute:: validateOutput
 
        :type: boolean
        :default: ``true``
@@ -73,27 +73,28 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: carbond.Operation.getAllParameters()
+    .. function:: getAllParameters()
 
         :rtype: Object.<string, carbond.OperationParameter>
 
         Gets all parameters defined for this :class:`~carbond.Operation` which includes all parameters inherited from this.endpoint
 
-    .. function:: carbond.Operation.getSanitizedURL(req)
+    .. function:: getSanitizedURL(req)
 
         :param req: the current request
         :type req: http.ClientRequest
+        :returns: the sanitized URL
         :rtype: string
 
         Returns a new URL with the query string portion removed
 
-    .. function:: carbond.Operation.getService()
+    .. function:: getService()
 
         :rtype: :class:`~carbond.Service`
 
         Returns the root :class:`~carbond.Service` instance
 
-    .. function:: carbond.Operation.service(req, res)
+    .. function:: service(req, res)
 
         :param req: The current request object
         :type req: :class:`~carbond.Request`

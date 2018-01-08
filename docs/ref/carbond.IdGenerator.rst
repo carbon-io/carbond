@@ -11,15 +11,16 @@ carbond.IdGenerator
 
 IdGenerator base class
 
-Methods
--------
+Abstract Methods
+----------------
 
 .. class:: carbond.IdGenerator
     :noindex:
     :hidden:
 
-    .. function:: carbond.IdGenerator.generateId()
+    .. function:: generateId()
 
+        :returns: The ID
         :rtype: \*
 
         Generates an ID, where the definition of ID is left up to the implementor

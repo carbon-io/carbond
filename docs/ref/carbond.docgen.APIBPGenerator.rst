@@ -19,18 +19,20 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: carbond.docgen.APIBPGenerator.generateBlueprint()
+    .. function:: generateBlueprint()
 
+        :returns: The api-blueprint text for the service
         :rtype: string
 
         Generates api-blueprint text
 
-    .. function:: carbond.docgen.APIBPGenerator.generateDocs(docsPath, options)
+    .. function:: generateDocs(docsPath, options)
 
         :param docsPath: The path to write docs to
         :type docsPath: string
         :param options: An array of options as specified by the user
         :type options: list
+        :returns: 0 on success, >0 on failure
         :rtype: int
 
         Generates api-blueprint docs and writes them to standard out or a file
