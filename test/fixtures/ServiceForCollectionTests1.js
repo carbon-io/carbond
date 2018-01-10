@@ -92,6 +92,10 @@ module.exports = o.main({
         }
       },
 
+      saveObjectConfig: {
+        supportsUpsert: true
+      },
+
       saveObject: function(obj, context) {
         return {
           val: obj,

@@ -26,6 +26,9 @@ module.exports = o({
         removeObject: true
       },
 
+      saveObjectConfig: {
+        supportsUpsert: true
+      },
       saveObject: function(object, context, options) {
         return {
           val: object,

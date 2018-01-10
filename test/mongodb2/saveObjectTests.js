@@ -95,7 +95,7 @@ __(function() {
             }
           },
           {
-            name: 'SaveObjectCreatedTest',
+            name: 'FailSaveObjectCreatedTest',
             description: 'Test PUT of new object',
             setup: function() {
               this.parent.dropDb()
@@ -106,18 +106,7 @@ __(function() {
               body: {_id: getObjectId(0), foo: 'bar'}
             },
             resSpec: {
-              statusCode: 201,
-              headers: function(headers, context) {
-                assert.deepStrictEqual(
-                  headers[context.global.idHeaderName],
-                  ejson.stringify(getObjectId(0)))
-                assert.deepStrictEqual(
-                  headers.location, '/saveObject/' + getObjectId(0).toString())
-              },
-              body: {
-                _id: getObjectId(0),
-                foo: 'bar'
-              }
+              statusCode: 404
             }
           },
         ]
@@ -167,15 +156,20 @@ __(function() {
             }
           },
           {
-            name: 'SuccessSaveObjectSchemaTest',
+            name: 'SuccessSaveObjectExistingSchemaTest',
             description: 'Test PUT with well formed object',
+            setup: function() {
+              this.parent.populateDb({
+                saveObject: [{_id: getObjectId(0), foo: 'bar'}]
+              })
+            },
             reqSpec: {
               url: '/saveObject/' + getObjectId(0),
               method: 'PUT',
               body: {_id: getObjectId(0), foo: 'bar'}
             },
             resSpec: {
-              statusCode: 201,
+              statusCode: 200,
               body: {_id: getObjectId(0), foo: 'bar'}
             }
           },
@@ -216,7 +210,95 @@ __(function() {
             }
           }
         ]
-      })
+      }),
+      o({
+        _type: MongoDBCollectionHttpTest,
+        name: 'SupportsUpsertConfigSaveObjectTests',
+        service: o({
+          _type: pong.Service,
+          dbUri: config.MONGODB_URI + '/saveObject',
+          endpoints: {
+            saveObject: o({
+              _type: pong.MongoDBCollection,
+              enabled: {saveObject: true},
+              collectionName: 'saveObject',
+              saveObjectConfig: {
+                supportsUpsert: true
+              }
+            })
+          }
+        }),
+        setup: function(context) {
+          MongoDBCollectionHttpTest.prototype.setup.apply(this, arguments)
+          context.global.idHeaderName = this.service.endpoints.saveObject.idHeaderName
+        },
+        teardown: function(context) {
+          delete context.global.idHeaderName
+          MongoDBCollectionHttpTest.prototype.teardown.apply(this, arguments)
+        },
+        tests: [
+          {
+            name: 'SaveObjectsResultsInBadRequestTest',
+            description: 'Test PUT of array with multiple objects',
+            reqSpec: {
+              url: '/saveObject/' + getObjectId(0).toString(),
+              method: 'PUT',
+              body: [
+                {_id: getObjectId(0), foo: 'bar'},
+                {_id: getObjectId(1), bar: 'baz'},
+                {_id: getObjectId(2), baz: 'yaz'}
+              ]
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'SaveObjectExistingTest',
+            description: 'Test PUT of existing object',
+            setup: function() {
+              this.parent.populateDb({
+                saveObject: [{_id: getObjectId(0), foo: 'bar'}]
+              })
+            },
+            reqSpec: {
+              url: '/saveObject/' + getObjectId(0),
+              method: 'PUT',
+              body: {_id: getObjectId(0), foo: 'bar'}
+            },
+            resSpec: {
+              statusCode: 200,
+              body: {_id: getObjectId(0), foo: 'bar'}
+            }
+          },
+          {
+            name: 'SaveObjectCreatedTest',
+            description: 'Test PUT of new object',
+            setup: function() {
+              this.parent.dropDb()
+            },
+            reqSpec: {
+              url: '/saveObject/' + getObjectId(0).toString(),
+              method: 'PUT',
+              body: {_id: getObjectId(0), foo: 'bar'}
+            },
+            resSpec: {
+              statusCode: 201,
+              headers: function(headers, context) {
+                assert.deepStrictEqual(
+                  headers[context.global.idHeaderName],
+                  ejson.stringify(getObjectId(0)))
+                assert.deepStrictEqual(
+                  headers.location, '/saveObject/' + getObjectId(0).toString())
+              },
+              body: {
+                _id: getObjectId(0),
+                foo: 'bar'
+              }
+            }
+          },
+        ]
+      }),
     ]
   })
 })

@@ -69,6 +69,9 @@ module.exports = o({
         maxPageSize: 10,
         supportsPagination: true
       },
+      saveObjectConfig: {
+        supportsUpsert: true
+      },
       // idGenerator doesn't really make sense in this context, but is here for tests
       idGenerator: {
         generateId: function() {
