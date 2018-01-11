@@ -519,6 +519,7 @@ __(function() {
         name: 'CollectionConfigResponseMutationTests',
         service: o({
           _type: pong.Service,
+          env: 'development',
           endpoints: {
             foo: o({
               _type: pong.Collection,
@@ -675,6 +676,11 @@ __(function() {
           },
           {
             name: 'Insert201UnrequireBazFailAdditionalParameterTest',
+            setup: function() {
+              var stub = sinon.stub(console, 'error').callsFake(function() {
+                stub.restore()
+              })
+            },
             reqSpec: function(context) {
               return {
                 url: '/foo',
@@ -695,7 +701,7 @@ __(function() {
             resSpec: {
               statusCode: 500,
               body: function(body) {
-                assert.ok(body.message.match(/^Output did not validate against: .+/))
+                assert.ok(body.match(/^Error: Output did not validate against: .+/))
               }
             }
           },
@@ -722,6 +728,11 @@ __(function() {
           },
           {
             name: 'InsertObject201OverrideFailTest',
+            setup: function() {
+              var stub = sinon.stub(console, 'error').callsFake(function() {
+                stub.restore()
+              })
+            },
             reqSpec: function(context) {
               return {
                 url: '/foo',
@@ -742,7 +753,7 @@ __(function() {
             resSpec: {
               statusCode: 500,
               body: function(body) {
-                assert.ok(body.message.match(/^Output did not validate against: .+/))
+                assert.ok(body.match(/^Error: Output did not validate against: .+/))
               }
             }
           },
@@ -797,6 +808,11 @@ __(function() {
           },
           {
             name: 'FindObject200ExplicitMergeFailTest',
+            setup: function() {
+              var stub = sinon.stub(console, 'error').callsFake(function() {
+                stub.restore()
+              })
+            },
             reqSpec: function(context) {
               return {
                 url: '/foo/0',
@@ -814,7 +830,7 @@ __(function() {
             resSpec: {
               statusCode: 500,
               body: function(body) {
-                assert.ok(body.message.match(/^Output did not validate against:.+/))
+                assert.ok(body.match(/^Error: Output did not validate against:.+/))
               }
             }
           }
