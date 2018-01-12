@@ -187,7 +187,7 @@ __(function() {
               idGenerator: pong.util.collectionIdGenerator,
               enabled: {save: true},
               saveConfig: {
-                saveSchema: {
+                schema: {
                   type: 'object',
                   properties: {
                     _id: {type: 'string'},
