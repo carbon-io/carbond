@@ -206,7 +206,7 @@ __(function() {
               _type: pong.Collection,
               enabled: {updateObject: true},
               updateObjectConfig: {
-                updateObjectSchema: {
+                schema: {
                   type: 'object',
                   properties: {
                     foo: {

@@ -136,7 +136,7 @@ __(function() {
               enabled: {save: true},
               collectionName: 'save',
               saveConfig: {
-                saveSchema: {
+                schema: {
                   type: 'object',
                   properties: {
                     _id: {type: 'ObjectId'},
