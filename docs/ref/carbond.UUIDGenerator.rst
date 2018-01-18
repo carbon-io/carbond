@@ -12,14 +12,14 @@ carbond.UUIDGenerator
 
 Generates UUIDs
 
-Properties
-----------
+Instance Properties
+-------------------
 
 .. class:: carbond.UUIDGenerator
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.UUIDGenerator.version
+    .. attribute:: version
 
        :type: number
        :required:
@@ -34,7 +34,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: carbond.UUIDGenerator.generateId()
+    .. function:: generateId()
 
         :rtype: string
 

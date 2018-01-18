@@ -100,40 +100,6 @@ __(function() {
               }
             }
           },
-          {
-            name: 'SaveObjectCreatedTest',
-            description: 'Test PUT of new object',
-            reqSpec: function(context) {
-              return {
-                url: '/saveObject/0',
-                method: 'PUT',
-                headers: {
-                  'x-pong': ejson.stringify({
-                    saveObject: {
-                      val: {$args: 0},
-                      created: true
-                    }
-                  })
-                },
-                body: {[context.global.idParameterName]: '0', foo: 'bar'}
-              }
-            },
-            resSpec: {
-              statusCode: 201,
-              headers: function(headers, context) {
-                assert.deepStrictEqual(
-                  headers[context.global.idHeaderName],
-                  ejson.stringify('0'))
-                assert.deepStrictEqual(headers.location, '/saveObject/0')
-              },
-              body: function(body, context) {
-                assert.deepStrictEqual(body, {
-                  [context.global.idParameterName]: '0',
-                  foo: 'bar'
-                })
-              }
-            }
-          },
         ]
       }),
       o({
@@ -147,7 +113,7 @@ __(function() {
               idGenerator: pong.util.collectionIdGenerator,
               enabled: {saveObject: true},
               saveObjectConfig: {
-                saveObjectSchema: {
+                schema: {
                   type: 'object',
                   properties: {
                     _id: {type: 'string'},
@@ -441,7 +407,113 @@ __(function() {
             }
           }
         ]
-      })
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'SupportsUpsertConfigSaveObjectTests',
+        service: o({
+          _type: pong.Service,
+          endpoints: {
+            saveObject: o({
+              _type: pong.Collection,
+              idGenerator: pong.util.collectionIdGenerator,
+              enabled: {saveObject: true},
+              saveObjectConfig: {
+                supportsUpsert: true
+              }
+            })
+          }
+        }),
+        setup: function(context) {
+          carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
+          context.global.idParameterName = this.service.endpoints.saveObject.idParameterName
+          context.global.idHeaderName = this.service.endpoints.saveObject.idHeaderName
+        },
+        teardown: function(context) {
+          delete context.global.idHeaderName
+          delete context.global.idParameterName
+          carbond.test.ServiceTest.prototype.teardown.apply(this, arguments)
+        },
+        tests: [
+          {
+            name: 'SaveObjectsResultsInBadRequestTest',
+            description: 'Test PUT of array with multiple objects',
+            reqSpec: function(context) {
+              return {
+                url: '/saveObject/0',
+                method: 'PUT',
+                body: [
+                  {[context.global.idParameterName]: '0', foo: 'bar'},
+                  {[context.global.idParameterName]: '1', bar: 'baz'},
+                  {[context.global.idParameterName]: '2', baz: 'yaz'}
+                ]
+              }
+            },
+            resSpec: {
+              statusCode: 400
+            }
+          },
+          {
+            name: 'SaveObjectExistingTest',
+            description: 'Test PUT of existing object',
+            reqSpec: function(context) {
+              return {
+                url: '/saveObject/0',
+                method: 'PUT',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    saveObject: {$args: 0}
+                  })
+                },
+                body: {[context.global.idParameterName]: '0', foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              body: function(body, context) {
+                assert.deepStrictEqual(body, {
+                  [context.global.idParameterName]: '0',
+                  foo: 'bar'
+                })
+              }
+            }
+          },
+          {
+            name: 'SaveObjectCreatedTest',
+            description: 'Test PUT of new object',
+            reqSpec: function(context) {
+              return {
+                url: '/saveObject/0',
+                method: 'PUT',
+                headers: {
+                  'x-pong': ejson.stringify({
+                    saveObject: {
+                      val: {$args: 0},
+                      created: true
+                    }
+                  })
+                },
+                body: {[context.global.idParameterName]: '0', foo: 'bar'}
+              }
+            },
+            resSpec: {
+              statusCode: 201,
+              headers: function(headers, context) {
+                assert.deepStrictEqual(
+                  headers[context.global.idHeaderName],
+                  ejson.stringify('0'))
+                assert.deepStrictEqual(headers.location, '/saveObject/0')
+              },
+              body: function(body, context) {
+                assert.deepStrictEqual(body, {
+                  [context.global.idParameterName]: '0',
+                  foo: 'bar'
+                })
+              }
+            }
+          },
+        ]
+      }),
     ]
   })
 })

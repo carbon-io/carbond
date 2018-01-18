@@ -143,7 +143,7 @@ __(function() {
               idGenerator: pong.util.collectionIdGenerator,
               enabled: {insertObject: true},
               insertObjectConfig: {
-                insertObjectSchema: {
+                schema: {
                   type: 'object',
                   properties: {
                     foo: {

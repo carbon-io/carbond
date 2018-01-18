@@ -107,7 +107,7 @@ or not inserted objects are returned
 (:js:attr:`~carbond.collections.InsertConfig.returnsInsertedObjects`) in the
 response body and to define a schema separate from the collection level schema
 that will be used to verify incoming objects
-(:js:attr:`~carbond.collections.InsertConfig.insertSchema`).
+(:js:attr:`~carbond.collections.InsertConfig.schema`).
 
 .. code-block:: js
 
@@ -115,7 +115,7 @@ that will be used to verify incoming objects
     insertConfig: {
       description: 'My collection insert operation',
       returnsInsertedObjects: false,
-      insertSchema: {
+      schema: {
         type: 'array',
         items: {
           type: 'object',
@@ -184,7 +184,7 @@ objects saved are returned in the response.
     saveConfig: {
       description: 'My collection save operation',
       returnsSavedObjects: false,
-      saveSchema: {
+      schema: {
         type: 'object',
         properties: {
           _id: {type: 'string'},
@@ -197,8 +197,8 @@ objects saved are returned in the response.
     },
     ...
 
-Note, unlike :js:attr:`~carbond.collections.InsertConfig.insertSchema`, it is
-necessary to specify the ID parameter (``_id`` in this case) on ``saveSchema``.
+Note, unlike :js:attr:`~carbond.collections.InsertConfig.schema`, it is
+necessary to specify the ID parameter (``_id`` in this case) on ``schema``.
 Note, it should have the same name as
 :js:attr:`~carbond.collections.Collection.idParameterName` or an error will be thrown
 on initialization.
@@ -222,7 +222,7 @@ parameter will be added to the list of parameters for the collection operation.
     updateConfig: {
       description: 'My collection update operation',
       supportsUpsert: false,
-      updateSchema: {
+      schema: {
         oneOf: [
           {
             type: 'object',
@@ -294,7 +294,7 @@ inserted object should be returned or not.
     insertObjectConfig: {
       description: 'My collection insertObject operation',
       returnsInsertedObject: false,
-      insertObjectSchema: {
+      schema: {
         type: 'object',
         properties: {
           foo: {type: 'boolean'},
@@ -362,8 +362,7 @@ allowed, whether an object is returned if an upsert takes place.
       description: 'My collection updateObject operation',
       supportsUpsert: true,
       returnsUpsertedObject: true,
-      updateSchema: {
-      updateSchema: {
+      schema: {
         oneOf: [
           {
             type: 'object',

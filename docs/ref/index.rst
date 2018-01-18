@@ -15,6 +15,8 @@ collection module reference
    carbond.OperationParameter.rst
    carbond.OperationResponse.rst
    carbond.ParameterParser.rst
+   carbond.Request.rst
+   carbond.Response.rst
    carbond.Service.rst
    carbond.SslOptions.rst
    carbond.SwaggerDescriptorGenerator.rst
@@ -22,6 +24,7 @@ collection module reference
    carbond.collections.Collection.rst
    carbond.collections.CollectionOperationConfig.rst
    carbond.collections.FindConfig.rst
+   carbond.collections.FindObjectConfig.rst
    carbond.collections.IdGenerator.rst
    carbond.collections.InsertConfig.rst
    carbond.collections.InsertObjectConfig.rst

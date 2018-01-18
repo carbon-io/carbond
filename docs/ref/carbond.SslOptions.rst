@@ -11,14 +11,14 @@ carbond.SslOptions
 
 All options relating to SSL for HTTPS server creation
 
-Properties
-----------
+Instance Properties
+-------------------
 
 .. class:: carbond.SslOptions
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.SslOptions.ciphers
+    .. attribute:: ciphers
 
        :type: string
        :default: undefined
@@ -26,7 +26,7 @@ Properties
        A string listing supported and unsupported ciphers (see https://www.openssl.org/docs/man1.0.2/apps/ciphers.html for ciphers and format). If omitted, the default ciphers for your version of NodeJS will be used (see ``tls`` documentation for details).
 
 
-    .. attribute:: carbond.SslOptions.crl
+    .. attribute:: crl
 
        :type: string
        :default: undefined
@@ -34,7 +34,7 @@ Properties
        A certificate revocation list in PEM format
 
 
-    .. attribute:: carbond.SslOptions.dhparam
+    .. attribute:: dhparam
 
        :type: string
        :default: undefined
@@ -42,7 +42,7 @@ Properties
        Diffie Hellman parameters (use ``openssl dhparam`` to generate). Note, if these are invalid, they will be silently discarded and the accompanying ciphers will be disabled. Key length must be greater than 1024 bits.
 
 
-    .. attribute:: carbond.SslOptions.ecdhCurve
+    .. attribute:: ecdhCurve
 
        :type: string
        :default: undefined
@@ -50,7 +50,7 @@ Properties
        A string describing a named curve to use for ECDH key agreement or false to disable ECDH. See ``crypto.getCurves()`` for a list of supported curve names.
 
 
-    .. attribute:: carbond.SslOptions.handshakeTimeout
+    .. attribute:: handshakeTimeout
 
        :type: number
        :default: undefined
@@ -58,7 +58,7 @@ Properties
        Amount of time in milliseconds to wait for the handshake to complete before throwing an error. If omitted, the default value of 120 seconds will be used.
 
 
-    .. attribute:: carbond.SslOptions.honorCipherOrder
+    .. attribute:: honorCipherOrder
 
        :type: boolean
        :default: ``true``
@@ -66,7 +66,7 @@ Properties
        Use the server's preferred cipher instead of the client's
 
 
-    .. attribute:: carbond.SslOptions.NPNProtocols
+    .. attribute:: NPNProtocols
 
        :type: string[]
        :default: undefined
@@ -74,7 +74,7 @@ Properties
        An array of possible NPN protocols, listed in order of priority
 
 
-    .. attribute:: carbond.SslOptions.rejectUnauthorized
+    .. attribute:: rejectUnauthorized
 
        :type: boolean
        :default: false
@@ -82,7 +82,7 @@ Properties
        Reject connections whose client certificate is not authorized by any of the CAs. This is only applicable if :class:`~carbond.SslOptions.requestCert` is ``true``.
 
 
-    .. attribute:: carbond.SslOptions.requestCert
+    .. attribute:: requestCert
 
        :type: boolean
        :default: false
@@ -90,7 +90,7 @@ Properties
        Whether of not to request and verify the client's certificate
 
 
-    .. attribute:: carbond.SslOptions.secureProtocol
+    .. attribute:: secureProtocol
 
        :type: string
        :default: ``'TLSv1_method'``
@@ -98,7 +98,7 @@ Properties
        The SSL method to use. The possible values depend on the version of OpenSSL installed in the environment. See https://www.openssl.org/docs/man1.0.2/ssl/SSL_CTX_new.html for possible values.
 
 
-    .. attribute:: carbond.SslOptions.serverKeyPassphrase
+    .. attribute:: serverKeyPassphrase
 
        :type: string
        :default: undefined
@@ -106,7 +106,7 @@ Properties
        The server key passphrase (this will be sanitized after initialization)
 
 
-    .. attribute:: carbond.SslOptions.serverKeyPath
+    .. attribute:: serverKeyPath
 
        :type: string
        :required:
@@ -114,7 +114,7 @@ Properties
        Path to the server private key in PEM format
 
 
-    .. attribute:: carbond.SslOptions.sessionIdContext
+    .. attribute:: sessionIdContext
 
        :type: string
        :default: undefined
@@ -122,7 +122,7 @@ Properties
        A string containing an opaque identifier for session resumption. If requestCert is true, the default is a 128 bit truncated SHA1 hash value generated from the command-line. Otherwise, a default is not provided.
 
 
-    .. attribute:: carbond.SslOptions.sessionTimeout
+    .. attribute:: sessionTimeout
 
        :type: number
        :default: undefined
@@ -130,7 +130,7 @@ Properties
        The number of seconds after which TLS sessions should timeout. If omitted, the default is 300 seconds.
 
 
-    .. attribute:: carbond.SslOptions.SNICallback
+    .. attribute:: SNICallback
 
        :type: function
        :default: undefined
@@ -138,7 +138,7 @@ Properties
        A callback that takes the arguments ``servername`` and ``cb``. This will be called if the client supports SNI TLS extension and should call ``cb`` with ``(null, ctx)``, where ``ctx`` is a ``SecureContext`` instance as returned by ``tls.createSecureContext(...)``. If this omitted, Node's default callback will be used (see Node documentation for more details).
 
 
-    .. attribute:: carbond.SslOptions.ticketKeys
+    .. attribute:: ticketKeys
 
        :type: Buffer
        :default: undefined
@@ -146,7 +146,7 @@ Properties
        A 48 byte ``Buffer`` instance with a 16-byte prefix, a 16-byte HMAC key, and a 16-byte AES key. This can be used to accept TLS session tickets on multiple instances of the TLS server.
 
 
-    .. attribute:: carbond.SslOptions.trustedCertsPaths
+    .. attribute:: trustedCertsPaths
 
        :type: string[]
        :default: undefined
@@ -161,13 +161,13 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: carbond.SslOptions.asHttpsOptions()
+    .. function:: asHttpsOptions()
 
         :rtype: Object
 
         Transforms the options managed by ``SslOptions`` into a format that is appropriate for ``https.createServer``
 
-    .. function:: carbond.SslOptions.isEnabled()
+    .. function:: isEnabled()
 
         :rtype: boolean
 

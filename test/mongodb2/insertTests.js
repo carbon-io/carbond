@@ -207,7 +207,7 @@ __(function() {
               enabled: {insert: true},
               collectionName: 'insert',
               insertConfig: {
-                insertSchema: {
+                schema: {
                   type: 'object',
                   properties: {
                     foo: {

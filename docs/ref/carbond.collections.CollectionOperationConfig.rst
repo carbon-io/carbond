@@ -11,14 +11,14 @@ carbond.collections.CollectionOperationConfig
 
 The base class for all collection configs
 
-Properties
-----------
+Instance Properties
+-------------------
 
 .. class:: carbond.collections.CollectionOperationConfig
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.collections.CollectionOperationConfig.additionalOptions
+    .. attribute:: additionalOptions
 
        :type: object.<string, \*>
        :required:
@@ -26,7 +26,7 @@ Properties
        Any additional options that should be added to options passed down to a handler.
 
 
-    .. attribute:: carbond.collections.CollectionOperationConfig.additionalParameters
+    .. attribute:: additionalParameters
 
        :type: object.<string, carbond.OperationParameter>
        :required:
@@ -34,7 +34,7 @@ Properties
        Any additional parameters that should be added to the collection parameters. These can override parameters configured via the :class:`~carbond.collections.CollectionOperationConfig.parameters`. Note, these will all end up being passed down to operation handlers via the "options" parameter.
 
 
-    .. attribute:: carbond.collections.CollectionOperationConfig.allowUnauthenticated
+    .. attribute:: allowUnauthenticated
 
        :type: boolean
        :default: false
@@ -42,7 +42,7 @@ Properties
        Allow unauthenticated requests to the operation
 
 
-    .. attribute:: carbond.collections.CollectionOperationConfig.description
+    .. attribute:: description
 
        :type: string
        :default: undefined
@@ -50,7 +50,7 @@ Properties
        A brief description of the operation used by the documentation generator
 
 
-    .. attribute:: carbond.collections.CollectionOperationConfig.endpoint
+    .. attribute:: endpoint
 
        :type: :class:`~carbond.Endpoint`
        :ro:
@@ -58,7 +58,7 @@ Properties
        The parent endpoint/collection that this configuration is a member of
 
 
-    .. attribute:: carbond.collections.CollectionOperationConfig.idParameter
+    .. attribute:: idParameter
 
        :type: string
        :ro:
@@ -66,7 +66,7 @@ Properties
        The collection object id property name. Note, this is configured on the top level :class:`~carbond.collections.Collection` and set on the configure during initialzation.
 
 
-    .. attribute:: carbond.collections.CollectionOperationConfig.noDocument
+    .. attribute:: noDocument
 
        :type: boolean
        :default: false
@@ -74,7 +74,7 @@ Properties
        Exclude the operation from "docgen" API documentation
 
 
-    .. attribute:: carbond.collections.CollectionOperationConfig.parameters
+    .. attribute:: parameters
 
        :type: object.<string, carbond.OperationParameter>
        :ro:
@@ -82,9 +82,9 @@ Properties
        Operation specific parameters (e.g., "skip", "limit"). These will be passed down to the operation handlers via the options parameter if they are not explicitly passed via another leading parameter (e.g., "id" and "update" for :class:`~carbond.collections.Collection.updateObject`). Note, this should generally be left alone by instances. Instead, use :class:`~carbond.collections.CollectionOperationConfig.additionalParameters`.
 
 
-    .. attribute:: carbond.collections.CollectionOperationConfig.responses
+    .. attribute:: responses
 
-       :type: :class:`~carbond.OperationResponse[]`
+       :type: Object.<string, carbond.OperationResponse>
        :required:
 
        Add custom responses for an operation. Note, this will override all default responses.

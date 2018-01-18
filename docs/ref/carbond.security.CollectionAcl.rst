@@ -12,19 +12,28 @@ carbond.security.CollectionAcl
 
 CollectionAcl description
 
-Properties
-----------
+Instance Properties
+-------------------
 
 .. class:: carbond.security.CollectionAcl
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.security.CollectionAcl.permissionDefinitions
+    .. attribute:: permissionDefinitions
 
        :type: object
        :required:
 
        mapping of permissions to defaults
+
+
+    .. attribute:: selfAndBelow
+
+       :inheritedFrom: :class:`~carbond.security.EndpointAcl`
+       :type: boolean
+       :default: false
+
+       xxx
 
 
 Methods
@@ -34,7 +43,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: carbond.security.CollectionAcl.hasPermission(user, permission, env)
+    .. function:: hasPermission(user, permission, env)
 
         :param user: xxx
         :type user: xxx
@@ -42,6 +51,7 @@ Methods
         :type permission: xxx
         :param env: xxx
         :type env: xxx
+        :returns: xxx
         :rtype: xxx
 
         hasPermission description

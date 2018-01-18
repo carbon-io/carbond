@@ -11,14 +11,14 @@ carbond.OperationParameter
 
 Describes an HTTP parameter. Parameter types include: path parameters (e.g., "_id" in "/foo/bar/:_id"), query parameters (e.g., "baz" in "/foo/bar?baz=true"), HTTP header parameters, and HTTP body parameters.
 
-Properties
-----------
+Instance Properties
+-------------------
 
 .. class:: carbond.OperationParameter
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.OperationParameter.default
+    .. attribute:: default
 
        :type: \*
        :default: undefined
@@ -26,7 +26,7 @@ Properties
        A default value for the parameter if it is not present in the incoming request
 
 
-    .. attribute:: carbond.OperationParameter.description
+    .. attribute:: description
 
        :type: string
        :default: undefined
@@ -34,7 +34,7 @@ Properties
        A brief description of this parameter This will be displayed in any generated documentation.
 
 
-    .. attribute:: carbond.OperationParameter.location
+    .. attribute:: location
 
        :type: string
        :required:
@@ -42,7 +42,7 @@ Properties
        The location of the parameter in an incoming request [choices: "query", "header", "path", "body]
 
 
-    .. attribute:: carbond.OperationParameter.name
+    .. attribute:: name
 
        :type: string
        :ro:
@@ -50,7 +50,7 @@ Properties
        The operation parameter name
 
 
-    .. attribute:: carbond.OperationParameter.required
+    .. attribute:: required
 
        :type: boolean
        :default: false
@@ -58,7 +58,7 @@ Properties
        Flag determining whether the parameter is required
 
 
-    .. attribute:: carbond.OperationParameter.schema
+    .. attribute:: schema
 
        :type: Object
        :default: undefined
@@ -73,7 +73,7 @@ Methods
     :noindex:
     :hidden:
 
-    .. function:: carbond.OperationParameter.extractParameterValueFromRequest(req)
+    .. function:: extractParameterValueFromRequest(req)
 
         :param req: The incoming request object
         :type req: :class:`~carbond.Request`

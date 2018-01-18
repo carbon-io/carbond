@@ -138,7 +138,7 @@ __(function() {
               enabled: {insertObject: true},
               collectionName: 'insertObject',
               insertObjectConfig: {
-                insertObjectSchema: {
+                schema: {
                   type: 'object',
                   properties: {
                     foo: {
