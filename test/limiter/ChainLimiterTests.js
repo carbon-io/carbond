@@ -82,7 +82,7 @@ module.exports = o({
           this.parent.buildLimiter(1)
         ]
         limiters_.forEach(function(limiter) {
-          sinon.stub(limiter, 'sendUnavailable', function() { })
+          sinon.stub(limiter, 'sendUnavailable').callsFake(function() { })
         })
         var limiterChain = o({
           _type: limiters.ChainLimiter,
@@ -132,7 +132,7 @@ module.exports = o({
         assert(!limiters_[2].sendUnavailable.called)
         reset()
 
-        sinon.stub(limiters_[0], 'process', function(req, res, next) {
+        sinon.stub(limiters_[0], 'process').callsFake(function(req, res, next) {
           next(new Error('foo'))
         })
         limiterChain.process({}, {}, next)

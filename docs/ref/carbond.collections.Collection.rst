@@ -2,7 +2,7 @@
     :heading:
 
 .. |br| raw:: html
- 
+
    <br />
 
 ==============================
@@ -10,325 +10,1544 @@ carbond.collections.Collection
 ==============================
 *extends* :class:`~carbond.Endpoint`
 
-Carbond :class:`~carbond.collections.Collection`\ s provide a high-level abstraction for defining :class:`~carbond.Endpoint`\ s that behave like a collection of 
-resources. When you define a :class:`~carbond.collections.Collection` you define the following methods:
+Provides a high-level abstraction for defining Endpoints that behave like a RESTful collection of resources
 
-- ``insert(obj, reqCtx)``
-- ``find(query, options, reqCtx)``
-- ``update(query, obj, options, reqCtx)``
-- ``remove(query, reqCtx)``
-- ``findObject(id, reqCtx)``
-- ``updateObject(id, reqCtx)``
-- ``removeObject(id, reqCtx)``
-
-Which results in the following tree of :class:`~carbond.Endpoints` and :class:`~carbond.Operations`:
-
-- ``/<collection>``
-
-  - ``GET`` which maps to :func:`find`
-  - ``POST`` which maps to ``insert``
-  - ``PUT`` which maps to ``update``
-  - ``DELETE`` which maps to ``remove``
-    
-- ``/<collection>/:id``
-
-  -  ``GET`` which maps to ``findObject``
-  -  ``PUT`` which maps to ``updateObject``
-  -  ``DELETE`` which maps to ``removeObject``
-
-
-Configuration
-=============
-
-..  code-block:: javascript
-
-    {
-      _type: carbon.carbond.Collection, // extends Endpoint
-      
-      [parameters: {
-        <name> : <OperationParameter>
-      }]  
-      
-      [insert: <function>],
-      [find: <function>],
-      [update: <function>],
-      [remove: <function>],
-      [findObject: <function>],
-      [updateObject: <function>],
-      [removeObject: <function>]
-      
-      [endpoints: { 
-        <path>: <Endpoint>
-        ...
-      }]
-    }
-
-Properties
-==========
+Static Properties
+-----------------
 
 .. class:: carbond.collections.Collection
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.collections.Collection.enabled
+    .. attribute:: ALL_METHODS
 
-        .. csv-table::
-            :class: details-table
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: Object
+       :required:
 
-            "enabled", :class:`object`
-            "Default", ``{ '*' : true}``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       A list of all HTTP methods recognized by carbond
 
-    .. attribute:: carbond.collections.Collection.endpoints
 
-        .. csv-table::
-            :class: details-table
+Instance Properties
+-------------------
 
-            "endpoints", :class:`object`
-            "Default", ``{}``
-            "Description", " A set of child :class:`~carbond.Endpoint` definitions. This is an object whose keys are path strings and values are instances of :class:`~carbond.Endpoint`. Each path key will be interpreted as relative to this :class:`~carbond.Endpoint`\ s :attr:`path` property."
+.. class:: carbond.collections.Collection
+    :noindex:
+    :hidden:
 
-    .. attribute:: carbond.collections.Collection.findConfig
+    .. attribute:: ALL_COLLECTION_OPERATIONS
 
-        .. csv-table::
-            :class: details-table
+       :type: array
+       :ro:
 
-            "findConfig", :class:`object`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       The list of valid collection operations
 
-    .. attribute:: carbond.collections.Collection.findObjectConfig
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: allowUnauthenticated
 
-            "findObjectConfig", :class:`object`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: string[]
+       :required:
 
-    .. attribute:: carbond.collections.Collection.idGenerator
+       Skip authentication for the HTTP methods listed on this endpoint
 
-        .. csv-table::
-            :class: details-table
 
-            "idGenerator", :class:`~carbond.IdGenerator`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. attribute:: defaultErrorSchema
 
-    .. attribute:: carbond.collections.Collection.idHeader
+       :type: Object
+       :ro:
 
-        .. csv-table::
-            :class: details-table
+       This is the default error body schema.
 
-            "idHeader", :class:`string`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-    .. attribute:: carbond.collections.Collection.idPathParameter
+    .. attribute:: defaultIdHeader
 
-        .. csv-table::
-            :class: details-table
+       :type: string
+       :ro:
 
-            "idPathParameter", :class:`string`
-            "Default", ``_id``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       The default ID header name
 
-    .. attribute:: carbond.collections.Collection.idRequiredOnInsert
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: defaultIdParameter
 
-            "", :class:`boolean`
-            "Default", ``false``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :type: string
+       :ro:
 
-    .. attribute:: carbond.collections.Collection.insertConfig
+       The default ID name of objects in this collection
 
-        .. csv-table::
-            :class: details-table
 
-            "insertConfig", :class:`object`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. attribute:: defaultIdPathParameter
 
-    .. attribute:: carbond.collections.Collection.removeConfig
+       :type: string
+       :ro:
 
-        .. csv-table::
-            :class: details-table
+       The default path parameter name representing the ID for an object in this collection
 
-            "removeConfig", :class:`object`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-    .. attribute:: carbond.collections.Collection.removeObjectConfig
+    .. attribute:: defaultSchema
 
-        .. csv-table::
-            :class: details-table
+       :type: Object
+       :ro:
 
-            "removeObjectConfig", :class:`object`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       This is the default schema used to validate all objects in this collection. If a schema is not specified explicitly, this schema will be used.
 
-    .. attribute:: carbond.collections.Collection.saveObjectConfig
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: description
 
-            "saveObjectConfig", :class:`object`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: string
+       :default: undefined
 
-    .. attribute:: carbond.collections.Collection.schema
+       A brief description of what this endpoint does. This will be displayed in any generated documentation.
 
-        .. csv-table::
-            :class: details-table
 
-            "schema", :class:`object`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. attribute:: enabled
 
-    .. attribute:: carbond.collections.Collection.supportsFind
+       :type: Object
+       :default: ``{'*': false}``
 
-        .. csv-table::
-            :class: details-table
+       Control which collection level operations
 
-            "supportsFind", :class:`boolean`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       .. csv-table::
+          :class: details-table
+          :header: "Name", "Type", "Default", "Description"
+          :widths: 10, 10, 10, 10
 
-    .. attribute:: carbond.collections.Collection.supportsFindObject
+          \*, ``boolean``, ``undefined``, The default value for all operations that are not explicitly specified
+          insert, ``boolean``, ``undefined``, Enable or disable the insert operation
+          find, ``boolean``, ``undefined``, Enable or disable the find operation
+          save, ``boolean``, ``undefined``, Enable or disable the save operation
+          update, ``boolean``, ``undefined``, Enable or disable the update operation
+          remove, ``boolean``, ``undefined``, Enable or disable the remove operation
+          insertObject, ``boolean``, ``undefined``, Enable or disable the insertObject operation
+          findObject, ``boolean``, ``undefined``, Enable or disable the findObject operation
+          saveObject, ``boolean``, ``undefined``, Enable or disable the saveObject operation
+          updateObject, ``boolean``, ``undefined``, Enable or disable the updateObject operation
+          removeObject, ``boolean``, ``undefined``, Enable or disable the removeObject operation
 
-        .. csv-table::
-            :class: details-table
 
-            "supportsFindObject", :class:`boolean`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-    .. attribute:: carbond.collections.Collection.supportsInsert
+    .. attribute:: endpoints
 
-        .. csv-table::
-            :class: details-table
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: Object.<string, carbond.Endpoint>
+       :required:
 
-            "supportsInsert", :class:`boolean`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       The endpoints that sit below this endpoint in the tree. URL paths to each endpoint are built during a depth first traversal of the tree on initialization using the property names defined on this Object.
 
-    .. attribute:: carbond.collections.Collection.supportsRemove
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: example
 
-            "supportsRemove", :class:`boolean`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :type: Object
+       :default: undefined
 
-    .. attribute:: carbond.collections.Collection.supportsRemoveObject
+       An example object for this collection
 
-        .. csv-table::
-            :class: details-table
 
-            "supportsRemoveObject", :class:`boolean`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. attribute:: findConfig
 
-    .. attribute:: carbond.collections.Collection.supportsSaveObject
+       :type: Object
+       :default: ``o({}, carbond.collections.FindConfigClass)``
 
-        .. csv-table::
-            :class: details-table
+       The config used to govern the behavior of the :class:`~find` operation
 
-            "supportsSaveObject", :class:`boolean`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-    .. attribute:: carbond.collections.Collection.supportsUpdate
+    .. attribute:: FindConfigClass
 
-        .. csv-table::
-            :class: details-table
+       :type: :class:`~carbond.collections.FindConfig`
+       :ro:
 
-            "supportsUpdate", :class:`boolean`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       The config class used to instantiate the :class:`~carbond.collections.Collection.find` operation config
 
-    .. attribute:: carbond.collections.Collection.supportsUpdateObject
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: findObjectConfig
 
-            "supportsUpdateObject", :class:`boolean`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :type: Object
+       :default: ``o({}, carbond.collections.FindObjectConfigClass)``
 
-    .. attribute:: carbond.collections.Collection.updateConfig
+       The config used to govern the behavior of the :class:`~findObject` operation
 
-        .. csv-table::
-            :class: details-table
 
-            "updateConfig", :class:`object`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. attribute:: FindObjectConfigClass
 
-    .. attribute:: carbond.collections.Collection.updateObjectConfig
+       :type: :class:`~carbond.collections.FindObjectConfig`
+       :ro:
 
-        .. csv-table::
-            :class: details-table
+       The config class used to instantiate the :class:`~carbond.collections.Collection.findObject` operation config
 
-            "updateObjectConfig", :class:`object`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
+    .. attribute:: idGenerator
+
+       :type: Object
+       :default: undefined
+
+       An object with the method "generateId" that will be called to populate ID if present and when appropriate (e.g. :class:`~carbond.collections.Collection.insert`)
+
+
+    .. attribute:: idHeader
+
+       :type: string
+       :default: :class:`~carbond.collections.Collection.defaultIdHeader`
+
+       The header name which should contain the EJSON serialized ID
+
+
+    .. attribute:: idParameter
+
+       :type: string
+       :default: :class:`~carbond.collections.Collection.defaultIdParameter`
+
+       The ID parameter name (XXX: rename to "objectIdName" since this is not a "parameter" name?)
+
+
+    .. attribute:: idPathParameter
+
+       :type: string
+       :default: :class:`~carbond.collections.Collection.defaultIdParameter`
+
+       The PATH_ID parameter name (e.g., /collection/:PATH_ID)
+
+
+    .. attribute:: insertConfig
+
+       :type: Object
+       :default: ``o({}, carbond.collections.InsertConfigClass)``
+
+       The config used to govern the behavior of the :class:`~insert` operation
+
+
+    .. attribute:: InsertConfigClass
+
+       :type: :class:`~carbond.collections.InsertConfig`
+       :ro:
+
+       The config class used to instantiate the :class:`~carbond.collections.Collection.insert` operation config
+
+
+    .. attribute:: insertObjectConfig
+
+       :type: Object
+       :default: ``o({}, carbond.collections.InsertObjectConfigClass)``
+
+       The config used to govern the behavior of the :class:`~insertObject` operation
+
+
+    .. attribute:: InsertObjectConfigClass
+
+       :type: :class:`~carbond.collections.InsertObjectConfig`
+       :ro:
+
+       The config class used to instantiate the :class:`~carbond.collections.Collection.insertObject` operation config
+
+
+    .. attribute:: noDocument
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: boolean
+       :default: false
+
+       Controls whether documentation for this endpoint is included in generated static documentation
+
+
+    .. attribute:: parameters
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: Object.<string, carbond.OperationParameter>
+       :required:
+
+       Operation parameter definitions that apply to all operations supported by this endpoint. Note, these will be merged with any parameter definitions on the operations themselves and their parsed values will be passed to the handler via ``req.parameters[<parameter name>]``.
+
+
+    .. attribute:: parent
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: :class:`~carbond.Endpoint`
+       :ro:
+
+       The parent endpoint for this endpoint in the endpoint tree
+
+
+    .. attribute:: path
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: string
+       :ro:
+
+       The URI path that routes to this endpoint. This is built during service initialization and will overwrite any value specified on instantiation.
+
+
+    .. attribute:: removeConfig
+
+       :type: Object
+       :default: ``o({}, carbond.collections.RemoveConfigClass)``
+
+       The config used to govern the behavior of the :class:`~remove` operation
+
+
+    .. attribute:: RemoveConfigClass
+
+       :type: :class:`~carbond.collections.RemoveConfig`
+       :ro:
+
+       The config class used to instantiate the :class:`~carbond.collections.Collection.remove` operation config
+
+
+    .. attribute:: removeObjectConfig
+
+       :type: Object
+       :default: ``o({}, carbond.collections.RemoveObjectConfigClass)``
+
+       The config used to govern the behavior of the :class:`~removeObject` operation
+
+
+    .. attribute:: RemoveObjectConfigClass
+
+       :type: :class:`~carbond.collections.RemoveObjectConfig`
+       :ro:
+
+       The config class used to instantiate the :class:`~carbond.collections.Collection.removeObject` operation config
+
+
+    .. attribute:: saveConfig
+
+       :type: Object
+       :default: ``o({}, carbond.collections.SaveConfigClass)``
+
+       The config used to govern the behavior of the :class:`~save` operation
+
+
+    .. attribute:: SaveConfigClass
+
+       :type: :class:`~carbond.collections.SaveConfig`
+       :ro:
+
+       The config class used to instantiate the :class:`~carbond.collections.Collection.save` operation config
+
+
+    .. attribute:: saveObjectConfig
+
+       :type: Object
+       :default: ``o({}, carbond.collections.SaveObjectConfigClass)``
+
+       The config used to govern the behavior of the :class:`~saveObject` operation
+
+
+    .. attribute:: SaveObjectConfigClass
+
+       :type: :class:`~carbond.collections.SaveObjectConfig`
+       :ro:
+
+       The config class used to instantiate the :class:`~carbond.collections.Collection.saveObject` operation config
+
+
+    .. attribute:: schema
+
+       :type: Object
+       :default: :class:`~carbond.collections.Collection.defaultSchema`
+
+       The schema used to validate objects in this collection
+
+
+    .. attribute:: service
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: :class:`~carbond.Service`
+       :ro:
+       :deprecated:
+
+       The root service object managing the endpoint tree. Getting a reference to this object is sometimes necessary or just convenient (i.e., HTTP error classes can be accessed via :attr:`~carbond.Service.errors`).
+
+
+    .. attribute:: supportsFind
+
+       :type: boolean
+       :required:
+
+       Whether or not the ``find`` operation is supported
+
+
+    .. attribute:: supportsFindObject
+
+       :type: boolean
+       :required:
+
+       Whether or not the ``findObject`` operation is supported
+
+
+    .. attribute:: supportsInsert
+
+       :type: boolean
+       :required:
+
+       Whether or not the ``insert`` operation is supported
+
+
+    .. attribute:: supportsInsertObject
+
+       :type: boolean
+       :required:
+
+       Whether or not the ``insertObject`` operation is supported
+
+
+    .. attribute:: supportsRemove
+
+       :type: boolean
+       :required:
+
+       Whether or not the ``remove`` operation is supported
+
+
+    .. attribute:: supportsRemoveObject
+
+       :type: boolean
+       :required:
+
+       Whether or not the ``removeObject`` operation is supported
+
+
+    .. attribute:: supportsSave
+
+       :type: boolean
+       :required:
+
+       Whether or not the ``save`` operation is supported
+
+
+    .. attribute:: supportsSaveObject
+
+       :type: boolean
+       :required:
+
+       Whether or not the ``saveObject`` operation is supported
+
+
+    .. attribute:: supportsUpdate
+
+       :type: boolean
+       :required:
+
+       Whether or not the ``update`` operation is supported
+
+
+    .. attribute:: supportsUpdateObject
+
+       :type: boolean
+       :required:
+
+       Whether or not the ``updateObject`` operation is supported
+
+
+    .. attribute:: updateConfig
+
+       :type: Object
+       :default: ``o({}, carbond.collections.UpdateConfigClass)``
+
+       The config used to govern the behavior of the :class:`~update` operation
+
+
+    .. attribute:: UpdateConfigClass
+
+       :type: :class:`~carbond.collections.UpdateConfig`
+       :ro:
+
+       The config class used to instantiate the :class:`~carbond.collections.Collection.update` operation config
+
+
+    .. attribute:: updateObjectConfig
+
+       :type: Object
+       :default: ``o({}, carbond.collections.UpdateObjectConfigClass)``
+
+       The config used to govern the behavior of the :class:`~updateObject` operation
+
+
+    .. attribute:: UpdateObjectConfigClass
+
+       :type: :class:`~carbond.collections.UpdateObjectConfig`
+       :ro:
+
+       The config class used to instantiate the :class:`~carbond.collections.Collection.updateObject` operation config
+
+
+    .. attribute:: validateOutput
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: boolean
+       :default: ``true``
+
+       Controls whether or not response bodies are validated using the response :class:`~carbond.OperationResponse.schema` corresponding to the current response code
+
+
+Abstract Methods
+----------------
+
+.. class:: carbond.collections.Collection
+    :noindex:
+    :hidden:
+
+    .. function:: find(options)
+
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.FindConfigClass`)
+        :type options: Object
+        :throws: :class:`~carbond.collections.errors.CollectionError` 
+        :returns: A list of objects
+        :rtype: Object[]
+
+        Retrieve objects from a collection
+
+    .. function:: findObject(id, options)
+
+        :param id: The object id
+        :type id: string
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.FindObjectConfigClass`)
+        :type options: Object
+        :throws: :class:`~carbond.collections.errors.CollectionError` 
+        :returns: The found object or null
+        :rtype: Object | null
+
+        Retrieve a single object from a collection
+
+    .. function:: insert(objects, options)
+
+        :param objects: An array of objects to insert
+        :type objects: Array
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.InsertConfigClass`)
+        :type options: Object
+        :throws: :class:`~carbond.collections.errors.CollectionError` 
+        :returns: The list of inserted objects
+        :rtype: Object[]
+
+        Bulk insert objects into a collection
+
+    .. function:: insertObject(object, options)
+
+        :param object: An object to insert
+        :type object: Object
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.InsertObjectConfigClass`)
+        :type options: Object
+        :throws: :class:`~carbond.collections.errors.CollectionError` 
+        :returns: The inserted object
+        :rtype: Object
+
+        Insert a single object into a collection
+
+    .. function:: remove(options)
+
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.RemoveConfigClass`)
+        :type options: Object
+        :throws: :class:`~carbond.collections.errors.CollectionError` 
+        :returns: An integer representing the number of objects removed or an array of the objects removed
+        :rtype: number | array
+
+        Remove objects from a collection
+
+    .. function:: removeObject(id, options)
+
+        :param id: The ID of the object to remove
+        :type id: String
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.RemoveConfigClass`)
+        :type options: Object
+        :throws: :class:`~carbond.collections.errors.CollectionError` 
+        :returns: An integer representing the number of objects removed (0 or 1) or the the object removed
+        :rtype: number | Object
+
+        Remove a specific object from a collection
+
+    .. function:: save(objects, options)
+
+        :param objects: An array of objects (with IDs) to save
+        :type objects: Array
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.SaveConfigClass`)
+        :type options: Object
+        :throws: :class:`~carbond.collections.errors.CollectionError` 
+        :returns: The list of saved objects
+        :rtype: Object[]
+
+        Replace the collection with an array of objects
+
+    .. function:: saveObject(object, options)
+
+        :param object: The object to save (with ID)
+        :type object: Object
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.SaveObjectConfigClass`)
+        :type options: Object
+        :throws: :class:`~carbond.collections.errors.CollectionError` 
+        :rtype: :ref:`SaveObjectResult <carbond.collections.Collection.SaveObjectResult>`
+
+        Replace or insert an object with a known ID
+
+    .. function:: update(update, options)
+
+        :param update: The update to be applied to the collection
+        :type update: \*
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.UpdateConfigClass`)
+        :type options: Object
+        :throws: :class:`~carbond.collections.errors.CollectionError` 
+        :rtype: :ref:`UpdateResult <carbond.collections.Collection.UpdateResult>`
+
+        Update (or upsert) a number of objects in a collection
+
+    .. function:: updateObject(id, update, options)
+
+        :param id: The ID of the object to update
+        :type id: string
+        :param update: The update to be applied to the collection
+        :type update: \*
+        :param options: The operation parameters (see: :class:`~carbond.collections.Collection.UpdateObjectConfigClass`)
+        :type options: Object
+        :throws: :class:`~carbond.collections.errors.CollectionError` 
+        :rtype: :ref:`UpdateObjectResult <carbond.collections.Collection.UpdateObjectResult>`
+
+        Update a specific object
 
 Methods
-=======
+-------
 
 .. class:: carbond.collections.Collection
     :noindex:
     :hidden:
 
-    .. function:: carbond.collections.Collection.getOperationConfig
+    .. function:: configureFindObjectOperation()
 
-        .. csv-table::
-            :class: details-table
+        :rtype: :ref:`ConfigureOperationResult <carbond.collections.Collection.ConfigureOperationResult>`
 
-            "getOperationConfig (*op*)", ""
-            "Arguments", "**op** (:class:`string`): Lorem ipsum dolor sit amet |br|"
-            "Returns", :class:`~carbond.Operation`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Update the operation config using collection level config (e.g., :class:`~carbond.collections.Collection.schema`) and build operation responses. In general, this method should not need to be overridden or extended. Instead, customization should be driven by the operation config and the pre/post handler methods.
+
+    .. function:: configureFindOperation()
+
+        :rtype: :ref:`ConfigureOperationResult <carbond.collections.Collection.ConfigureOperationResult>`
+
+        Update the operation config using collection level config (e.g., :class:`~carbond.collections.Collection.schema`) and build operation responses. In general, this method should not need to be overridden or extended. Instead, customization should be driven by the operation config and the pre/post handler methods.
+
+    .. function:: configureInsertObjectOperation()
+
+        :rtype: :ref:`ConfigureOperationResult <carbond.collections.Collection.ConfigureOperationResult>`
+
+        Update the operation config using collection level config (e.g., :class:`~carbond.collections.Collection.schema`) and build operation responses. In general, this method should not need to be overridden or extended. Instead, customization should be driven by the operation config and the pre/post handler methods.
+
+    .. function:: configureInsertOperation()
+
+        :rtype: :ref:`ConfigureOperationResult <carbond.collections.Collection.ConfigureOperationResult>`
+
+        Update the operation config using collection level config (e.g., :class:`~carbond.collections.Collection.schema`) and build operation responses. In general, this method should not need to be overridden or extended. Instead, customization should be driven by the operation config and the pre/post handler methods.
+
+    .. function:: configureRemoveObjectOperation()
+
+        :rtype: :ref:`ConfigureOperationResult <carbond.collections.Collection.ConfigureOperationResult>`
+
+        Update the operation config using collection level config (e.g., :class:`~carbond.collections.Collection.schema`) and build operation responses. In general, this method should not need to be overridden or extended. Instead, customization should be driven by the operation config and the pre/post handler methods.
+
+    .. function:: configureRemoveOperation()
+
+        :rtype: :ref:`ConfigureOperationResult <carbond.collections.Collection.ConfigureOperationResult>`
+
+        Update the operation config using collection level config (e.g., :class:`~carbond.collections.Collection.schema`) and build operation responses. In general, this method should not need to be overridden or extended. Instead, customization should be driven by the operation config and the pre/post handler methods.
+
+    .. function:: configureSaveObjectOperation()
+
+        :rtype: :ref:`ConfigureOperationResult <carbond.collections.Collection.ConfigureOperationResult>`
+
+        Update the operation config using collection level config (e.g., :class:`~carbond.collections.Collection.schema`) and build operation responses. In general, this method should not need to be overridden or extended. Instead, customization should be driven by the operation config and the pre/post handler methods.
+
+    .. function:: configureSaveOperation()
+
+        :rtype: :ref:`ConfigureOperationResult <carbond.collections.Collection.ConfigureOperationResult>`
+
+        Update the operation config using collection level config (e.g., :class:`~carbond.collections.Collection.schema`) and build operation responses. In general, this method should not need to be overridden or extended. Instead, customization should be driven by the operation config and the pre/post handler methods.
+
+    .. function:: configureUpdateObjectOperation()
+
+        :rtype: :ref:`ConfigureOperationResult <carbond.collections.Collection.ConfigureOperationResult>`
+
+        Update the operation config using collection level config (e.g., :class:`~carbond.collections.Collection.schema`) and build operation responses. In general, this method should not need to be overridden or extended. Instead, customization should be driven by the operation config and the pre/post handler methods.
+
+    .. function:: configureUpdateOperation()
+
+        :rtype: :ref:`ConfigureOperationResult <carbond.collections.Collection.ConfigureOperationResult>`
+
+        Update the operation config using collection level config (e.g., :class:`~carbond.collections.Collection.schema`) and build operation responses. In general, this method should not need to be overridden or extended. Instead, customization should be driven by the operation config and the pre/post handler methods.
+
+    .. function:: getOperation(method)
+
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :param method: The HTTP method corresponding to the operation to retrieve
+        :type method: string
+        :rtype: :class:`~carbond.Operation`
+
+        Retrieves the operation instance corresponding to the passed HTTP method
+
+    .. function:: getOperationConfig(op)
+
+        :param op: The operation name (e.g., "insert")
+        :type op: string
+        :rtype: :class:`~carbond.collections.CollectionOperationConfig`
+
+        Get the config for an operation by name
+
+    .. function:: getOperationConfigFieldName(op)
+
+        :param op: The operation name (e.g., "insert")
+        :type op: string
+        :rtype: string
+
+        Get the property name for an operation config by name
+
+    .. function:: getService()
+
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :rtype: :class:`~carbond.Service`
+
+        Returns the root :class:`~carbond.Service` instance (note, this is preferred over accessing the ``service`` property itself)
+
+    .. function:: isOperationAuthorized(method, user, req)
+
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :param method: The HTTP method corresponding to the operation that we are attempting to authorize
+        :type method: string
+        :param user: The user object
+        :type user: Object
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :returns: Whether of not the operation is authorized
+        :rtype: boolean
+
+        Tests whether an operation is authorized given a user (as returned by the root authenticator) and any :class:`~carbond.security.Acl` that may apply to this endpoint
+
+    .. function:: operations()
+
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :rtype: :class:`~carbond.Operation[]`
+
+        Gathers all operations defined on this endpoint
+
+    .. function:: options(req, res)
+
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: undefined
+
+        Implements the OPTIONS method handler
+
+    .. function:: postFind(result, options)
+
+        :param result: The found object(s)
+        :type result: Object[]
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: Object[]
+
+        Update or transform the operation result before passing it back up to the HTTP layer
+
+    .. function:: postFindObject(result, id, options)
+
+        :param result: The found object
+        :type result: Object | null
+        :param id: The object id
+        :type id: string
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: Object | null
+
+        Update or transform the operation result before passing it back up to the HTTP layer
+
+    .. function:: postFindObjectOperation(result, config, req, res)
+
+        :param result: The found object
+        :type result: Object | null
+        :param config: The find object operation config
+        :type config: :class:`~carbond.collections.Collection.findObjectConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :returns: Returns the found object
+        :rtype: Object | null
+
+        Update the HTTP response to reflect the result of the operation
+
+    .. function:: postFindOperation(result, config, req, res)
+
+        :param result: The found objects
+        :type result: Object[]
+        :param config: The find operation config
+        :type config: :class:`~carbond.collections.Collection.findConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :returns: Returns the found objects
+        :rtype: Object[]
+
+        Update the HTTP response to reflect the result of the operation
+
+    .. function:: postInsert(result, objects, options)
+
+        :param result: The inserted object(s)
+        :type result: Object[]
+        :param objects: The object(s) to insert
+        :type objects: Object[]
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: Object[]
+
+        Update or transform the operation result before passing it back up to the HTTP layer
+
+    .. function:: postInsertObject(result, object, options)
+
+        :param result: The inserted object
+        :type result: Object
+        :param object: The object to insert
+        :type object: Object
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: Object
+
+        Update or transform the operation result before passing it back up to the HTTP layer
+
+    .. function:: postInsertObjectOperation(result, config, req, res)
+
+        :param result: The inserted object
+        :type result: Object
+        :param config: The insert object operation config
+        :type config: :class:`~carbond.collections.Collection.InsertObjectConfigClass`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :returns: Returns the inserted object if configured to do so and ``null`` otherwise
+        :rtype: Object | null
+
+        Update the HTTP response to reflect the result of the operation
+
+    .. function:: postInsertOperation(result, config, req, res)
+
+        :param result: The inserted objects
+        :type result: Object[]
+        :param config: The insert operation config
+        :type config: :class:`~carbond.collections.Collection.InsertConfigClass`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :returns: Returns the inserted objects if configured to do so and ``null`` otherwise
+        :rtype: Object[] | null
+
+        Update the HTTP response to reflect the result of the operation
+
+    .. function:: postRemove(result, options)
+
+        :param result: The number of objects (or the object(s) themselves) removed
+        :type result: number | array
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: number | array
+
+        Update or transform the operation result before passing it back up to the HTTP layer
+
+    .. function:: postRemoveObject(result, options)
+
+        :param result: The number of objects (or the object itself) removed
+        :type result: number | Object
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: number | array
+
+        Update or transform the operation result before passing it back up to the HTTP layer
+
+    .. function:: postRemoveObjectOperation(result, config, req, res)
+
+        :param result: The number of objects removed or the removed object
+        :type result: number | Object
+        :param config: The remove object operation config
+        :type config: :class:`~carbond.collections.Collection.RemoveObjectConfigClass`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :returns: Returns undefined} or the removed object
+        :rtype: Object
+
+        Update the HTTP response to reflect the result of the operation. It should be noted that the result can be either a number or an object. If the underlying driver does not support returning the removed object, then the result will always be a number and :class:`~carbond.collections.RemoveObjectConfig.returnsRemovedObject` should be configured to reflect this.
+
+    .. function:: postRemoveOperation(result, config, req, res)
+
+        :param result: The number of objects removed or the removed objec(s)
+        :type result: number | array
+        :param config: The remove operation config
+        :type config: :class:`~carbond.collections.Collection.RemoveConfigClass`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :returns: Returns undefined} or the removed objects
+        :rtype: Object
+
+        Update the HTTP response to reflect the result of the operation. It should be noted that the result can be either a number or an array of object(s). If the underlying driver does not support returning the removed object(s), then the result will always be a number and :class:`~carbond.collections.RemoveConfig.returnsRemovedObjects` should be configured to reflect this.
+
+    .. function:: postSave(result, objects, options)
+
+        :param result: The saved objects
+        :type result: Object[]
+        :param objects: The objects to save
+        :type objects: Object[]
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: Object[]
+
+        Update or transform the operation result before passing it back up to the HTTP layer
+
+    .. function:: postSaveObject(result, object, options)
+
+        :param result: The ``SaveObjectResult``
+        :type result: :ref:`SaveObjectResult <carbond.collections.Collection.SaveObjectResult>`
+        :param object: The object to save
+        :type object: Object
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: :ref:`SaveObjectResult <carbond.collections.Collection.SaveObjectResult>`
+
+        Update or transform the operation result before passing it back up to the HTTP layer
+
+    .. function:: postSaveObjectOperation(result, config, req, res)
+
+        :param result: The saved object and a flag to indicate if it was created rather than replaced
+        :type result: :ref:`SaveObjectResult <carbond.collections.Collection.SaveObjectResult>`
+        :param config: The save object operation config
+        :type config: :class:`~carbond.collections.Collection.SaveObjectConfigClass`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :returns: Returns the saved object if configured to do so and ``null`` if not
+        :rtype: Object[] | null
+
+        Update the HTTP response to reflect the result of the operation
+
+    .. function:: postSaveOperation(result, config, req, res)
+
+        :param result: The saved objects
+        :type result: Object[]
+        :param config: The save operation config
+        :type config: :class:`~carbond.collections.Collection.saveConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :returns: Returns the saved objects if configured to do so and ``null`` if not
+        :rtype: Object[] | null
+
+        Update the HTTP response to reflect the result of the operation
+
+    .. function:: postUpdate(result, update, options)
+
+        :param result: The ``UpdateResult``
+        :type result: :ref:`UpdateResult <carbond.collections.Collection.UpdateResult>`
+        :param update: The update spec
+        :type update: \*
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: :ref:`UpdateResult <carbond.collections.Collection.UpdateResult>`
+
+        Update or transform the operation result before passing it back up to the HTTP layer
+
+    .. function:: postUpdateObject(result, update, update, options)
+
+        :param result: The ``UpdateResult``
+        :type result: :ref:`UpdateResult <carbond.collections.Collection.UpdateResult>`
+        :param update: The update spec
+        :type update: string
+        :param update: The update spec
+        :type update: \*
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: :ref:`UpdateResult <carbond.collections.Collection.UpdateResult>`
+
+        Update or transform the operation result before passing it back up to the HTTP layer
+
+    .. function:: postUpdateObjectOperation(result, config, req, res)
+
+        :param result: The number of objects updated/upserted or the upserted object
+        :type result: :ref:`UpdateObjectResult <carbond.collections.Collection.UpdateObjectResult>`
+        :param config: The update object operation config
+        :type config: :class:`~carbond.collections.Collection.UpdateObjectConfigClass`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :returns: Returns undefined} or the upserted object
+        :rtype: Object
+
+        Update the HTTP response to reflect the result of the operation. It should be noted that the result can be either a number or an object. If the underlying driver does not support returning the upserted object, then the result will always be a number and :class:`~carbond.collections.UpdateObjectConfig.returnsUpsertedObject` should be configured to reflect this.
+
+    .. function:: postUpdateOperation(result, config, req, res)
+
+        :param result: The number of objects updated/upserted or the upserted object(s)
+        :type result: :ref:`UpdateResult <carbond.collections.Collection.UpdateResult>`
+        :param config: The update operation config
+        :type config: :class:`~carbond.collections.Collection.UpdateConfigClass`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :returns: Returns undefined} or the upserted object(s)
+        :rtype: Object
+
+        Update the HTTP response to reflect the result of the operation. It should be noted that the result can be either a number or an array of objects. If the underlying driver does not support returning the upserted object(s), then the result will always be a number and :class:`~carbond.collections.UpdateConfig.returnsUpsertedObjects` should be configured to reflect this.
+
+    .. function:: preFind(options)
+
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: :ref:`PreFindResult <carbond.collections.Collection.PreFindResult>` | undefined
+
+        Update or transform any parameters to be passed to the operation handler
+
+    .. function:: preFindObject(id, options)
+
+        :param id: The object id
+        :type id: string
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: :ref:`PreFindObjectResult <carbond.collections.Collection.PreFindObjectResult>` | undefined
+
+        Update or transform any parameters to be passed to the operation handler
+
+    .. function:: preFindObjectOperation(config, req, res)
+
+        :param config: The find object operation config
+        :type config: :class:`~carbond.collections.FindObjectConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preFindOperation(config, req, res)
+
+        :param config: The find operation config
+        :type config: :class:`~carbond.collections.FindConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preInsert(objects, options)
+
+        :param objects: The objects to insert
+        :type objects: Object[]
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: :ref:`PreInsertResult <carbond.collections.Collection.PreInsertResult>` | undefined
+
+        Update or transform any parameters to be passed to the operation handler
+
+    .. function:: preInsertObject(object, options)
+
+        :param object: The object to insert
+        :type object: Object
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: :ref:`PreInsertObjectResult <carbond.collections.Collection.PreInsertObjectResult>` | undefined
+
+        Update or transform any parameters to be passed to the operation handler
+
+    .. function:: preInsertObjectOperation(config, req, res)
+
+        :param config: The insert object operation config
+        :type config: :class:`~carbond.collections.InsertObjectConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preInsertOperation(config, req, res)
+
+        :param config: The insert operation config
+        :type config: :class:`~carbond.collections.InsertConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preRemove(options)
+
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: :ref:`PreRemoveResult <carbond.collections.Collection.PreRemoveResult>` | undefined
+
+        Update or transform any parameters to be passed to the operation handler
+
+    .. function:: preRemoveObject(id, options)
+
+        :param id: The object id
+        :type id: string
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: :ref:`PreRemoveObjectResult <carbond.collections.Collection.PreRemoveObjectResult>` | undefined
+
+        Update or transform any parameters to be passed to the operation handler
+
+    .. function:: preRemoveObjectOperation(config, req, res)
+
+        :param config: The remove object operation config
+        :type config: :class:`~carbond.collections.RemoveObjectConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preRemoveOperation(config, req, res)
+
+        :param config: The remove operation config
+        :type config: :class:`~carbond.collections.RemoveConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preSave(objects, options)
+
+        :param objects: The objects to save
+        :type objects: Object[]
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: :ref:`PreSaveResult <carbond.collections.Collection.PreSaveResult>` | undefined
+
+        Update or transform any parameters to be passed to the operation handler
+
+    .. function:: preSaveObject(object, options)
+
+        :param object: The object to save
+        :type object: Object
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: :ref:`PreSaveObjectResult <carbond.collections.Collection.PreSaveObjectResult>` | undefined
+
+        Update or transform any parameters to be passed to the operation handler
+
+    .. function:: preSaveObjectOperation(config, req, res)
+
+        :param config: The save object operation config
+        :type config: :class:`~carbond.collections.SaveObjectConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preSaveOperation(config, req, res)
+
+        :param config: The save operation config
+        :type config: :class:`~carbond.collections.SaveConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preUpdate(update, options)
+
+        :param update: The update spec
+        :type update: \*
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: :ref:`PreUpdateResult <carbond.collections.Collection.PreUpdateResult>` | undefined
+
+        Update or transform any parameters to be passed to the operation handler
+
+    .. function:: preUpdateObject(id, update, options)
+
+        :param id: The object id
+        :type id: string
+        :param update: The update spec
+        :type update: \*
+        :param options: The operation handler options
+        :type options: Object
+        :rtype: :ref:`PreUpdateObjectResult <carbond.collections.Collection.PreUpdateObjectResult>` | undefined
+
+        Update or transform any parameters to be passed to the operation handler
+
+    .. function:: preUpdateObjectOperation(config, req, res)
+
+        :param config: The update object operation config
+        :type config: :class:`~carbond.collections.UpdateObjectConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: preUpdateOperation(config, req, res)
+
+        :param config: The update operation config
+        :type config: :class:`~carbond.collections.UpdateConfig`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
+
+        Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
+
+    .. function:: supportedMethods()
+
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :rtype: string[]
+
+        Returns a list of HTTP methods supported by this endpoint
+
+.. _carbond.collections.Collection.ConfigureOperationResult:
+
+.. rubric:: Typedef: ConfigureOperationResult
+
+Properties
+----------
+
+    .. attribute:: opConfig
+
+       :type: :class:`~carbond.collections.CollectionOperationConfig`
+       :required:
+
+       The operation config
 
 
-RESTFul interface
-=================
+    .. attribute:: defaultResponses
 
-- ``/<collection>``
-  
-  - ``GET`` which maps to ``find``
-  - ``POST`` which maps to ``insert``
-  - ``PUT`` which maps to ``update``
-  - ``DELETE`` which maps to ``remove``
-    
-- ``/<collection>/:id``
-  
-  -  ``GET`` which maps to ``findObject``
-  -  ``PUT`` which maps to ``updateObject``
-  -  ``DELETE`` which maps to ``removeObject``
+       :type: :class:`~carbond.OperationResponse[]` | Object[]
+       :required:
 
-Examples (synchronous)
-----------------------
+       A list of default responses (raw Objects will be converted to instances of :class:`~carbond.OperationResponse`)
 
-..  code-block:: javascript
 
-    __(function() {
-      module.exports = o({
-        _type: carbon.carbond.ObjectServer,
-        port: 8888,
-        dbUri: "mongodb://localhost:27017/mydb",
-        endpoints: {
-          feedback: o({
-            _type: carbon.carbond.Collection,
-            insert: function(obj) {
-              return this.objectserver.db.getCollection('feedback').insert(obj)
-            }
-          })
-        }
-      })
-    })
+.. _carbond.collections.Collection.PreFindObjectResult:
+
+.. rubric:: Typedef: PreFindObjectResult
+
+Properties
+----------
+
+    .. attribute:: id
+
+       :type: string
+       :default: undefined
+
+       The object id
+
+
+    .. attribute:: options
+
+       :type: Object
+       :default: undefined
+
+       The operation handler options
+
+
+.. _carbond.collections.Collection.PreFindResult:
+
+.. rubric:: Typedef: PreFindResult
+
+Properties
+----------
+
+    .. attribute:: options
+
+       :type: Object
+       :default: undefined
+
+       The operation handler options
+
+
+.. _carbond.collections.Collection.PreInsertObjectResult:
+
+.. rubric:: Typedef: PreInsertObjectResult
+
+Properties
+----------
+
+    .. attribute:: object
+
+       :type: Object
+       :default: undefined
+
+       The object to insert
+
+
+    .. attribute:: options
+
+       :type: Object
+       :default: undefined
+
+       The operation handler options
+
+
+.. _carbond.collections.Collection.PreInsertResult:
+
+.. rubric:: Typedef: PreInsertResult
+
+Properties
+----------
+
+    .. attribute:: objects
+
+       :type: Object[]
+       :default: undefined
+
+       The objects to insert
+
+
+    .. attribute:: options
+
+       :type: Object
+       :default: undefined
+
+       The operation handler options
+
+
+.. _carbond.collections.Collection.PreOperationResult:
+
+.. rubric:: Typedef: PreOperationResult
+
+Properties
+----------
+
+    .. attribute:: options
+
+       :type: Object
+       :required:
+
+       A map of parameters to be passed to the operation handler. Note, this is generally just ``req.parameters``.
+
+
+.. _carbond.collections.Collection.PreRemoveObjectResult:
+
+.. rubric:: Typedef: PreRemoveObjectResult
+
+Properties
+----------
+
+    .. attribute:: id
+
+       :type: string
+       :default: undefined
+
+       The object id
+
+
+    .. attribute:: options
+
+       :type: Object
+       :default: undefined
+
+       The operation handler options
+
+
+.. _carbond.collections.Collection.PreRemoveResult:
+
+.. rubric:: Typedef: PreRemoveResult
+
+Properties
+----------
+
+    .. attribute:: options
+
+       :type: Object
+       :default: undefined
+
+       The operation handler options
+
+
+.. _carbond.collections.Collection.PreSaveObjectResult:
+
+.. rubric:: Typedef: PreSaveObjectResult
+
+Properties
+----------
+
+    .. attribute:: object
+
+       :type: Object
+       :default: undefined
+
+       The object to save
+
+
+    .. attribute:: options
+
+       :type: Object
+       :default: undefined
+
+       The operation handler options
+
+
+.. _carbond.collections.Collection.PreSaveResult:
+
+.. rubric:: Typedef: PreSaveResult
+
+Properties
+----------
+
+    .. attribute:: objects
+
+       :type: Object[]
+       :default: undefined
+
+       The objects to save
+
+
+    .. attribute:: options
+
+       :type: Object
+       :default: undefined
+
+       The operation handler options
+
+
+.. _carbond.collections.Collection.PreUpdateObjectResult:
+
+.. rubric:: Typedef: PreUpdateObjectResult
+
+Properties
+----------
+
+    .. attribute:: id
+
+       :type: string
+       :default: undefined
+
+       The object id
+
+
+    .. attribute:: update
+
+       :type: \*
+       :default: undefined
+
+       The update spec
+
+
+    .. attribute:: options
+
+       :type: Object
+       :default: undefined
+
+       The operation handler options
+
+
+.. _carbond.collections.Collection.PreUpdateResult:
+
+.. rubric:: Typedef: PreUpdateResult
+
+Properties
+----------
+
+    .. attribute:: update
+
+       :type: \*
+       :default: undefined
+
+       The update spec
+
+
+    .. attribute:: options
+
+       :type: Object
+       :default: undefined
+
+       The operation handler options
+
+
+.. _carbond.collections.Collection.SaveObjectResult:
+
+.. rubric:: Typedef: SaveObjectResult
+
+Properties
+----------
+
+    .. attribute:: val
+
+       :type: Object
+       :required:
+
+       The saved object
+
+
+    .. attribute:: created
+
+       :type: boolean
+       :required:
+
+       A flag indicating whether the object was created or replaced
+
+
+.. _carbond.collections.Collection.UpdateObjectResult:
+
+.. rubric:: Typedef: UpdateObjectResult
+
+Properties
+----------
+
+    .. attribute:: val
+
+       :type: number | Object
+       :required:
+
+       The number of objects updated if no upsert took place, the number of objects upserted if configured not to return upserted objects, or the upserted object(s) if configured to return the upserted object(s) (see: :class:`~carbond.collections.Collection.UpdateObjectConfigClass`)
+
+
+    .. attribute:: created
+
+       :type: boolean
+       :required:
+
+       A flag indicating whether an upsert took place
+
+
+.. _carbond.collections.Collection.UpdateResult:
+
+.. rubric:: Typedef: UpdateResult
+
+Properties
+----------
+
+    .. attribute:: val
+
+       :type: number | Object
+       :required:
+
+       The number of objects updated if no upsert took place, the number of objects upserted if configured not to return upserted objects, or the upserted object(s) if configured to return the upserted object(s) (see: :class:`~carbond.collections.Collection.UpdateConfigClass`)
+
+
+    .. attribute:: created
+
+       :type: boolean
+       :required:
+
+       A flag indicating whether an upsert took place
+

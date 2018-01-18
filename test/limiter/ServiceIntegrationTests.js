@@ -37,7 +37,7 @@ var CountDownLimiter = oo({
 
 var SimpleOperation = oo({
   _type: Operation,
-  service: function() {
+  handle: function() {
     return this.endpoint.path + '::' + this.name
   }
 })
@@ -160,7 +160,7 @@ module.exports = o({
   },
   setup: function () {
     ServiceTest.prototype.setup.call(this)
-    sinon.stub(ApiKeyAuthenticator.prototype, 'findUser', function() {
+    sinon.stub(ApiKeyAuthenticator.prototype, 'findUser').callsFake(function() {
       return {
         username: 'foo'
       }

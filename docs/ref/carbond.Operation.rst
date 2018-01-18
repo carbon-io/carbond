@@ -2,156 +2,105 @@
     :heading:
 
 .. |br| raw:: html
- 
+
    <br />
 
 =================
 carbond.Operation
 =================
 
-An ``Operation`` represents a single HTTP method on an endpoint (``GET``, ``PUT``, ``POST``, ``PATCH``, ``DELETE``, ``HEAD``, ``OPTIONS``). 
+Handles HTTP requests for a specific method (e.g., "GET") to a specific :class:`~carbond.Endpoint` by assigning to a property on the endpoint that corresponds to that HTTP method (e.g. :class:`~carbond.Endpoint.get`). This can be instantiated explicitly in the context of an :class:`~carbond.Endpoint` or implicitly if just a handler method is provided. In the latter case, the operation object will be built and instantiated for you.
 
-An ``Operation`` implements this HTTP method via service. XXX 
-
-
-Each ``Operation`` can define any number of :js:class:`OperationParameter`. All parameters provided to an ``Operation`` will be available via the ``parameters`` property of the ``HttpRequest`` object and can be accessed as ``req.parameters[<parameter-name>]`` or ``req.parameters.<parameter-name>``.
-
-Carbond supports both JSON and `EJSON <http://docs.mongodb.org/manual/reference/mongodb-extended-json/>`_ (Extended JSON, which includes support additional types such as ``Date`` and ``ObjectId``). 
-
-Formally defining parameters for operations helps you to build a self-describing API for which the framework can then auto-generate API documention and interactive administration tools. 
-
-Configuration
-=============
-
-..  code-block:: javascript
-
-    {
-      _type: carbon.carbond.Operation,
-      [description: <string>],
-      [parameters: {
-        <name>: <OperationParameter>,
-        ...
-      }],
-      service: <function>
-    }
-
-Properties
-==========
+Instance Properties
+-------------------
 
 .. class:: carbond.Operation
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.Operation.description
+    .. attribute:: description
 
-        .. csv-table::
-            :class: details-table
+       :type: string
+       :default: undefined
 
-            "description", :class:`string`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       A brief description of what this operation does. This will be displayed in any generated documentation.
 
-    .. attribute:: carbond.Operation.endpoint
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: endpoint
 
-            "endpoint", :class:`~carbond.Endpoint`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :type: :class:`~carbond.Endpoint`
+       :required:
 
-    .. attribute:: carbond.Operation.limiter
+       xxx
 
-        .. csv-table::
-            :class: details-table
 
-            "limiter", :class:`~carbond.limiter.Limiter`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. attribute:: name
 
-    .. attribute:: carbond.Operation.name
+       :type: string
+       :ro:
 
-        .. csv-table::
-            :class: details-table
+       The operation name (i.e., HTTP method)
 
-            "name", :class:`string`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-    .. attribute:: carbond.Operation.parameters
+    .. attribute:: parameters
 
-        .. csv-table::
-            :class: details-table
+       :type: Object.<string, carbond.OperationParameter>
+       :default: ``{}``
 
-            "parameters", :class:`object`
-            "Default", ``{}``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       Any parameters that are specific to this operation (as opposed to those defined on the parent endpoint)
 
-    .. attribute:: carbond.Operation.responses
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: responses
 
-            "responses", :class:`object`
-            "Default", ``[]``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :type: Object.<string, carbond.OperationResponse>
+       :default: ``{}``
 
-    .. attribute:: carbond.Operation.validateOutput
+       Response definitions for this operation. These will be used for validation purposes as well as generated static documentation.
 
-        .. csv-table::
-            :class: details-table
 
-            "validateOutput", :class:`boolean`
-            "Default", ``true``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. attribute:: validateOutput
 
-  
+       :type: boolean
+       :default: ``true``
+
+       Flag determining whether responses are validated using the definitions in :class:`~carbond.Operation.responses`
+
+
 Methods
-=======
+-------
 
-.. class:: carbond.Service
+.. class:: carbond.Operation
     :noindex:
     :hidden:
 
-    .. function:: carbond.Operation.getAllParameters
+    .. function:: getAllParameters()
 
-        .. csv-table::
-            :class: details-table
+        :rtype: Object.<string, carbond.OperationParameter>
 
-            "getAllParameters ()", ""
-            "Arguments", ``undefined``
-            "Returns", :class:`object`
-            "Descriptions", "Gets all parameters defined for this Operation which includes all parameters inherited from this.endpoint"
+        Gets all parameters defined for this :class:`~carbond.Operation` which includes all parameters inherited from this.endpoint
 
-    .. function:: carbond.Operation.getSanitizedURL
+    .. function:: getSanitizedURL(req)
 
-        .. csv-table::
-            :class: details-table
+        :param req: the current request
+        :type req: http.ClientRequest
+        :returns: the sanitized URL
+        :rtype: string
 
-            "getSanitizedURL (*req*)", ""
-            "Arguments", "**req** (:class:`~http.ClientRequest`): the current request"
-            "Returns", :class:`String`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Returns a new URL with the query string portion removed
 
-    .. function:: carbond.Operation.getService
+    .. function:: getService()
 
-        .. csv-table::
-            :class: details-table
+        :rtype: :class:`~carbond.Service`
 
-            "getService ()", ""
-            "Arguments", ``undefined``
-            "Returns", :class:`~carbond.Service`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Returns the root :class:`~carbond.Service` instance
 
-    .. function:: carbond.Operation.service
+    .. function:: service(req, res)
 
-        .. csv-table::
-            :class: details-table
+        :param req: The current request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :throws: :class:`~httperrors.HttpError` 
+        :rtype: Object | null | undefined
 
-            "service (*req, res*)", ""
-            "Arguments", "**req** (:class:`~http.ClientRequest`): the current request |br|
-            **res** (:class:`~http.ClientResponse`): the current response |br|"
-            "Returns", ``undefined``
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
-
-            
+        Handles incoming requests, generating the appropriate response. Responses can be sent by the handler itself or this can be delegated to the service. If an object is returned, it will be serialized (and validated if configured to do so) and sent as the body of the response. If ``null`` is returned, it will end the response. If ``undefined`` is returned, it will be the responsibility of the handler to end the response. If the response status code is something other than ``204``, it should be set by the handler. Additionally, custom headers should be set on the response object before returning. To respond with an error (status code > 400), an instance of :class:`~httperrors.HttpError` can be thrown.

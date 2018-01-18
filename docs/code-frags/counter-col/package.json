@@ -1,0 +1,15 @@
+{
+  "name": "mem-col",
+  "version": "0.0.1",
+  "description": "In memory collection example.",
+  "contributors": [
+    "Bob Smith <bob@smith.com>"
+  ],
+  "main": "./lib/MemCol",
+  "scripts": {
+      "test": "node ./test"
+  },
+  "dependencies": {
+      "carbon-io": "*"
+  }
+}

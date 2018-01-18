@@ -2,7 +2,7 @@
     :heading:
 
 .. |br| raw:: html
- 
+
    <br />
 
 =======================================
@@ -10,77 +10,124 @@ carbond.security.HttpBasicAuthenticator
 =======================================
 *extends* :class:`~carbond.security.Authenticator`
 
-Description for :class:`~carbond.security.HttpBasicAuthenticator` goes here
+An authenticator for the Basic HTTP Authenitcation Scheme.
 
-Properties
-==========
+Instance Properties
+-------------------
 
 .. class:: carbond.security.HttpBasicAuthenticator
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.security.HttpBasicAuthenticator.passwordField
+    .. attribute:: passwordField
 
-        .. csv-table::
-            :class: details-table
+       :type: string
+       :required:
 
-            "passwordField", :class:`string`
-            "Default", ``undefined``
-            "Description", "Password field."
+       Name of the field that contains the password in the database.
 
-    .. attribute:: carbond.security.HttpBasicAuthenticator.passwordHashFn
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: passwordHashFn
 
-            "passwordHashFn", :class:`function`
-            "Default", ``noop``
-            "Description", "Password hash function."
+       :type: string | function
+       :default: ``noop``
 
-    .. attribute:: carbond.security.HttpBasicAuthenticator.usernameField
+       Either a string representing a :class:`~carbond.security.Hasher` (possible values are *noop*, *sha256*, and *bcrypt*), an instance of :class:`~carbond.security.Hasher` or a constructor function for a :class:`~carbond.security.Hasher`.
 
-        .. csv-table::
-            :class: details-table
 
-            "usernameField", :class:`string`
-            "Default", ``undefined``
-            "Description", "Username field."
+    .. attribute:: usernameField
 
+       :type: string
+       :required:
+
+       Name of the field that contains the username in the database.
+
+
+Abstract Methods
+----------------
+
+.. class:: carbond.security.HttpBasicAuthenticator
+    :noindex:
+    :hidden:
+
+    .. function:: findUser(username)
+
+        :param username: The username sent by the client.
+        :type username: string
+        :throws: Error If the usernameField or passwordField are undefined.
+
+        Find a user matching a username. Must be implemented by subcalsses.
+
+    .. function:: getAuthenticationHeaders()
+
+        :inheritedFrom: :class:`~carbond.security.Authenticator`
+        :returns: An array of strings representing request headers.
+        :rtype: string[]
+
+        Gets the names of the request headers where authentication details can be found. Should be implemented by subclasses, for example: :attr:`~carbond.security.ApiKeyAuthenticator`
+
+    .. function:: isRootUser(user)
+
+        :inheritedFrom: :class:`~carbond.security.Authenticator`
+        :param user: An object representing a user
+        :type user: Object
+        :returns: ``true`` if the user is determined to be root, ``false`` otherwise.
+        :rtype: boolean
+
+        Checks if a user is root.
 
 Methods
-=======
+-------
 
 .. class:: carbond.security.HttpBasicAuthenticator
     :noindex:
     :hidden:
 
-    .. function:: carbond.security.Authenticator.HttpBasicAuthenticator.authenticate
+    .. function:: authenticate(req)
 
-        .. csv-table::
-            :class: details-table
+        :param req: The current request
+        :type req: Request
+        :throws: HttpErrors.Unauthorized If credentials weren't validated
+        :returns: An object representing the user. Undefined if no credentials are found on the request.
+        :rtype: Object | undefined
 
-            "authenticate (*req*)", ""
-            "Arguments", "**req** (:class:`express.request`): The current request object |br|"
-            "Returns", :class:`string`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Authenticates a request using HTTP Baisc. Returns a user object that matches the username and password sent with the request. If no user matching the username and password is found, throws a 401 Unauthorized error.
 
-    .. function:: carbond.security.Authenticator.HttpBasicAuthenticator.findUser
+    .. function:: getService()
 
-        .. csv-table::
-            :class: details-table
+        :inheritedFrom: :class:`~carbond.security.Authenticator`
+        :returns: The parent Service
+        :rtype: :class:`~carbond.Service`
 
-            "findUser (*username*)", ""
-            "Arguments", "**username** (:class:`string`): the username to be found |br|"
-            "Returns", :class:`string`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        A getter for the parent Service
 
-    .. function:: carbond.security.Authenticator.HttpBasicAuthenticator.validateCreds
+    .. function:: initialize(service)
 
-        .. csv-table::
-            :class: details-table
+        :inheritedFrom: :class:`~carbond.security.Authenticator`
+        :param service: The parent Service
+        :type service: :class:`~carbond.Service`
+        :rtype: undefined
 
-            "validateCreds (*username, password*)", ""
-            "Arguments", "**username** (:class:`string`): the username to be validated |br|
-            **password** (:class:`string`): the password to be checked |br|"
-            "Returns", :class:`string`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Initializes the authenticator. Called by :class:`~carbond.Service.start` on the parent Service and sets `this.service` to the parent Service.
+
+    .. function:: throwUnauthenticated(msg)
+
+        :inheritedFrom: :class:`~carbond.security.Authenticator`
+        :param msg: The message returned with the 401 error.
+        :type msg: string
+        :throws: HttpErrors.Unauthorized 
+        :rtype: undefined
+
+        Throws a 401 Unauthorized Error.
+
+    .. function:: validateCreds(username, password)
+
+        :param username: username from the HTTP request
+        :type username: string
+        :param password: password from the HTTP request
+        :type password: string
+        :throws: Service.errors.InternalServerError 500 Internal Server Error
+        :returns: Object representing the user if a user matching the username and password is found. Otherwise returns undefined.
+        :rtype: Object | undefined
+
+        Finds a user matching a username and password. The password is checked using the hash function.

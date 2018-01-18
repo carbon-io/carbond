@@ -6,7 +6,7 @@ Services
 
 APIs are defined via :js:class:`~carbond.Service`\ s. Put simply, a
 :js:class:`~carbond.Service` is an HTTP server that exposes a JSON REST API and
-which is defined as a tree of :js:class:`~carbond.Endpoint`\s. 
+which is defined as a tree of :js:class:`~carbond.Endpoint`\s.
 
 Services and Endpoints
 ----------------------
@@ -15,8 +15,8 @@ All :js:class:`~carbond.Service` definitions follow the same general structure:
 
 .. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleExample.js
     :language: javascript
-    :lines: 1-8,15-16,23-
-    :linenos:  
+    :named-sections: services-structureHeader,services-structureBody,services-structureFooter
+    :linenos:
 
 Here is an example of a simple :js:class:`~carbond.Service` that runs on port
 ``8888`` and that defines a single :js:class:`~carbond.Endpoint` at the path
@@ -24,10 +24,10 @@ Here is an example of a simple :js:class:`~carbond.Service` that runs on port
 
 .. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleExample.js
     :language: javascript
-    :lines: 1-8,15,17-
-    :linenos:  
+    :named-sections: services-endpointHeader,services-endpointBody,services-endpointFooter
+    :linenos:
 
-Service middleware 
+Service middleware
 ------------------
 
 You can register Express-style middleware for your service via the
@@ -36,13 +36,13 @@ You can register Express-style middleware for your service via the
 
 .. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleExample.js
     :language: javascript
-    :lines: 1-16,23-
-    :linenos:  
+    :named-sections: services-middlewareHeader,services-middlewareFooter
+    :linenos:
 
 
 .. todo:: document error handling middleware here?
 
-.. _running-services-from-the-command-line-label:
+.. _carbond-running-services-from-the-command-line:
 
 Running Services from the command line
 --------------------------------------
@@ -56,44 +56,44 @@ of the library, as shown below on line 6:
 
 .. literalinclude:: ../code-frags/standalone-examples/ServiceSimpleExample.js
     :language: javascript
-    :lines: 1-8,15-16,23-
-    :linenos:  
+    :named-sections: services-oMainHeader,services-oMainBody,services-oMainFooter
+    :linenos:
     :emphasize-lines: 6
 
 You can then start your :js:class:`~carbond.Service` like this:
 
-..  literalinclude:: ../shell-frags/shell-output-starting-service.rst 
-    :language: sh 
+..  literalinclude:: ../shell-frags/shell-output-starting-service.rst
+    :language: sh
 
 You can use ``-h`` or ``--help`` to get command help from your
 :js:class:`~carbond.Service`:
 
 .. todo:: remove doc generation command?
 
-..  literalinclude:: ../shell-frags/shell-output-service-help.rst 
-    :language: sh 
+..  literalinclude:: ../shell-frags/shell-output-service-help.rst
+    :language: sh
 
 You can see that there are two sub-commands. One for starting the server and
 another for generating documentation for your :js:class:`~carbond.Service`.
 
 The default sub-command is ``start-server``, and will be run if you omit a
-sub-command (e.g. ``$> node <path-to-your-app>/MyService``): 
+sub-command (e.g. ``$> node <path-to-your-app>/MyService``):
 
 .. todo:: remove some options (limiter?) here?
 
-..  literalinclude:: ../shell-frags/shell-output-service-ss-help.rst 
-    :language: sh 
+..  literalinclude:: ../shell-frags/shell-output-service-ss-help.rst
+    :language: sh
 
 Embedding Services into larger applications *(advanced use)*
 ------------------------------------------------------------
 
 While you will usually run your :js:class:`~carbond.Service`\s via the command
 line as a top-level application, :js:class:`~carbond.Service` objects can also
-be used as a library (although it is not common). 
+be used as a library (although it is not common).
 
-By using the :js:meth:`~carbond.Service.start` and
-:js:meth:`~carbond.Service.stop` methods, you can manage the
-:js:class:`~carbond.Service` lifecyle manually. 
+By using the :js:func:`~carbond.Service.start` and
+:js:func:`~carbond.Service.stop` methods, you can manage the
+:js:class:`~carbond.Service` lifecyle manually.
 
 These methods have both an asynchronous and a synchronous interface:
 
@@ -101,17 +101,17 @@ These methods have both an asynchronous and a synchronous interface:
 
 .. literalinclude:: ../code-frags/standalone-examples/ServiceAsyncProgrammaticServiceStartExample.js
     :language: javascript
-    :lines: 1-7,9-40
+    :named-sections: services-asyncExampleHeader,services-asyncExampleFooter
     :linenos:
 
 **Synchronous example**
 
 .. literalinclude:: ../code-frags/standalone-examples/ServiceSyncProgrammaticServiceStartExample.js
     :language: javascript
-    :lines: 1-8,10-39
+    :named-sections: services-syncExampleHeader,services-syncExampleFooter
     :linenos:
 
 Important note: you should not find yourself starting and stopping services like
-this (by manually calling :js:meth:`~carbond.Service.start` and
-:js:meth:`~carbond.Service.stop`) frequently. In most use-cases you will simply
+this (by manually calling :js:func:`~carbond.Service.start` and
+:js:func:`~carbond.Service.stop`) frequently. In most use-cases you will simply
 use the command line invocation described in the previous section.

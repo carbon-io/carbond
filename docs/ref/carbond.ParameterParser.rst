@@ -5,67 +5,57 @@
 
    <br />
 
-=========================
+=======================
 carbond.ParameterParser
-=========================
+=======================
 
-Description for :class:`~ParameterParser` goes here
-
-Properties
-==========
-
-*none*
-
+An HTTP parameter parser class that parses any parameters defined on an operation and its parent endpoint on the current request. The parsed parameter values are stored on :class:`~carbond.Request.parameters`.
 
 Methods
-=======
+-------
 
 .. class:: carbond.ParameterParser
     :noindex:
     :hidden:
 
-    .. function:: carbond.ParameterParser.parseParameterValue
+    .. function:: parseParameterValue(datum, definition)
 
-        .. csv-table::
-            :class: details-table
+        :param datum: The parameter representation as plucked from the current request
+        :type datum: Object | string
+        :param definition: The parameter descriptor
+        :type definition: :class:`~carbond.OperationParameter`
+        :returns: The parsed parameter value
+        :rtype: Object | string | number
 
-            "parseParameterValue (*datum, definitions*)", ""
-            "Arguments", "**datum** (:class:`object`): Lorem ipsum dolor sit amet |br|
-            **definitions** (:class:`object`): Lorem ipsum dolor sit amet |br|"
-            "Returns", :class:`object`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Parse a single parameter
 
-    .. function:: carbond.ParameterParser.processParameter
+    .. function:: processParameter(req, definition)
 
-        .. csv-table::
-            :class: details-table
+        :param req: The current request
+        :type req: :class:`~carbond.Request`
+        :param definition: The parameter to parse
+        :type definition: :class:`~carbond.OperationParameter`
+        :rtype: undefined
 
-            "processParameter (*req, definitions*)", ""
-            "Arguments", "**req** (:class:`~http.ClientRequest`): Lorem ipsum dolor sit amet |br|
-            **definitions** (:class:`object`): Lorem ipsum dolor sit amet |br|"
-            "Returns", ``undefined``
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Parse a single parameter on the current request as defined by the "definition" parameter
 
-    .. function:: carbond.ParameterParser.processParameterValue
+    .. function:: processParameters(req, definitions)
 
-        .. csv-table::
-            :class: details-table
+        :param req: The current request
+        :type req: :class:`~carbond.Request`
+        :param definitions: An array of parameters to parse from the current request
+        :type definitions: :class:`~carbond.OperationParameter[]`
+        :rtype: undefined
 
-            "processParameterValue (*datum, definitions*)", ""
-            "Arguments", "**datum** (:class:`object`): Lorem ipsum dolor sit amet |br|
-            **definitions** (:class:`object`): Lorem ipsum dolor sit amet |br|"
-            "Returns", :class:`object`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Parse all parameters on the current request that are included in the :class:`~carbond.OperationParameter` definitions list
 
-    .. function:: carbond.ParameterParser.processParameters
+    .. function:: processParameterValue(datum, definition)
 
-        .. csv-table::
-            :class: details-table
+        :param datum: The parameter representation as plucked from the current request
+        :type datum: Object | string
+        :param definition: The parameter descriptor
+        :type definition: :class:`~carbond.OperationParameter`
+        :returns: The parsed and validated parameter value
+        :rtype: Object | string | number
 
-            "processParameters (*req, definitions*)", ""
-            "Arguments", "**req** (:class:`~http.ClientRequest`): Lorem ipsum dolor sit amet |br|
-            **definitions** (:class:`object`): Lorem ipsum dolor sit amet |br|"
-            "Returns", ``undefined``
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
-
-    
+        Process (i.e., parse and validate) a single parameter

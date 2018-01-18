@@ -1,68 +1,117 @@
-var o = require('@carbon-io/carbon-core').atom.o(module).main
+var _ = require('lodash')
+
+var o = require('@carbon-io/carbon-core').atom.o(module)
 
 var carbond = require('../../')
 
-/*******************************************************************************
+
+/***************************************************************************************************
  * ServiceForBasicCollectionTests1
- * 
+ *
  * This is an Service for basic Collection testing.
  */
-module.exports = o({
+module.exports = o.main({
   _type: carbond.Service,
-  
+
   port: 8888,
   verbosity: 'warn',
-  
+
   endpoints: {
     // Simple endpoint with Collection operations defined as functions
     basic: o({
       _type: carbond.collections.Collection,
-      
-      insert: function(obj) {
-        return { _id: "000" }
+
+      enabled: {
+        insert: true,
+        insertObject: true,
+        find: true,
+        findObject: true,
+        save: true,
+        saveObject: true,
+        update: true,
+        updateObject: true,
+        remove: true,
+        removeObject: true
       },
 
-      find: function(query, reqCtx) {
-        return [{
-          _id: "000",
-          op: "find",
-          query: query
-        }]
-      },
-
-      update: function(query, update) {
+      insert: function(objects, context) {
+        var count = 0
         return {
-          n: 1
+          val: _.map(objects, function(obj) {
+            return _.assignIn(_.cloneDeep(obj), {_id: (count++).toString()})
+          }),
+          created: true
         }
       },
 
-      remove: function(query) {
+      findConfig: {
+        supportsPagination: true
+      },
+
+      find: function(context) {
+        var self = this
+        return _.map(_.range(context.limit), function(id) {
+          return {
+            [self.idParameterName]: (context.skip + id).toString(),
+            op: 'find',
+            context: context
+          }
+        })
+      },
+
+      save: function(objs, context) {
+        return objs
+      },
+
+      update: function(update, context) {
         return {
-          n: 1 
+          val: 1,
+          created: context.upsert ? true : false
         }
       },
 
-      saveObject: function(obj, reqCtx) {
-        reqCtx.res.status(201)
-        return true
+      remove: function(context) {
+        return 1
       },
 
-      findObject: function(id) {
-        if (id === "doesnotexist") {
+      insertObject: function(obj, context) {
+        return {
+          val: _.assignIn(_.cloneDeep(obj), {_id: "0"}),
+          created: true
+        }
+      },
+
+      findObject: function(id, context) {
+        if (id < 0) {
           return null
         }
         return {
           _id: id,
           op: "findObject",
+          context: context
         }
       },
-        
-      updateObject: function(id, update, reqCtx) {
-        return true
+
+      saveObjectConfig: {
+        supportsUpsert: true
       },
 
-      removeObject: function(id) {
-        return true
+      saveObject: function(obj, context) {
+        return {
+          val: obj,
+          created: true
+        }
+      },
+
+      updateObject: function(id, update, context) {
+        return {
+          val: 1,
+          created: context.upsert ? true : false
+        }
+      },
+
+      removeObject: function(id, context) {
+        return 1
       }
 
     })

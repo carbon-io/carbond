@@ -2,354 +2,162 @@
     :heading:
 
 .. |br| raw:: html
-    
+
    <br />
 
 ================
 carbond.Endpoint
 ================
 
-An :class:`~carbond.Endpoint` is a representation of a RESTFul resource. Each endpoint can implement one or more operations representing each of the HTTP methods: ``GET``, ``PUT``, ``POST``, ``PATCH``, ``DELETE``, ``HEAD``, ``OPTIONS``.
+The Endpoint class is a core abstraction in carbond which models an API as a tree of Endpoint instances, each of which is responsible for defining how to handle a given request to a particular URI
 
-Endpoints can also define child endpoints whose paths will be interpreted relative to the ``path`` of this :class:`~carbond.Endpoint` object.
-
-Configuration
-=============
-
-..  code-block:: javascript
-
-    {
-      _type: carbon.carbond.Endpoint,
-
-      [parameters: {
-        <name> : <OperationParameter>
-      }]  
-
-      [get: <function> | <Operation>],
-      [put: <function> | <Operation>],
-      [post: <function> | <Operation>],
-      [create: <function> | <Operation>],
-      [delete: <function> | <Operation>],
-      [head: <function> | <Operation>],
-      [options: <function> | <Operation>],
-
-      [endpoints: { 
-        <path>: <Endpoint>
-        ...
-      }]
-    }
-
-Properties
-==========
+Static Properties
+-----------------
 
 .. class:: carbond.Endpoint
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.Endpoint.acl
+    .. attribute:: ALL_METHODS
 
-         .. csv-table::
-             :class: details-table
+       :type: Object
+       :required:
 
-             "acl", :class:`object`
-             "Default", ``null``
-             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       A list of all HTTP methods recognized by carbond
 
-    .. attribute:: carbond.Endpoint.allowUnauthenticated
 
-         .. csv-table::
-             :class: details-table
+Instance Properties
+-------------------
 
-             "allowUnauthenticated", :class:`object`
-             "Default", ``null``
-             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+.. class:: carbond.Endpoint
+    :noindex:
+    :hidden:
 
-    .. attribute:: carbond.Endpoint.dataAcl
+    .. attribute:: allowUnauthenticated
 
-         .. csv-table::
-             :class: details-table
+       :type: string[]
+       :required:
 
-             "dataAcl", :class:`object`
-             "Default", ``null``
-             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       Skip authentication for the HTTP methods listed on this endpoint
 
-    .. attribute:: carbond.Endpoint.description
 
-         .. csv-table::
-             :class: details-table
+    .. attribute:: description
 
-             "description", :class:`string`
-             "Default", ``undefined``
-             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :type: string
+       :default: undefined
 
-    .. attribute:: carbond.Endpoint.endpoints
+       A brief description of what this endpoint does. This will be displayed in any generated documentation.
 
-        .. csv-table::
-            :class: details-table
 
-            "endpoints", :class:`object`
-            *Required*, ""
-            "Description", "A set of child :class:`~carbond.Endpoint` definitions. This is an object whose keys are path strings and values are instances of :class:`~carbond.Endpoint`. Each path key will be interpreted as relative to this Endpoints ``path`` property."
+    .. attribute:: endpoints
 
-    .. attribute:: carbond.Endpoint.parameters
+       :type: Object.<string, carbond.Endpoint>
+       :required:
 
-        .. csv-table::
-            :class: details-table
+       The endpoints that sit below this endpoint in the tree. URL paths to each endpoint are built during a depth first traversal of the tree on initialization using the property names defined on this Object.
 
-            "parameters", :class:`object`
-            *Required*, ""
-            "Description", "A mapping of parameter names to ``OperationParameter`` objects. Parameters defined for an ``Endpoint`` are inherited by all operations of this ``Endpoint`` as well as by all child ``Endpoints`` of this ``Endpoint``."
 
-    .. attribute:: carbond.Endpoint.parent
-    
-        .. csv-table::
-            :class: details-table
+    .. attribute:: noDocument
 
-            "parent", :class:`~carbond.Endpoint`
-            "Default", ``null``
-            "Description", "The parent :class:`~carbond.Endpoint` of this :class:`~carbond.Endpoint`."
+       :type: boolean
+       :default: false
 
-    .. attribute:: carbond.Endpoint.path
+       Controls whether documentation for this endpoint is included in generated static documentation
 
-        .. csv-table::
-            :class: details-table
 
-            "path", :class:`string`
-            *Required*, ""
-            "Description", "The path to which this endpoint is bound. The path can contain variable patterns (e.g. ``'orders/:id'``). The ``path`` property is not configured directly on ``Endpoint`` objects but are specified as lvals in enclosing definitions of endpoints such as in a parent :class:`~carbond.Endpoint` object. When retrieved the value of this property will be the absolute path of the endpoint from ``/``."
+    .. attribute:: parameters
 
-    .. attribute:: carbond.Endpoint.sanitizeMode
+       :type: Object.<string, carbond.OperationParameter>
+       :required:
 
-         .. csv-table::
-             :class: details-table
+       Operation parameter definitions that apply to all operations supported by this endpoint. Note, these will be merged with any parameter definitions on the operations themselves and their parsed values will be passed to the handler via ``req.parameters[<parameter name>]``.
 
-             "sanitizeMode", :class:`string`
-             "Default", ``strict``
-             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-    .. attribute:: carbond.Endpoint.sanitizesOutput
+    .. attribute:: parent
 
-         .. csv-table::
-             :class: details-table
+       :type: :class:`~carbond.Endpoint`
+       :ro:
 
-             "sanitizesOutput", :class:`boolean`
-             "Default", ``false``
-             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       The parent endpoint for this endpoint in the endpoint tree
 
-    .. attribute:: carbond.Endpoint.service
 
-         .. csv-table::
-             :class: details-table
+    .. attribute:: path
 
-             "service", :class:`~carbond.Service`
-             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :type: string
+       :ro:
 
-    .. attribute:: carbond.Endpoint.validateOutput
+       The URI path that routes to this endpoint. This is built during service initialization and will overwrite any value specified on instantiation.
 
-         .. csv-table::
-             :class: details-table
 
-             "validateOutput", :class:`boolean`
-             "Default", ``true``
-             "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. attribute:: service
+
+       :type: :class:`~carbond.Service`
+       :ro:
+       :deprecated:
+
+       The root service object managing the endpoint tree. Getting a reference to this object is sometimes necessary or just convenient (i.e., HTTP error classes can be accessed via :attr:`~carbond.Service.errors`).
+
+
+    .. attribute:: validateOutput
+
+       :type: boolean
+       :default: ``true``
+
+       Controls whether or not response bodies are validated using the response :class:`~carbond.OperationResponse.schema` corresponding to the current response code
 
 
 Methods
-=======
+-------
 
 .. class:: carbond.Endpoint
     :noindex:
     :hidden:
 
-    .. function:: carbond.Endpoint.getOperation
+    .. function:: getOperation(method)
 
-        .. csv-table::
-            :class: details-table
+        :param method: The HTTP method corresponding to the operation to retrieve
+        :type method: string
+        :rtype: :class:`~carbond.Operation`
 
-            "getOperation (*method*)", ""
-            "Arguments", "**method** (:class:`function`): the HTTP method"
-            "Returns", :class:`function`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Retrieves the operation instance corresponding to the passed HTTP method
 
-    .. function:: carbond.Endpoint.getService
+    .. function:: getService()
 
-        .. csv-table::
-            :class: details-table
+        :rtype: :class:`~carbond.Service`
 
-            "getService ()", ""
-            "Arguments", ""
-            "Returns", :class:`~carbond.Service`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Returns the root :class:`~carbond.Service` instance (note, this is preferred over accessing the ``service`` property itself)
 
-    .. function:: carbond.Endpoint.isOperationAuthorized
+    .. function:: isOperationAuthorized(method, user, req)
 
-        .. csv-table::
-            :class: details-table
+        :param method: The HTTP method corresponding to the operation that we are attempting to authorize
+        :type method: string
+        :param user: The user object
+        :type user: Object
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :returns: Whether of not the operation is authorized
+        :rtype: boolean
 
-            "isOperationAuthorized (*method, user, req*)", ""
-            "Arguments", "**method** (:class:`function`): the HTTP method |br|
-            **user**: The user to check auth against |br|
-            **req** (:class:`express.request`): The current `Request` object |br|"
-            "Returns", :class:`boolean`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Tests whether an operation is authorized given a user (as returned by the root authenticator) and any :class:`~carbond.security.Acl` that may apply to this endpoint
 
-    .. function:: carbond.Endpoint.operations
+    .. function:: operations()
 
-        .. csv-table::
-            :class: details-table
+        :rtype: :class:`~carbond.Operation[]`
 
-            "operations ()", ""
-            "Arguments", ``undefined``
-            "Returns", :class:`object`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Gathers all operations defined on this endpoint
 
-    .. function:: carbond.Endpoint.options
+    .. function:: options(req, res)
 
-        .. csv-table::
-            :class: details-table
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: undefined
 
-            "options (*req, res*)", ""
-            "Arguments", "**req** (:class:`express.request`): The current `Request` object. |br|
-            **res** (:class:`express.response`): The current `Response` object."
-            "Returns", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Implements the OPTIONS method handler
 
-    .. function:: carbond.Endpoint.supportedMethods
+    .. function:: supportedMethods()
 
-        .. csv-table::
-            :class: details-table
+        :rtype: string[]
 
-            "supportedMethods ()", ""
-            "Arguments", ``undefined``
-            "Returns", :class:`object`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
-
-Operations
-==========
-
-Each endpoint can implement one or more operations representing each of the HTTP methods: ``GET``, ``PUT``, ``POST``, ``PATCH``, ``DELETE``, ``HEAD``, ``OPTIONS``. There is no requirement an endpoint implement all HTTP methods. It only needs to implement those it wishes to support.
-
-Each operation is represented as either:
-
-- A function of the form ``function(req, res)``
-- An ``Operation`` object. This is more elaborate definition which allows for a description, parameter definitions, and other useful meta-data as well as a ``service`` method of the form ``function(req, res)``
-  
-When responding to HTTP requests, two styles are supported:
-
-- An asynchronous style where operations write directly to the ``HttpResponse`` object passed to the operation. This style is useful when the operation needs to manipulate the ``HttpResponse`` object to do more than simply return JSON (e.g. set HTTP headers), or wished to pass the response to other functions.
-- A synchronous style where the operation simply returns a JSON object from the operation, or throws an exception to signal an error condition. When using this style the ``HttpResponse`` parameter can be omitted from the function signature of the operation. This style is useful when programming in a more synchronous style and / or coordinating with exceptions thrown deeper in the call stack.
-
-Examples (synchronous)
-----------------------
-
-..  code-block:: javascript
-
-    get: function(req) {
-      return { msg: "hello world!" }
-    }
-
-..  code-block:: javascript
-
-    get: {
-      description: "My hello world operation",
-      params: {}
-      service: function(req) {
-        return { msg: "hello world!" }
-      }
-    }
-
-XXX come back to talk about error handling
-
-Operation details
-=================
-
-get
----
-
-Implementation of HTTP ``GET``. Either a ``function`` or an ``Operation`` object.
-
-If the operation is defined by a function it will have these parameters:
-
-- ``req``: the ``HttpRequest`` object
-- ``res``: the ``HttpResponse`` object (can be omitted if using a synchronous style). If the operation is defined by an ``Operation`` object the definition will have a service method of the same signature.
-
-put
----
-
-Implementation of HTTP ``PUT``. Either a ``function`` or an ``Operation`` object.
-
-If the operation is defined by a function it will have these parameters:
-
-- ``req``: the ``HttpRequest`` object
-- ``res``: the ``HttpResponse`` object (can be omitted if using a synchronous style). If the operation is defined by an ``Operation`` object the definition will have a service method of the same signature.
-
-post
-----
-
-Implementation of HTTP ``POST``. Either a ``function`` or an ``Operation`` object.
-
-If the operation is defined by a function it will have these parameters:
-
-- ``req``: the ``HttpRequest`` object
-- ``res``: the ``HttpResponse`` object (can be omitted if using a synchronous style). If the operation is defined by an ``Operation`` object the definition will have a service method of the same signature.
-
-patch
-------
-
-Implementation of HTTP ``PATCH``. Either a ``function`` or an ``Operation`` object.
-
-If the operation is defined by a function it will have these parameters:
-
-- ``req``: the ``HttpRequest`` object
-- ``res``: the ``HttpResponse`` object (can be omitted if using a synchronous style). If the operation is defined by an ``Operation`` object the definition will have a service method of the same signature.
-
-delete
-------
-
-Implementation of HTTP ``DELETE``. Either a ``function`` or an ``Operation`` object.
-
-If the operation is defined by a function it will have these parameters:
-
-- ``req``: the ``HttpRequest`` object
-- ``res``: the ``HttpResponse`` object (can be omitted if using a synchronous style). If the operation is defined by an ``Operation`` object the definition will have a service method of the same signature.
-
-head
-----
-
-Implementation of HTTP ``HEAD``. Either a ``function`` or an ``Operation`` object.
-
-If the operation is defined by a function it will have these parameters:
-
-- ``req``: the ``HttpRequest`` object
-- ``res``: the ``HttpResponse`` object (can be omitted if using a synchronous style). If the operation is defined by an ``Operation`` object the definition will have a service method of the same signature.
-
-options
--------
-
-Implementation of HTTP ``OPTIONS``. Either a ``function`` or an ``Operation`` object.
-
-If the operation is defined by a function it will have these parameters:
-
-- ``req``: the ``HttpRequest`` object
-- ``res``: the ``HttpResponse`` object (can be omitted if using a synchronous style). If the operation is defined by an ``Operation`` object the definition will have a service method of the same signature.
-
-Examples
-========
-
-..  code-block:: javascript
-
-    var carbon = require('carbon.io')
-    var o = carbon.atom.o(module)
-
-    module.exports = o({
-      _type: carbon.carbond.ObjectServer,
-      port: 8888,
-      endpoints: {
-        hello: o({
-          _type: carbon.carbond.Endpoint,
-          get: function(req) {
-            return { msg: "Hello World!" }
-          }
-        })
-      }
-    })
+        Returns a list of HTTP methods supported by this endpoint

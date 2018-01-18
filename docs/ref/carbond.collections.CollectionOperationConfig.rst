@@ -2,69 +2,90 @@
     :heading:
 
 .. |br| raw:: html
- 
+
    <br />
 
 =============================================
 carbond.collections.CollectionOperationConfig
 =============================================
 
-Description for :class:`~carbond.collections.CollectionOperationConfig` goes here
+The base class for all collection configs
 
-Properties
-==========
+Instance Properties
+-------------------
 
-.. class:: carbond.collections.Collection
+.. class:: carbond.collections.CollectionOperationConfig
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.collections.Collection.allowUnauthenticated
+    .. attribute:: additionalOptions
 
-        .. csv-table::
-            :class: details-table
+       :type: object.<string, \*>
+       :required:
 
-            "allowUnauthenticated", :class:`boolean`
-            "Default", ``false``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
-
-    .. attribute:: carbond.collections.Collection.description
-
-        .. csv-table::
-            :class: details-table
-
-            "description", :class:`string`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
-
-    .. attribute:: carbond.collections.Collection.endpoint
-
-        .. csv-table::
-            :class: details-table
-
-            "endpoint", :class:`~carbond.Endpoint`
-            "Default", ``null``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
-
-    .. attribute:: carbond.collections.Collection.parameters
-
-        .. csv-table::
-            :class: details-table
-
-            "parameters", :class:`object`
-            "Default", ``{}``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
-
-    .. attribute:: carbond.collections.Collection.responses
-
-        .. csv-table::
-            :class: details-table
-
-            "responses", :class:`object`
-            "Default", ``[]``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       Any additional options that should be added to options passed down to a handler.
 
 
-Methods
-=======
+    .. attribute:: additionalParameters
 
-*none*
+       :type: object.<string, carbond.OperationParameter>
+       :required:
+
+       Any additional parameters that should be added to the collection parameters. These can override parameters configured via the :class:`~carbond.collections.CollectionOperationConfig.parameters`. Note, these will all end up being passed down to operation handlers via the "options" parameter.
+
+
+    .. attribute:: allowUnauthenticated
+
+       :type: boolean
+       :default: false
+
+       Allow unauthenticated requests to the operation
+
+
+    .. attribute:: description
+
+       :type: string
+       :default: undefined
+
+       A brief description of the operation used by the documentation generator
+
+
+    .. attribute:: endpoint
+
+       :type: :class:`~carbond.Endpoint`
+       :ro:
+
+       The parent endpoint/collection that this configuration is a member of
+
+
+    .. attribute:: idParameter
+
+       :type: string
+       :ro:
+
+       The collection object id property name. Note, this is configured on the top level :class:`~carbond.collections.Collection` and set on the configure during initialzation.
+
+
+    .. attribute:: noDocument
+
+       :type: boolean
+       :default: false
+
+       Exclude the operation from "docgen" API documentation
+
+
+    .. attribute:: parameters
+
+       :type: object.<string, carbond.OperationParameter>
+       :ro:
+
+       Operation specific parameters (e.g., "skip", "limit"). These will be passed down to the operation handlers via the options parameter if they are not explicitly passed via another leading parameter (e.g., "id" and "update" for :class:`~carbond.collections.Collection.updateObject`). Note, this should generally be left alone by instances. Instead, use :class:`~carbond.collections.CollectionOperationConfig.additionalParameters`.
+
+
+    .. attribute:: responses
+
+       :type: Object.<string, carbond.OperationResponse>
+       :required:
+
+       Add custom responses for an operation. Note, this will override all default responses.
+

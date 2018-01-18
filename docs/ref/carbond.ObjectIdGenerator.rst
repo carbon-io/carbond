@@ -8,39 +8,36 @@
 =========================
 carbond.ObjectIdGenerator
 =========================
+*extends* :class:`~carbond.IdGenerator`
 
-Description goes here for :class:`~carbond.ObjectIdGenerator`
+Generates :class:`~ejson.types.ObjectId` IDs
 
-Properties
-==========
+Instance Properties
+-------------------
 
 .. class:: carbond.ObjectIdGenerator
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.ObjectIdGenerator.generateStrings
+    .. attribute:: generateStrings
 
-        .. csv-table::
-            :class: details-table
+       :type: boolean
+       :default: false
 
-            "generateStrings", :class:`boolean`
-            "Default", ``false``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       Whether or not to return a ``string`` representation of the :class:`~ejson.types.ObjectId`
 
 
 Methods
-=======
+-------
 
 .. class:: carbond.ObjectIdGenerator
     :noindex:
     :hidden:
 
-    .. function:: carbond.ObjectIdGenerator.generateId
+    .. function:: generateId()
 
-        .. csv-table::
-            :class: details-table
+        :overrides: :attr:`~carbond.IdGenerator.generateId`
+        :returns: Returns the :class:`~ejson.types.ObjectId` instance of a ``string`` if configured to do so
+        :rtype: :class:`~ejson.types.ObjectId` | string
 
-            "generateId ()", "overrides :attr:`~carbond.IdGenerator.generateId`"
-            "Arguments", ``undefined``
-            "Returns", :class:`string`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Generates an :class:`~ejson.types.ObjectId`

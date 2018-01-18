@@ -2,146 +2,102 @@
     :heading:
 
 .. |br| raw:: html
- 
+
    <br />
 
 ====================
 carbond.security.Acl
 ====================
 
-Description for :class:`~carbond.security.Acl` goes here
+User and group based access control for endpoints
 
-Properties
-==========
+Instance Properties
+-------------------
 
 .. class:: carbond.security.Acl
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.security.Acl.entries
+    .. attribute:: entries
 
-        .. csv-table::
-            :class: details-table
+       :type: :class:`~carbond.security.AclEntry[]`
+       :default: ``[]``
 
-            "entries", :class:`object`
-            "Default", ``[]``
-            "Description", "This defines the actual access control list for the ACL as an array of *entry* objects each having a *user specifier* and a set of *permissions*. Each user specifier is either of the form ``user: <userId>`` or of the form ``user: {<group-name>: <value>}`` where ``group-name`` is one of the groups defined in ``groupDefinitions``. Each permission object is a mapping of a permisson (defined in ``permissionDefinitions``) to a *permission predicate*. Permission predicates are either simple boolean values or a function that takes a user object and returns a boolean value."
+       description An array of ACL descriptors. Each descriptor provides the mechanism to match against a user object by ID or group membership and determine the whether or not a request is allowed for the user and operation using some predicate.
 
-    .. attribute:: carbond.security.Acl.groupDefinitions
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: groupDefinitions
 
-            "groupDefinitions", :class:`object`
-            "Default", ``{}``
-            "Description", "This defines the set of group names that will be used in the ACL. Each entry defines a group by mapping it to a property path, as a ``string``, or a function that takes a user and returns a value. If provided with a property path the path is evaluated against the authenticated user when checking ACL permissions. By default there always exists a group with the name ``user`` to allow for individual users to be specified in ACL entries."
+       :type: Object.<string, (function()|string)>
+       :default: ``{}``
 
-    .. attribute:: carbond.security.Acl.permissionDefinitions
+       This is mapping of group names to "extractors". An extractor can be a function or a string. If it is a function, it should take a user object as its sole argument and return the group name as a string. Otherwise, it should be a string in property path notation (e.g., "foo.bar.baz").
 
-        .. csv-table::
-            :class: details-table
 
-            "permissionDefinitions", :class:`object`
-            "Default", ``{}``
-            "Description", "This defines the set of permissions that can be used in this ACL by mapping default permission names, as ``strings``, to default values in the form of *permission predicates*. Permission predicates are either simple boolean values or a function that takes a user object and returns a boolean value."
+    .. attribute:: permissionDefinitions
+
+       :type: Object.<string, (boolean|function())>
+       :default: ``{}``
+
+       A map of operation name (e.g., 'get' or, for collections, 'find') to predicate. The predicate can be a `boolean` or `Function`. If it is a function, it should take a user and env as arguments.
 
 
 Methods
-=======
+-------
 
 .. class:: carbond.security.Acl
     :noindex:
     :hidden:
 
-    .. function:: carbond.security.Acl.and
+    .. function:: and(acl)
 
-        .. csv-table::
-            :class: details-table
+        :param acl: The second ACL
+        :type acl: :class:`~carbond.security.Acl`
+        :rtype: :class:`~carbond.security.Acl`
 
-            "and (*acl*)", ""
-            "Arguments", "**acl** (:class:`object`): Lorem ipsum dolor sit amet |br|"
-            "Returns", :class:`boolean`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Generates an ACL that is the logical conjunction of this ACL and a second ACL
 
-    .. function:: carbond.security.Acl.hasPermission
+    .. function:: hasPermission(user, permission, env)
 
-        .. csv-table::
-            :class: details-table
+        :param user: A user object
+        :type user: Object
+        :param permission: The name of the operation being authorized
+        :type permission: string
+        :param env: Request context (e.g., ``{req: req}``)
+        :type env: Object.<string, Object>
+        :throws: Error 
+        :returns: Whether or not the request is authorized
+        :rtype: boolean
 
-            "hasPermission (*user, permission, env*)", ""
-            "Arguments", "**user** (:class:`string`): Lorem ipsum dolor sit amet |br|
-            **permission** (:class:`string`): Lorem ipsum dolor sit amet |br|
-            **env** (:class:`object`): Lorem ipsum dolor sit amet |br|"
-            "Returns", :class:`boolean`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Determines whether the current request is allowed based on the current user (as returned by :class:`~carbond.security.Authenticator.authenticate`) and operation
 
-    .. function:: carbond.security.Acl.or
+    .. function:: or(acl)
 
-        .. csv-table::
-            :class: details-table
+        :param acl: The second ACL
+        :type acl: :class:`~carbond.security.Acl`
+        :rtype: :class:`~carbond.security.Acl`
 
-            "or (*acl*)", ""
-            "Arguments", "**acl** (:class:`object`): Lorem ipsum dolor sit amet |br|"
-            "Returns", :class:`boolean`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        or Generates an ACL that is the logical disjunction of this ACL and a second ACL
 
-..  code-block:: javascript 
+.. _carbond.security.Acl.AclEntry:
 
-    {
-      permissionDefinitions: { // map of permissions to defaults boolean values 
-        <string>: <permission-predicate>(boolean | function) 
-      },
-      
-      groupDefinitions: {
-        <string>: <string> // map of group names to property paths (or function(user) --> value ) 
-      },
-      
-      entries: [ // actual ACL entries 
-        {
-          user: <user-spec> { 
-          permissions: { 
-            <permission>: <function> | <boolean>
-          }
-        }
-      ]
-    }
+.. rubric:: Typedef: AclEntry
 
-**Example**
+Properties
+----------
 
-..  code-block:: javascript 
+    .. attribute:: user
 
-    {
-      permissionDefinitions: { // This ACL has two permissions, read and write 
-        read: false,
-        write: false 
-      },
-      
-      groupDefinitions: { // This ACL defines three groups, role, title, and region 
-        role: 'role',
-        title: function(user) { return user.title; },
-        region: 'address.zip'
-      },
-      
-      entries: [
-        {
-          user: { role: "Admin" },
-          permissions: {
-            "*": true 
-          }
-        },
-        {
-          user: { title: "CFO" },
-          permissions: {
-            read: true,
-            write: true 
-          }
-        },
-       {
-          user: 1234,
-          permissions: {
-            read: true,
-            write: false 
-          }
-        }
-      ]
-    }
+       :type: string | Object.<string, (string|function())>
+       :required:
+
+       This is either a "user spec" or a "group spec". A "user spec" is simply a string. This string either maps to a user ID or it is the wildcard character ("*"), thereby matching any user. A "group spec" is an object with a single key. The value for this key is the group identifier we expect to find in a user object. To extract this group identifier, the same key is used to look up an "extractor" in :class:`~carbond.security.Acl.groupDefinitions`.
+
+
+    .. attribute:: permissions
+
+       :type: Object.<string, (boolean|function())>
+       :required:
+
+       A map of operation name (e.g., 'get' or, for collections, 'find') to predicate. The predicate can be a `boolean` or `Function`. If it is a function, it should take a user and env as arguments.
+

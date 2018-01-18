@@ -1,6 +1,6 @@
 {
   "name": "@carbon-io/carbond",
-  "version": "0.6.36",
+  "version": "0.7.1",
   "description": "Carbond",
   "keywords": ["carbond", "carbon.io"],
   "contributors": [
@@ -15,11 +15,12 @@
   "directories" : {
     "lib" : "./lib"
   },
-  "engines": { "node": ">=4.0.0" },
+  "engines": { "node": ">=6.0.0" },
   "devDependencies": {
+    "deep-diff": "0.3.x",
     "mocha": "2.x",
     "mockery": "1.7.x",
-    "sinon": "1.17.x",
+    "sinon": "2.3.x",
     "tmp": "0.0.x"
   },
   "dependencies": {
@@ -38,7 +39,7 @@
     "toobusy-js": "~0.5.1",
     "uuid": "3.0.x",
     "z-schema": "3.17.0",
-    "@carbon-io/carbon-core": "0.6.x",
+    "@carbon-io/carbon-core": "0.7.x",
     "mongodb-uri": "mongolab/mongodb-uri-node.git#v0.9.7"
   },
   "scripts": {

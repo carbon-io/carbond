@@ -14,6 +14,7 @@ function deleteUser(id) {
   module.exports.db.getCollection('users').deleteObject(parseInt(id))
 }
 
+// pre-endpoints
 __(function() {
   module.exports = o.main({
     _type: carbon.carbond.Service,
@@ -45,4 +46,4 @@ __(function() {
     }
   })
 })
-
+// post-endpoints

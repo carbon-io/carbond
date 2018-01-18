@@ -4,8 +4,8 @@ var carbond = require('../../')
 
 /*******************************************************************************
  * Service1
- * 
- * This is a very simple Service. This is meant for testing sync 
+ *
+ * This is a very simple Service. This is meant for testing sync
  * operations defined as simple functions.
  *
  * Defined as a template so that it can be cloned and reused.
@@ -14,7 +14,7 @@ var middlewareCalled = false
 
 module.exports = {
   _type: carbond.Service,
-  
+
   port: 8888,
   verbosity: 'info',
   apiRoot: '/api',
@@ -26,18 +26,18 @@ module.exports = {
       next()
     }
   ],
-  
+
   endpoints: {
     // Simple endpoint with operations defined as functions
     e1: o({
       _type: carbond.Endpoint,
       get: function(req, res) {
-        return { 
+        return {
           methodCalled: "get",
           reqParams: req.query
         }
       },
-      
+
       post: function(req, res) {
         return {
           methodCalled: "post",
@@ -45,7 +45,7 @@ module.exports = {
           reqBody: req.body
         }
       },
-      
+
       put: function(req, res) {
         return {
           methodCalled: "put",
@@ -72,7 +72,7 @@ module.exports = {
           middlewareCalled: middlewareCalled
         }
       }
-      
+
     })
   }
 }

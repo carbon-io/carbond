@@ -2,64 +2,62 @@
     :heading:
 
 .. |br| raw:: html
- 
+
    <br />
 
 ========================
 carbond.test.ServiceTest
 ========================
+*extends* :class:`~testtube.HttpTest`
 
-Description goes here for :class:`~carbond.test.ServiceTest`
+A test harness for testing :class:`~carbond.Service`\ s. This will automatically startup and shutdown a service as part of the test's setup and teardown phase.
 
-Properties
-==========
+Instance Properties
+-------------------
 
 .. class:: carbond.test.ServiceTest
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.test.ServiceTest.service
+    .. attribute:: service
 
-        .. csv-table::
-            :class: details-table
+       :type: :class:`~carbond.Service`
+       :required:
 
-            "service", :class:`~carbond.Service`
-            "Default", ``undefined``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       The service instance to test
 
-    .. attribute:: carbond.test.ServiceTest.suppressServiceLogging
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: serviceEnv
 
-            "suppressServiceLogging", :class:`boolean`
-            "Default", ``true``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :type: string
+       :default: ``'development'``
+
+       Sets the service's :class:`~carbond.Service.env` for testing
+
+
+    .. attribute:: suppressServiceLogging
+
+       :type: boolean
+       :default: ``true``
+
+       Flag to suppress service logging to the console
 
 
 Methods
-=======
+-------
 
 .. class:: carbond.test.ServiceTest
     :noindex:
     :hidden:
 
-    .. function:: carbond.test.ServiceTest.setup
+    .. function:: setup()
 
-        .. csv-table::
-            :class: details-table
+        :rtype: undefined
 
-            "setup ()", ""
-            "Arguments", ``undefined``
-            "Returns", ``undefined``
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Performs setup operations for this test, namely starting the service to be tested and configuring service logging
 
-    .. function:: carbond.test.ServiceTest.teardown
+    .. function:: teardown()
 
-        .. csv-table::
-            :class: details-table
+        :rtype: undefined
 
-            "teardown ()", ""
-            "Arguments", ``undefined``
-            "Returns", ``undefined``
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Performs teardown operations for this test, namely stopping the service

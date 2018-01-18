@@ -2,7 +2,7 @@
     :heading:
 
 .. |br| raw:: html
- 
+
    <br />
 
 ============================
@@ -10,56 +10,85 @@ carbond.security.EndpointAcl
 ============================
 *extends* :class:`~carbond.security.Acl`
 
-Description for :class:`~carbond.security.EndpointAcl` goes here
+EndpointAcl description
 
-Properties
-==========
+Instance Properties
+-------------------
 
 .. class:: carbond.security.EndpointAcl
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.security.EndpointAcl.permissionDefinitions
+    .. attribute:: entries
 
-        .. csv-table::
-            :class: details-table
+       :inheritedFrom: :class:`~carbond.security.Acl`
+       :type: :class:`~carbond.security.AclEntry[]`
+       :default: ``[]``
 
-            "permissionDefinitions", :class:`object`
-            "Default", "{ ``find``: ``false`` |br|
-               ``get``: ``false`` |br|
-               ``put``: ``false`` |br|
-               ``patch``: ``false`` |br|
-               ``post``: ``false`` |br|
-               ``delete``: ``false`` |br|
-               ``head``: ``false`` |br|
-               ``options``: ``true`` }"
-            "Description", "A mapping of permissions to defaults"
+       description An array of ACL descriptors. Each descriptor provides the mechanism to match against a user object by ID or group membership and determine the whether or not a request is allowed for the user and operation using some predicate.
 
-    .. attribute:: carbond.security.EndpointAcl.selfAndBelow
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: groupDefinitions
 
-            "selfAndBelow", :class:`boolean`
-            "Default", ``false``
-            "Description", "If true, a permission name, or a function, EndpointAcl will apply to descendants"
+       :inheritedFrom: :class:`~carbond.security.Acl`
+       :type: Object.<string, (function()|string)>
+       :default: ``{}``
+
+       This is mapping of group names to "extractors". An extractor can be a function or a string. If it is a function, it should take a user object as its sole argument and return the group name as a string. Otherwise, it should be a string in property path notation (e.g., "foo.bar.baz").
+
+
+    .. attribute:: permissionDefinitions
+
+       :type: object
+       :required:
+
+       mapping of permissions to defaults
+
+
+    .. attribute:: selfAndBelow
+
+       :type: boolean
+       :default: false
+
+       xxx
 
 
 Methods
-=======
+-------
 
 .. class:: carbond.security.EndpointAcl
     :noindex:
     :hidden:
 
-    .. function:: carbond.security.EndpointAcl.hasPermission
+    .. function:: and(acl)
 
-        .. csv-table::
-            :class: details-table
+        :inheritedFrom: :class:`~carbond.security.Acl`
+        :param acl: The second ACL
+        :type acl: :class:`~carbond.security.Acl`
+        :rtype: :class:`~carbond.security.Acl`
 
-            "hasPermission (*user, permission, env*)", "overrides :attr:`~carbond.security.Acl.hasPermission`"
-            "Arguments", "**user** (:class:`object`): Lorem ipsum dolor sit amet |br|
-            **permission** (:class:`string`): Lorem ipsum dolor sit amet |br|
-            **env** (:class:`object`): Lorem ipsum dolor sit amet |br|"
-            "Returns", :class:`boolean`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Generates an ACL that is the logical conjunction of this ACL and a second ACL
+
+    .. function:: hasPermission(user, permission, env)
+
+        :inheritedFrom: :class:`~carbond.security.Acl`
+        :param user: A user object
+        :type user: Object
+        :param permission: The name of the operation being authorized
+        :type permission: string
+        :param env: Request context (e.g., ``{req: req}``)
+        :type env: Object.<string, Object>
+        :throws: Error 
+        :returns: Whether or not the request is authorized
+        :rtype: boolean
+
+        Determines whether the current request is allowed based on the current user (as returned by :class:`~carbond.security.Authenticator.authenticate`) and operation
+
+    .. function:: or(acl)
+
+        :inheritedFrom: :class:`~carbond.security.Acl`
+        :param acl: The second ACL
+        :type acl: :class:`~carbond.security.Acl`
+        :rtype: :class:`~carbond.security.Acl`
+
+        or Generates an ACL that is the logical disjunction of this ACL and a second ACL

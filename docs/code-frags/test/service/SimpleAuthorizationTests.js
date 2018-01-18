@@ -23,9 +23,9 @@ __(function() {
         service: _o(
           '../../standalone-examples/ServiceSimpleAuthorizationExample').Service1,
         _mongoFixtures: {
-          db: path.join(path.dirname(module.filename), 
-                        '..', 
-                        'fixtures', 
+          db: path.join(path.dirname(module.filename),
+                        '..',
+                        'fixtures',
                         'SimpleAuthorizationDB.json')
         },
         tests: [
@@ -97,7 +97,7 @@ __(function() {
               }
             }
           },
-          // -- user:10002 
+          // -- user:10002
           {
             reqSpec: {
               method: 'GET',
@@ -167,9 +167,9 @@ __(function() {
         service: _o(
           '../../standalone-examples/ServiceSimpleAuthorizationExample').Service2,
         _mongoFixtures: {
-          db: path.join(path.dirname(module.filename), 
-                        '..', 
-                        'fixtures', 
+          db: path.join(path.dirname(module.filename),
+                        '..',
+                        'fixtures',
                         'SimpleAuthorizationDB.json')
         },
         tests: [
@@ -209,7 +209,10 @@ __(function() {
                 assert(core.ejson.isObjectId(
                   core.ejson.parse(val['carbonio-id'])))
               },
-              body: null
+              body: function(body) {
+                assert.equal(body.msg, 'bar')
+                assert(core.ejson.isObjectId(body._id))
+              }
             }
           },
           // -- title:CFO
@@ -263,7 +266,7 @@ __(function() {
               statusCode: 403
             }
           },
-          // -- user:10002 
+          // -- user:10002
           {
             reqSpec: {
               method: 'GET',
@@ -294,7 +297,10 @@ __(function() {
                 assert(core.ejson.isObjectId(
                   core.ejson.parse(val['carbonio-id'])))
               },
-              body: null
+              body: function(body) {
+                assert.equal(body.msg, 'baz')
+                assert(core.ejson.isObjectId(body._id))
+              }
             }
           },
           {
@@ -365,9 +371,9 @@ __(function() {
         service: _o(
           '../../standalone-examples/ServiceExternalACLExample'),
         _mongoFixtures: {
-          db: path.join(path.dirname(module.filename), 
-                        '..', 
-                        'fixtures', 
+          db: path.join(path.dirname(module.filename),
+                        '..',
+                        'fixtures',
                         'SimpleAuthorizationDB.json')
         },
         tests: [
@@ -407,7 +413,10 @@ __(function() {
                 assert(core.ejson.isObjectId(
                   core.ejson.parse(val['carbonio-id'])))
               },
-              body: null
+              body: function(body) {
+                assert.equal(body.msg, 'bar')
+                assert(core.ejson.isObjectId(body._id))
+              }
             }
           },
           // -- title:CFO
@@ -461,7 +470,7 @@ __(function() {
               statusCode: 403
             }
           },
-          // -- user:10002 
+          // -- user:10002
           {
             reqSpec: {
               method: 'GET',
@@ -492,7 +501,10 @@ __(function() {
                 assert(core.ejson.isObjectId(
                   core.ejson.parse(val['carbonio-id'])))
               },
-              body: null
+              body: function(body) {
+                assert.equal(body.msg, 'baz')
+                assert(core.ejson.isObjectId(body._id))
+              }
             }
           },
           {

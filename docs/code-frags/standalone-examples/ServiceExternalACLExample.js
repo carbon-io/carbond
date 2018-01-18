@@ -18,9 +18,10 @@ __(function() {
     endpoints: {
       hello: o({
         _type: carbon.carbond.mongodb.MongoDBCollection,
-        collection: 'hello',
+        collectionName: 'hello',
+        enabled: {'*': true},
         acl: _o('./MyAcl')
       })
     }
-  }) 
+  })
 })

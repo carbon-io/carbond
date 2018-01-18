@@ -8,7 +8,7 @@
   "main": "./lib/HelloService.js",
   "scripts": {
       "start": "node ./lib/HelloService.js",
-      "test": "node ./test/HelloServiceTest.js"
+      "test": "node ./test"
   },
   "bin": {
       "HelloService": "./bin/HelloService.js"

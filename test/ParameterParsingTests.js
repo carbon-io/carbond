@@ -64,241 +64,265 @@ __(function() {
     parser: o({
       _type: '../lib/ParameterParser',
     }),
-    
+
     /**********************************************************************
      * tests
      */
     parsingTests: [
       {
-        datum: undefined, 
+        datum: undefined,
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'Undefined' }
         },
         result: undefined
       },
-      
+
       {
-        datum: '{ "$undefined": true }', 
+        datum: '{ "$undefined": true }',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'Undefined' }
         },
         result: undefined
       },
-      
+
       {
         datum: undefined,
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'number' },
         default: 2
         },
         result: 2
       },
-      
+
       {
         datum: '',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'number' },
         default: 2
         },
         result: 2
       },
-      
+
       {
         datum: null, // XXX I think this is right but might interact strangely with qs parser so revisit this
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'number' },
         default: 2
         },
         result: 2
       },
-      
+
       {
         datum: "null",
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'null' },
         },
         result: null
       },
-      
+
       {
         datum: 3,
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'number' }
         },
         error: true // should error since 3 is not a string
       },
-      
+
       {
         datum: '3',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'number' }
         },
         result: 3
       },
-      
+
       {
         datum: '3',
         definition: {
           name: 'x',
+          location: 'body',
           schema: undefined
         },
         result: '3' // if no schema we do not do any conversions
       },
-      
+
       {
         datum: '"3"',
         definition: {
           name: 'x',
+          location: 'body',
           schema: { type: 'string' }
         },
         result: "3"
       },
-      
+
       {
         datum: 'true',
         definition: {
           name: 'x',
-          schema: { type: 'boolean' } 
+          location: 'body',
+          schema: { type: 'boolean' }
         },
         result: true
       },
-      
+
       {
         datum: 'hello',
         definition: {
           name: 'x',
-          schema: { type: 'string'} 
+          location: 'body',
+          schema: { type: 'string'}
         },
         result: "hello"
       },
-      
+
       {
         datum: '"hello"',
         definition: {
           name: 'x',
-          schema: { type: 'string'} 
+          location: 'body',
+          schema: { type: 'string'}
         },
         result: "hello"
       },
-      
+
       {
         datum: '{"hello": "world"}',
         definition: {
           name: 'x',
-          schema: { type: 'string'} 
+          location: 'body',
+          schema: { type: 'string'}
         },
         result: '{"hello": "world"}'
       },
-      
+
       {
         datum: '      {"hello": "world"} ',
         definition: {
           name: 'x',
-          schema: { type: 'string'} 
+          location: 'body',
+          schema: { type: 'string'}
         },
         result: '      {"hello": "world"} '
       },
-      
+
       {
         datum: '["hello", "world"]',
         definition: {
           name: 'x',
-          schema: { type: 'string'} 
+          location: 'body',
+          schema: { type: 'string'}
         },
         result: '["hello", "world"]'
       },
-      
+
       {
         datum: '["hello", "world"]     ',
         definition: {
           name: 'x',
-          schema: { type: 'string'} 
+          location: 'body',
+          schema: { type: 'string'}
         },
         result: '["hello", "world"]     '
       },
-      
+
       {
         datum: '    "hello" ',
         definition: {
           name: 'x',
-          schema: { type: 'string'} 
+          location: 'body',
+          schema: { type: 'string'}
         },
         result: '    "hello" '
       },
-      
+
       {
         datum: '{ "a": 1 }',
         definition: {
           name: 'x',
-          schema: { type: 'object'} 
+          location: 'body',
+          schema: { type: 'object'}
         },
         result: { a:1 }
       },
-      
+
       {
         datum: '[{ "a": 1 }]',
         definition: {
           name: 'x',
-          schema: { type: 'array'} 
+          location: 'body',
+          schema: { type: 'array'}
         },
         result: [{ a:1 }]
       },
-      
+
       {
         datum: '{ "$date": "1970-01-01T00:00:00.000Z" }',
         definition: {
           name: 'x',
-          schema: { type: 'Date'} 
+          location: 'body',
+          schema: { type: 'Date'}
         },
         result: new Date(0)
       },
-      
+
       {
         datum: '{ "$oid": "c2c48257aa5a56df131db1e4" }',
         definition: {
           name: 'x',
-          schema: { type: 'ObjectId'} 
+          location: 'body',
+          schema: { type: 'ObjectId'}
         },
         result: new ObjectId("c2c48257aa5a56df131db1e4")
       },
-      
+
       {
         datum: 'c2c48257aa5a56df131db1e4',
         definition: {
           name: 'x',
-          schema: { type: 'ObjectId'} 
+          location: 'body',
+          schema: { type: 'ObjectId'}
         },
         result: new ObjectId("c2c48257aa5a56df131db1e4")
       },
-      
+
       {
         datum: { a: '1' },
         definition: {
           name: 'x',
-          schema: { 
+          location: 'header',
+          schema: {
             type: 'object',
             properties: {
               a: { type: 'integer' }
             }
           }
         },
-        result: { a: 1 }
+        result: { a: 1 }  // Will not fail validation -- coerced since not in body
       },
-      
+
       {
         datum: { a: '1' },
         definition: {
           name: 'x',
-          location: "body",
-          schema: { 
+          location: 'body',
+          schema: {
             type: 'object',
             properties: {
               a: { type: 'integer' }
@@ -307,12 +331,13 @@ __(function() {
         },
         error: true // Will fail validation -- not coerced since in body
       },
-      
+
       {
         datum: { a: 'true' },
         definition: {
           name: 'x',
-          schema: { 
+          location: 'header',
+          schema: {
             type: 'object',
             properties: {
               a: { type: 'boolean' }
@@ -321,15 +346,16 @@ __(function() {
         },
         result: { a: true }
       },
-      
+
       {
         datum: { a: ['true'] },
         definition: {
           name: 'x',
-          schema: { 
-            type: 'object', 
+          location: 'header',
+          schema: {
+            type: 'object',
             properties: {
-              a: { 
+              a: {
                 type: 'array',
                 items: { type: 'boolean' }
               }
@@ -338,13 +364,14 @@ __(function() {
         },
         result: { a: [true] }
       },
-      
+
       {
         datum: { a: { $timestamp: { t: "0", i: "0" }}},
         definition: {
           name: 'x',
-          schema: { 
-            type: 'object', 
+          location: 'body',
+          schema: {
+            type: 'object',
             properties: {
               a: { type: 'Timestamp' }
             }

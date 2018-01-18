@@ -7,17 +7,17 @@ Server guide (Carbond)
 Carbond is the server component of the Carbon.io framework and is used
 for creating microservices and APIs.
 
-..  toctree::
+.. toctree::
 
-    application-structure.rst
-    services.rst
-    endpoints.rst
-    operations.rst
-    database-management.rst
-    collections.rst
-    aac/index.rst
-    error-handling.rst
-    logging.rst
-    testing.rst
+   application-structure.rst
+   services.rst
+   endpoints.rst
+   operations.rst
+   database-management.rst
+   collections/index.rst
+   aac/index.rst
+   error-handling.rst
+   logging.rst
+   testing.rst
 
 .. todo:: generating-api-documentation.rst, admin-interface.rst

@@ -2,94 +2,136 @@
     :heading:
 
 .. |br| raw:: html
- 
+
    <br />
 
 ====================================
 carbond.security.ApiKeyAuthenticator
 ====================================
+*extends* :class:`~carbond.security.Authenticator`
 
-Description for :class:`~carbond.security.ApiKeyAuthenticator` goes here
+An abstract class for API key authentication
 
-Properties
-==========
+Instance Properties
+-------------------
 
 .. class:: carbond.security.ApiKeyAuthenticator
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.security.ApiKeyAuthenticator.idGenerator
+    .. attribute:: apiKeyLocation
 
-        .. csv-table::
-            :class: details-table
+       :type: string
+       :default: ``header``
 
-            "idGenerator", :class:`~carbond.ObjectIdGenerator`
-            "Default", :class:`~carbond.ObjectIdGenerator`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       The loaction of the API key, either *header* or *query*.
 
-    .. attribute:: carbond.security.ApiKeyAuthenticator.apiKeyLocation
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: apiKeyParameterName
 
-            "apiKeyLocation", :class:`string`
-            "Default", ``header``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :type: string
+       :default: ``Api-Key``
 
-    .. attribute:: carbond.security.ApiKeyAuthenticator.apiKeyParameterName
+       The name of the API key parameter
 
-        .. csv-table::
-            :class: details-table
 
-            "apiKeyParameterName", :class:`string`
-            "Default", ``Api-Key``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. attribute:: idGenerator
 
+       :type: :class:`~carbond.IdGenerator`
+       :default: :class:`~carbond.UUIDGenerator`
+
+       The ID generator to generate API keys.
+
+
+    .. attribute:: maskUserObjectKeys
+
+       :type: string[]
+       :default: undefined
+
+       An array of properties that should be masked on the user object in the logs. Used for masking sensitive information.
+
+
+Abstract Methods
+----------------
+
+.. class:: carbond.security.ApiKeyAuthenticator
+    :noindex:
+    :hidden:
+
+    .. function:: findUser(apiKey)
+
+        :param apiKey: The API Key that was sent with this request
+        :type apiKey: string
+        :returns: A user object
+        :rtype: Object
+
+        An abstract method for finding the user from an API key. Should be implemented by subclasses. For example, :class:`~carbond.security.MongoDBApiKeyAuthenticator`
+
+    .. function:: isRootUser(user)
+
+        :inheritedFrom: :class:`~carbond.security.Authenticator`
+        :param user: An object representing a user
+        :type user: Object
+        :returns: ``true`` if the user is determined to be root, ``false`` otherwise.
+        :rtype: boolean
+
+        Checks if a user is root.
 
 Methods
-=======
+-------
 
 .. class:: carbond.security.ApiKeyAuthenticator
     :noindex:
     :hidden:
 
-    .. function:: carbond.security.ApiKeyAuthenticator.authenticate
+    .. function:: authenticate(req)
 
-        .. csv-table::
-            :class: details-table
+        :param req: The current request
+        :type req: Request
+        :throws: HttpErrors.Unauthorized If no user matching the API key is found
+        :throws: HttpErrors.InternalServerError If :class:`~carbond.security.ApiKeyAuthenticator.apiKeyLocation` is malformed, or if there is an error finding the user.
+        :returns: An object representing the user
+        :rtype: Object
 
-            "authenticate (*req*)", ""
-            "Arguments", "**req** (:class:`express.request`): The current request object |br|"
-            "Returns", :class:`undefined`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Authenticates the current request using an API key. Returns a user object that matches the API Key sent with the request. If no user matching the API key is found, throws a 401 Unauthorized error.
 
-    .. function:: carbond.security.ApiKeyAuthenticator.findUser
+    .. function:: generateApiKey()
 
-        .. csv-table::
-            :class: details-table
+        :returns: A UUID (see [Wikipedia]undefined)
+        :rtype: string
 
-            "findUser (*apiKey*)", ""
-            "Arguments", "**apiKey** (:class:`string`): Lorem ipsum dolor sit amet |br|"
-            "Returns", ``undefined``
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Generates a UUID using :attr:`~carbond.security.ApiKeyAuthenticator.idGenerator`
 
-    .. function:: carbond.security.ApiKeyAuthenticator.generateApiKey
+    .. function:: getAuthenticationHeaders()
 
-        .. csv-table::
-            :class: details-table
+        :returns: An array containing the name of the header which contains the API key. An empty array if the location of the API key is in the querystring.
+        :rtype: string[]
 
-            "generateApiKey ()", ""
-            "Arguments", ``undefined``
-            "Returns", :class:`string`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Gets an array containing :attr:`~carbond.security.ApiKeyAuthenticator.apiKeyParameterName`
 
-    .. function:: carbond.security.ApiKeyAuthenticator.getAuthenticationHeaders
+    .. function:: getService()
 
-        .. csv-table::
-            :class: details-table
+        :inheritedFrom: :class:`~carbond.security.Authenticator`
+        :returns: The parent Service
+        :rtype: :class:`~carbond.Service`
 
-            "getAuthenticationHeaders ()", ""
-            "Arguments", ``undefined``
-            "Returns", :class:`object`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
-            
+        A getter for the parent Service
+
+    .. function:: initialize(service)
+
+        :inheritedFrom: :class:`~carbond.security.Authenticator`
+        :param service: The parent Service
+        :type service: :class:`~carbond.Service`
+        :rtype: undefined
+
+        Initializes the authenticator. Called by :class:`~carbond.Service.start` on the parent Service and sets `this.service` to the parent Service.
+
+    .. function:: throwUnauthenticated(msg)
+
+        :inheritedFrom: :class:`~carbond.security.Authenticator`
+        :param msg: The message returned with the 401 error.
+        :type msg: string
+        :throws: HttpErrors.Unauthorized 
+        :rtype: undefined
+
+        Throws a 401 Unauthorized Error.

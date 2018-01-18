@@ -2,34 +2,28 @@
     :heading:
 
 .. |br| raw:: html
- 
+
    <br />
 
 ===========================
 carbond.security.NoopHasher
 ===========================
-*extends* :class:`~carbond.security.Hasher`
+*extends* :class:`~Hasher`
 
-Description for :class:`~carbond.security.NoopHasher` goes here
-
-Properties
-==========
-
-*none* (no inherits directive yet)
+A NOOP "hasher" which just returns the data as the digest. Useful as a placeholder or for testing purposes. This offers no security. A real hash function such as :class:`~carbond.security.BcryptHasher` should be used in production.
 
 Methods
-=======
+-------
 
 .. class:: carbond.security.NoopHasher
     :noindex:
     :hidden:
 
-    .. function:: carbond.security.NoopHasher.hash
+    .. function:: hash(data)
 
-        .. csv-table::
-            :class: details-table
+        :param data: the data to "hash"
+        :type data: string
+        :returns: the digest (which is just the input data)
+        :rtype: string
 
-            "hash (*data*)", *overrides* :attr:`~carbond.Hasher.hash`
-            "Arguments", "**data** (:class:`string`): the data to hash |br|"
-            "Returns", :class:`string`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Returns the input data unchanged

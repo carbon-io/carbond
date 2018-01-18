@@ -2,418 +2,532 @@
     :heading:
 
 .. |br| raw:: html
- 
+
    <br />
 
 ===============
 carbond.Service
 ===============
+*extends* :class:`~carbond.Endpoint`
 
-Description goes here for :class:`~carbond.Service`
+Service is the main entry point to a carbond service
 
-Properties
-==========
+Static Properties
+-----------------
 
 .. class:: carbond.Service
     :noindex:
     :hidden:
 
-    .. attribute:: carbond.Service.adminRoot
+    .. attribute:: ALL_METHODS
 
-        .. csv-table::
-            :class: details-table
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: Object
+       :required:
 
-            "adminRoot", :class:`string`
-            "Default", ``/service-admin``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       A list of all HTTP methods recognized by carbond
 
-    .. attribute:: carbond.Service.apiRoot
 
-        .. csv-table::
-            :class: details-table
+Instance Properties
+-------------------
 
-            "apiRoot", :class:`string`
-            *Required*
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+.. class:: carbond.Service
+    :noindex:
+    :hidden:
 
-    .. attribute:: carbond.Service.authenticator
+    .. attribute:: adminRoot
 
-        .. csv-table::
-            :class: details-table
+       :type: string
+       :default: ``'/service-admin'``
 
-            "authenticator", :class:`object`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       The "administrative" root URL path component (this is only enabled if the "swagger" command line option is present)
 
-    .. attribute:: carbond.Service.busyLimiter
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: allowUnauthenticated
 
-            "busyLimiter", :class:`object`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: string[]
+       :required:
 
-    .. attribute:: carbond.Service.cluster
+       Skip authentication for the HTTP methods listed on this endpoint
 
-        .. csv-table::
-            :class: details-table
 
-            "cluster", :class:`boolean`
-            "Default", ``false``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. attribute:: apiRoot
 
-    .. attribute:: carbond.Service.cmdargs
+       :type: string
+       :default: undefined
 
-        .. csv-table::
-            :class: details-table
+       The root component of the URL path component. This will be prepended to any routes that are yielded by the :class:`~carbond.Endpoint` tree.
 
-            "cmdargs", :class:`object`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-    .. attribute:: carbond.Service.corsEnabled
+    .. attribute:: authenticator
 
-        .. csv-table::
-            :class: details-table
+       :type: :class:`~carbond.security.Authenticator`
+       :default: undefined
 
-            "corsEnabled", :class:`boolean`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       The root authenticator. If present, all requests will be passed through the authenticator resulting in a 401 if authentication fails.
 
-    .. attribute:: carbond.Service.db
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: cluster
 
-            "db", :class:`object`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :type: boolean
+       :default: false
 
-    .. attribute:: carbond.Service.dbUri
+       Whether or not to use Node's ``cluster`` module
 
-        .. csv-table::
-            :class: details-table
 
-            "dbUri", :class:`string`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. attribute:: cmdargs
 
-    .. attribute:: carbond.Service.dbs
+       :type: Object
+       :default: ``{}``
 
-        .. csv-table::
-            :class: details-table
+       Additional command line argument definitions (will be merged into :class:`~carbond.Service.defaultCmdargs`)
 
-            "dbs", :class:`object`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-    .. attribute:: carbond.Service.dbUris
+    .. attribute:: corsEnabled
 
-        .. csv-table::
-            :class: details-table
+       :type: boolean
+       :default: ``true``
 
-            "dbUris", :class:`object`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       Flag determining whether CORS is enabled
 
-    .. attribute:: carbond.Service.defaultBusyLimiterClass
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: db
 
-            "defaultBusyLimiterClass", :class:`~carbond.limiter.TooBusyLimiter`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :type: Object
+       :required:
 
-    .. attribute:: carbond.Service.description
+       The connection object for :attr:`~carbond.Service.dbUri`
 
-        .. csv-table::
-            :class: details-table
 
-            "description", :class:`string`
-            *Required*
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. attribute:: dbs
 
-    .. attribute:: carbond.Service.endpoints
+       :type: Object.<string, Object>
+       :required:
 
-        .. csv-table::
-            :class: details-table
+       The connection objects for :attr:`~carbond.Service.dbUri`. The keys for this object will mirror those in :attr:`~carbond.Service.dbUri`, while the values will be the connection objects themselves.
 
-            "endpoints", :class:`object`
-            *Required*
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-    .. attribute:: carbond.Service.errorHandlingMiddleware
+    .. attribute:: dbUri
 
-        .. csv-table::
-            :class: details-table
+       :type: string
+       :required:
 
-            "errorHandlingMiddleware", :class:`object`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       The database URI to connect to at startup (currently restricted to MongoDB)
 
-    .. attribute:: carbond.Service.fiberPoolSize
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: dbUris
 
-            "fiberPoolSize", :class:`integer`
-            "Default", ``Fiber default pool size``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :type: Object.<string, string>
+       :required:
 
-    .. attribute:: carbond.Service.generateOptionsMethodsInDocs
+       Database URIs to connect to at startup (currently restricted to MongoDB)
 
-        .. csv-table::
-            :class: details-table
 
-            "generateOptionsMethodsInDocs", :class:`boolean`
-            "Default", ``false``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. attribute:: defaultCmdargs
 
-    .. attribute:: carbond.Service.hostname
+       :type: Object
+       :default: ``{...}``
 
-        .. csv-table::
-            :class: details-table
+       The default command line arguments definition. :class:`~carbond.Service#cmdargs` can be used to extend the default set of command line arguments.
 
-            "hostname", :class:`string`
-            "Default", ``0.0.0.0``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-    .. attribute:: carbond.Service.limiter
+    .. attribute:: defaultDocgenOptions
 
-        .. csv-table::
-            :class: details-table
+       :type: Object
+       :default: ``{...}``
 
-            "limiter", :class:`object`
-            *Required*
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       Default options for the "aglio" documentation generator
 
-    .. attribute:: carbond.Service.middleware
+       .. csv-table::
+          :class: details-table
+          :header: "Name", "Type", "Default", "Description"
+          :widths: 10, 10, 10, 10
 
-        .. csv-table::
-            :class: details-table
+          defaultDocgenOptions['github-flavored-markdown'], ``Object``, ````{}````, undefined
+          defaultDocgenOptions['api-blueprint'], ``Object``, ````{}````, undefined
+          defaultDocgenOptions['aglio'], ``Object``, ````{}````, undefined
 
-            "middleware", :class:`object`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-    .. attribute:: carbond.Service.numClusterWorkers
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: description
 
-            "numClusterWorkers", :class:`integer`
-            *Required*
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :type: string
+       :default: ``'This is a Service'``
 
-    .. attribute:: carbond.Service.parameterParser
+       A short description of this service
 
-        .. csv-table::
-            :class: details-table
 
-            "parameterParser", :class:`~carbond.ParameterParser`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. attribute:: endpoints
 
-    .. attribute:: carbond.Service.path
+       :type: Object
+       :default: ``{}``
 
-        .. csv-table::
-            :class: details-table
+       The endpoint tree. Note, keys in the endpoint tree will be used to construct routes to the various :class:`~carbond.Operation`s servicing requests for an individual :class:`~carbond.Endpoint`.
 
-            "path", :class:`string`
-            *Required*
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-    .. attribute:: carbond.Service.port
+    .. attribute:: env
 
-        .. csv-table::
-            :class: details-table
+       :type: string
+       :required:
 
-            "port", :class:`integer`
-            *Required*
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       carbond.DEFAULT_ENV}
 
-    .. attribute:: carbond.Service.processUser
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: errorHandlingMiddleware
 
-            "processUser", :class:`string`
-            *Required*
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :type: function()[]
+       :default: ``[]``
 
-    .. attribute:: carbond.Service.publicDirectories
+       Middleware that will be invoked in the event that an error is thrown. Error-handling middleware function signatures should conform to ``fn(err, req, res, next)``.
 
-        .. csv-table::
-            :class: details-table
 
-            "publicDirectories", :class:`object`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. attribute:: errors
 
-    .. attribute:: carbond.Service.serviceName
+       :type: Object
+       :default: ``HttpErrors``
 
-        .. csv-table::
-            :class: details-table
+       A shortcut reference to the ``@carbon-io/http-errors`` module to be accessed using the service reference available throughout the ``carbond`` component hierarchy
 
-            "serviceName", :class:`string`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-    .. attribute:: carbond.Service.sslOptions
+    .. attribute:: fiberPoolSize
 
-        .. csv-table::
-            :class: details-table
+       :type: number
+       :default: ``120``
 
-            "sslOptions", :class:`~SslOptions`
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo        re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       Sets the pool size for the underlying ``fibers`` module. Note, a new fiber will be created and destroyed for every fiber created beyond the pool size. If this occurs regularly, it can lead to significant performance degradation. While the default should usually suffice, this parameter should be tuned according to the expected number of concurrent requests.
 
-    .. attribute:: carbond.Service.verbosity
 
-        .. csv-table::
-            :class: details-table
+    .. attribute:: generateOptionsMethodsInDocs
 
-            "verbosity", :class:`string`
-            "Default", ``info``
-            "Description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo    re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+       :type: boolean
+       :default: false
 
+       Whether or not to include OPTIONS methods in static documentation
+
+
+    .. attribute:: gracefulShutdown
+
+       :type: boolean
+       :default: ``true``
+
+       Whether or not the service should gracefully shutdown when a stop is requested (i.e., whether or not open sockets should be allowed to timeout or severed immediately). The default for this is computed using :attr:`~carbond.DEFAULT_ENV` (e.g., ``DEFAULT_ENV === 'production'``).
+
+
+    .. attribute:: hostname
+
+       :type: string
+       :default: ``'127.0.0.1'``
+
+       The address that this service should listen on
+
+
+    .. attribute:: logger
+
+       :type: logging.Logger
+       :default: ``{...}``
+
+       The logger instance used by service log methods (e.g. undefined)
+
+
+    .. attribute:: middleware
+
+       :type: function()[]
+       :default: ``[]``
+
+       Middleware functions that will be executed via express before control is passed on to any :class:`~carbond.Operation`. Middleware function signatures should conform to ``fn(req, res, next)``.
+
+
+    .. attribute:: noDocument
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: boolean
+       :default: false
+
+       Controls whether documentation for this endpoint is included in generated static documentation
+
+
+    .. attribute:: numClusterWorkers
+
+       :type: number
+       :default: undefined
+
+       The number of cluster workers to start. If left ``undefined`` or set to ``0``, it will be set to the number of CPUs present.
+
+
+    .. attribute:: parameterParser
+
+       :type: :class:`~carbond.ParameterParser`
+       :default: ``o({_type: './ParameterParser'})``
+
+       The parameter parser used to parse all incoming request parameters (i.e., query, header, body, and path). In most cases, the default parser should be sufficient.
+
+
+    .. attribute:: parameters
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: Object.<string, carbond.OperationParameter>
+       :required:
+
+       Operation parameter definitions that apply to all operations supported by this endpoint. Note, these will be merged with any parameter definitions on the operations themselves and their parsed values will be passed to the handler via ``req.parameters[<parameter name>]``.
+
+
+    .. attribute:: parent
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: :class:`~carbond.Endpoint`
+       :ro:
+
+       The parent endpoint for this endpoint in the endpoint tree
+
+
+    .. attribute:: path
+
+       :type: string
+       :default: ``''``
+
+       Since :class:`~carbond.Service` is itself an :class:`~carbond.Endpoint`, this can be used to set the URL path component that the service endpoint is accessible at
+
+
+    .. attribute:: port
+
+       :type: number
+       :default: ``8888``
+
+       The port that this service should bind
+
+
+    .. attribute:: processUser
+
+       :type: string
+       :default: undefined
+
+       If set, privileges will be dropped and the effective user for the process will be set to this
+
+
+    .. attribute:: publicDirectories
+
+       :type: Object.<string, string>
+       :default: ``{}``
+
+       Directories with static assets that should be exposed by the service. Keys are the URL paths under which these static assests should be served while values are the local filesystem paths at which the assets exist.
+
+
+    .. attribute:: serverSocketTimeout
+
+       :type: number
+       :default: undefined
+
+       The socket timeout for all incoming connections. Note, the system default is 2 minutes.
+
+
+    .. attribute:: service
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: :class:`~carbond.Service`
+       :ro:
+       :deprecated:
+
+       The root service object managing the endpoint tree. Getting a reference to this object is sometimes necessary or just convenient (i.e., HTTP error classes can be accessed via :attr:`~carbond.Service.errors`).
+
+
+    .. attribute:: signalHandler
+
+       :type: Object.<string, function()>
+       :default: ``{...}``
+
+       An object whose keys are signal names (e.g., "SIGINT") and whose values are functions invoked to handle the signal(s) corresponding to their aforementioned keys. Note, keys here can be a string of signal names delineated by spaces (e.g. "SIGINT SIGHUP"). In this case, the corresponding function will be called for any of the signals named in the key.
+
+
+    .. attribute:: sslOptions
+
+       :type: :class:`~carbond.SslOptions`
+       :default: ``o({_type: './SslOptions'})``
+
+       SSL options to use if running HTTPS
+
+
+    .. attribute:: validateOutput
+
+       :inheritedFrom: :class:`~carbond.Endpoint`
+       :type: boolean
+       :default: ``true``
+
+       Controls whether or not response bodies are validated using the response :class:`~carbond.OperationResponse.schema` corresponding to the current response code
+
+
+Abstract Methods
+----------------
+
+.. class:: carbond.Service
+    :noindex:
+    :hidden:
+
+    .. function:: doStart(options)
+
+        :param options: Parsed command line options
+        :type options: Object
+        :rtype: undefined
+
+        Performs custom startup operations. This method will be called after initialization (e.g., database connections will be established and the endpoint tree will be built) but before the server's socket is bound. Override this method if your app requires further initialization.
+
+    .. function:: doStop()
+
+        :rtype: undefined
+
+        Performs custom teardown operations. This method will be called first in the stop sequence.
 
 Methods
-=======
+-------
 
 .. class:: carbond.Service
     :noindex:
     :hidden:
 
-    .. function:: carbond.Service.doStart
+    .. function:: getOperation(method)
 
-        .. csv-table::
-            :class: details-table
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :param method: The HTTP method corresponding to the operation to retrieve
+        :type method: string
+        :rtype: :class:`~carbond.Operation`
 
-            "doStart (*options*)", ""
-            "Arguments", "**options** (:class:`object`): Lorem ipsum dolor sit amet |br|"
-            "Returns", ``undefined``
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Retrieves the operation instance corresponding to the passed HTTP method
 
-    .. function:: carbond.Service.doStop
+    .. function:: getService()
 
-        .. csv-table::
-            :class: details-table
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :rtype: :class:`~carbond.Service`
 
-            "doStop()", ""
-            "Arguments", ``undefined``
-            "Returns", ``undefined``
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Returns the root :class:`~carbond.Service` instance (note, this is preferred over accessing the ``service`` property itself)
 
-    .. function:: carbond.Service.logDebug
+    .. function:: isOperationAuthorized(method, user, req)
 
-        .. csv-table::
-            :class: details-table
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :param method: The HTTP method corresponding to the operation that we are attempting to authorize
+        :type method: string
+        :param user: The user object
+        :type user: Object
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :returns: Whether of not the operation is authorized
+        :rtype: boolean
 
-            "logDebug (*obj*)", ""
-            "Arguments", "**obj** (:class:`object`): Lorem ipsum dolor sit amet"
-            "Returns", ``undefined``
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Tests whether an operation is authorized given a user (as returned by the root authenticator) and any :class:`~carbond.security.Acl` that may apply to this endpoint
 
-    .. function:: carbond.Service.logError
+    .. function:: logDebug()
 
-        .. csv-table::
-            :class: details-table
+        :rtype: undefined
 
-            "logError (*obj*)", ""
-            "Arguments", "**obj** (:class:`object`): Lorem ipsum dolor sit amet"
-            "Returns", ``undefined``
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Log a message at the "debug" level
 
-    .. function:: carbond.Service.logFatal
+    .. function:: logError()
 
-        .. csv-table::
-            :class: details-table
+        :rtype: undefined
 
-            "logFatal (*obj*)", ""
-            "Arguments", "**obj** (:class:`object`): Lorem ipsum dolor sit amet"
-            "Returns", ``undefined``
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Log a message at the "error" level
 
-    .. function:: carbond.Service.logInfo
+    .. function:: logFatal()
 
-        .. csv-table::
-            :class: details-table
+        :rtype: undefined
 
-            "logInfo (*obj*)", ""
-            "Arguments", "**obj** (:class:`object`): Lorem ipsum dolor sit amet"
-            "Returns", ``undefined``
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Log a message at the "fatal" level
 
-    .. function:: carbond.Service.logTrace
+    .. function:: logInfo()
 
-        .. csv-table::
-            :class: details-table
+        :rtype: undefined
 
-            "logtrace (*obj*)", ""
-            "Arguments", "**obj** (:class:`object`): Lorem ipsum dolor sit amet"
-            "Returns", ``undefined``
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Log a message at the "info" level
 
-    .. function:: carbond.Service.logWarning
+    .. function:: logTrace()
 
-        .. csv-table::
-            :class: details-table
+        :rtype: undefined
 
-            "logWarning (*obj*)", ""
-            "Arguments", "**obj** (:class:`object`): Lorem ipsum dolor sit amet"
-            "Returns", ``undefined``
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Log a message at the "trace" level
 
-    .. function:: carbond.Service.on
+    .. function:: logWarning()
 
-        .. csv-table::
-            :class: details-table
+        :rtype: undefined
 
-            "on (*event, listener*)", ""
-            "Arguments", "**event** (:class:`string`): the event type |br|
-            **listener** (:class:`function`): callback to fire when `event` occurs |br|"
-            "Returns", :class:`EventEmitter`
-            "Descriptions", "Register an event callback."
+        Log a message at the "warn" level
 
-    .. function:: carbond.Service.once
+    .. function:: on(event, listener)
 
-        .. csv-table::
-            :class: details-table
+        :param event: [choices: "start", "stop"]
+        :type event: String
+        :param listener: Callback to fire when ``event`` occurs
+        :type listener: function
+        :rtype: EventEmitter
 
-            "once (*event, listener*)", ""
-            "Arguments", "**event** (:class:`string`): the event type |br|
-            **listener** (:class:`function`): callback to fire when `event` occurs |br|"
-            "Returns", :class:`EventEmitter`
-            "Descriptions", "Register an event callback that executes once."
+        Register a service event callback
 
+    .. function:: once(event, listener)
 
-    .. function:: carbond.Service.removeAllListeners
+        :param event: the event type [choices: "start", "stop"]
+        :type event: String
+        :param listener: callback to fire when ``event`` occurs
+        :type listener: function
+        :rtype: EventEmitter
 
-        .. csv-table::
-            :class: details-table
+        Register a service event callback that executes once
 
-            "removeAllListeners (*event*)", ""
-            "Arguments", "**event** (:class:`string`): the event type |br|"
-            "Returns", :class:`EventEmitter`
-            "Descriptions", "Remove all listeners. If `event` is passed, remove all events for that specific event (or events)."
+    .. function:: operations()
 
-    .. function:: carbond.Service.removeListener
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :rtype: :class:`~carbond.Operation[]`
 
-        .. csv-table::
-            :class: details-table
+        Gathers all operations defined on this endpoint
 
-            "removeListener (*event, listener*)", ""
-            "Arguments", "**event** (:class:`string`): the event type |br|
-            **listener** (:class:`function`): callback to fire when `event` occurs |br|"
-            "Returns", :class:`EventEmitter`
-            "Descriptions", "Remove a specific listener for a particular event."
+    .. function:: options(req, res)
 
-    .. function:: carbond.Service.start
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :param req: The request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :rtype: undefined
 
-        .. csv-table::
-            :class: details-table
+        Implements the OPTIONS method handler
 
-            "start (*options, cb*)", ""
-            "Arguments", "**options** (:class:`object`): Lorem ipsum dolor sit amet |br|
-            **cb** (:class:`function`): Lorem ipsum dolor sit amet |br|"
-            "Returns", ``undefined``
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. function:: removeAllListeners(event)
 
-    .. function:: carbond.Service.stop
+        :param event: the event type [choices: "start", "stop"]
+        :type event: ...String
+        :rtype: EventEmitter
 
-        .. csv-table::
-            :class: details-table
+        Remove all listeners. If ``event`` is passed, remove all listeners for that specific event (or events).
 
-            "stop (*cb*)", ""
-            "Arguments", "**cb** (:class:`function`): Lorem ipsum dolor sit amet |br|"
-            "Returns", ``undefined`` 
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. function:: removeListener(event, listener)
 
+        :param event: the event type [choices: "start", "stop"]
+        :type event: String
+        :param listener: callback to fire when ``event`` occurs
+        :type listener: function
+        :rtype: EventEmitter
+
+        Remove a specific listener for a particular event.
+
+    .. function:: start(options, cb)
+
+        :param options: Parsed command line options
+        :type options: Object
+        :param cb: Async callback (this can be omitted if calling from within a Fiber)
+        :type cb: function
+        :throws: Error 
+        :rtype: undefined
+
+        Initializes and starts the service
+
+    .. function:: stop(cb)
+
+        :param cb: Async callback (this can be omitted if calling from within a Fiber)
+        :type cb: function
+        :rtype: undefined
+
+        Stops the service
+
+    .. function:: supportedMethods()
+
+        :inheritedFrom: :class:`~carbond.Endpoint`
+        :rtype: string[]
+
+        Returns a list of HTTP methods supported by this endpoint

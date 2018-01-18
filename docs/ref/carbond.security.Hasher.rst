@@ -2,64 +2,61 @@
     :heading:
 
 .. |br| raw:: html
- 
+
    <br />
 
 =======================
 carbond.security.Hasher
 =======================
 
-Description for :class:`~carbond.security.Hasher` goes here
+A utility class for cryptographic hash functions
 
-Properties
-==========
-
-*none* *abstract*
-
-Methods
-=======
+Abstract Methods
+----------------
 
 .. class:: carbond.security.Hasher
     :noindex:
     :hidden:
 
-    .. function:: carbond.security.Hasher.eq
+    .. function:: eq(data, digest)
 
-        .. csv-table::
-            :class: details-table
+        :param data: the data in its raw form
+        :type data: string
+        :param digest: the digest to compare against
+        :type digest: string
+        :returns: true if the data evaluates to digest
+        :rtype: boolean
 
-            "eq (*data, digest*)", ""
-            "Arguments", "**data** (:class:`string`): Lorem ipsum dolor sit amet |br|
-            **digest** (:class:`string`): Lorem ipsum dolor sit amet |br|"
-            "Returns", :class:`boolean`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Compares data against a digest
 
-    .. function:: carbond.security.Hasher.getHasher
+    .. function:: hash(data)
 
-        .. csv-table::
-            :class: details-table
+        :param data: the data to hash
+        :type data: string
+        :returns: the digest
+        :rtype: string
 
-            "getHasher (*name*)", ""
-            "Arguments", "**name** (:class:`string`): The name of a hasher |br|"
-            "Returns", :class:`function`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Calculates the hash digest of the input string
 
-    .. function:: carbond.security.Hasher.getHasherNames
+Methods
+-------
 
-        .. csv-table::
-            :class: details-table
+.. class:: carbond.security.Hasher
+    :noindex:
+    :hidden:
 
-            "getHasherNames ()", ""
-            "Arguments", ``undefined``
-            "Returns", :class:`object`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. function:: getHasher(name)
 
-    .. function:: carbond.security.Hasher.hash
+        :param name: the name of a hasher. Supported hashers are *noop*, *sha256*, and *bcrypt*.
+        :type name: string
+        :returns: the constructor for a hasher or undefined if not found
+        :rtype: function | undefined
 
-        .. csv-table::
-            :class: details-table
+        Get a hasher class by name.
 
-            "hash (*data*)", ""
-            "Arguments", "**data** (:class:`string`): the data to hash |br|"
-            "Returns", :class:`string`
-            "Descriptions", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolo            re magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du    is a    ute     irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu    pidatat     non proi    dent, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    .. function:: getHasherNames()
+
+        :returns: registered hasher names
+        :rtype: string[]
+
+        Get the names of all registered hashers.

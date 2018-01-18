@@ -1,3 +1,5 @@
+.. _carbond-application-structure:
+
 =====================
 Application structure
 =====================
@@ -19,7 +21,7 @@ Your ``package.json`` file should include ``carbon-io``:
     :lines: 1-4,8-
 
 While the ``carbon-io`` dependency shown in the above example will always pull
-in the latest version, you will likely want to to pin it to a specific minor
+in the latest version, you will likely want to pin it to a specific minor
 version. e.g.: 
 
 .. XXX we can't use inline markup with substitutions... so we're using
@@ -45,7 +47,7 @@ Next you create your app / service. Continuing with the example above,
 .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
     :language: javascript
     :linenos:
-    :lines: 3-14, 51-
+    :named-sections: definingYourServiceHeader,definingYourServiceFooter
 
 Using __, _o, and o
 -------------------
@@ -56,7 +58,7 @@ The preamble requires the main ``carbon-io`` package as well and defines the
 .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
     :language: javascript
     :linenos:
-    :lines: 3-7
+    :named-sections: preamble
 
 The :js:func:`~fibers.__` operator is used to run this service inside of a `Fiber
 <https://github.com/carbon-io/fibers>`_ when this module is invoked as the main
@@ -88,7 +90,7 @@ in subsequent sections.
 .. literalinclude:: ../code-frags/hello-world/lib/HelloService.js
     :language: javascript
     :linenos:
-    :lines: 9-14, 51-
+    :named-sections: exportsHeader,exportsFooter
 
 Running your Service 
 --------------------
@@ -100,6 +102,6 @@ follows:
     :language: sh 
 
 For more details on running ``carbond`` ``Service``\s see the documentation on
-:ref:`running services from the command line <running Services from
-the command line>`.
+:ref:`running services from the command line 
+<carbond-running-services-from-the-command-line>`.
 

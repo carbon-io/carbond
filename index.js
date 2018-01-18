@@ -1,11 +1,35 @@
 var core = require('@carbon-io/carbon-core')
 var o = core.atom.o(module)
 
-/**
+/***************************************************************************************************
+ * @external express
+ * @description The express namespace
+ * @see https://expressjs.com/en/4x/api.html
+ */
+
+/***************************************************************************************************
  * @namespace carbond
  */
 
-module.exports = { 
+// XXX: fill in any documentation for extensions to the express classes
+
+/***************************************************************************************************
+ * @class Request
+ * @memberof carbond
+ * @description The Request object represents the HTTP request and has properties for the request
+ *              query string, parameters, body, HTTP headers, and so on
+ * @extends external:express.Request
+ */
+
+/***************************************************************************************************
+ * @class Response
+ * @memberof carbond
+ * @description The Response object represents the HTTP response that an Express app sends when it
+ *              gets an HTTP request
+ * @extends external:express.Response
+ */
+
+module.exports = {
   Endpoint: require('./lib/Endpoint'),
   IdGenerator: require('./lib/IdGenerator'),
   ObjectIdGenerator: require('./lib/ObjectIdGenerator'),
@@ -15,7 +39,20 @@ module.exports = {
   Service: require('./lib/Service'),
   collections: {
     Collection: require('./lib/collections/Collection'),
-    CollectionOperationConfig: require('./lib/collections/CollectionOperationConfig'), // XXX do we want to export this?
+    CollectionOperationResult: require('./lib/collections/CollectionOperationResult'),
+    CollectionOperationConfig: require('./lib/collections/CollectionOperationConfig'),
+    IdGenerator: require('./lib/collections/IdGenerator'),
+    InsertConfig: require('./lib/collections/CollectionOperationConfig'),
+    FindConfig: require('./lib/collections/FindConfig'),
+    FindObjectConfig: require('./lib/collections/FindObjectConfig'),
+    InsertConfig: require('./lib/collections/InsertConfig'),
+    InsertObjectConfig: require('./lib/collections/InsertObjectConfig'),
+    RemoveConfig: require('./lib/collections/RemoveConfig'),
+    RemoveObjectConfig: require('./lib/collections/RemoveObjectConfig'),
+    SaveConfig: require('./lib/collections/SaveConfig'),
+    SaveObjectConfig: require('./lib/collections/SaveObjectConfig'),
+    UpdateConfig: require('./lib/collections/UpdateConfig'),
+    UpdateObjectConfig: require('./lib/collections/UpdateObjectConfig')
   },
   limiter: {
     ChainLimiter: require('./lib/limiter/ChainLimiter'),
@@ -32,6 +69,16 @@ module.exports = {
   },
   mongodb: {
     MongoDBCollection: require('./lib/mongodb/MongoDBCollection'),
+    MongoDBFindConfig: require('./lib/mongodb/MongoDBFindConfig'),
+    MongoDBFindObjectConfig: require('./lib/mongodb/MongoDBFindObjectConfig'),
+    MongoDBInsertConfig: require('./lib/mongodb/MongoDBInsertConfig'),
+    MongoDBInsertObjectConfig: require('./lib/mongodb/MongoDBInsertObjectConfig'),
+    MongoDBRemoveConfig: require('./lib/mongodb/MongoDBRemoveConfig'),
+    MongoDBRemoveObjectConfig: require('./lib/mongodb/MongoDBRemoveObjectConfig'),
+    MongoDBSaveConfig: require('./lib/mongodb/MongoDBSaveConfig'),
+    MongoDBSaveObjectConfig: require('./lib/mongodb/MongoDBSaveObjectConfig'),
+    MongoDBUpdateConfig: require('./lib/mongodb/MongoDBUpdateConfig'),
+    MongoDBUpdateObjectConfig: require('./lib/mongodb/MongoDBUpdateObjectConfig')
   },
   security: {
     Acl: require('./lib/security/Acl'),
@@ -75,3 +122,4 @@ Object.defineProperty(module.exports, '$Test', {
     return require('./test/index.js')
   }
 })
+
