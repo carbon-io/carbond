@@ -461,6 +461,62 @@ __(function() {
             }
           },
         ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'HookAndHandlerContextTests',
+        service: o({
+          _type: carbond.Service,
+          endpoints: {
+            insertObject: o({
+              _type: carbond.collections.Collection,
+              enabled: {insertObject: true},
+              preInsertObjectOperation: function(config, req, res, context) {
+                context.preInsertObjectOperation = 1
+                return carbond.collections.Collection.prototype.preInsertObjectOperation.apply(this, arguments)
+              },
+              preInsertObject: function(object, options, context) {
+                context.preInsertObject = 1
+                return carbond.collections.Collection.prototype.preInsertObject.apply(this, arguments)
+              },
+              insertObject: function(object, options, context) {
+                context.insertObject = 1
+                object[this.idParameterName] = '0'
+                return  object
+              },
+              postInsertObject: function(result, object, options, context) {
+                context.postInsertObject = 1
+                return carbond.collections.Collection.prototype.postInsertObject.apply(this, arguments)
+              },
+              postInsertObjectOperation: function(result, config, req, res, context) {
+                context.postInsertObjectOperation = 1
+                res.set('context', ejson.stringify(context))
+                return carbond.collections.Collection.prototype.postInsertObjectOperation.apply(this, arguments)
+              }
+            })
+          }
+        }),
+        tests: [
+          {
+            reqSpec: {
+              url: '/insertObject',
+              method: 'POST',
+              body: {}
+            },
+            resSpec: {
+              statusCode: 201,
+              headers: function(headers) {
+                assert.deepEqual(ejson.parse(headers.context), {
+                  preInsertObjectOperation: 1,
+                  preInsertObject: 1,
+                  insertObject: 1,
+                  postInsertObject: 1,
+                  postInsertObjectOperation: 1
+                })
+              }
+            }
+          }
+        ]
       })
     ]
   })

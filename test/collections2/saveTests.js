@@ -514,6 +514,63 @@ __(function() {
             }
           }
         ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'HookAndHandlerContextTests',
+        service: o({
+          _type: carbond.Service,
+          endpoints: {
+            save: o({
+              _type: carbond.collections.Collection,
+              enabled: {save: true},
+              preSaveOperation: function(config, req, res, context) {
+                context.preSaveOperation = 1
+                return carbond.collections.Collection.prototype.preSaveOperation.apply(this, arguments)
+              },
+              preSave: function(objects, options, context) {
+                context.preSave = 1
+                return carbond.collections.Collection.prototype.preSave.apply(this, arguments)
+              },
+              save: function(objects, options, context) {
+                context.save = 1
+                return objects
+              },
+              postSave: function(result, objects, options, context) {
+                context.postSave = 1
+                return carbond.collections.Collection.prototype.postSave.apply(this, arguments)
+              },
+              postSaveOperation: function(result, config, req, res, context) {
+                context.postSaveOperation = 1
+                res.set('context', ejson.stringify(context))
+                return carbond.collections.Collection.prototype.postSaveOperation.apply(this, arguments)
+              }
+            })
+          }
+        }),
+        tests: [
+          {
+            reqSpec: function() {
+              return {
+                url: '/save',
+                method: 'PUT',
+                body: [{[this.parent.service.endpoints.save.idParameterName]: '0'}]
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              headers: function(headers) {
+                assert.deepEqual(ejson.parse(headers.context), {
+                  preSaveOperation: 1,
+                  preSave: 1,
+                  save: 1,
+                  postSave: 1,
+                  postSaveOperation: 1
+                })
+              }
+            }
+          }
+        ]
       })
     ]
   })

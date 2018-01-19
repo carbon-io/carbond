@@ -674,6 +674,60 @@ __(function() {
             }
           }
         ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'HookAndHandlerContextTests',
+        service: o({
+          _type: carbond.Service,
+          endpoints: {
+            updateObject: o({
+              _type: carbond.collections.Collection,
+              enabled: {updateObject: true},
+              preUpdateObjectOperation: function(config, req, res, context) {
+                context.preUpdateObjectOperation = 1
+                return carbond.collections.Collection.prototype.preUpdateObjectOperation.apply(this, arguments)
+              },
+              preUpdateObject: function(id, update, options, context) {
+                context.preUpdateObject = 1
+                return carbond.collections.Collection.prototype.preUpdateObject.apply(this, arguments)
+              },
+              updateObject: function(id, update, options, context) {
+                context.updateObject = 1
+                return 1
+              },
+              postUpdateObject: function(result, id, update, options, context) {
+                context.postUpdateObject = 1
+                return carbond.collections.Collection.prototype.postUpdateObject.apply(this, arguments)
+              },
+              postUpdateObjectOperation: function(result, config, req, res, context) {
+                context.postUpdateObjectOperation = 1
+                res.set('context', ejson.stringify(context))
+                return carbond.collections.Collection.prototype.postUpdateObjectOperation.apply(this, arguments)
+              }
+            })
+          }
+        }),
+        tests: [
+          {
+            reqSpec: {
+              url: '/updateObject/0',
+              method: 'PATCH'
+            },
+            resSpec: {
+              statusCode: 200,
+              headers: function(headers) {
+                assert.deepEqual(ejson.parse(headers.context), {
+                  preUpdateObjectOperation: 1,
+                  preUpdateObject: 1,
+                  updateObject: 1,
+                  postUpdateObject: 1,
+                  postUpdateObjectOperation: 1
+                })
+              }
+            }
+          }
+        ]
       })
     ]
   })
