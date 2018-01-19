@@ -17,16 +17,16 @@ collection of resources. When you define a
 :js:class:`~carbond.collections.Collection` you may define :doc:`handlers
 <collection-operation-handlers>` for the following operations:
 
-- ``insert(objects, options)``
-- ``find(options)``
-- ``save(objects, options)``
-- ``update(update, options)``
-- ``remove(options)``
-- ``insertObject(object, options)``
-- ``findObject(id, options)``
-- ``saveObject(object, options)``
-- ``updateObject(id, update, options)``
-- ``removeObject(id, options)``
+- ``insert(objects, options, context)``
+- ``find(options, context)``
+- ``save(objects, options, context)``
+- ``update(update, options, context)``
+- ``remove(options, context)``
+- ``insertObject(object, options, context)``
+- ``findObject(id, options, context)``
+- ``saveObject(object, options, context)``
+- ``updateObject(id, update, options, context)``
+- ``removeObject(id, options, context)``
 
 Which results in the following tree of :js:class:`~carbond.Endpoint`\s and
 :js:class:`~carbond.Operation`\s:
