@@ -854,6 +854,60 @@ __(function() {
             }
           }
         ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'HookAndHandlerContextTests',
+        service: o({
+          _type: carbond.Service,
+          endpoints: {
+            find: o({
+              _type: carbond.collections.Collection,
+              enabled: {find: true},
+              preFindOperation: function(config, req, res, context) {
+                context.preFindOperation = 1
+                return carbond.collections.Collection.prototype.preFindOperation.apply(this, arguments)
+              },
+              preFind: function(options, context) {
+                context.preFind = 1
+                return carbond.collections.Collection.prototype.preFind.apply(this, arguments)
+              },
+              find: function(options, context) {
+                context.find = 1
+                return [{[this.idParameterName]: '0'}]
+              },
+              postFind: function(result, options, context) {
+                context.postFind = 1
+                return carbond.collections.Collection.prototype.postFind.apply(this, arguments)
+              },
+              postFindOperation: function(result, config, req, res, context) {
+                context.postFindOperation = 1
+                res.set('context', ejson.stringify(context))
+                return carbond.collections.Collection.prototype.postFindOperation.apply(this, arguments)
+              }
+            })
+          }
+        }),
+        tests: [
+          {
+            reqSpec: {
+              url: '/find',
+              method: 'GET'
+            },
+            resSpec: {
+              statusCode: 200,
+              headers: function(headers) {
+                assert.deepEqual(ejson.parse(headers.context), {
+                  preFindOperation: 1,
+                  preFind: 1,
+                  find: 1,
+                  postFind: 1,
+                  postFindOperation: 1
+                })
+              }
+            }
+          }
+        ]
       })
     ]
   })

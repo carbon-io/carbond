@@ -514,6 +514,63 @@ __(function() {
           },
         ]
       }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'HookAndHandlerContextTests',
+        service: o({
+          _type: carbond.Service,
+          endpoints: {
+            saveObject: o({
+              _type: carbond.collections.Collection,
+              enabled: {saveObject: true},
+              preSaveObjectOperation: function(config, req, res, context) {
+                context.preSaveObjectOperation = 1
+                return carbond.collections.Collection.prototype.preSaveObjectOperation.apply(this, arguments)
+              },
+              preSaveObject: function(object, options, context) {
+                context.preSaveObject = 1
+                return carbond.collections.Collection.prototype.preSaveObject.apply(this, arguments)
+              },
+              saveObject: function(object, options, context) {
+                context.saveObject = 1
+                return object
+              },
+              postSaveObject: function(result, object, options, context) {
+                context.postSaveObject = 1
+                return carbond.collections.Collection.prototype.postSaveObject.apply(this, arguments)
+              },
+              postSaveObjectOperation: function(result, config, req, res, context) {
+                context.postSaveObjectOperation = 1
+                res.set('context', ejson.stringify(context))
+                return carbond.collections.Collection.prototype.postSaveObjectOperation.apply(this, arguments)
+              }
+            })
+          }
+        }),
+        tests: [
+          {
+            reqSpec: function() {
+              return {
+                url: '/saveObject/0',
+                method: 'PUT',
+                body: {[this.parent.service.endpoints.saveObject.idParameterName]: '0'}
+              }
+            },
+            resSpec: {
+              statusCode: 200,
+              headers: function(headers) {
+                assert.deepEqual(ejson.parse(headers.context), {
+                  preSaveObjectOperation: 1,
+                  preSaveObject: 1,
+                  saveObject: 1,
+                  postSaveObject: 1,
+                  postSaveObjectOperation: 1
+                })
+              }
+            }
+          }
+        ]
+      })
     ]
   })
 })

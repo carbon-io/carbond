@@ -557,6 +557,64 @@ __(function() {
             }
           },
         ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'HookAndHandlerContextTests',
+        service: o({
+          _type: carbond.Service,
+          endpoints: {
+            insert: o({
+              _type: carbond.collections.Collection,
+              enabled: {insert: true},
+              preInsertOperation: function(config, req, res, context) {
+                context.preInsertOperation = 1
+                return carbond.collections.Collection.prototype.preInsertOperation.apply(this, arguments)
+              },
+              preInsert: function(objects, options, context) {
+                context.preInsert = 1
+                return carbond.collections.Collection.prototype.preInsert.apply(this, arguments)
+              },
+              insert: function(objects, options, context) {
+                context.insert = 1
+                for (var i = 0; i < objects.length; i++) {
+                  objects[i][this.idParameterName] = i.toString()
+                }
+                return  objects
+              },
+              postInsert: function(result, objects, options, context) {
+                context.postInsert = 1
+                return carbond.collections.Collection.prototype.postInsert.apply(this, arguments)
+              },
+              postInsertOperation: function(result, config, req, res, context) {
+                context.postInsertOperation = 1
+                res.set('context', ejson.stringify(context))
+                return carbond.collections.Collection.prototype.postInsertOperation.apply(this, arguments)
+              }
+            })
+          }
+        }),
+        tests: [
+          {
+            reqSpec: {
+              url: '/insert',
+              method: 'POST',
+              body: [{}]
+            },
+            resSpec: {
+              statusCode: 201,
+              headers: function(headers) {
+                assert.deepEqual(ejson.parse(headers.context), {
+                  preInsertOperation: 1,
+                  preInsert: 1,
+                  insert: 1,
+                  postInsert: 1,
+                  postInsertOperation: 1
+                })
+              }
+            }
+          }
+        ]
       })
     ],
   })

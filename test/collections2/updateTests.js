@@ -604,6 +604,60 @@ __(function() {
             }
           }
         ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'HookAndHandlerContextTests',
+        service: o({
+          _type: carbond.Service,
+          endpoints: {
+            update: o({
+              _type: carbond.collections.Collection,
+              enabled: {update: true},
+              preUpdateOperation: function(config, req, res, context) {
+                context.preUpdateOperation = 1
+                return carbond.collections.Collection.prototype.preUpdateOperation.apply(this, arguments)
+              },
+              preUpdate: function(update, options, context) {
+                context.preUpdate = 1
+                return carbond.collections.Collection.prototype.preUpdate.apply(this, arguments)
+              },
+              update: function(update, options, context) {
+                context.update = 1
+                return 1
+              },
+              postUpdate: function(result, update, options, context) {
+                context.postUpdate = 1
+                return carbond.collections.Collection.prototype.postUpdate.apply(this, arguments)
+              },
+              postUpdateOperation: function(result, config, req, res, context) {
+                context.postUpdateOperation = 1
+                res.set('context', ejson.stringify(context))
+                return carbond.collections.Collection.prototype.postUpdateOperation.apply(this, arguments)
+              }
+            })
+          }
+        }),
+        tests: [
+          {
+            reqSpec: {
+              url: '/update',
+              method: 'PATCH'
+            },
+            resSpec: {
+              statusCode: 200,
+              headers: function(headers) {
+                assert.deepEqual(ejson.parse(headers.context), {
+                  preUpdateOperation: 1,
+                  preUpdate: 1,
+                  update: 1,
+                  postUpdate: 1,
+                  postUpdateOperation: 1
+                })
+              }
+            }
+          }
+        ]
       })
     ]
   })

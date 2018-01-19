@@ -238,10 +238,61 @@ __(function() {
             }
           }
         ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'HookAndHandlerContextTests',
+        service: o({
+          _type: carbond.Service,
+          endpoints: {
+            findObject: o({
+              _type: carbond.collections.Collection,
+              enabled: {findObject: true},
+              preFindObjectOperation: function(config, req, res, context) {
+                context.preFindObjectOperation = 1
+                return carbond.collections.Collection.prototype.preFindObjectOperation.apply(this, arguments)
+              },
+              preFindObject: function(id, options, context) {
+                context.preFindObject = 1
+                return carbond.collections.Collection.prototype.preFindObject.apply(this, arguments)
+              },
+              findObject: function(id, options, context) {
+                context.findObject = 1
+                return {[this.idParameterName]: id}
+              },
+              postFindObject: function(result, id, options, context) {
+                context.postFindObject = 1
+                return carbond.collections.Collection.prototype.postFindObject.apply(this, arguments)
+              },
+              postFindObjectOperation: function(result, config, req, res, context) {
+                context.postFindObjectOperation = 1
+                res.set('context', ejson.stringify(context))
+                return carbond.collections.Collection.prototype.postFindObjectOperation.apply(this, arguments)
+              }
+            })
+          }
+        }),
+        tests: [
+          {
+            reqSpec: {
+              url: '/findObject/0',
+              method: 'GET'
+            },
+            resSpec: {
+              statusCode: 200,
+              headers: function(headers) {
+                assert.deepEqual(ejson.parse(headers.context), {
+                  preFindObjectOperation: 1,
+                  preFindObject: 1,
+                  findObject: 1,
+                  postFindObject: 1,
+                  postFindObjectOperation: 1
+                })
+              }
+            }
+          }
+        ]
       })
     ]
   })
 })
-
-
-

@@ -349,6 +349,60 @@ __(function() {
             }
           }
         ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'HookAndHandlerContextTests',
+        service: o({
+          _type: carbond.Service,
+          endpoints: {
+            removeObject: o({
+              _type: carbond.collections.Collection,
+              enabled: {removeObject: true},
+              preRemoveObjectOperation: function(config, req, res, context) {
+                context.preRemoveObjectOperation = 1
+                return carbond.collections.Collection.prototype.preRemoveObjectOperation.apply(this, arguments)
+              },
+              preRemoveObject: function(id, options, context) {
+                context.preRemoveObject = 1
+                return carbond.collections.Collection.prototype.preRemoveObject.apply(this, arguments)
+              },
+              removeObject: function(id, options, context) {
+                context.removeObject = 1
+                return 1
+              },
+              postRemoveObject: function(result, id, options, context) {
+                context.postRemoveObject = 1
+                return carbond.collections.Collection.prototype.postRemoveObject.apply(this, arguments)
+              },
+              postRemoveObjectOperation: function(result, config, req, res, context) {
+                context.postRemoveObjectOperation = 1
+                res.set('context', ejson.stringify(context))
+                return carbond.collections.Collection.prototype.postRemoveObjectOperation.apply(this, arguments)
+              }
+            })
+          }
+        }),
+        tests: [
+          {
+            reqSpec: {
+              url: '/removeObject/0',
+              method: 'DELETE'
+            },
+            resSpec: {
+              statusCode: 200,
+              headers: function(headers) {
+                assert.deepEqual(ejson.parse(headers.context), {
+                  preRemoveObjectOperation: 1,
+                  preRemoveObject: 1,
+                  removeObject: 1,
+                  postRemoveObject: 1,
+                  postRemoveObjectOperation: 1
+                })
+              }
+            }
+          }
+        ]
       })
     ]
   })

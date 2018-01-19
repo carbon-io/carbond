@@ -348,6 +348,60 @@ __(function() {
             }
           }
         ]
+      }),
+      o({
+        _type: carbond.test.ServiceTest,
+        name: 'HookAndHandlerContextTests',
+        service: o({
+          _type: carbond.Service,
+          endpoints: {
+            remove: o({
+              _type: carbond.collections.Collection,
+              enabled: {remove: true},
+              preRemoveOperation: function(config, req, res, context) {
+                context.preRemoveOperation = 1
+                return carbond.collections.Collection.prototype.preRemoveOperation.apply(this, arguments)
+              },
+              preRemove: function(options, context) {
+                context.preRemove = 1
+                return carbond.collections.Collection.prototype.preRemove.apply(this, arguments)
+              },
+              remove: function(options, context) {
+                context.remove = 1
+                return 1
+              },
+              postRemove: function(result, options, context) {
+                context.postRemove = 1
+                return carbond.collections.Collection.prototype.postRemove.apply(this, arguments)
+              },
+              postRemoveOperation: function(result, config, req, res, context) {
+                context.postRemoveOperation = 1
+                res.set('context', ejson.stringify(context))
+                return carbond.collections.Collection.prototype.postRemoveOperation.apply(this, arguments)
+              }
+            })
+          }
+        }),
+        tests: [
+          {
+            reqSpec: {
+              url: '/remove',
+              method: 'DELETE'
+            },
+            resSpec: {
+              statusCode: 200,
+              headers: function(headers) {
+                assert.deepEqual(ejson.parse(headers.context), {
+                  preRemoveOperation: 1,
+                  preRemove: 1,
+                  remove: 1,
+                  postRemove: 1,
+                  postRemoveOperation: 1
+                })
+              }
+            }
+          }
+        ]
       })
     ]
   })

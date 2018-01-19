@@ -5,16 +5,16 @@ Collection Operation Handlers
 When you define a Collection, you may define handlers for the following
 operations:
 
-- ``insert(objects, options)``
-- ``find(options)``
-- ``save(objects, options)``
-- ``update(update, options)``
-- ``remove(options)``
-- ``insertObject(object, options)``
-- ``findObject(id, options)``
-- ``saveObject(object, options)``
-- ``updateObject(id, update, options)``
-- ``removeObject(id, options)``
+- ``insert(objects, options, context)``
+- ``find(options, context)``
+- ``save(objects, options, context)``
+- ``update(update, options, context)``
+- ``remove(options, context)``
+- ``insertObject(object, options, context)``
+- ``findObject(id, options, context)``
+- ``saveObject(object, options, context)``
+- ``updateObject(id, update, options, context)``
+- ``removeObject(id, options, context)``
 
 Handlers determine how various HTTP requests to a Collection are handled.
 There are two types of parameters passed to each operation handler: those
@@ -28,14 +28,13 @@ The options parameter
 
 .. todo:: rework
 
-The ``options`` parameter can be thought of as an object
-derived from the set of all parameters available to a particular operation minus
-the parameters that correspond to required arguments to the handler.
-Additionally, "all parameters" consists of all parameters defined on each
-endpoint in the endpoint tree as well as any that may be defined on the
-operation itself. These are merged from the root (the service) to the leaf
-(the operation), with parameters defined closer to the leaf overriding any
-that may have been defined closer to the root.
+The ``options`` parameter can be thought of as an object derived from the set of
+all parameters available to a particular operation minus the parameters that
+correspond to required arguments to the handler.  Additionally, "all parameters"
+consists of all parameters defined on each endpoint in the endpoint tree as well
+as any that may be defined on the operation itself. These are merged from the
+root (the service) to the leaf (the operation), with parameters defined closer
+to the leaf overriding any that may have been defined closer to the root.
 
 For example, the :js:func:`~carbond.mongodb.MongoDBCollection.update` operation
 supports queries by adding another parameter called ``query`` (not to be
@@ -46,10 +45,29 @@ spec will be passed to the operation handler via the first parameter
 parameter as a property of that object (e.g., ``options.query``).
 
 While the inputs and outputs to and from various operation handlers should
-remain the same, the operation configuration allows you to specify behaviors like whether
-the HTTP response body should contain the objects inserted or whether "upserts"
-should be allowed in response to ``PATCH`` requests. See
+remain the same, the operation configuration allows you to specify behaviors
+like whether the HTTP response body should contain the objects inserted or
+whether "upserts" should be allowed in response to ``PATCH`` requests. See
 :doc:`collection-operation-configuration` for more information.
+
+The context parameter
+=====================
+
+The ``context`` parameter is the last parameter passed to each handler. It is
+not used by ``carbond`` internally, but is provided as a convenience to pass
+data between collection operation hooks (see :doc:`operation hooks
+<collection-operation-hooks>`) and the various operation handlers described in
+this document.
+
+It is initialized to an empty object (e.g., ``{}``) and passed to each
+hook/handler in the processing chain by the base
+:js:class:`~carbond.collections.Collection` class.  Since hook methods will
+generally not need to be overridden, thereby obviating the need to pass data
+using this parameter, it can usually be ignored and omitted from the handler
+signatures in your implementation (as is the case in the examples to follow).
+However, if you do find that extending or overriding hook methods is necessary,
+this parameter can come in handy (see :doc:`operation hooks
+<collection-operation-hooks>` for an example of how this might be useful).
 
 Collection operations semantics 
 ===============================
