@@ -19,24 +19,6 @@ Instance Properties
     :noindex:
     :hidden:
 
-    .. attribute:: additionalOptions
-
-       :inheritedFrom: :class:`~carbond.collections.RemoveConfig`
-       :type: object.<string, \*>
-       :required:
-
-       Any additional options that should be added to options passed down to a handler.
-
-
-    .. attribute:: additionalParameters
-
-       :inheritedFrom: :class:`~carbond.collections.RemoveConfig`
-       :type: object.<string, carbond.OperationParameter>
-       :required:
-
-       Any additional parameters that should be added to the collection parameters. These can override parameters configured via the :class:`~carbond.collections.CollectionOperationConfig.parameters`. Note, these will all end up being passed down to operation handlers via the "options" parameter.
-
-
     .. attribute:: allowUnauthenticated
 
        :inheritedFrom: :class:`~carbond.collections.RemoveConfig`
@@ -72,7 +54,16 @@ Instance Properties
        The parent endpoint/collection that this configuration is a member of
 
 
-    .. attribute:: idParameter
+    .. attribute:: example
+
+       :inheritedFrom: :class:`~carbond.collections.RemoveConfig`
+       :type: object
+       :default: undefined
+
+       An example response body used for documentation
+
+
+    .. attribute:: idParameterName
 
        :inheritedFrom: :class:`~carbond.collections.RemoveConfig`
        :type: string
@@ -90,21 +81,21 @@ Instance Properties
        Exclude the operation from "docgen" API documentation
 
 
-    .. attribute:: parameters
+    .. attribute:: options
 
        :inheritedFrom: :class:`~carbond.collections.RemoveConfig`
-       :type: object.<string, carbond.OperationParameter>
-       :ro:
+       :type: object.<string, \*>
+       :required:
 
-       Operation specific parameters (e.g., "skip", "limit"). These will be passed down to the operation handlers via the options parameter if they are not explicitly passed via another leading parameter (e.g., "id" and "update" for :class:`~carbond.collections.Collection.updateObject`). Note, this should generally be left alone by instances. Instead, use :class:`~carbond.collections.CollectionOperationConfig.additionalParameters`.
+       Any additional options that should be added to options passed down to a handler.
 
 
-    .. attribute:: queryParameter
+    .. attribute:: parameters
 
        :type: object.<string, carbond.OperationParameter>
        :required:
 
-       The "query" parameter definition
+       The "query" parameter definition (will be omitted if :class:`~carbond.collections.MongoDBRemoveConfig.supportsQuery` is ``false``)
 
        .. csv-table::
           :class: details-table

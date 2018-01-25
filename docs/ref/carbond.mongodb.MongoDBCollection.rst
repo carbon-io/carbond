@@ -55,10 +55,10 @@ Instance Properties
 
     .. attribute:: collection
 
-       :type: string
-       :required:
+       :type: :class:`~leafnode.db.Collection`
+       :ro:
 
-       The database collection name
+       The collection object for the collection this instance is accessing
 
 
     .. attribute:: COLLECTION_QUERY_OPERATIONS
@@ -69,7 +69,23 @@ Instance Properties
        The list of operations that support queries
 
 
+    .. attribute:: collectionName
+
+       :type: string
+       :required:
+
+       The database collection name
+
+
     .. attribute:: db
+
+       :type: :class:`~leafnode.db.DB`
+       :ro:
+
+       The database object for the database that houses the collection this instance is accessing
+
+
+    .. attribute:: dbName
 
        :type: string
        :default: undefined
@@ -86,7 +102,7 @@ Instance Properties
        This is the default error body schema.
 
 
-    .. attribute:: defaultIdHeader
+    .. attribute:: defaultIdHeaderName
 
        :inheritedFrom: :class:`~carbond.collections.Collection`
        :type: string
@@ -218,16 +234,16 @@ Instance Properties
        An object with the method "generateId" that will be called to populate ID if present and when appropriate (e.g. :class:`~carbond.collections.Collection.insert`)
 
 
-    .. attribute:: idHeader
+    .. attribute:: idHeaderName
 
        :inheritedFrom: :class:`~carbond.collections.Collection`
        :type: string
-       :default: :class:`~carbond.collections.Collection.defaultIdHeader`
+       :default: :class:`~carbond.collections.Collection.defaultIdHeaderName`
 
        The header name which should contain the EJSON serialized ID
 
 
-    .. attribute:: idParameter
+    .. attribute:: idParameterName
 
        :type: string
        :default: ``'_id'``
@@ -235,7 +251,7 @@ Instance Properties
        The ID parameter name
 
 
-    .. attribute:: idPathParameter
+    .. attribute:: idPathParameterName
 
        :inheritedFrom: :class:`~carbond.collections.Collection`
        :type: string
@@ -635,22 +651,26 @@ Methods
 
         Update the operation config using collection level config (e.g., :class:`~carbond.collections.Collection.schema`) and build operation responses. In general, this method should not need to be overridden or extended. Instead, customization should be driven by the operation config and the pre/post handler methods.
 
-    .. function:: find(options)
+    .. function:: find(options, context)
 
         :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.FindConfigClass`)
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :returns: A list of objects
         :rtype: Object[]
 
         Retrieve objects from a collection
 
-    .. function:: findObject(id, options)
+    .. function:: findObject(id, options, context)
 
         :param id: The object id
         :type id: string
         :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.FindObjectConfigClass`)
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :returns: The found object or null
         :rtype: Object | null
@@ -691,24 +711,28 @@ Methods
 
         Returns the root :class:`~carbond.Service` instance (note, this is preferred over accessing the ``service`` property itself)
 
-    .. function:: insert(objects, options)
+    .. function:: insert(objects, options, context)
 
         :param objects: An array of objects to insert
         :type objects: Array
         :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.InsertConfigClass`)
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :returns: The list of inserted objects
         :rtype: Object[]
 
         Bulk insert objects into a collection
 
-    .. function:: insertObject(object, options)
+    .. function:: insertObject(object, options, context)
 
         :param object: An object to insert
         :type object: Object
         :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.InsertObjectConfigClass`)
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :returns: The inserted object
         :rtype: Object
@@ -747,18 +771,20 @@ Methods
 
         Implements the OPTIONS method handler
 
-    .. function:: postFind(result, options)
+    .. function:: postFind(result, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The found object(s)
         :type result: Object[]
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: Object[]
 
         Update or transform the operation result before passing it back up to the HTTP layer
 
-    .. function:: postFindObject(result, id, options)
+    .. function:: postFindObject(result, id, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The found object
@@ -767,11 +793,13 @@ Methods
         :type id: string
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: Object | null
 
         Update or transform the operation result before passing it back up to the HTTP layer
 
-    .. function:: postFindObjectOperation(result, config, req, res)
+    .. function:: postFindObjectOperation(result, config, req, res, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The found object
@@ -782,12 +810,14 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :returns: Returns the found object
         :rtype: Object | null
 
         Update the HTTP response to reflect the result of the operation
 
-    .. function:: postFindOperation(result, config, req, res)
+    .. function:: postFindOperation(result, config, req, res, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The found objects
@@ -798,12 +828,14 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :returns: Returns the found objects
         :rtype: Object[]
 
         Update the HTTP response to reflect the result of the operation
 
-    .. function:: postInsert(result, objects, options)
+    .. function:: postInsert(result, objects, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The inserted object(s)
@@ -812,11 +844,13 @@ Methods
         :type objects: Object[]
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: Object[]
 
         Update or transform the operation result before passing it back up to the HTTP layer
 
-    .. function:: postInsertObject(result, object, options)
+    .. function:: postInsertObject(result, object, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The inserted object
@@ -825,11 +859,13 @@ Methods
         :type object: Object
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: Object
 
         Update or transform the operation result before passing it back up to the HTTP layer
 
-    .. function:: postInsertObjectOperation(result, config, req, res)
+    .. function:: postInsertObjectOperation(result, config, req, res, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The inserted object
@@ -840,12 +876,14 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :returns: Returns the inserted object if configured to do so and ``null`` otherwise
         :rtype: Object | null
 
         Update the HTTP response to reflect the result of the operation
 
-    .. function:: postInsertOperation(result, config, req, res)
+    .. function:: postInsertOperation(result, config, req, res, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The inserted objects
@@ -856,34 +894,40 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :returns: Returns the inserted objects if configured to do so and ``null`` otherwise
         :rtype: Object[] | null
 
         Update the HTTP response to reflect the result of the operation
 
-    .. function:: postRemove(result, options)
+    .. function:: postRemove(result, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The number of objects (or the object(s) themselves) removed
         :type result: number | array
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: number | array
 
         Update or transform the operation result before passing it back up to the HTTP layer
 
-    .. function:: postRemoveObject(result, options)
+    .. function:: postRemoveObject(result, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The number of objects (or the object itself) removed
         :type result: number | Object
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: number | array
 
         Update or transform the operation result before passing it back up to the HTTP layer
 
-    .. function:: postRemoveObjectOperation(result, config, req, res)
+    .. function:: postRemoveObjectOperation(result, config, req, res, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The number of objects removed or the removed object
@@ -894,12 +938,14 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :returns: Returns undefined} or the removed object
         :rtype: Object
 
         Update the HTTP response to reflect the result of the operation. It should be noted that the result can be either a number or an object. If the underlying driver does not support returning the removed object, then the result will always be a number and :class:`~carbond.collections.RemoveObjectConfig.returnsRemovedObject` should be configured to reflect this.
 
-    .. function:: postRemoveOperation(result, config, req, res)
+    .. function:: postRemoveOperation(result, config, req, res, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The number of objects removed or the removed objec(s)
@@ -910,12 +956,14 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :returns: Returns undefined} or the removed objects
         :rtype: Object
 
         Update the HTTP response to reflect the result of the operation. It should be noted that the result can be either a number or an array of object(s). If the underlying driver does not support returning the removed object(s), then the result will always be a number and :class:`~carbond.collections.RemoveConfig.returnsRemovedObjects` should be configured to reflect this.
 
-    .. function:: postSave(result, objects, options)
+    .. function:: postSave(result, objects, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The saved objects
@@ -924,11 +972,13 @@ Methods
         :type objects: Object[]
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: Object[]
 
         Update or transform the operation result before passing it back up to the HTTP layer
 
-    .. function:: postSaveObject(result, object, options)
+    .. function:: postSaveObject(result, object, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The ``SaveObjectResult``
@@ -937,11 +987,13 @@ Methods
         :type object: Object
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`SaveObjectResult <carbond.collections.Collection.SaveObjectResult>`
 
         Update or transform the operation result before passing it back up to the HTTP layer
 
-    .. function:: postSaveObjectOperation(result, config, req, res)
+    .. function:: postSaveObjectOperation(result, config, req, res, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The saved object and a flag to indicate if it was created rather than replaced
@@ -952,12 +1004,14 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :returns: Returns the saved object if configured to do so and ``null`` if not
         :rtype: Object[] | null
 
         Update the HTTP response to reflect the result of the operation
 
-    .. function:: postSaveOperation(result, config, req, res)
+    .. function:: postSaveOperation(result, config, req, res, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The saved objects
@@ -968,12 +1022,14 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :returns: Returns the saved objects if configured to do so and ``null`` if not
         :rtype: Object[] | null
 
         Update the HTTP response to reflect the result of the operation
 
-    .. function:: postUpdate(result, update, options)
+    .. function:: postUpdate(result, update, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The ``UpdateResult``
@@ -982,11 +1038,13 @@ Methods
         :type update: \*
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`UpdateResult <carbond.collections.Collection.UpdateResult>`
 
         Update or transform the operation result before passing it back up to the HTTP layer
 
-    .. function:: postUpdateObject(result, update, update, options)
+    .. function:: postUpdateObject(result, update, update, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The ``UpdateResult``
@@ -997,11 +1055,13 @@ Methods
         :type update: \*
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`UpdateResult <carbond.collections.Collection.UpdateResult>`
 
         Update or transform the operation result before passing it back up to the HTTP layer
 
-    .. function:: postUpdateObjectOperation(result, config, req, res)
+    .. function:: postUpdateObjectOperation(result, config, req, res, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The number of objects updated/upserted or the upserted object
@@ -1012,12 +1072,14 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :returns: Returns undefined} or the upserted object
         :rtype: Object
 
         Update the HTTP response to reflect the result of the operation. It should be noted that the result can be either a number or an object. If the underlying driver does not support returning the upserted object, then the result will always be a number and :class:`~carbond.collections.UpdateObjectConfig.returnsUpsertedObject` should be configured to reflect this.
 
-    .. function:: postUpdateOperation(result, config, req, res)
+    .. function:: postUpdateOperation(result, config, req, res, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param result: The number of objects updated/upserted or the upserted object(s)
@@ -1028,32 +1090,38 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :returns: Returns undefined} or the upserted object(s)
         :rtype: Object
 
         Update the HTTP response to reflect the result of the operation. It should be noted that the result can be either a number or an array of objects. If the underlying driver does not support returning the upserted object(s), then the result will always be a number and :class:`~carbond.collections.UpdateConfig.returnsUpsertedObjects` should be configured to reflect this.
 
-    .. function:: preFind(options)
+    .. function:: preFind(options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreFindResult <carbond.collections.Collection.PreFindResult>` | undefined
 
         Update or transform any parameters to be passed to the operation handler
 
-    .. function:: preFindObject(id, options)
+    .. function:: preFindObject(id, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param id: The object id
         :type id: string
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreFindObjectResult <carbond.collections.Collection.PreFindObjectResult>` | undefined
 
         Update or transform any parameters to be passed to the operation handler
 
-    .. function:: preFindObjectOperation(config, req, res)
+    .. function:: preFindObjectOperation(config, req, res, context)
 
         :param config: The find object operation config
         :type config: :class:`~carbond.collections.FindObjectConfig`
@@ -1061,11 +1129,13 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preFindOperation(config, req, res)
+    .. function:: preFindOperation(config, req, res, context)
 
         :param config: The find operation config
         :type config: :class:`~carbond.collections.FindConfig`
@@ -1073,33 +1143,39 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preInsert(objects, options)
+    .. function:: preInsert(objects, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param objects: The objects to insert
         :type objects: Object[]
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreInsertResult <carbond.collections.Collection.PreInsertResult>` | undefined
 
         Update or transform any parameters to be passed to the operation handler
 
-    .. function:: preInsertObject(object, options)
+    .. function:: preInsertObject(object, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param object: The object to insert
         :type object: Object
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreInsertObjectResult <carbond.collections.Collection.PreInsertObjectResult>` | undefined
 
         Update or transform any parameters to be passed to the operation handler
 
-    .. function:: preInsertObjectOperation(config, req, res)
+    .. function:: preInsertObjectOperation(config, req, res, context)
 
         :param config: The insert object operation config
         :type config: :class:`~carbond.collections.InsertObjectConfig`
@@ -1107,11 +1183,13 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preInsertOperation(config, req, res)
+    .. function:: preInsertOperation(config, req, res, context)
 
         :param config: The insert operation config
         :type config: :class:`~carbond.collections.InsertConfig`
@@ -1119,31 +1197,37 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preRemove(options)
+    .. function:: preRemove(options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreRemoveResult <carbond.collections.Collection.PreRemoveResult>` | undefined
 
         Update or transform any parameters to be passed to the operation handler
 
-    .. function:: preRemoveObject(id, options)
+    .. function:: preRemoveObject(id, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param id: The object id
         :type id: string
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreRemoveObjectResult <carbond.collections.Collection.PreRemoveObjectResult>` | undefined
 
         Update or transform any parameters to be passed to the operation handler
 
-    .. function:: preRemoveObjectOperation(config, req, res)
+    .. function:: preRemoveObjectOperation(config, req, res, context)
 
         :param config: The remove object operation config
         :type config: :class:`~carbond.collections.RemoveObjectConfig`
@@ -1151,11 +1235,13 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preRemoveOperation(config, req, res)
+    .. function:: preRemoveOperation(config, req, res, context)
 
         :param config: The remove operation config
         :type config: :class:`~carbond.collections.RemoveConfig`
@@ -1163,33 +1249,39 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preSave(objects, options)
+    .. function:: preSave(objects, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param objects: The objects to save
         :type objects: Object[]
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreSaveResult <carbond.collections.Collection.PreSaveResult>` | undefined
 
         Update or transform any parameters to be passed to the operation handler
 
-    .. function:: preSaveObject(object, options)
+    .. function:: preSaveObject(object, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param object: The object to save
         :type object: Object
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreSaveObjectResult <carbond.collections.Collection.PreSaveObjectResult>` | undefined
 
         Update or transform any parameters to be passed to the operation handler
 
-    .. function:: preSaveObjectOperation(config, req, res)
+    .. function:: preSaveObjectOperation(config, req, res, context)
 
         :overrides: :attr:`~carbond.collections.Collection.preSaveObjectOperation`
         :param config: The save object operation config
@@ -1198,11 +1290,13 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preSaveOperation(config, req, res)
+    .. function:: preSaveOperation(config, req, res, context)
 
         :param config: The save operation config
         :type config: :class:`~carbond.collections.SaveConfig`
@@ -1210,22 +1304,26 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preUpdate(update, options)
+    .. function:: preUpdate(update, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param update: The update spec
         :type update: \*
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreUpdateResult <carbond.collections.Collection.PreUpdateResult>` | undefined
 
         Update or transform any parameters to be passed to the operation handler
 
-    .. function:: preUpdateObject(id, update, options)
+    .. function:: preUpdateObject(id, update, options, context)
 
         :inheritedFrom: :class:`~carbond.collections.Collection`
         :param id: The object id
@@ -1234,11 +1332,13 @@ Methods
         :type update: \*
         :param options: The operation handler options
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreUpdateObjectResult <carbond.collections.Collection.PreUpdateObjectResult>` | undefined
 
         Update or transform any parameters to be passed to the operation handler
 
-    .. function:: preUpdateObjectOperation(config, req, res)
+    .. function:: preUpdateObjectOperation(config, req, res, context)
 
         :param config: The update object operation config
         :type config: :class:`~carbond.collections.UpdateObjectConfig`
@@ -1246,11 +1346,13 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: preUpdateOperation(config, req, res)
+    .. function:: preUpdateOperation(config, req, res, context)
 
         :param config: The update operation config
         :type config: :class:`~carbond.collections.UpdateConfig`
@@ -1258,51 +1360,61 @@ Methods
         :type req: :class:`~carbond.Request`
         :param res: The response object
         :type res: :class:`~carbond.Response`
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :rtype: :ref:`PreOperationResult <carbond.collections.Collection.PreOperationResult>`
 
         Build the options to be passed to the operation handler from the request and operation config. Note, in general, this should not need to be overridden or extended.
 
-    .. function:: remove(options)
+    .. function:: remove(options, context)
 
         :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.RemoveConfigClass`)
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :returns: An integer representing the number of objects removed or an array of the objects removed
         :rtype: number | array
 
         Remove objects from a collection
 
-    .. function:: removeObject(id, options)
+    .. function:: removeObject(id, options, context)
 
         :param id: The ID of the object to remove
         :type id: String
         :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.RemoveConfigClass`)
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :returns: An integer representing the number of objects removed (0 or 1) or the the object removed
         :rtype: number | Object
 
         Remove a specific object from a collection
 
-    .. function:: save(objects, options)
+    .. function:: save(objects, options, context)
 
         :param objects: An array of objects (with IDs) to save
         :type objects: Array
         :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.SaveConfigClass`)
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :returns: The list of saved objects
         :rtype: Object[]
 
         Replace the collection with an array of objects
 
-    .. function:: saveObject(object, options)
+    .. function:: saveObject(object, options, context)
 
         :overrides: :attr:`~carbond.collections.Collection.saveObject`
         :param object: The object to save (with ID)
         :type object: Object
         :param options: The operation parameters (see: :class:`~carbond.mongodb.Collection.SaveObjectConfigClass`)
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: :ref:`SaveObjectResult <carbond.collections.Collection.SaveObjectResult>`
 
@@ -1315,19 +1427,21 @@ Methods
 
         Returns a list of HTTP methods supported by this endpoint
 
-    .. function:: update(update, options)
+    .. function:: update(update, options, context)
 
         :overrides: :attr:`~carbond.collections.Collection.update`
         :param update: The update to be applied to the collection
         :type update: Object
         :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.UpdateConfigClass`)
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: :ref:`UpdateResult <carbond.collections.Collection.UpdateResult>`
 
         Update (or upsert) a number of objects in a collection
 
-    .. function:: updateObject(id, update, options)
+    .. function:: updateObject(id, update, options, context)
 
         :param id: The ID of the object to update
         :type id: string
@@ -1335,6 +1449,8 @@ Methods
         :type update: Object
         :param options: The operation parameters (see: :class:`~carbond.mongodb.MongoDBCollection.UpdateObjectConfigClass`)
         :type options: Object
+        :param context: A free form object to pass data between hook and handler methods
+        :type context: Object
         :throws: :class:`~carbond.collections.errors.CollectionError` 
         :rtype: :ref:`UpdateObjectResult <carbond.collections.Collection.UpdateObjectResult>`
 

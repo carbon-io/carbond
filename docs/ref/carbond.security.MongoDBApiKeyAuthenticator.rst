@@ -87,23 +87,6 @@ Instance Properties
        The name of the collection in which users are stored
 
 
-Abstract Methods
-----------------
-
-.. class:: carbond.security.MongoDBApiKeyAuthenticator
-    :noindex:
-    :hidden:
-
-    .. function:: isRootUser(user)
-
-        :inheritedFrom: :class:`~carbond.security.ApiKeyAuthenticator`
-        :param user: An object representing a user
-        :type user: Object
-        :returns: ``true`` if the user is determined to be root, ``false`` otherwise.
-        :rtype: boolean
-
-        Checks if a user is root.
-
 Methods
 -------
 

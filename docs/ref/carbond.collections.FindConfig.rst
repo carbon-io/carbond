@@ -19,24 +19,6 @@ Instance Properties
     :noindex:
     :hidden:
 
-    .. attribute:: additionalOptions
-
-       :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
-       :type: object.<string, \*>
-       :required:
-
-       Any additional options that should be added to options passed down to a handler.
-
-
-    .. attribute:: additionalParameters
-
-       :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
-       :type: object.<string, carbond.OperationParameter>
-       :required:
-
-       Any additional parameters that should be added to the collection parameters. These can override parameters configured via the :class:`~carbond.collections.CollectionOperationConfig.parameters`. Note, these will all end up being passed down to operation handlers via the "options" parameter.
-
-
     .. attribute:: allowUnauthenticated
 
        :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
@@ -64,21 +46,22 @@ Instance Properties
        The parent endpoint/collection that this configuration is a member of
 
 
-    .. attribute:: idParameter
+    .. attribute:: example
+
+       :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
+       :type: object
+       :default: undefined
+
+       An example response body used for documentation
+
+
+    .. attribute:: idParameterName
 
        :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
        :type: string
        :ro:
 
        The collection object id property name. Note, this is configured on the top level :class:`~carbond.collections.Collection` and set on the configure during initialzation.
-
-
-    .. attribute:: idParameterDefinition
-
-       :type: boolean
-       :required:
-
-       The id parameter definition (will use :class:`~carbond.collections.Collection.idParameter` as name). This will be merged into :class:`~carbond.collections.FindConfig.parameters` if configured to support id queries.
 
 
     .. attribute:: maxPageSize
@@ -98,6 +81,15 @@ Instance Properties
        Exclude the operation from "docgen" API documentation
 
 
+    .. attribute:: options
+
+       :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
+       :type: object.<string, \*>
+       :required:
+
+       Any additional options that should be added to options passed down to a handler.
+
+
     .. attribute:: pageSize
 
        :type: boolean
@@ -106,12 +98,12 @@ Instance Properties
        The page size
 
 
-    .. attribute:: paginationParameters
+    .. attribute:: parameters
 
        :type: object.<string, carbond.OperationParameter>
        :required:
 
-       The "page" parameter definition
+       The id query parameter (will use :class:`~carbond.collections.Collection.idParameterName` as name) (will be omitted if :class:`~carbond.collections.FindConfig.supportsIdQuery` is ``false``)
 
        .. csv-table::
           :class: details-table
@@ -119,16 +111,11 @@ Instance Properties
           :widths: 10, 10, 10, 10
 
           page, :class:`~carbond.OperationParameter`, ``undefined``, undefined
+          pageSize, :class:`~carbond.OperationParameter`, ``undefined``, undefined
+          skip, :class:`~carbond.OperationParameter`, ``undefined``, undefined
+          limit, :class:`~carbond.OperationParameter`, ``undefined``, undefined
+          idParameterName>, :class:`~carbond.OperationParameter`, ``undefined``, undefined
 
-
-
-    .. attribute:: parameters
-
-       :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
-       :type: object.<string, carbond.OperationParameter>
-       :ro:
-
-       Operation specific parameters (e.g., "skip", "limit"). These will be passed down to the operation handlers via the options parameter if they are not explicitly passed via another leading parameter (e.g., "id" and "update" for :class:`~carbond.collections.Collection.updateObject`). Note, this should generally be left alone by instances. Instead, use :class:`~carbond.collections.CollectionOperationConfig.additionalParameters`.
 
 
     .. attribute:: responses
@@ -138,23 +125,6 @@ Instance Properties
        :required:
 
        Add custom responses for an operation. Note, this will override all default responses.
-
-
-    .. attribute:: skipAndLimitParameters
-
-       :type: object.<string, carbond.OperationParameter>
-       :required:
-
-       The "limit" parameter definition
-
-       .. csv-table::
-          :class: details-table
-          :header: "Name", "Type", "Default", "Description"
-          :widths: 10, 10, 10, 10
-
-          skip, :class:`~carbond.OperationParameter`, ``undefined``, undefined
-          limit, :class:`~carbond.OperationParameter`, ``undefined``, undefined
-
 
 
     .. attribute:: supportsIdQuery
@@ -187,9 +157,3 @@ Methods
 .. class:: carbond.collections.FindConfig
     :noindex:
     :hidden:
-
-    .. function:: addIdQueryParameter()
-
-        :rtype: undefined
-
-        Merge :class:`~carbond.collections.FindConfig.idParameterDefinition` into :class:`~carbond.collections.FindConfig.parameters`

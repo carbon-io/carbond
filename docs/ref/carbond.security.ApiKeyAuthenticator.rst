@@ -67,16 +67,6 @@ Abstract Methods
 
         An abstract method for finding the user from an API key. Should be implemented by subclasses. For example, :class:`~carbond.security.MongoDBApiKeyAuthenticator`
 
-    .. function:: isRootUser(user)
-
-        :inheritedFrom: :class:`~carbond.security.Authenticator`
-        :param user: An object representing a user
-        :type user: Object
-        :returns: ``true`` if the user is determined to be root, ``false`` otherwise.
-        :rtype: boolean
-
-        Checks if a user is root.
-
 Methods
 -------
 

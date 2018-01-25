@@ -19,24 +19,6 @@ Instance Properties
     :noindex:
     :hidden:
 
-    .. attribute:: additionalOptions
-
-       :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
-       :type: object.<string, \*>
-       :required:
-
-       Any additional options that should be added to options passed down to a handler.
-
-
-    .. attribute:: additionalParameters
-
-       :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
-       :type: object.<string, carbond.OperationParameter>
-       :required:
-
-       Any additional parameters that should be added to the collection parameters. These can override parameters configured via the :class:`~carbond.collections.CollectionOperationConfig.parameters`. Note, these will all end up being passed down to operation handlers via the "options" parameter.
-
-
     .. attribute:: allowUnauthenticated
 
        :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
@@ -66,27 +48,20 @@ Instance Properties
 
     .. attribute:: example
 
+       :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
        :type: object
        :default: undefined
 
-       An example successful response body (201) used for documentation
+       An example response body used for documentation
 
 
-    .. attribute:: idParameter
+    .. attribute:: idParameterName
 
        :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
        :type: string
        :ro:
 
        The collection object id property name. Note, this is configured on the top level :class:`~carbond.collections.Collection` and set on the configure during initialzation.
-
-
-    .. attribute:: insertObjectSchema
-
-       :type: object
-       :default: undefined
-
-       The schema used to validate the request body. If this is undefined, the collection level schema will be used.
 
 
     .. attribute:: noDocument
@@ -96,6 +71,15 @@ Instance Properties
        :default: false
 
        Exclude the operation from "docgen" API documentation
+
+
+    .. attribute:: options
+
+       :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
+       :type: object.<string, \*>
+       :required:
+
+       Any additional options that should be added to options passed down to a handler.
 
 
     .. attribute:: parameters
@@ -129,4 +113,12 @@ Instance Properties
        :default: ``true``
 
        Whether or not the HTTP layer returns the object inserted in the response
+
+
+    .. attribute:: schema
+
+       :type: object
+       :default: undefined
+
+       The schema used to validate the request body. If this is undefined, the collection level schema will be used. Note, :class:`~carbond.collections.InsertObjectConfig.parameters.object.schema` takes precedence.
 

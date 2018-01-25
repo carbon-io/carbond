@@ -94,8 +94,9 @@ Methods
 
         Returns the root :class:`~carbond.Service` instance
 
-    .. function:: service(req, res)
+    .. function:: handle(req, res)
 
+        :deprecated:
         :param req: The current request object
         :type req: :class:`~carbond.Request`
         :param res: The response object
@@ -104,3 +105,15 @@ Methods
         :rtype: Object | null | undefined
 
         Handles incoming requests, generating the appropriate response. Responses can be sent by the handler itself or this can be delegated to the service. If an object is returned, it will be serialized (and validated if configured to do so) and sent as the body of the response. If ``null`` is returned, it will end the response. If ``undefined`` is returned, it will be the responsibility of the handler to end the response. If the response status code is something other than ``204``, it should be set by the handler. Additionally, custom headers should be set on the response object before returning. To respond with an error (status code > 400), an instance of :class:`~httperrors.HttpError` can be thrown.
+
+    .. function:: service(req, res)
+
+        :deprecated:
+        :param req: The current request object
+        :type req: :class:`~carbond.Request`
+        :param res: The response object
+        :type res: :class:`~carbond.Response`
+        :throws: :class:`~httperrors.HttpError` 
+        :rtype: Object | null | undefined
+
+        Alias for :class:`~carbond.Operation.handle`

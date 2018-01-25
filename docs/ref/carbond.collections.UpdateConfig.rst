@@ -19,24 +19,6 @@ Instance Properties
     :noindex:
     :hidden:
 
-    .. attribute:: additionalOptions
-
-       :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
-       :type: object.<string, \*>
-       :required:
-
-       Any additional options that should be added to options passed down to a handler.
-
-
-    .. attribute:: additionalParameters
-
-       :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
-       :type: object.<string, carbond.OperationParameter>
-       :required:
-
-       Any additional parameters that should be added to the collection parameters. These can override parameters configured via the :class:`~carbond.collections.CollectionOperationConfig.parameters`. Note, these will all end up being passed down to operation handlers via the "options" parameter.
-
-
     .. attribute:: allowUnauthenticated
 
        :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
@@ -66,13 +48,14 @@ Instance Properties
 
     .. attribute:: example
 
-       :type: Object
+       :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
+       :type: object
        :default: undefined
 
        An example response body used for documentation
 
 
-    .. attribute:: idParameter
+    .. attribute:: idParameterName
 
        :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
        :type: string
@@ -90,12 +73,21 @@ Instance Properties
        Exclude the operation from "docgen" API documentation
 
 
+    .. attribute:: options
+
+       :inheritedFrom: :class:`~carbond.collections.CollectionOperationConfig`
+       :type: object.<string, \*>
+       :required:
+
+       Any additional options that should be added to options passed down to a handler.
+
+
     .. attribute:: parameters
 
        :type: object.<string, carbond.OperationParameter>
        :required:
 
-       The update parameter definition
+       The "upsert" parameter definition (will be omitted if :class:`~carbond.collections.UpdateConfig.supportsUpsert` is ``false``)
 
        .. csv-table::
           :class: details-table
@@ -103,6 +95,7 @@ Instance Properties
           :widths: 10, 10, 10, 10
 
           update, :class:`~carbond.OperationParameter`, ``undefined``, undefined
+          upsert, :class:`~carbond.OperationParameter`, ``undefined``, undefined
 
 
 
@@ -123,15 +116,7 @@ Instance Properties
        Whether or not the HTTP layer returns objects created via an upsert
 
 
-    .. attribute:: supportsUpsert
-
-       :type: boolean
-       :default: false
-
-       Whether of not the client is allowed to create objects in the collection using the PATCH method
-
-
-    .. attribute:: updateSchema
+    .. attribute:: schema
 
        :type: Object
        :default: undefined
@@ -139,18 +124,10 @@ Instance Properties
        The schema used to validate the request body. No validation will be performed if this is left undefined.
 
 
-    .. attribute:: upsertParameter
+    .. attribute:: supportsUpsert
 
-       :type: object.<string, carbond.OperationParameter>
-       :required:
+       :type: boolean
+       :default: false
 
-       The "upsert" parameter definition
-
-       .. csv-table::
-          :class: details-table
-          :header: "Name", "Type", "Default", "Description"
-          :widths: 10, 10, 10, 10
-
-          upsert, :class:`~carbond.OperationParameter`, ``undefined``, undefined
-
+       Whether of not the client is allowed to create objects in the collection using the PATCH method
 

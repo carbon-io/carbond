@@ -34,16 +34,7 @@ Abstract Methods
         :returns: An array of strings representing request headers.
         :rtype: string[]
 
-        Gets the names of the request headers where authentication details can be found. Should be implemented by subclasses, for example: :attr:`~carbond.security.ApiKeyAuthenticator`
-
-    .. function:: isRootUser(user)
-
-        :param user: An object representing a user
-        :type user: Object
-        :returns: ``true`` if the user is determined to be root, ``false`` otherwise.
-        :rtype: boolean
-
-        Checks if a user is root.
+        Gets the names of the request headers where authentication details can be found. Should be implemented by subclasses, for example: :attr:`~carbond.security.ApiKeyAuthenticator`. Must be implemented by subclasses which use headers other than the Authorization header. Otherwise the custom headers will be blocked by the Service.
 
 Methods
 -------

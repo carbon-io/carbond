@@ -19,24 +19,6 @@ Instance Properties
     :noindex:
     :hidden:
 
-    .. attribute:: additionalOptions
-
-       :inheritedFrom: :class:`~carbond.collections.SaveConfig`
-       :type: object.<string, \*>
-       :required:
-
-       Any additional options that should be added to options passed down to a handler.
-
-
-    .. attribute:: additionalParameters
-
-       :inheritedFrom: :class:`~carbond.collections.SaveConfig`
-       :type: object.<string, carbond.OperationParameter>
-       :required:
-
-       Any additional parameters that should be added to the collection parameters. These can override parameters configured via the :class:`~carbond.collections.CollectionOperationConfig.parameters`. Note, these will all end up being passed down to operation handlers via the "options" parameter.
-
-
     .. attribute:: allowUnauthenticated
 
        :inheritedFrom: :class:`~carbond.collections.SaveConfig`
@@ -81,7 +63,7 @@ Instance Properties
        An example response body used for documentation
 
 
-    .. attribute:: idParameter
+    .. attribute:: idParameterName
 
        :inheritedFrom: :class:`~carbond.collections.SaveConfig`
        :type: string
@@ -97,6 +79,15 @@ Instance Properties
        :default: false
 
        Exclude the operation from "docgen" API documentation
+
+
+    .. attribute:: options
+
+       :inheritedFrom: :class:`~carbond.collections.SaveConfig`
+       :type: object.<string, \*>
+       :required:
+
+       Any additional options that should be added to options passed down to a handler.
 
 
     .. attribute:: parameters
@@ -134,7 +125,7 @@ Instance Properties
        Whether or not the HTTP layer returns the objects saved in the response
 
 
-    .. attribute:: saveSchema
+    .. attribute:: schema
 
        :inheritedFrom: :class:`~carbond.collections.SaveConfig`
        :type: Object
