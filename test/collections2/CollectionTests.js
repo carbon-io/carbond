@@ -593,6 +593,30 @@ __(function() {
                     }
                   }
                 }
+              },
+              saveObjectConfig: {
+                responses: {
+                  $multiop: [
+                    {
+                      $merge: {
+                        '$400.description': 'foo bar baz',
+                        200: {
+                          statusCode: 200,
+                          description: 'foo bar baz',
+                          schema: {
+                            type: 'object',
+                            properties: {
+                              _id: {type: 'string'},
+                              foo: {type: 'string'}
+                            },
+                            required: ['_id', 'foo'],
+                            additionalProperties: false
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
               }
             })
           }
@@ -642,6 +666,26 @@ __(function() {
                   additionalProperties: false
                 },
                 headers: ['Location', context.global.idHeaderName]
+              })
+              assert.deepEqual(collection.endpoints[`:${context.global.idParameterName}`].put.responses[200], {
+                statusCode: 200,
+                description: 'foo bar baz',
+                schema: {
+                  type: 'object',
+                  properties: {
+                    [context.global.idParameterName]: {type: 'string'},
+                    foo: {type: 'string'}
+                  },
+                  required: [context.global.idParameterName, 'foo'],
+                  additionalProperties: false
+                },
+                headers: []
+              })
+              assert.deepEqual(collection.endpoints[`:${context.global.idParameterName}`].put.responses[400], {
+                statusCode: 400,
+                description: 'foo bar baz',
+                schema: collection.defaultErrorSchema,
+                headers: []
               })
             }
           }),
