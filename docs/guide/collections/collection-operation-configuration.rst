@@ -83,7 +83,7 @@ classes instead of the default ones as defined on
 .. _collection-operation-config-class:
 
 The OperationConfig class
-=====================
+=========================
 
 :js:class:`~carbond.collections.CollectionOperationConfig` is the base class for
 all Collection configs. It defines basic properties that are common to all
@@ -413,6 +413,120 @@ same configuration parameters as
     removeObjectConfig: {
       description: 'My collection remove operation',
       returnsRemovedObject: true
-    }
+    },
     ...
+
+.. _collection-operation-config-parameters-responses:
+
+Collection Operation Parameter and Response configuration (Advanced)
+====================================================================
+
+.. todo:: pull examples out into code-frags
+
+For the most part, you should not need to alter the parameter or response specs
+themselves when instantiating a :js:class:`~carbond.collections.Collection`. The
+:js:class:`~carbond.collections.Collection` class (or a subclass) and the
+:js:class:`~carbond.collections.CollectionOperationConfig` classes themselves
+should provide the levers necessary to specify the appropriate
+parameter/response schemas. The :js:class:`~carbond.collections.InsertConfig`
+class, for example, has the property
+:js:attr:`~carbond.collections.InsertConfig.insertSchema`, which allows you to
+specify a custom schema for the body of a ``POST`` request that ends up getting
+routed to the collection. If
+:js:attr:`~carbond.collections.InsertConfig.insertSchema` is not configured, it
+will default to :js:attr:`~carbond.collections.Collection.schema`. 
+
+If you do find that you need to further configure parameters/responses beyond
+what is available via either the config or collection classes themselves, you
+can do this using the various operators available via the :js:func:`~atom.o`
+operator (e.g., ``$merge``, ``$delete``, etc.). See :ref:`Atom` for an in-depth
+description of the available operators.
+
+For instance, if you want to configure a custom description for the ``201``
+response returned for a successful insert, you can set that using a property
+path:
+
+.. code-block:: js
+
+    ...
+    insertConfig: {
+      responses: {
+        '$201.description': 'Foo bar baz'
+      }
+    },
+    ...
+    
+If you would prefer to override the ``201`` response wholesale, you can use the
+``$merge`` operator:
+
+.. code-block:: js
+
+    ...
+    insertConfig: {
+      responses: {
+        $merge: {
+          201: {
+            statusCode: 201,
+            description: 'Foo bar baz',
+            schema: {
+              type: 'object',
+              properties: {
+                foo: {type: 'string'},
+                bar: {type: 'string'}
+              },
+              additionalProperties: false,
+              required: ['foo']
+            },
+            headers: ['Location', 'baz']
+          }
+        }
+      }
+    },
+    ...
+
+Similarly, you can add custom parameters using the ``$merge`` operator:
+
+.. code-block:: js
+
+    ...
+    insertConfig: {
+      parameters: {
+        $merge: {
+          baz: {
+            description: 'Foo bar baz',
+            location: 'header',
+            schema: {type: 'string'},
+            default: 'yaz'
+          }
+        }
+      }
+    },
+    ...
+
+If you're paying close attention, these examples should strike you as odd given
+that the operators provided by :js:func:`~atom.o` only work if they are applied
+to the top level properties of the object being instantiated. For example,
+``$merge`` would not get applied in the following case:
+
+.. code-block:: js
+
+    var proto = {a: {b: {c: 1}}}
+    var instance = o({a: {b: {$merge: {d: 2}}}}, proto)
+    console.dir(instance, {depth: 4}) // => { a: { b: { '$merge': { d: 1 } } } }
+
+Whereas, if the ``$merge`` operator is chained, you would get the expected
+result:
+
+.. code-block:: js
+
+    var proto = {a: {b: {c: 1}}}
+    var instance = o({a: {$merge: {b: {$merge: {d: 2}}}}}, proto)
+    console.dir(instance, {depth: 4}) // => { a: { b: { c: 0, d: 1 } } }
+
+The reason, this works in the context of
+:js:class:`~carbond.collections.Collection`\ s is because the instantiation of
+the various :js:class:`~carbond.collections.CollectionOperationConfig`\ s is
+handled by the :js:class:`~carbond.collections.Collection` class during
+initialization *after* construction.
+
 

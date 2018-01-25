@@ -1,4 +1,4 @@
-var carbon = require('carbon-io') 
+var carbon = require('carbon-io')
 var __ = carbon.fibers.__(module)
 var _o = carbon.bond._o(module)
 var carbond = carbon.carbond
