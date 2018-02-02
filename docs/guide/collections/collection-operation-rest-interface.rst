@@ -48,7 +48,7 @@ In the following tables, ``bulk`` will refer to requests whose body is an
     * - ``Location``
       - ``bulk``
       - Contains the URL to retrieve all inserted objects in ID query format
-        (see: `FindConfig`_)
+        (see: :ref:`FindConfig <collection-operation-configuration-FindConfig>`)
     * - ``Location``
       - ``object``
       - Contains the object URL
@@ -200,7 +200,7 @@ PATCH /<collection>
       - Description
     * - ``Location``
       - Contains the URL to retrieve all upserted objects in ID query format
-        (see: `FindConfig`_)
+        (see: :ref:`FindConfig <collection-operation-configuration-FindConfig>`)
     * - :js:attr:`~carbond.collections.Collection.idHeaderName`
       - Contains the EJSON serialized IDs of the upserted objects
 

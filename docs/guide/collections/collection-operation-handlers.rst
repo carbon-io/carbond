@@ -438,3 +438,6 @@ removed object.
 Note, when ``null``, ``undefined``, or ``0`` is returned, this indicates that
 the object does not exist and directs the collection to respond with a ``404``.
 
+.. _json schema: http://json-schema.org/
+.. _json patch: http://jsonpatch.com/
+.. _mongo driver: http://mongodb.github.io/node-mongodb-native/2.2/api/Collection.html

@@ -45,7 +45,7 @@ method.
 .. literalinclude:: ../../code-frags/standalone-examples/ServiceSimpleAuthenticationExample.js
     :language: javascript
     :linenos:
-    :lines: authentication-customAuthenticator
+    :named-sections: authentication-customAuthenticator
     :dedent: 6
     :emphasize-lines: 3
 

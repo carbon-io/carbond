@@ -9,7 +9,7 @@ operations are implemented. You should only have to configure which operations
 you want enabled along with some extra collection level and collection operation
 level configuration.
 
-.. literalinclude:: ../code-frags/hello-world-mongodb/lib/HelloService.js
+.. literalinclude:: ../../code-frags/hello-world-mongodb/lib/HelloService.js
     :language: javascript
     :linenos:
     :lines: 1-12,14,16-

@@ -134,6 +134,8 @@ In the previous example, the ``insert`` operation on this collection will not
 return the objects that were inserted and each incoming object must contain at
 least the ``foo`` property.
 
+.. _collection-operation-configuration-FindConfig:
+
 FindConfig
 ~~~~~~~~~~
 
@@ -437,9 +439,9 @@ will default to :js:attr:`~carbond.collections.Collection.schema`.
 
 If you do find that you need to further configure parameters/responses beyond
 what is available via either the config or collection classes themselves, you
-can do this using the various operators available via the :js:func:`~atom.o`
-operator (e.g., ``$merge``, ``$delete``, etc.). See :ref:`Atom` for an in-depth
-description of the available operators.
+can do this using the various operators available via the :js:func:`~atom.atom.o`
+operator (e.g., ``$merge``, ``$delete``, etc.). See :ref:`Atom <atom-guide-Atom>`
+for an in-depth description of the available operators.
 
 For instance, if you want to configure a custom description for the ``201``
 response returned for a successful insert, you can set that using a property
@@ -528,4 +530,6 @@ the various :js:class:`~carbond.collections.CollectionOperationConfig`\ s is
 handled by the :js:class:`~carbond.collections.Collection` class during
 initialization *after* construction.
 
-
+.. _json schema: http://json-schema.org/
+.. _json patch: http://jsonpatch.com/
+.. _mongo driver: http://mongodb.github.io/node-mongodb-native/2.2/api/Collection.html

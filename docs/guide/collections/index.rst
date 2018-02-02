@@ -10,6 +10,7 @@ Collections
    Operation REST interface <collection-operation-rest-interface.rst>
    Operation pre/post hooks <collection-operation-hooks.rst>
    MongoDBCollection class <mongodb-collection.rst>
+   MongoDBCollection operation configuration <mongodb-collection-operation-config-class.rst>
 
 Carbond :js:class:`~carbond.collections.Collection`\s provide a high-level
 abstraction for defining :js:class:`~carbond.Endpoint`\s that behave like a
