@@ -61,8 +61,8 @@ The Collection class handles much of the HTTP boilerplate code you would
 typically have to implement to build an API. See
 :doc:`collection-operation-rest-interface` for more information.
 
-Collection Endpoints and operations - XX remove from left nav
-=============================================================
+.. rubric:: Collection Endpoints and operations
+   :class: h2
 
 :js:class:`~carbond.collections.Collection` Endpoints can be created either by 
 creating an instance of a :js:class:`~carbond.collections.Collection` (most 
@@ -82,8 +82,8 @@ Collection operation config properties to do so. See
 
 .. _enabling-disabling-operations:
 
-Enabling / Disabling Operations
--------------------------------
+.. rubric:: Enabling / Disabling Operations
+   :class: h2
 
 :js:class:`~carbond.collections.Collection` :doc:`operation handlers
 <collection-operation-handlers>` can be enabled
@@ -127,8 +127,8 @@ exposed to the user:
 
 .. _collection-configuration:
 
-Collection Configuration
-------------------------
+.. rubric:: Collection Configuration
+   :class: h2
 
 .. todo:: fix line lengths below
 
