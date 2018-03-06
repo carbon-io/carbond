@@ -19,23 +19,23 @@ module.exports = o({
       _type: testtube.Test,
       name: 'TestInstantiate',
       description: 'Test instantiate',
-      doTest: function () {
+      doTest: function() {
         assert.throws(function() {
           var limiter = o({_type: Limiter})
         }, Error)
-      }
+      },
     }),
     o({
       _type: testtube.Test,
       name: 'TestSendUnavailable',
       description: 'Test `sendUnavailable`',
-      setup: function () {
+      setup: function() {
         sinon.stub(Limiter.prototype, '_C').callsFake(function() {})
       },
-      teardown: function () {
+      teardown: function() {
         Limiter.prototype._C.restore()
       },
-      doTest: function () {
+      doTest: function() {
         var _handleErrorSpy = sinon.spy()
         var resSpy = sinon.spy()
         resSpy.append = sinon.spy()
@@ -48,7 +48,7 @@ module.exports = o({
         assert(_handleErrorSpy.args[0][1] === resSpy)
         assert(resSpy.append.args[0][0] === 'Retry-After')
         assert(resSpy.append.args[0][1] === '60')
-      }
+      },
     }),
-  ]
+  ],
 })

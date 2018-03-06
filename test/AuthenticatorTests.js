@@ -19,8 +19,8 @@ var USERS_COL = 'authenticator_test_users'
 function mockHttpBasicAuthRequest(username, password) {
   return {
     headers: {
-      authorization: 'Basic ' + Buffer(username + ':' + password, 'utf8').toString('base64')
-    }
+      authorization: 'Basic ' + Buffer(username + ':' + password, 'utf8').toString('base64'),
+    },
   }
 }
 
@@ -29,23 +29,23 @@ function mockService(db) {
     errors: process._HttpErrors,
     logWarning: sinon.spy(),
     logDebug: sinon.spy(),
-    db: db
+    db: db,
   }
 }
 
 var MongoDBAuthenticatorTest = oo({
   _type: testtube.Test,
-  _C: function () {
+  _C: function() {
     this.userRecords = []
   },
   db: {
     $property: {
       get: function() {
         return this.parent.parent.db
-      }
-    }
+      },
+    },
   },
-  setup: function () {
+  setup: function() {
     var c = this.db.getCollection(USERS_COL)
     try {
       c.drop()
@@ -57,7 +57,7 @@ var MongoDBAuthenticatorTest = oo({
       c.insert(record)
     })
   },
-  teardown: function () {
+  teardown: function() {
     var c = this.db.getCollection(USERS_COL)
     try {
       c.drop()
@@ -88,12 +88,12 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: "AuthenticatorTests",
+    name: 'AuthenticatorTests',
 
     /**********************************************************************
      * description
      */
-    description: "Test the various predefined authenticators",
+    description: 'Test the various predefined authenticators',
 
     /**********************************************************************
      * db
@@ -102,8 +102,8 @@ __(function() {
       $property: {
         get: function() {
           return this._db
-        }
-      }
+        },
+      },
     },
 
     /**********************************************************************
@@ -141,7 +141,7 @@ __(function() {
               _type: _o('../lib/security/HttpBasicAuthenticator'),
               usernameField: 'username',
               passwordField: 'password',
-              passwordHashFn: 'foo'
+              passwordHashFn: 'foo',
             },
             username: 'foo',
             password: 'bar',
@@ -150,7 +150,7 @@ __(function() {
               assert.throws(function() {
                 var authenticator = o(self.authenticator)
               }, Error)
-            }
+            },
           }),
           o({
             _type: testtube.Test,
@@ -158,7 +158,7 @@ __(function() {
             description: 'Test with unspecified required fields',
             authenticator: {
               _type: _o('../lib/security/HttpBasicAuthenticator'),
-              usernameField: 'username'
+              usernameField: 'username',
               // missing passwordField
             },
             username: 'foo',
@@ -169,7 +169,7 @@ __(function() {
               assert.throws(function() {
                 authenticator.authenticate(req)
               }, Error)
-            }
+            },
           }),
           o({
             _type: testtube.Test,
@@ -178,7 +178,7 @@ __(function() {
             authenticator: {
               _type: _o('../lib/security/HttpBasicAuthenticator'),
               usernameField: 'username',
-              passwordField: 'password'
+              passwordField: 'password',
             },
             username: 'foo',
             password: 'bar',
@@ -191,7 +191,7 @@ __(function() {
               assert.throws(function() {
                 authenticator.authenticate(req)
               }, process._HttpErrors.Unauthorized)
-            }
+            },
           }),
           o({
             _type: testtube.Test,
@@ -200,7 +200,7 @@ __(function() {
             authenticator: {
               _type: _o('../lib/security/HttpBasicAuthenticator'),
               usernameField: 'username',
-              passwordField: 'password'
+              passwordField: 'password',
             },
             username: 'foo',
             password: 'bar',
@@ -212,7 +212,7 @@ __(function() {
               var req = mockHttpBasicAuthRequest(this.username, this.password)
               var result = authenticator.authenticate(req)
               assert.equal(result.username, this.username)
-            }
+            },
           }),
           o({
             _type: testtube.Test,
@@ -221,7 +221,7 @@ __(function() {
             authenticator: {
               _type: _o('../lib/security/HttpBasicAuthenticator'),
               usernameField: 'username',
-              passwordField: 'password'
+              passwordField: 'password',
             },
             username: 'foo',
             password: 'bar',
@@ -231,7 +231,7 @@ __(function() {
                 _type: _o('../lib/security/Hasher'),
                 hash: function(data) {
                   return 'bar'
-                }
+                },
               })
               var check = function() {
                 var authenticator = o(self.authenticator)
@@ -250,9 +250,9 @@ __(function() {
               assert.throws(function() {
                 var authenticator = o(self.authenticator)
               }, TypeError)
-            }
+            },
           }),
-        ]
+        ],
       }),
 
 
@@ -273,15 +273,15 @@ __(function() {
               _type: _o('../lib/security/MongoDBHttpBasicAuthenticator'),
               usernameField: 'username',
             },
-            doTest: function () {
+            doTest: function() {
               var authenticator = o(this.authenticator)
               authenticator.initialize(mockService(this.db))
               var req = mockHttpBasicAuthRequest(this.username, this.password)
-              assert.throws(function () {
+              assert.throws(function() {
                 // missing passwordField
                 authenticator.authenticate(req)
               }, Error)
-            }
+            },
           }),
           o({
             _type: MongoDBAuthenticatorTest,
@@ -292,15 +292,15 @@ __(function() {
               usernameField: 'username',
               passwordField: 'password',
             },
-            doTest: function () {
+            doTest: function() {
               var authenticator = o(this.authenticator)
               authenticator.initialize(mockService(this.db))
               var req = mockHttpBasicAuthRequest(this.username, this.password)
-              assert.throws(function () {
+              assert.throws(function() {
                 // missing userCollection
                 authenticator.authenticate(req)
               }, Error)
-            }
+            },
           }),
           o({
             _type: MongoDBAuthenticatorTest,
@@ -313,18 +313,18 @@ __(function() {
               userCollection: USERS_COL,
             },
             userRecords: [
-              {username: 'bar', password: 'baz'}
+              {username: 'bar', password: 'baz'},
             ],
             username: 'foo',
             password: 'bar',
-            doTest: function () {
+            doTest: function() {
               var authenticator = o(this.authenticator)
               authenticator.initialize(mockService(this.db))
               var req = mockHttpBasicAuthRequest(this.username, this.password)
-              assert.throws(function () {
+              assert.throws(function() {
                 authenticator.authenticate(req)
               }, process._HttpErrors.Unauthenticated)
-            }
+            },
           }),
           o({
             _type: MongoDBAuthenticatorTest,
@@ -337,18 +337,18 @@ __(function() {
               userCollection: USERS_COL,
             },
             userRecords: [
-              {username: 'foo', password: 'baz'}
+              {username: 'foo', password: 'baz'},
             ],
             username: 'foo',
             password: 'bar',
-            doTest: function () {
+            doTest: function() {
               var authenticator = o(this.authenticator)
               authenticator.initialize(mockService(this.db))
               var req = mockHttpBasicAuthRequest(this.username, this.password)
-              assert.throws(function () {
+              assert.throws(function() {
                 authenticator.authenticate(req)
               }, process._HttpErrors.Unauthenticated)
-            }
+            },
           }),
           o({
             _type: MongoDBAuthenticatorTest,
@@ -361,19 +361,19 @@ __(function() {
               userCollection: USERS_COL,
             },
             userRecords: [
-              {username: 'foo', password: 'bar'}
+              {username: 'foo', password: 'bar'},
             ],
             username: 'foo',
             password: 'bar',
-            doTest: function () {
+            doTest: function() {
               var authenticator = o(this.authenticator)
               authenticator.initialize(mockService(this.db))
               var req = mockHttpBasicAuthRequest(this.username, this.password)
               var user = authenticator.authenticate(req)
               assert.equal(user.username, this.username)
-            }
+            },
           }),
-        ]
+        ],
       }),
 
       //
@@ -390,15 +390,17 @@ __(function() {
             name: 'GenerateKeyTest',
             description: 'Key generation test',
             authenticator: {
-              _type: _o('../lib/security/ApiKeyAuthenticator')
+              _type: _o('../lib/security/ApiKeyAuthenticator'),
             },
-            doTest: function () {
+            doTest: function() {
               var key = o(this.authenticator).generateApiKey()
               assert(_.isString(key))
               assert(
                 key.match(
-                  '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}'))
-            }
+                  '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}'
+                )
+              )
+            },
           }),
           o({
             _type: testtube.Test,
@@ -408,7 +410,7 @@ __(function() {
               _type: _o('../lib/security/ApiKeyAuthenticator'),
               maskUserObjectKeys: [
                 'credentials.password',
-                'credentials.apiKey'
+                'credentials.apiKey',
               ],
               findUser: function(apiKey) {
                 return {
@@ -416,24 +418,24 @@ __(function() {
                   title: 'Bar',
                   credentials: {
                     password: '12345',
-                    apiKey: '123456'
-                  }
+                    apiKey: '123456',
+                  },
                 }
-              }
+              },
             },
-            doTest: function () {
+            doTest: function() {
               var self = this
               var authenticator = o(this.authenticator)
               authenticator.initialize(o({
                 _type: _o('../lib/Service'),
                 logDebug: sinon.spy(),
                 logInfo: sinon.spy(),
-                logError: sinon.spy()
+                logError: sinon.spy(),
               }))
               var user = authenticator.authenticate({
                 header: function() {
                   return '123456'
-                }
+                },
               })
               assert.equal(user.credentials.apiKey, '123456')
               assert.equal(user.credentials.password, '12345')
@@ -447,9 +449,9 @@ __(function() {
                   check(logger.getCall(i))
                 }
               })
-            }
-          })
-        ]
+            },
+          }),
+        ],
       }),
       o({
         _type: testtube.Test,
@@ -469,24 +471,24 @@ __(function() {
                   title: 'Bar',
                   credentials: {
                     password: '12345',
-                    apiKey: '123456'
-                  }
+                    apiKey: '123456',
+                  },
                 }
-              }
+              },
             },
-            doTest: function () {
+            doTest: function() {
               var self = this
               var authenticator = o(this.authenticator)
               authenticator.initialize(o({
                 _type: _o('../lib/Service'),
                 logDebug: sinon.spy(),
                 logInfo: sinon.spy(),
-                logError: sinon.spy()
+                logError: sinon.spy(),
               }))
               var user = authenticator.authenticate({
                 header: function() {
                   return '123456'
-                }
+                },
               })
               assert.equal(user.credentials.apiKey, '123456')
               assert.equal(user.credentials.password, '12345')
@@ -500,10 +502,10 @@ __(function() {
                   check(logger.getCall(i))
                 }
               })
-            }
-          })
-        ]
-      })
-    ]
+            },
+          }),
+        ],
+      }),
+    ],
   })
 })

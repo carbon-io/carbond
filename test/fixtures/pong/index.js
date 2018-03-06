@@ -3,5 +3,5 @@ module.exports = {
   Endpoint: require('./Endpoint'),
   Collection: require('./Collection'),
   MongoDBCollection: require('./MongoDBCollection'),
-  util: require('./util')
+  util: require('./util'),
 }

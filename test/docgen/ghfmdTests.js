@@ -7,7 +7,6 @@ var mockery = require('mockery')
 var sinon = require('sinon')
 var tmp = require('tmp')
 
-var _o = require('@carbon-io/carbon-core').bond._o(module)
 var o  = require('@carbon-io/carbon-core').atom.o(module).main
 var testtube = require('@carbon-io/carbon-core').testtube
 var service = require('../fixtures/Service1')
@@ -20,7 +19,7 @@ module.exports = o({
     mockery.enable({
       useCleanCache: true,
       warnOnReplace: false,
-      warnOnUnregistered: false
+      warnOnUnregistered: false,
     })
   },
   _teardown: function() {
@@ -37,7 +36,7 @@ module.exports = o({
         this.tmpFile = tmp.fileSync()
         this.sandbox = sinon.sandbox.create()
         this.sandbox.stub(process, 'argv', [
-          'node', 'Service1.js', 'gen-static-docs', '-o', 'single-page', '--out', this.tmpFile.name
+          'node', 'Service1.js', 'gen-static-docs', '-o', 'single-page', '--out', this.tmpFile.name,
         ])
         this.sandbox.stub(process, 'exit', function() {
           throw new Error('exit')
@@ -60,14 +59,17 @@ module.exports = o({
         var serviceHash = crypto.createHash('sha256')
         fixtureHash.update(
           fs.readFileSync(
-            __dirname + '/../fixtures/Service1_README.md'))
+            __dirname + '/../fixtures/Service1_README.md'
+          )
+        )
         var fileData = fs.readFileSync(this.tmpFile.name)
         assert(fileData.length > 0)
         serviceHash.update(fileData)
         assert.equal(
-          serviceHash.digest('hex'), fixtureHash.digest('hex'))
-      }
-    })
-  ]
+          serviceHash.digest('hex'), fixtureHash.digest('hex')
+        )
+      },
+    }),
+  ],
 })
 

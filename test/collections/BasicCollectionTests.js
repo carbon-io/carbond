@@ -15,7 +15,7 @@ var carbond = require('../../')
 function getContext(config, page, skip, limit) {
   return {
     skip: page * config.pageSize + skip,
-    limit: limit
+    limit: limit,
   }
 }
 
@@ -45,7 +45,8 @@ var OpHttpTest = oo({
       function(config, req, res) {
         self.config = config
         return originalPreOperation.call(self.ce, config, req, res)
-      })
+      }
+    )
   },
 
   /***************************************************************************
@@ -65,10 +66,10 @@ var OpHttpTest = oo({
       context: {
         skip: this.config.pageSize * page + skip,
         limit: limit,
-        _id: undefined
-      }
+        _id: undefined,
+      },
     }
-  }
+  },
 })
 
 /***************************************************************************************************
@@ -108,7 +109,7 @@ __(function() {
               body: [
                 {foo: 'foo'},
                 {bar: 'bar'},
-                {baz: 'baz'}
+                {baz: 'baz'},
               ],
             },
             resSpec: {
@@ -117,13 +118,13 @@ __(function() {
                 assert.equal(headers.location, '/basic?_id=0&_id=1&_id=2')
               },
               body: [
-                {_id: "0", foo: 'foo'},
-                {_id: "1", bar: 'bar'},
-                {_id: "2", baz: 'baz'}
-              ]
-            }
+                {_id: '0', foo: 'foo'},
+                {_id: '1', bar: 'bar'},
+                {_id: '2', baz: 'baz'},
+              ],
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: OpHttpTest,
@@ -134,17 +135,17 @@ __(function() {
             reqSpec: {
               url: '/basic/',
               method: 'POST',
-              body: {foo: 'foo'}
+              body: {foo: 'foo'},
             },
             resSpec: {
               statusCode: 201,
               headers: function(headers) {
                 assert.equal(headers.location, '/basic/0')
               },
-              body: {_id: "0", foo: "foo"}
-            }
+              body: {_id: '0', foo: 'foo'},
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: OpHttpTest,
@@ -158,7 +159,7 @@ __(function() {
               parameters: {
                 skip: 1,
                 limit: 2,
-                page: 2
+                page: 2,
               },
             },
             resSpec: {
@@ -169,11 +170,12 @@ __(function() {
                   body,
                   _.map(_.range(2), function(id) {
                     return self.parent.genDoc(id, 2, 1, 2)
-                  }))
+                  })
+                )
               },
-            }
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: OpHttpTest,
@@ -191,10 +193,10 @@ __(function() {
                 assert.deepEqual(body, {
                   _id: 1,
                   op: 'findObject',
-                  context: {}
+                  context: {},
                 })
-              }
-            }
+              },
+            },
           },
           {
             reqSpec: {
@@ -203,9 +205,9 @@ __(function() {
             },
             resSpec: {
               statusCode: 404,
-            }
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: OpHttpTest,
@@ -219,35 +221,35 @@ __(function() {
               body: [
                 {
                   _id: '666',
-                  foo: 'foo'
+                  foo: 'foo',
                 },
                 {
                   _id: '777',
-                  bar: 'bar'
+                  bar: 'bar',
                 },
                 {
                   _id: '888',
-                  baz: 'baz'
-                }
-              ]
+                  baz: 'baz',
+                },
+              ],
             },
             resSpec: {
               statusCode: 200,
               body: [
                 {
                   _id: '666',
-                  foo: 'foo'
+                  foo: 'foo',
                 },
                 {
                   _id: '777',
-                  bar: 'bar'
+                  bar: 'bar',
                 },
                 {
                   _id: '888',
-                  baz: 'baz'
-                }
-              ]
-            }
+                  baz: 'baz',
+                },
+              ],
+            },
           },
           {
             reqSpec: {
@@ -256,17 +258,17 @@ __(function() {
               body: {
                 _id: '666',
                 foo: 'foo',
-              }
+              },
             },
             resSpec: {
               statusCode: 400,
               body: function(body) {
                 assert.equal(body.code, 400)
                 assert.equal(body.description, 'Bad Request')
-              }
-            }
+              },
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: OpHttpTest,
@@ -280,19 +282,19 @@ __(function() {
               body: {
                 _id: '666',
                 foo: 'foo',
-              }
+              },
             },
             resSpec: {
               statusCode: 201,
               body: {
                 _id: '666',
-                foo: 'foo'
+                foo: 'foo',
               },
               headers: function(headers) {
                 assert.equal(headers.location, '/basic/666')
                 assert.equal(ejson.parse(headers['carbonio-id']), '666')
-              }
-            }
+              },
+            },
           },
           {
             reqSpec: {
@@ -301,17 +303,17 @@ __(function() {
               body: [
                 {
                   _id: '666',
-                  foo: 'foo'
+                  foo: 'foo',
                 },
-              ]
+              ],
             },
             resSpec: {
               statusCode: 400,
               body: function(body) {
                 assert.equal(body.code, 400)
                 assert.equal(body.description, 'Bad Request')
-              }
-            }
+              },
+            },
           },
           {
             reqSpec: {
@@ -320,17 +322,17 @@ __(function() {
               body: {
                 _id: '666',
                 foo: 'foo',
-              }
+              },
             },
             resSpec: {
               statusCode: 400,
               body: function(body) {
                 assert.equal(body.code, 400)
                 assert.equal(body.description, 'Bad Request')
-              }
-            }
-          }
-        ]
+              },
+            },
+          },
+        ],
       }),
       o({
         _type: OpHttpTest,
@@ -343,25 +345,25 @@ __(function() {
               method: 'PATCH',
               body: {
                 // XXX: there is no format specified update specs on Collection
-                append: 'foo'
-              }
+                append: 'foo',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: {
-                n: 1
-              }
-            }
+                n: 1,
+              },
+            },
           },
           {
             reqSpec: {
               url: '/basic',
               method: 'PATCH',
-              body: []
+              body: [],
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           // XXX: empty bodies are converted to {} before schema validation
           // {
@@ -374,7 +376,7 @@ __(function() {
           //     statusCode: 400
           //   }
           // },
-        ]
+        ],
       }),
       o({
         _type: OpHttpTest,
@@ -386,25 +388,25 @@ __(function() {
               url: '/basic/1',
               method: 'PATCH',
               body: {
-                append: 'foo'
-              }
+                append: 'foo',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: {
-                n: 1
-              }
-            }
+                n: 1,
+              },
+            },
           },
           {
             reqSpec: {
               url: '/basic/1',
               method: 'PATCH',
-              body: []
+              body: [],
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           // XXX: empty bodies are converted to {} before schema validation
           // {
@@ -417,7 +419,7 @@ __(function() {
           //     statusCode: 400
           //   }
           // },
-        ]
+        ],
       }),
       o({
         _type: OpHttpTest,
@@ -427,16 +429,16 @@ __(function() {
           {
             reqSpec: {
               url: '/basic',
-              method: 'DELETE'
+              method: 'DELETE',
             },
             resSpec: {
               statusCode: 200,
               body: {
-                n: 1
-              }
-            }
+                n: 1,
+              },
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: OpHttpTest,
@@ -446,16 +448,16 @@ __(function() {
           {
             reqSpec: {
               url: '/basic/1',
-              method: 'DELETE'
+              method: 'DELETE',
             },
             resSpec: {
               statusCode: 200,
               body: {
-                n: 1
-              }
-            }
+                n: 1,
+              },
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: testtube.Test,
@@ -467,63 +469,63 @@ __(function() {
           this.normalizedDefaultObjectSchema = {
             type: 'object',
             properties: {
-              _id: { type: 'string' }
+              _id: {type: 'string'},
             },
-            required: ['_id']
+            required: ['_id'],
           }
 
           this.insertSchema = {
             type: 'object',
             properties: {
-              _id: { type: 'string' }
-            }
+              _id: {type: 'string'},
+            },
           }
 
           this.saveSchema = {
             type: 'object',
             properties: {
-              _id: { type: 'string' }
+              _id: {type: 'string'},
             },
             required: ['_id'],
-            additionalProperties: true
+            additionalProperties: true,
           }
 
           this.defaultErrorSchema = {
             type: 'object',
             properties: {
-              code: { type: 'integer' },
-              description: { type: 'string' },
-              message: { type: 'string' },
+              code: {type: 'integer'},
+              description: {type: 'string'},
+              message: {type: 'string'},
             },
-            required: ['code', 'description', 'message']
+            required: ['code', 'description', 'message'],
           }
 
           this.NotFoundResponse = {
             statusCode: 404,
             description: 'Collection resource cannot be found by the supplied _id.',
             schema: this.defaultErrorSchema,
-            headers: []
+            headers: [],
           }
 
           this.BadRequestResponse = {
             statusCode: 400,
             description: 'Request is malformed (i.e. invalid parameters).',
             schema: this.defaultErrorSchema,
-            headers: []
+            headers: [],
           }
 
           this.ForbiddenResponse = {
             statusCode: 403,
             description: 'User is not authorized to run this operation.',
             schema: this.defaultErrorSchema,
-            headers: []
+            headers: [],
           }
 
           this.InternalServerErrorResponse = {
             statusCode: 500,
             description: 'There was an unexpected internal error processing this request.',
             schema: this.defaultErrorSchema,
-            headers: []
+            headers: [],
           }
         },
         tests: [
@@ -546,44 +548,45 @@ __(function() {
                           items: {
                             properties: {_id: {type: 'string'}},
                             required: ['_id'],
-                            type: 'object'
+                            type: 'object',
                           },
-                          type: 'array'
+                          type: 'array',
                         },
                         {
                           properties: {_id: {type: 'string'}},
                           required: ['_id'],
-                          type: 'object'
-                        }
-                      ]
+                          type: 'object',
+                        },
+                      ],
                     },
-                    headers: ['Location', this.parent.ce.defaultIdHeaderName]
+                    headers: ['Location', this.parent.ce.defaultIdHeaderName],
                   },
                   '400': _.assign(_.clone(this.parent.BadRequestResponse), {
                     schema: {
                       oneOf: [
                         this.parent.BadRequestResponse.schema,
-                        this.parent.BadRequestResponse.schema
-                      ]
-                    }
+                        this.parent.BadRequestResponse.schema,
+                      ],
+                    },
                   }),
                   '403': _.assign(_.clone(this.parent.ForbiddenResponse), {
                     schema: {
                       oneOf: [
                         this.parent.ForbiddenResponse.schema,
-                        this.parent.ForbiddenResponse.schema
-                      ]
-                    }
+                        this.parent.ForbiddenResponse.schema,
+                      ],
+                    },
                   }),
                   '500': _.assign(_.clone(this.parent.InternalServerErrorResponse), {
                     schema: {
                       oneOf: [
                         this.parent.InternalServerErrorResponse.schema,
-                        this.parent.InternalServerErrorResponse.schema
-                      ]
-                    }
-                  })
-                })
+                        this.parent.InternalServerErrorResponse.schema,
+                      ],
+                    },
+                  }),
+                }
+              )
               assert.deepEqual(
                 this.parent.ce.getOperation('post').parameters, {
                   object: {
@@ -596,17 +599,17 @@ __(function() {
                         {
                           items: {
                             properties: {_id: {type: 'string'}},
-                            type: 'object'
+                            type: 'object',
                           },
-                          type: 'array'
+                          type: 'array',
                         },
                         {
                           properties: {_id: {type: 'string'}},
-                          type: 'object'
-                        }
-                      ]
+                          type: 'object',
+                        },
+                      ],
                     },
-                    default: null
+                    default: null,
                   },
                   objects: {
                     description: 'Object(s) to insert',
@@ -618,20 +621,21 @@ __(function() {
                         {
                           items: {
                             properties: {_id: {type: 'string'}},
-                            type: 'object'
+                            type: 'object',
                           },
-                          type: 'array'
+                          type: 'array',
                         },
                         {
                           properties: {_id: {type: 'string'}},
-                          type: 'object'
-                        }
-                      ]
+                          type: 'object',
+                        },
+                      ],
                     },
-                    default: null
-                  }
-                })
-            }
+                    default: null,
+                  },
+                }
+              )
+            },
           }),
           o({
             _type: testtube.Test,
@@ -646,14 +650,15 @@ __(function() {
                                  'additional properties.',
                     schema: {
                       type: 'array',
-                      items: this.parent.normalizedDefaultObjectSchema
+                      items: this.parent.normalizedDefaultObjectSchema,
                     },
-                    headers: []
+                    headers: [],
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
-                })
+                  '500': this.parent.InternalServerErrorResponse,
+                }
+              )
               assert.deepEqual(
                 this.parent.ce.getOperation('get').parameters, {
                   page: {
@@ -662,11 +667,11 @@ __(function() {
                     schema: {
                       type: 'number',
                       multipleOf: 1,
-                      minimum: 0
+                      minimum: 0,
                     },
                     location: 'query',
                     required: false,
-                    default: 0
+                    default: 0,
                   },
                   pageSize: {
                     name: 'pageSize',
@@ -674,11 +679,11 @@ __(function() {
                     schema: {
                       type: 'number',
                       multipleOf: 1,
-                      minimum: 0
+                      minimum: 0,
                     },
                     location: 'query',
                     required: false,
-                    default: null
+                    default: null,
                   },
                   skip: {
                     name: 'skip',
@@ -686,11 +691,11 @@ __(function() {
                     schema: {
                       type: 'number',
                       multipleOf: 1,
-                      minimum: 0
+                      minimum: 0,
                     },
                     location: 'query',
                     required: false,
-                    default: null
+                    default: null,
                   },
                   limit: {
                     name: 'limit',
@@ -698,11 +703,11 @@ __(function() {
                     schema: {
                       type: 'number',
                       multipleOf: 1,
-                      minimum: 0
+                      minimum: 0,
                     },
                     location: 'query',
                     required: false,
-                    default: null
+                    default: null,
                   },
                   _id: {
                     name: '_id',
@@ -710,15 +715,16 @@ __(function() {
                     schema: {
                       oneOf: [
                         {type: 'string'},
-                        {type: 'array', items: {type: 'string'}}
-                      ]
+                        {type: 'array', items: {type: 'string'}},
+                      ],
                     },
                     location: 'query',
                     required: false,
-                    default: null
-                  }
-                })
-            }
+                    default: null,
+                  },
+                }
+              )
+            },
           }),
           o({
             _type: testtube.Test,
@@ -730,35 +736,38 @@ __(function() {
                   '200': {
                     statusCode: 200,
                     description: 'Object(s) in the collection were successfully updated',
-                    schema:  {
+                    schema: {
                       type: 'object',
                       properties: {
                         n: {
                           type: 'number',
                           minimum: 0,
-                          multipleOf: 1
-                        }
+                          multipleOf: 1,
+                        },
                       },
                       required: ['n'],
-                      additionalProperties: false
+                      additionalProperties: false,
                     },
-                    headers: []
+                    headers: [],
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
-                })
-            assert.deepEqual(
-              this.parent.ce.getOperation('patch').parameters, {
-                update: {
-                  name: 'update',
-                  location: 'body',
-                  description: 'The update spec',
-                  schema: {type: 'object'},
-                  required: true,
-                  default: null
-                }})
-            }
+                  '500': this.parent.InternalServerErrorResponse,
+                }
+              )
+              assert.deepEqual(
+                this.parent.ce.getOperation('patch').parameters, {
+                  update: {
+                    name: 'update',
+                    location: 'body',
+                    description: 'The update spec',
+                    schema: {type: 'object'},
+                    required: true,
+                    default: null,
+                  },
+                }
+              )
+            },
           }),
           o({
             _type: testtube.Test,
@@ -770,27 +779,29 @@ __(function() {
                   '200': {
                     statusCode: 200,
                     description: 'Object(s) in collection were successfully removed',
-                    schema:  {
+                    schema: {
                       type: 'object',
                       properties: {
                         n: {
                           type: 'number',
                           minimum: 0,
-                          multipleOf: 1
-                        }
+                          multipleOf: 1,
+                        },
                       },
                       required: ['n'],
-                      additionalProperties: false
+                      additionalProperties: false,
                     },
-                    headers: []
+                    headers: [],
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
-                })
+                  '500': this.parent.InternalServerErrorResponse,
+                }
+              )
               assert.deepEqual(
-                this.parent.ce.getOperation('delete').parameters, {})
-            }
+                this.parent.ce.getOperation('delete').parameters, {}
+              )
+            },
           }),
           o({
             _type: testtube.Test,
@@ -804,7 +815,7 @@ __(function() {
                     description: 'The object was successfully saved. The body will ' +
                                  'contain the saved object.',
                     schema: this.parent.normalizedDefaultObjectSchema,
-                    headers: []
+                    headers: [],
                   },
                   '201': {
                     statusCode: 201,
@@ -813,12 +824,13 @@ __(function() {
                                  'resource and the body will contain the inserted object if ' +
                                  'configured to do so.',
                     schema: this.parent.normalizedDefaultObjectSchema,
-                    headers: ['Location', this.parent.ce.idHeaderName]
+                    headers: ['Location', this.parent.ce.idHeaderName],
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
-                })
+                  '500': this.parent.InternalServerErrorResponse,
+                }
+              )
               assert.deepEqual(
                 this.parent.oe.getOperation('put').parameters, {
                   object: {
@@ -827,10 +839,11 @@ __(function() {
                     location: 'body',
                     schema: this.parent.saveSchema,
                     required: true,
-                    default: null
-                  }
-                 })
-            }
+                    default: null,
+                  },
+                }
+              )
+            },
           }),
           o({
             _type: testtube.Test,
@@ -842,15 +855,15 @@ __(function() {
                   statusCode: 200,
                   description: 'Returns the object resource found at this URL specified by id.',
                   schema: this.parent.normalizedDefaultObjectSchema,
-                  headers: []
+                  headers: [],
                 },
                 '404': this.parent.NotFoundResponse,
                 '400': this.parent.BadRequestResponse,
                 '403': this.parent.ForbiddenResponse,
-                '500': this.parent.InternalServerErrorResponse
+                '500': this.parent.InternalServerErrorResponse,
               })
               assert.deepEqual(this.parent.oe.getOperation('get').parameters, {})
-            }
+            },
           }),
           o({
             _type: testtube.Test,
@@ -869,33 +882,35 @@ __(function() {
                           type: 'number',
                           minimum: 0,
                           maximum: 1,
-                          multipleOf: 1
-                        }
+                          multipleOf: 1,
+                        },
                       },
                       required: ['n'],
-                      additionalProperties: false
+                      additionalProperties: false,
                     },
-                    headers: []
+                    headers: [],
                   },
                   '404': this.parent.NotFoundResponse,
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
-                })
+                  '500': this.parent.InternalServerErrorResponse,
+                }
+              )
               assert.deepEqual(
                 this.parent.oe.getOperation('patch').parameters, {
                   update: {
                     name: 'update',
                     description: 'The update spec',
-                    schema:  {
-                      type: 'object'
+                    schema: {
+                      type: 'object',
                     },
                     location: 'body',
                     required: true,
-                    default: null
-                  }
-                })
-            }
+                    default: null,
+                  },
+                }
+              )
+            },
           }),
           o({
             _type: testtube.Test,
@@ -914,25 +929,27 @@ __(function() {
                           type: 'number',
                           minimum: 0,
                           maximum: 1,
-                          multipleOf: 1
-                        }
+                          multipleOf: 1,
+                        },
                       },
                       required: ['n'],
-                      additionalProperties: false
+                      additionalProperties: false,
                     },
-                    headers: []
+                    headers: [],
                   },
                   '404': this.parent.NotFoundResponse,
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
-                })
+                  '500': this.parent.InternalServerErrorResponse,
+                }
+              )
               assert.deepEqual(
-                this.parent.oe.getOperation('delete').parameters, {})
-            }
-          })
-        ]
-      })
+                this.parent.oe.getOperation('delete').parameters, {}
+              )
+            },
+          }),
+        ],
+      }),
     ],
   })
 })

@@ -41,9 +41,9 @@ __(function() {
           endpoints: {
             removeObject: o({
               _type: pong.Collection,
-              enabled: {removeObject: true}
-            })
-          }
+              enabled: {removeObject: true},
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -62,14 +62,14 @@ __(function() {
               method: 'DELETE',
               headers: {
                 'x-pong': ejson.stringify({
-                  removeObject: 1
-                })
-              }
+                  removeObject: 1,
+                }),
+              },
             },
             resSpec: {
               statusCode: 200,
-              body: {n: 1}
-            }
+              body: {n: 1},
+            },
           },
           {
             name: 'RemoveObjectHandlerReturnInvalidCountTest',
@@ -93,13 +93,13 @@ __(function() {
               method: 'DELETE',
               headers: {
                 'x-pong': ejson.stringify({
-                  removeObject: 2
-                })
-              }
+                  removeObject: 2,
+                }),
+              },
             },
             resSpec: {
-              statusCode: 500
-            }
+              statusCode: 500,
+            },
           },
           {
             name: 'RemoveObjectHandlerReturnArrayTest',
@@ -124,16 +124,16 @@ __(function() {
                 method: 'DELETE',
                 headers: {
                   'x-pong': ejson.stringify({
-                    removeObject: {[context.global.idParameterName]: '0', foo: 'bar'}
-                  })
-                }
+                    removeObject: {[context.global.idParameterName]: '0', foo: 'bar'},
+                  }),
+                },
               }
             },
             resSpec: {
-              statusCode: 500
-            }
+              statusCode: 500,
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -145,10 +145,10 @@ __(function() {
               _type: pong.Collection,
               enabled: {removeObject: true},
               removeObjectConfig: {
-                returnsRemovedObject: true
-              }
-            })
-          }
+                returnsRemovedObject: true,
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -168,17 +168,17 @@ __(function() {
                 method: 'DELETE',
                 headers: {
                   'x-pong': ejson.stringify({
-                    removeObject: {[context.global.idParameterName]: '0', foo: 'bar'}
-                  })
-                }
+                    removeObject: {[context.global.idParameterName]: '0', foo: 'bar'},
+                  }),
+                },
               }
             },
             resSpec: {
               statusCode: 200,
               body: function(body, context) {
                 assert.deepStrictEqual(body, {[context.global.idParameterName]: '0', foo: 'bar'})
-              }
-            }
+              },
+            },
           },
           {
             name: 'RemoveObjectHandlerReturnObjectsTest',
@@ -202,13 +202,13 @@ __(function() {
               method: 'DELETE',
               headers: {
                 'x-pong': ejson.stringify({
-                  removeObject: 1
-                })
-              }
+                  removeObject: 1,
+                }),
+              },
             },
             resSpec: {
-              statusCode: 500
-            }
+              statusCode: 500,
+            },
           },
           {
             name: 'RemoveObjectHandlerReturnObjectTest',
@@ -233,16 +233,16 @@ __(function() {
                 method: 'DELETE',
                 headers: {
                   'x-pong': ejson.stringify({
-                    removeObject: [{[context.global.idParameterName]: '0', foo: 'bar'}]
-                  })
-                }
+                    removeObject: [{[context.global.idParameterName]: '0', foo: 'bar'}],
+                  }),
+                },
               }
             },
             resSpec: {
-              statusCode: 500
-            }
+              statusCode: 500,
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -262,14 +262,14 @@ __(function() {
                       schema: {
                         type: 'number',
                         minimum: 0,
-                        multipleOf: 2
-                      }
-                    }
-                  }
-                }
-              }
-            })
-          }
+                        multipleOf: 2,
+                      },
+                    },
+                  },
+                },
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -284,7 +284,7 @@ __(function() {
             _type: testtube.Test,
             name: 'RemoveObjectConfigCustomParameterInitializationTest',
             doTest: function(context) {
-              let removeObjectOperation = 
+              let removeObjectOperation =
                 this.parent.service.endpoints.removeObject.endpoints[`:${context.global.idParameterName}`].delete
               assert.deepEqual(removeObjectOperation.parameters, {
                 foo: {
@@ -293,10 +293,10 @@ __(function() {
                   description: undefined,
                   schema: {type: 'number', minimum: 0, multipleOf: 2},
                   required: false,
-                  default: undefined
+                  default: undefined,
                 },
               })
-            }
+            },
           }),
           {
             name: 'RemoveObjectConfigCustomParameterPassedViaOptionsFailTest',
@@ -313,15 +313,15 @@ __(function() {
                 method: 'DELETE',
                 headers: {
                   'x-pong': ejson.stringify({
-                    removeObject: 1
+                    removeObject: 1,
                   }),
-                  foo: 3
-                }
+                  foo: 3,
+                },
               }
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'RemoveObjectConfigCustomParameterPassedViaOptionsSuccessTest',
@@ -338,17 +338,17 @@ __(function() {
                 method: 'DELETE',
                 headers: {
                   'x-pong': ejson.stringify({
-                    removeObject: 1
+                    removeObject: 1,
                   }),
-                  foo: 4
+                  foo: 4,
                 },
               }
             },
             resSpec: {
-              statusCode: 200
-            }
-          }
-        ]
+              statusCode: 200,
+            },
+          },
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -379,15 +379,15 @@ __(function() {
                 context.postRemoveObjectOperation = 1
                 res.set('context', ejson.stringify(context))
                 return carbond.collections.Collection.prototype.postRemoveObjectOperation.apply(this, arguments)
-              }
-            })
-          }
+              },
+            }),
+          },
         }),
         tests: [
           {
             reqSpec: {
               url: '/removeObject/0',
-              method: 'DELETE'
+              method: 'DELETE',
             },
             resSpec: {
               statusCode: 200,
@@ -397,14 +397,14 @@ __(function() {
                   preRemoveObject: 1,
                   removeObject: 1,
                   postRemoveObject: 1,
-                  postRemoveObjectOperation: 1
+                  postRemoveObjectOperation: 1,
                 })
-              }
-            }
-          }
-        ]
-      })
-    ]
+              },
+            },
+          },
+        ],
+      }),
+    ],
   })
 })
 

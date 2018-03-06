@@ -221,7 +221,7 @@ var _Collection = oo({
 
   postRemoveObjectOperation: function(result, config, req, res) {
     return util.overrideOrSuper(Collection, this, 'postRemoveObjectOperation', arguments, req)
-  }
+  },
 })
 
 module.exports = _Collection

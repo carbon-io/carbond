@@ -13,7 +13,7 @@ __(function() {
         // pre-operations-asyncFunc
         get: function(req, res) {// 1
           res.send({msg: 'Hello World!'})
-        }
+        },
         // post-operations-asyncFunc
       }),
       hello2: o({
@@ -24,8 +24,8 @@ __(function() {
           parameters: {},
           service: function(req, res) {
             res.send({msg: 'Hello World!'})
-          }
-        }
+          },
+        },
         // post-operations-asyncObj
       }),
       hello3: o({
@@ -33,7 +33,7 @@ __(function() {
         // pre-operations-syncFunc
         get: function(req) {
           return {msg: 'Hello World!'}
-        }
+        },
         // post-operations-syncFunc
       }),
       hello4: o({
@@ -44,8 +44,8 @@ __(function() {
           parameters: {},
           service: function(req) {
             return {msg: 'Hello World!'}
-          }
-        }
+          },
+        },
         // post-operations-syncObj
       }),
       hello5: o({
@@ -58,13 +58,13 @@ __(function() {
               description: 'A message to say to the world',
               location: 'query',
               required: true,
-              schema: {type: 'string'}
-            }
+              schema: {type: 'string'},
+            },
           },
           service: function(req) {
             return {msg: 'Hello World! ' + req.parameters.message}
-          }
-        }
+          },
+        },
         // post-operations-queryParam
       }),
       zipcodes: o({
@@ -81,18 +81,18 @@ __(function() {
                 type: 'object',
                 properties: {
                   _id: {type: 'number'},
-                  state: {type: 'string'}
-                }
-              }
-            }
+                  state: {type: 'string'},
+                },
+              },
+            },
           },
           service: function(req) {
             this.getService().db.getCollection('zipcodes').insert(req.parameters.body)
             return null
-          }
-        }
+          },
+        },
         // post-operations-bodyParam
-      })
-    }
+      }),
+    },
   })
 })

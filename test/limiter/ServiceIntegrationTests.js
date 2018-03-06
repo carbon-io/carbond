@@ -32,14 +32,14 @@ var CountDownLimiter = oo({
     }
     this.state.visits--
     next()
-  }
+  },
 })
 
 var SimpleOperation = oo({
   _type: Operation,
   handle: function() {
     return this.endpoint.path + '::' + this.name
-  }
+  },
 })
 
 var TestService = {
@@ -57,12 +57,12 @@ var TestService = {
   authenticator: o({
     _type: ApiKeyAuthenticator,
     apiKeyParameterName: 'Api-Key',
-    apiKeyLocation: 'header'
+    apiKeyLocation: 'header',
   }),
 
   limiter: o({
     _type: CountDownLimiter,
-    name: 'serviceLimiter'
+    name: 'serviceLimiter',
   }),
 
   endpoints: {
@@ -72,7 +72,7 @@ var TestService = {
         _type: CountDownLimiter,
         preAuth: true,
         maxVisits: 4,
-        name: '/foo::EndpointLimiter'
+        name: '/foo::EndpointLimiter',
       }),
       get: o({
         _type: SimpleOperation,
@@ -80,8 +80,8 @@ var TestService = {
           _type: CountDownLimiter,
           preAuth: true,
           maxVisits: 2,
-          name: '/foo::get::OperationLimiter'
-        })
+          name: '/foo::get::OperationLimiter',
+        }),
       }),
       post: o({
         _type: SimpleOperation,
@@ -89,8 +89,8 @@ var TestService = {
           _type: CountDownLimiter,
           preAuth: false,
           maxVisits: 2,
-          name: '/foo::post::OperationLimiter'
-        })
+          name: '/foo::post::OperationLimiter',
+        }),
       }),
       endpoints: {
         bar: o({
@@ -98,13 +98,13 @@ var TestService = {
           limiter: o({
             _type: CountDownLimiter,
             maxVisits: 1,
-            name: '/foo/bar::EndpointLimiter'
+            name: '/foo/bar::EndpointLimiter',
           }),
           get: o({
             _type: SimpleOperation,
           }),
         }),
-      }
+      },
     }),
     bar: o({
       _type: Endpoint,
@@ -112,7 +112,7 @@ var TestService = {
         _type: CountDownLimiter,
         preAuth: false,
         maxVisits: 4,
-        name: '/bar::EndpointLimiter'
+        name: '/bar::EndpointLimiter',
       }),
       get: o({
         _type: SimpleOperation,
@@ -120,8 +120,8 @@ var TestService = {
           _type: CountDownLimiter,
           preAuth: true,
           maxVisits: 2,
-          name: '/bar::get::OperationLimiter'
-        })
+          name: '/bar::get::OperationLimiter',
+        }),
       }),
       post: o({
         _type: SimpleOperation,
@@ -129,8 +129,8 @@ var TestService = {
           _type: CountDownLimiter,
           preAuth: false,
           maxVisits: 2,
-          name: '/bar::post::OperationLimiter'
-        })
+          name: '/bar::post::OperationLimiter',
+        }),
       }),
       endpoints: {
         foo: o({
@@ -138,15 +138,15 @@ var TestService = {
           limiter: o({
             _type: CountDownLimiter,
             maxVisits: 1,
-            name: '/bar/foo::EndpointLimiter'
+            name: '/bar/foo::EndpointLimiter',
           }),
           get: o({
             _type: SimpleOperation,
           }),
-        })
-      }
-    })
-  }
+        }),
+      },
+    }),
+  },
 }
 
 module.exports = o({
@@ -158,11 +158,11 @@ module.exports = o({
   _init: function() {
     ServiceTest.prototype._init.call(this)
   },
-  setup: function () {
+  setup: function() {
     ServiceTest.prototype.setup.call(this)
     sinon.stub(ApiKeyAuthenticator.prototype, 'findUser').callsFake(function() {
       return {
-        username: 'foo'
+        username: 'foo',
       }
     })
 
@@ -192,7 +192,7 @@ module.exports = o({
     // /bar/foo
     sinon.spy(this.service.endpoints.bar.endpoints.foo.limiter, 'process')
   },
-  teardown: function () {
+  teardown: function() {
     ServiceTest.prototype.teardown.call(this)
     ApiKeyAuthenticator.prototype.findUser.restore()
 
@@ -230,103 +230,103 @@ module.exports = o({
         url: '/foo',
         method: 'get',
         headers: {
-          'Api-Key': 'foo'
-        }
+          'Api-Key': 'foo',
+        },
       },
       resSpec: {
         statusCode: 200,
-        body: '/foo::get'
-      }
+        body: '/foo::get',
+      },
     },
     {
       reqSpec: {
         url: '/foo',
         method: 'get',
         headers: {
-          'Api-Key': 'foo'
-        }
+          'Api-Key': 'foo',
+        },
       },
       resSpec: {
         statusCode: 200,
-        body: '/foo::get'
-      }
+        body: '/foo::get',
+      },
     },
     {
       reqSpec: {
         url: '/foo',
         method: 'get',
         headers: {
-          'Api-Key': 'foo'
-        }
+          'Api-Key': 'foo',
+        },
       },
       resSpec: {
         statusCode: 503,
         body: {
           code: 503,
           description: 'Service Unavailable',
-          message: '/foo::get::OperationLimiter'
-        }
-      }
+          message: '/foo::get::OperationLimiter',
+        },
+      },
     },
     {
       reqSpec: {
         url: '/foo',
         method: 'post',
         headers: {
-          'Api-Key': 'foo'
-        }
+          'Api-Key': 'foo',
+        },
       },
       resSpec: {
         statusCode: 200,
-        body: '/foo::post'
-      }
+        body: '/foo::post',
+      },
     },
     {
       reqSpec: {
         url: '/foo',
         method: 'post',
         headers: {
-          'Api-Key': 'foo'
-        }
+          'Api-Key': 'foo',
+        },
       },
       resSpec: {
         statusCode: 503,
         body: {
           code: 503,
           description: 'Service Unavailable',
-          message: '/foo::EndpointLimiter'
-        }
-      }
+          message: '/foo::EndpointLimiter',
+        },
+      },
     },
     {
       reqSpec: {
         url: '/foo/bar',
         method: 'get',
         headers: {
-          'Api-Key': 'foo'
-        }
+          'Api-Key': 'foo',
+        },
       },
       resSpec: {
         statusCode: 200,
-        body: '/foo/bar::get'
-      }
+        body: '/foo/bar::get',
+      },
     },
     {
       reqSpec: {
         url: '/foo/bar',
         method: 'get',
         headers: {
-          'Api-Key': 'foo'
-        }
+          'Api-Key': 'foo',
+        },
       },
       resSpec: {
         statusCode: 503,
         body: {
           code: 503,
           description: 'Service Unavailable',
-          message: '/foo/bar::EndpointLimiter'
-        }
-      }
+          message: '/foo/bar::EndpointLimiter',
+        },
+      },
     },
     // /bar/foo
     {
@@ -334,69 +334,69 @@ module.exports = o({
         url: '/bar',
         method: 'get',
         headers: {
-          'Api-Key': 'bar'
-        }
+          'Api-Key': 'bar',
+        },
       },
       resSpec: {
         statusCode: 200,
-        body: '/bar::get'
-      }
+        body: '/bar::get',
+      },
     },
     {
       reqSpec: {
         url: '/bar',
         method: 'get',
         headers: {
-          'Api-Key': 'bar'
-        }
+          'Api-Key': 'bar',
+        },
       },
       resSpec: {
         statusCode: 200,
-        body: '/bar::get'
-      }
+        body: '/bar::get',
+      },
     },
     {
       reqSpec: {
         url: '/bar',
         method: 'get',
         headers: {
-          'Api-Key': 'bar'
-        }
+          'Api-Key': 'bar',
+        },
       },
       resSpec: {
         statusCode: 503,
         body: {
           code: 503,
           description: 'Service Unavailable',
-          message: '/bar::get::OperationLimiter'
-        }
-      }
+          message: '/bar::get::OperationLimiter',
+        },
+      },
     },
     {
       reqSpec: {
         url: '/bar',
         method: 'post',
         headers: {
-          'Api-Key': 'bar'
-        }
+          'Api-Key': 'bar',
+        },
       },
       resSpec: {
         statusCode: 200,
-        body: '/bar::post'
-      }
+        body: '/bar::post',
+      },
     },
     {
       reqSpec: {
         url: '/bar',
         method: 'post',
         headers: {
-          'Api-Key': 'bar'
-        }
+          'Api-Key': 'bar',
+        },
       },
       resSpec: {
         statusCode: 200,
-        body: '/bar::post'
-      }
+        body: '/bar::post',
+      },
     },
     // NOTE: because of the preAuth/postAuth ordering, one more request is
     //       allowed to get through before the endpoint limiter kicks in
@@ -405,47 +405,47 @@ module.exports = o({
         url: '/bar',
         method: 'post',
         headers: {
-          'Api-Key': 'bar'
-        }
+          'Api-Key': 'bar',
+        },
       },
       resSpec: {
         statusCode: 503,
         body: {
           code: 503,
           description: 'Service Unavailable',
-          message: '/bar::EndpointLimiter'
-        }
-      }
+          message: '/bar::EndpointLimiter',
+        },
+      },
     },
     {
       reqSpec: {
         url: '/bar/foo',
         method: 'get',
         headers: {
-          'Api-Key': 'foo'
-        }
+          'Api-Key': 'foo',
+        },
       },
       resSpec: {
         statusCode: 200,
-        body: '/bar/foo::get'
-      }
+        body: '/bar/foo::get',
+      },
     },
     {
       reqSpec: {
         url: '/bar/foo',
         method: 'get',
         headers: {
-          'Api-Key': 'foo'
-        }
+          'Api-Key': 'foo',
+        },
       },
       resSpec: {
         statusCode: 503,
         body: {
           code: 503,
           description: 'Service Unavailable',
-          message: '/bar/foo::EndpointLimiter'
-        }
-      }
+          message: '/bar/foo::EndpointLimiter',
+        },
+      },
     },
-  ]
+  ],
 })

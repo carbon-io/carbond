@@ -42,9 +42,9 @@ __(function() {
             findObject: o({
               _type: pong.Collection,
               idGenerator: pong.util.collectionIdGenerator,
-              enabled: {findObject: true}
-            })
-          }
+              enabled: {findObject: true},
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -64,15 +64,15 @@ __(function() {
                 method: 'HEAD',
                 headers: {
                   'x-pong': ejson.stringify({
-                    findObject: {[context.global.idParameterName]: '0', foo: 'bar'}
-                  })
-                }
+                    findObject: {[context.global.idParameterName]: '0', foo: 'bar'},
+                  }),
+                },
               }
             },
             resSpec: {
               statusCode: 200,
-              body: undefined
-            }
+              body: undefined,
+            },
           },
           {
             name: 'FindObjectReturnArrayValidationErrorTest',
@@ -83,14 +83,14 @@ __(function() {
                 method: 'GET',
                 headers: {
                   'x-pong': ejson.stringify({
-                    findObject: [{[context.global.idParameterName]: '0', foo: 'bar'}]
-                  })
-                }
+                    findObject: [{[context.global.idParameterName]: '0', foo: 'bar'}],
+                  }),
+                },
               }
             },
             resSpec: {
-              statusCode: 500
-            }
+              statusCode: 500,
+            },
           },
           {
             name: 'FindObjectTest',
@@ -101,17 +101,17 @@ __(function() {
                 method: 'GET',
                 headers: {
                   'x-pong': ejson.stringify({
-                    findObject: {[context.global.idParameterName]: '0', foo: 'bar'}
-                  })
-                }
+                    findObject: {[context.global.idParameterName]: '0', foo: 'bar'},
+                  }),
+                },
               }
             },
             resSpec: {
               statusCode: 200,
               body: function(body, context) {
                 assert.deepStrictEqual(body, {[context.global.idParameterName]: '0', foo: 'bar'})
-              }
-            }
+              },
+            },
           },
           {
             name: 'FindObjectNotFoundTest',
@@ -122,16 +122,16 @@ __(function() {
                 method: 'GET',
                 headers: {
                   'x-pong': ejson.stringify({
-                    findObject: null
-                  })
-                }
+                    findObject: null,
+                  }),
+                },
               }
             },
             resSpec: {
-              statusCode: 404
-            }
+              statusCode: 404,
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -151,14 +151,14 @@ __(function() {
                       schema: {
                         type: 'number',
                         minimum: 0,
-                        multipleOf: 2
-                      }
-                    }
-                  }
-                }
-              }
-            })
-          }
+                        multipleOf: 2,
+                      },
+                    },
+                  },
+                },
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -173,7 +173,7 @@ __(function() {
             _type: testtube.Test,
             name: 'FindObjectConfigCustomParameterInitializationTest',
             doTest: function(context) {
-              let findObjectOperation = 
+              let findObjectOperation =
                 this.parent.service.endpoints.findObject.endpoints[`:${context.global.idParameterName}`].get
               assert.deepEqual(findObjectOperation.parameters, {
                 foo: {
@@ -182,10 +182,10 @@ __(function() {
                   description: undefined,
                   schema: {type: 'number', minimum: 0, multipleOf: 2},
                   required: false,
-                  default: undefined
-                }
+                  default: undefined,
+                },
               })
-            }
+            },
           }),
           {
             name: 'FindObjectConfigCustomParameterPassedViaOptionsFailTest',
@@ -202,15 +202,15 @@ __(function() {
                 method: 'GET',
                 headers: {
                   'x-pong': ejson.stringify({
-                    findObject: {[context.global.idParameterName]: '0', foo: 'bar'}
+                    findObject: {[context.global.idParameterName]: '0', foo: 'bar'},
                   }),
-                  foo: 3
-                }
+                  foo: 3,
+                },
               }
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'FindObjectConfigCustomParameterPassedViaOptionsSuccessTest',
@@ -227,17 +227,17 @@ __(function() {
                 method: 'GET',
                 headers: {
                   'x-pong': ejson.stringify({
-                    findObject: {[context.global.idParameterName]: '0', foo: 'bar'}
+                    findObject: {[context.global.idParameterName]: '0', foo: 'bar'},
                   }),
-                  foo: 4
-                }
+                  foo: 4,
+                },
               }
             },
             resSpec: {
-              statusCode: 200
-            }
-          }
-        ]
+              statusCode: 200,
+            },
+          },
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -268,15 +268,15 @@ __(function() {
                 context.postFindObjectOperation = 1
                 res.set('context', ejson.stringify(context))
                 return carbond.collections.Collection.prototype.postFindObjectOperation.apply(this, arguments)
-              }
-            })
-          }
+              },
+            }),
+          },
         }),
         tests: [
           {
             reqSpec: {
               url: '/findObject/0',
-              method: 'GET'
+              method: 'GET',
             },
             resSpec: {
               statusCode: 200,
@@ -286,13 +286,13 @@ __(function() {
                   preFindObject: 1,
                   findObject: 1,
                   postFindObject: 1,
-                  postFindObjectOperation: 1
+                  postFindObjectOperation: 1,
                 })
-              }
-            }
-          }
-        ]
-      })
-    ]
+              },
+            },
+          },
+        ],
+      }),
+    ],
   })
 })

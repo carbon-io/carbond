@@ -18,29 +18,29 @@ __(function() {
     name: 'SimpleSubEndpointTests',
     service: _o('../../standalone-examples/ServiceSimpleSubEndpointExample'),
     _mongoFixtures: {
-      db: path.join(path.dirname(module.filename), 
-                    '..', 
-                    'fixtures', 
-                    'SimpleSubEndpointTestsDB.json')
+      db: path.join(path.dirname(module.filename),
+        '..',
+        'fixtures',
+        'SimpleSubEndpointTestsDB.json'),
     },
     tests: [
       {
         reqSpec: {
           method: 'GET',
-          url: '/users'
+          url: '/users',
         },
         resSpec: {
           statusCode: 200,
           body: function(val) {
             assert(_.isArray(val))
             assert.equal(val.length, 2)
-          }
-        }
+          },
+        },
       },
       {
         reqSpec: {
           method: 'GET',
-          url: '/users/0'
+          url: '/users/0',
         },
         resSpec: {
           statusCode: 200,
@@ -49,22 +49,22 @@ __(function() {
             assert(_.isObjectLike(val))
             assert.equal(val.firstName, 'foo')
             assert.equal(val.lastName, 'bar')
-          }
-        }
+          },
+        },
       },
       {
         reqSpec: {
           method: 'DELETE',
-          url: '/users/0'
+          url: '/users/0',
         },
         resSpec: {
           statusCode: 200,
           body: function(val) {
             assert(_.isNil(val))
-          }
-        }
-      }
-    ]
+          },
+        },
+      },
+    ],
   })
 })
 

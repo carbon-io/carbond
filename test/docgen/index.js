@@ -9,8 +9,8 @@ module.exports = o({
   setup: function() { },
   teardown: function() { },
   tests: [
-    _o('./ghfmdTests')
-  ]
+    _o('./ghfmdTests'),
+  ],
 })
 
 

@@ -11,8 +11,8 @@ __(function() {
     name: 'CounterColTestSuite',
     description: 'CounterCol test suite.',
     tests: [
-      _o('./CounterColTests')
-    ]
+      _o('./CounterColTests'),
+    ],
   })
 })
 

@@ -13,15 +13,15 @@ __(function() {
       apiKeyParameterName: 'API_KEY',
       apiKeyLocation: 'header',
       userCollection: 'users',
-      apiKeyField: 'apiKey'
+      apiKeyField: 'apiKey',
     }),
     endpoints: {
       hello: o({
         _type: carbon.carbond.mongodb.MongoDBCollection,
         collectionName: 'hello',
         enabled: {'*': true},
-        acl: _o('./MyAcl')
-      })
-    }
+        acl: _o('./MyAcl'),
+      }),
+    },
   })
 })

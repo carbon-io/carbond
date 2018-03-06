@@ -25,17 +25,17 @@ __(function() {
                 description: 'bar',
                 location: 'query',
                 required: true,
-                schema: {type: 'string'}
-              }
+                schema: {type: 'string'},
+              },
             },
             service: function(req) {
               var col = this.getService().db.getCollection('foo')
               col.insert({bar: req.parameters.bar})
               return col.findOne({bar: req.parameters.bar})
-            }
-          }
-        })
-      }
+            },
+          },
+        }),
+      },
     }),
     tests: [
       {
@@ -43,17 +43,17 @@ __(function() {
           method: 'GET',
           url: '/foo',
           parameters: {
-            bar: '{"baz": "yaz"}'
-          }
+            bar: '{"baz": "yaz"}',
+          },
         },
         resSpec: {
           statusCode: 200,
           body: function(body) {
             assert.equal(body.bar, '{"baz": "yaz"}')
-          }
-        }
-      }
-    ]
+          },
+        },
+      },
+    ],
   })
 })
 

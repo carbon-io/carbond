@@ -43,18 +43,18 @@ __(function() {
           body: {
             _id: 'foo',
             name: 'bar',
-          }
+          },
         },
         resSpec: {
           statusCode: 201,
           body: {
             _id: 'foo',
-            name: 'bar'
+            name: 'bar',
           },
           headers: function(headers) {
             assert.equal(headers.location, '/advanced1/foo')
           },
-        }
+        },
       },
 
       // Test updateObject
@@ -63,16 +63,16 @@ __(function() {
           url: '/advanced1/foo',
           method: 'PATCH',
           parameters: {
-            upsert: true
+            upsert: true,
           },
           body: {
-            name: 'bar'
-          }
+            name: 'bar',
+          },
         },
         resSpec: {
           statusCode: 201,
-          body: {n: 1}
-        }
+          body: {n: 1},
+        },
       },
 
       {
@@ -80,16 +80,16 @@ __(function() {
           url: '/advanced2/foo',
           method: 'PATCH',
           parameters: {
-            upsert: true
+            upsert: true,
           },
           body: {
-            name: 'bar'
-          }
+            name: 'bar',
+          },
         },
         resSpec: {
           statusCode: 201,
-          body: {_id: 'foo', name: 'bar'}
-        }
+          body: {_id: 'foo', name: 'bar'},
+        },
       },
 
       {
@@ -97,50 +97,50 @@ __(function() {
           url: '/advanced3/foo',
           method: 'PATCH',
           body: {
-            name: 'bar'
-          }
+            name: 'bar',
+          },
         },
         resSpec: {
           statusCode: 404,
           body: {
             code: 404,
             description: 'Not Found',
-            message: 'foo'
-          }
-        }
+            message: 'foo',
+          },
+        },
       },
 
       // Test removeObject
       {
         reqSpec: {
           url: '/advanced1/foo',
-          method: 'DELETE'
+          method: 'DELETE',
         },
         resSpec: {
           statusCode: 200,
-          body: {_id: 'foo'}
-        }
+          body: {_id: 'foo'},
+        },
       },
 
       {
         reqSpec: {
           url: '/advanced2/foo',
-          method: 'DELETE'
+          method: 'DELETE',
         },
         resSpec: {
           statusCode: 404,
-        }
+        },
       },
 
       {
         reqSpec: {
           url: '/advanced3/foo',
-          method: 'DELETE'
+          method: 'DELETE',
         },
         resSpec: {
           statusCode: 200,
-          body: {n: 1}
-        }
+          body: {n: 1},
+        },
       },
 
       // Test returnsInsertedObjects
@@ -149,12 +149,12 @@ __(function() {
         reqSpec: {
           url: '/advanced4/',
           method: 'POST',
-          body: [{foo: 'bar'}, {foo: 'bar'}]
+          body: [{foo: 'bar'}, {foo: 'bar'}],
         },
         resSpec: {
           statusCode: 201,
-          body: [{_id: '0', foo: 'bar'}, {_id: '1', foo: 'bar'}]
-        }
+          body: [{_id: '0', foo: 'bar'}, {_id: '1', foo: 'bar'}],
+        },
       },
 
       // Test config responses are honored
@@ -163,10 +163,10 @@ __(function() {
         _type: testtube.Test,
         doTest: function() {
           assert(_.some(this.parent.service.endpoints.advanced4.post.responses,
-                        function(val) {
-                          return val.statusCode === 201
-                        }))
-        }
+            function(val) {
+              return val.statusCode === 201
+            }))
+        },
       }),
 
       o({
@@ -182,9 +182,9 @@ __(function() {
           this.normalizedDefaultObjectSchema = {
             type: 'object',
             properties: {
-              _id: {type: 'string'}
+              _id: {type: 'string'},
             },
-            required: ['_id']
+            required: ['_id'],
           }
 
           this.defaultObjectSchema =
@@ -197,35 +197,35 @@ __(function() {
               description: {type: 'string'},
               message: {type: 'string'},
             },
-            required: ['code', 'description', 'message']
+            required: ['code', 'description', 'message'],
           }
 
           this.NotFoundResponse = {
             statusCode: 404,
             description: 'Collection resource cannot be found by the supplied _id.',
             schema: this.defaultErrorSchema,
-            headers: []
+            headers: [],
           }
 
           this.BadRequestResponse = {
             statusCode: 400,
             description: 'Request is malformed (i.e. invalid parameters).',
             schema: this.defaultErrorSchema,
-            headers: []
+            headers: [],
           }
 
           this.ForbiddenResponse = {
             statusCode: 403,
             description: 'User is not authorized to run this operation.',
             schema: this.defaultErrorSchema,
-            headers: []
+            headers: [],
           }
 
           this.InternalServerErrorResponse = {
             statusCode: 500,
             description: 'There was an unexpected internal error processing this request.',
             schema: this.defaultErrorSchema,
-            headers: []
+            headers: [],
           }
         },
         tests: [
@@ -241,7 +241,7 @@ __(function() {
                     description: 'The object was successfully saved. The body will ' +
                                  'contain the saved object.',
                     schema: this.parent.normalizedDefaultObjectSchema,
-                    headers: []
+                    headers: [],
                   },
                   '201': {
                     statusCode: 201,
@@ -250,25 +250,25 @@ __(function() {
                                  'resource and the body will contain the inserted object if ' +
                                  'configured to do so.',
                     schema: this.parent.normalizedDefaultObjectSchema,
-                    headers: ['Location', this.parent.ce.idHeaderName]
+                    headers: ['Location', this.parent.ce.idHeaderName],
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
+                  '500': this.parent.InternalServerErrorResponse,
                 })
               assert.deepEqual(this.parent.oe.getOperation('put').parameters,
-                               {
-                                 object: {
-                                   name: 'object',
-                                   description: 'Object to save',
-                                   schema:  this.parent.defaultObjectSchema,
-                                   location: 'body',
-                                   required: true,
-                                   default: undefined
-                                 }
-                               })
+                {
+                  object: {
+                    name: 'object',
+                    description: 'Object to save',
+                    schema: this.parent.defaultObjectSchema,
+                    location: 'body',
+                    required: true,
+                    default: undefined,
+                  },
+                })
 
-            }
+            },
           }),
           o({
             _type: testtube.Test,
@@ -286,13 +286,13 @@ __(function() {
                           type: 'number',
                           minimum: 0,
                           maximum: 1,
-                          multipleOf: 1
-                        }
+                          multipleOf: 1,
+                        },
                       },
                       required: ['n'],
-                      additionalProperties: false
+                      additionalProperties: false,
                     },
-                    headers: []
+                    headers: [],
                   },
                   '201': {
                     statusCode: 201,
@@ -307,47 +307,47 @@ __(function() {
                           type: 'number',
                           minimum: 0,
                           maximum: 1,
-                          multipleOf: 1
-                        }
+                          multipleOf: 1,
+                        },
                       },
                       required: ['n'],
-                      additionalProperties: false
+                      additionalProperties: false,
                     },
-                    headers: ['Location', this.parent.ce.idHeaderName]
+                    headers: ['Location', this.parent.ce.idHeaderName],
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
+                  '500': this.parent.InternalServerErrorResponse,
                 })
               assert.deepEqual(this.parent.oe.getOperation('patch').parameters,
-                               {
-                                 update: {
-                                   name: 'update',
-                                   description: 'The update spec',
-                                   schema:  {type: 'object'},
-                                   location: 'body',
-                                   required: true,
-                                   default: undefined
-                                 },
-                                 upsert: {
-                                   name: 'upsert',
-                                   description: 'Enable upsert',
-                                   location: 'query',
-                                   schema: {
-                                     oneOf: [
-                                       {type: 'boolean', default: false},
-                                       {
-                                         type: 'number',
-                                         maximum: 1,
-                                         minimum: 0,
-                                         multipleOf: 1
-                                       }
-                                     ]
-                                   },
-                                   required: false,
-                                   default: false
-                                 }
-                               })
+                {
+                  update: {
+                    name: 'update',
+                    description: 'The update spec',
+                    schema: {type: 'object'},
+                    location: 'body',
+                    required: true,
+                    default: undefined,
+                  },
+                  upsert: {
+                    name: 'upsert',
+                    description: 'Enable upsert',
+                    location: 'query',
+                    schema: {
+                      oneOf: [
+                        {type: 'boolean', default: false},
+                        {
+                          type: 'number',
+                          maximum: 1,
+                          minimum: 0,
+                          multipleOf: 1,
+                        },
+                      ],
+                    },
+                    required: false,
+                    default: false,
+                  },
+                })
               assert.deepEqual(this.parent.oe2.getOperation('patch').responses,
                 {
                   '200': {
@@ -360,13 +360,13 @@ __(function() {
                           type: 'number',
                           minimum: 0,
                           maximum: 1,
-                          multipleOf: 1
-                        }
+                          multipleOf: 1,
+                        },
                       },
                       required: ['n'],
-                      additionalProperties: false
+                      additionalProperties: false,
                     },
-                    headers: []
+                    headers: [],
                   },
                   '201': {
                     statusCode: 201,
@@ -375,13 +375,13 @@ __(function() {
                                  'resource and the body will contain the upserted object if ' +
                                  'configured to do so.',
                     schema: this.parent.normalizedDefaultObjectSchema,
-                    headers: ['Location', this.parent.ce.idHeaderName]
+                    headers: ['Location', this.parent.ce.idHeaderName],
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
+                  '500': this.parent.InternalServerErrorResponse,
                 })
-            }
+            },
           }),
           o({
             _type: testtube.Test,
@@ -393,18 +393,18 @@ __(function() {
                     statusCode: 200,
                     description: 'The object was successfully removed',
                     schema: this.parent.normalizedDefaultObjectSchema,
-                    headers: []
+                    headers: [],
                   },
                   '404': this.parent.NotFoundResponse,
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
+                  '500': this.parent.InternalServerErrorResponse,
                 })
               assert.deepEqual(this.parent.oe.getOperation('delete').parameters, {})
-            }
+            },
           }),
-        ]
-      })
-    ]
+        ],
+      }),
+    ],
   })
 })

@@ -38,15 +38,15 @@ __(function() {
               // missing
               assert.throws(() => o({
                 _type: OperationParameter,
-                location: 'body'
+                location: 'body',
               }), TypeError, /OperationParameter\.name (undefined) .+/)
               // invalid type
               assert.throws(() => o({
                 _type: OperationParameter,
                 name: 666,
-                location: 'body'
+                location: 'body',
               }), TypeError, /OperationParameter\.name (666) .+/)
-            }
+            },
           }),
           o({
             _type: testtube.Test,
@@ -55,25 +55,25 @@ __(function() {
               // missing
               assert.throws(() => o({
                 _type: OperationParameter,
-                name: 'foo'
+                name: 'foo',
               }), TypeError, /OperationParameter\.location (undefined) .+/)
               // invalid location
               assert.throws(() => o({
                 _type: OperationParameter,
                 name: 'foo',
-                location: 'bar'
+                location: 'bar',
               }), TypeError, /OperationParameter\.location (bar) .+/)
               // invalid type
               assert.throws(() => o({
                 _type: OperationParameter,
                 name: 'foo',
-                location: 666
+                location: 666,
               }), TypeError, /OperationParameter\.location (666) .+/)
-            }
-          })
-        ]
+            },
+          }),
+        ],
       }),
-    ]
+    ],
   })
 })
 

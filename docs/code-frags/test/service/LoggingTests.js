@@ -38,14 +38,14 @@ __(function() {
         },
         reqSpec: {
           method: 'GET',
-          url: '/hello'
+          url: '/hello',
         },
         resSpec: {
           statusCode: 200,
           body: {
-            msg: 'Hello World!'
-          }
-        }
+            msg: 'Hello World!',
+          },
+        },
       },
       {
         teardown: function() {
@@ -61,17 +61,17 @@ __(function() {
           method: 'GET',
           url: '/hello',
           parameters: {
-            error: true
-          }
+            error: true,
+          },
         },
         resSpec: {
           statusCode: 200,
           body: {
-            msg: 'Hello World!'
-          }
-        }
-      }
-    ]
+            msg: 'Hello World!',
+          },
+        },
+      },
+    ],
   })
 })
 

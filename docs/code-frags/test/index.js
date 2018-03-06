@@ -6,14 +6,14 @@ var _o = core.bond._o(module)
 var o = core.atom.o(module)
 var testtube = core.testtube
 
-carbonioMock = {
+var carbonioMock = {
   fibers: core.fibers,
   atom: core.atom,
   bond: core.bond,
   testtube: core.testtube,
   ejson: core.ejson,
   HttpErrors: core.HttpErrors,
-  carbond: require('../../..')
+  carbond: require('../../..'),
 }
 
 /**************************************************************************
@@ -30,7 +30,7 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: "CarbondCodeFragsTestSuite",
+    name: 'CarbondCodeFragsTestSuite',
 
     /**********************************************************************
      * tests
@@ -42,20 +42,20 @@ __(function() {
             mockery.registerMock('carbon-io', carbonioMock)
             mockery.enable({
               warnOnUnregistered: false,
-              warnOnReplace: false
+              warnOnReplace: false,
             })
             return [
               _o('./limiter'),
               _o('./service'),
-              _o('../hello-world/test')
+              _o('../hello-world/test'),
             ]
           } finally {
             mockery.disable()
             mockery.deregisterMock('carbon-io')
           }
-        }
-      }
-    }
+        },
+      },
+    },
   })
 })
 

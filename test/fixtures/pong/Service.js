@@ -19,8 +19,8 @@ var Service = oo({
     'x-return-body': {
       name: 'x-pong',
       description: 'EJSON serialized response',
-      location: 'header'
-    }
+      location: 'header',
+    },
   },
 
   _C: function() {
@@ -30,7 +30,7 @@ var Service = oo({
   _init: function() {
     carbond.Service.prototype._init.call(this)
     setNestedProps(this, this.overrides)
-  }
+  },
 })
 
 module.exports = Service

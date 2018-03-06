@@ -42,9 +42,9 @@ __(function() {
             saveObject: o({
               _type: pong.Collection,
               idGenerator: pong.util.collectionIdGenerator,
-              enabled: {saveObject: true}
-            })
-          }
+              enabled: {saveObject: true},
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -67,13 +67,13 @@ __(function() {
                 body: [
                   {[context.global.idParameterName]: '0', foo: 'bar'},
                   {[context.global.idParameterName]: '1', bar: 'baz'},
-                  {[context.global.idParameterName]: '2', baz: 'yaz'}
-                ]
+                  {[context.global.idParameterName]: '2', baz: 'yaz'},
+                ],
               }
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'SaveObjectExistingTest',
@@ -84,10 +84,10 @@ __(function() {
                 method: 'PUT',
                 headers: {
                   'x-pong': ejson.stringify({
-                    saveObject: {$args: 0}
-                  })
+                    saveObject: {$args: 0},
+                  }),
                 },
-                body: {[context.global.idParameterName]: '0', foo: 'bar'}
+                body: {[context.global.idParameterName]: '0', foo: 'bar'},
               }
             },
             resSpec: {
@@ -95,12 +95,12 @@ __(function() {
               body: function(body, context) {
                 assert.deepStrictEqual(body, {
                   [context.global.idParameterName]: '0',
-                  foo: 'bar'
+                  foo: 'bar',
                 })
-              }
-            }
+              },
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -119,16 +119,16 @@ __(function() {
                     _id: {type: 'string'},
                     foo: {
                       type: 'string',
-                      pattern: '^(bar|baz|yaz)$'
-                    }
+                      pattern: '^(bar|baz|yaz)$',
+                    },
                   },
                   required: ['_id'],
                   patternProperties: {
-                    '^\\d+$': {type: 'string'}
+                    '^\\d+$': {type: 'string'},
                   },
-                  additionalProperties: false
-                }
-              }
+                  additionalProperties: false,
+                },
+              },
             }),
             saveObject1: o({
               _type: pong.Collection,
@@ -141,18 +141,18 @@ __(function() {
                     _id: {type: 'string'},
                     foo: {
                       type: 'string',
-                      pattern: '^(bar|baz|yaz)$'
-                    }
+                      pattern: '^(bar|baz|yaz)$',
+                    },
                   },
                   required: ['_id'],
                   patternProperties: {
-                    '^\\d+$': {type: 'string'}
+                    '^\\d+$': {type: 'string'},
                   },
-                  additionalProperties: false
-                }
-              }
-            })
-          }
+                  additionalProperties: false,
+                },
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -173,12 +173,12 @@ __(function() {
               return {
                 url: '/saveObject/0',
                 method: 'PUT',
-                body: {[context.global.idParameterName]: '0', bar: 'baz'}
+                body: {[context.global.idParameterName]: '0', bar: 'baz'},
               }
             },
             resSpec: {
               statusCode: 400,
-            }
+            },
           },
           {
             name: 'SuccessSaveObjectSchemaTest',
@@ -192,20 +192,20 @@ __(function() {
                 method: 'PUT',
                 headers: {
                   'x-pong': ejson.stringify({
-                    saveObject: {$args: 0}
-                  })
+                    saveObject: {$args: 0},
+                  }),
                 },
-                body: {[context.global.idParameterName]: '0', foo: 'bar'}
+                body: {[context.global.idParameterName]: '0', foo: 'bar'},
               }
             },
             resSpec: {
               statusCode: 200,
               body: function(body, context) {
                 assert.deepStrictEqual(body, {
-                  [context.global.idParameterName]: '0', foo: 'bar'
+                  [context.global.idParameterName]: '0', foo: 'bar',
                 })
-              }
-            }
+              },
+            },
           },
           {
             name: 'FailSaveObject1SchemaTest',
@@ -215,11 +215,15 @@ __(function() {
             },
             reqSpec: function() {
               return _.assign(_.clone(this.history.getReqSpec('FailSaveObjectSchemaTest')),
-                              {url: '/saveObject1/0'})
+                {url: '/saveObject1/0'})
             },
             resSpec: {
-              $property: {get: function() {return this.history.getResSpec('FailSaveObjectSchemaTest')}}
-            }
+              $property: {
+                get: function() {
+                  return this.history.getResSpec('FailSaveObjectSchemaTest')
+                },
+              },
+            },
           },
           {
             name: 'SuccessSaveObject1SchemaTest',
@@ -229,13 +233,17 @@ __(function() {
             },
             reqSpec: function() {
               return _.assign(_.clone(this.history.getReqSpec('SuccessSaveObjectSchemaTest')),
-                              {url: '/saveObject1/0'})
+                {url: '/saveObject1/0'})
             },
             resSpec: {
-              $property: {get: function() {return this.history.getResSpec('SuccessSaveObjectSchemaTest')}}
-            }
-          }
-        ]
+              $property: {
+                get: function() {
+                  return this.history.getResSpec('SuccessSaveObjectSchemaTest')
+                },
+              },
+            },
+          },
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -248,10 +256,10 @@ __(function() {
               idGenerator: pong.util.collectionIdGenerator,
               enabled: {saveObject: true},
               saveObjectConfig: {
-                returnsSavedObject: false
-              }
-            })
-          }
+                returnsSavedObject: false,
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -273,18 +281,18 @@ __(function() {
                 method: 'PUT',
                 headers: {
                   'x-pong': ejson.stringify({
-                    saveObject: {$args: 0}
-                  })
+                    saveObject: {$args: 0},
+                  }),
                 },
-                body: {[context.global.idParameterName]: '0', foo: 'bar'}
+                body: {[context.global.idParameterName]: '0', foo: 'bar'},
               }
             },
             resSpec: {
               statusCode: 204,
-              body: undefined
-            }
-          }
-        ]
+              body: undefined,
+            },
+          },
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -304,14 +312,14 @@ __(function() {
                       schema: {
                         type: 'number',
                         minimum: 0,
-                        multipleOf: 2
-                      }
-                    }
-                  }
-                }
-              }
-            })
-          }
+                        multipleOf: 2,
+                      },
+                    },
+                  },
+                },
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -338,10 +346,10 @@ __(function() {
                     type: 'object',
                     properties: {_id: {type: 'string'}},
                     required: ['_id'],
-                    additionalProperties: true
+                    additionalProperties: true,
                   },
                   required: true,
-                  default: undefined
+                  default: undefined,
                 },
                 foo: {
                   name: 'foo',
@@ -349,10 +357,10 @@ __(function() {
                   description: undefined,
                   schema: {type: 'number', minimum: 0, multipleOf: 2},
                   required: false,
-                  default: undefined
+                  default: undefined,
                 },
               })
-            }
+            },
           }),
           {
             name: 'SaveObjectConfigCustomParameterPassedViaOptionsFailTest',
@@ -369,16 +377,16 @@ __(function() {
                 method: 'PUT',
                 headers: {
                   'x-pong': ejson.stringify({
-                    saveObject: {$args: 0}
+                    saveObject: {$args: 0},
                   }),
-                  foo: 3
+                  foo: 3,
                 },
-                body: {[context.global.idParameterName]: '0', foo: 'bar'}
+                body: {[context.global.idParameterName]: '0', foo: 'bar'},
               }
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'SaveObjectConfigCustomParameterPassedViaOptionsSuccessTest',
@@ -395,18 +403,18 @@ __(function() {
                 method: 'PUT',
                 headers: {
                   'x-pong': ejson.stringify({
-                    saveObject: {$args: 0}
+                    saveObject: {$args: 0},
                   }),
-                  foo: 4
+                  foo: 4,
                 },
-                body: {[context.global.idParameterName]: '0', foo: 'bar'}
+                body: {[context.global.idParameterName]: '0', foo: 'bar'},
               }
             },
             resSpec: {
-              statusCode: 200
-            }
-          }
-        ]
+              statusCode: 200,
+            },
+          },
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -419,10 +427,10 @@ __(function() {
               idGenerator: pong.util.collectionIdGenerator,
               enabled: {saveObject: true},
               saveObjectConfig: {
-                supportsUpsert: true
-              }
-            })
-          }
+                supportsUpsert: true,
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -445,13 +453,13 @@ __(function() {
                 body: [
                   {[context.global.idParameterName]: '0', foo: 'bar'},
                   {[context.global.idParameterName]: '1', bar: 'baz'},
-                  {[context.global.idParameterName]: '2', baz: 'yaz'}
-                ]
+                  {[context.global.idParameterName]: '2', baz: 'yaz'},
+                ],
               }
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'SaveObjectExistingTest',
@@ -462,10 +470,10 @@ __(function() {
                 method: 'PUT',
                 headers: {
                   'x-pong': ejson.stringify({
-                    saveObject: {$args: 0}
-                  })
+                    saveObject: {$args: 0},
+                  }),
                 },
-                body: {[context.global.idParameterName]: '0', foo: 'bar'}
+                body: {[context.global.idParameterName]: '0', foo: 'bar'},
               }
             },
             resSpec: {
@@ -473,10 +481,10 @@ __(function() {
               body: function(body, context) {
                 assert.deepStrictEqual(body, {
                   [context.global.idParameterName]: '0',
-                  foo: 'bar'
+                  foo: 'bar',
                 })
-              }
-            }
+              },
+            },
           },
           {
             name: 'SaveObjectCreatedTest',
@@ -489,11 +497,11 @@ __(function() {
                   'x-pong': ejson.stringify({
                     saveObject: {
                       val: {$args: 0},
-                      created: true
-                    }
-                  })
+                      created: true,
+                    },
+                  }),
                 },
-                body: {[context.global.idParameterName]: '0', foo: 'bar'}
+                body: {[context.global.idParameterName]: '0', foo: 'bar'},
               }
             },
             resSpec: {
@@ -501,18 +509,19 @@ __(function() {
               headers: function(headers, context) {
                 assert.deepStrictEqual(
                   headers[context.global.idHeaderName],
-                  ejson.stringify('0'))
+                  ejson.stringify('0')
+                )
                 assert.deepStrictEqual(headers.location, '/saveObject/0')
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, {
                   [context.global.idParameterName]: '0',
-                  foo: 'bar'
+                  foo: 'bar',
                 })
-              }
-            }
+              },
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -543,9 +552,9 @@ __(function() {
                 context.postSaveObjectOperation = 1
                 res.set('context', ejson.stringify(context))
                 return carbond.collections.Collection.prototype.postSaveObjectOperation.apply(this, arguments)
-              }
-            })
-          }
+              },
+            }),
+          },
         }),
         tests: [
           {
@@ -553,7 +562,7 @@ __(function() {
               return {
                 url: '/saveObject/0',
                 method: 'PUT',
-                body: {[this.parent.service.endpoints.saveObject.idParameterName]: '0'}
+                body: {[this.parent.service.endpoints.saveObject.idParameterName]: '0'},
               }
             },
             resSpec: {
@@ -564,14 +573,14 @@ __(function() {
                   preSaveObject: 1,
                   saveObject: 1,
                   postSaveObject: 1,
-                  postSaveObjectOperation: 1
+                  postSaveObjectOperation: 1,
                 })
-              }
-            }
-          }
-        ]
-      })
-    ]
+              },
+            },
+          },
+        ],
+      }),
+    ],
   })
 })
 

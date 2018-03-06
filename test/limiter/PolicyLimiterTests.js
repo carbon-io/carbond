@@ -39,7 +39,7 @@ module.exports = o({
             o({
               _type: PolicyLimiter,
               selector: selector,
-              policy: o({_type: WindowLimiterPolicy})
+              policy: o({_type: WindowLimiterPolicy}),
             })
           }, TypeError)
         })
@@ -49,11 +49,11 @@ module.exports = o({
             o({
               _type: PolicyLimiter,
               selector: o({_type: StaticKeyLimiterSelector}),
-              policy: policy
+              policy: policy,
             })
           }, TypeError)
         })
-      }
+      },
     }),
     o({
       _type: testtube.Test,
@@ -65,9 +65,9 @@ module.exports = o({
           _type: PolicyLimiter,
           selector: o({
             _type: StaticKeyLimiterSelector,
-            staticKey: 'foo'
+            staticKey: 'foo',
           }),
-          policy: o({_type: WindowLimiterPolicy})
+          policy: o({_type: WindowLimiterPolicy}),
         })
         limiter.initialize(service, service)
         assert.equal(_.keys(PolicyLimiter._state).length, 1)
@@ -76,15 +76,15 @@ module.exports = o({
         assert('foo' in PolicyLimiter._state.service)
         var endpoint = o({
           _type: Endpoint,
-          path: '/bar'
+          path: '/bar',
         })
         var limiter1 = o({
           _type: PolicyLimiter,
           selector: o({
             _type: StaticKeyLimiterSelector,
-            staticKey: 'foo'
+            staticKey: 'foo',
           }),
-          policy: o({_type: WindowLimiterPolicy})
+          policy: o({_type: WindowLimiterPolicy}),
         })
         limiter1.initialize(service, endpoint)
         assert.equal(_.keys(PolicyLimiter._state).length, 2)
@@ -95,17 +95,17 @@ module.exports = o({
           _type: Operation,
           endpoint: ({
             _type: Endpoint,
-            path: '/baz'
+            path: '/baz',
           }),
-          name: 'GET'
+          name: 'GET',
         })
         var limiter2 = o({
           _type: PolicyLimiter,
           selector: o({
             _type: StaticKeyLimiterSelector,
-            staticKey: 'foo'
+            staticKey: 'foo',
           }),
-          policy: o({_type: WindowLimiterPolicy})
+          policy: o({_type: WindowLimiterPolicy}),
         })
         limiter2.initialize(service, operation)
         assert.equal(_.keys(PolicyLimiter._state).length, 3)
@@ -116,14 +116,14 @@ module.exports = o({
           _type: PolicyLimiter,
           selector: o({
             _type: StaticKeyLimiterSelector,
-            key: 'foo'
+            key: 'foo',
           }),
-          policy: o({_type: WindowLimiterPolicy})
+          policy: o({_type: WindowLimiterPolicy}),
         })
-        assert.throws(function () {
+        assert.throws(function() {
           limiter3.initialize(service, {})
         }, TypeError)
-      }
+      },
     }),
     o({
       _type: testtube.Test,
@@ -136,7 +136,7 @@ module.exports = o({
           1000, // allow
           1500, // reject
           1900, // reject
-          2000  // allow
+          2000,  // allow
         ]
         sinon.stub(Date, 'now').callsFake(function() {
           return results.shift()
@@ -152,8 +152,8 @@ module.exports = o({
           policy: o({
             _type: WindowLimiterPolicy,
             window: 1000,
-            reqLimit: 1
-          })
+            reqLimit: 1,
+          }),
         })
         sinon.stub(limiter, 'sendUnavailable').callsFake(function() {})
         var nextSpy = sinon.spy()
@@ -164,7 +164,7 @@ module.exports = o({
         }
         assert.equal(limiter.sendUnavailable.callCount, 3)
         assert.equal(nextSpy.callCount, 3)
-      }
-    })
-  ]
+      },
+    }),
+  ],
 })

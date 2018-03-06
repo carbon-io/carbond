@@ -1,5 +1,4 @@
 var assert = require('assert')
-var path = require('path')
 
 var carbon = require('carbon-io')
 
@@ -8,7 +7,6 @@ var _o = carbon.bond._o(module)
 var carbond = carbon.carbond
 var ejson = carbon.ejson
 var o = carbon.atom.o(module)
-var testtube = carbon.testtube
 
 var ObjectId = ejson.types.ObjectId
 
@@ -30,13 +28,13 @@ __(function() {
               body: [
                 {
                   name: 'foo',
-                  count: 0
+                  count: 0,
                 },
                 {
                   name: 'bar',
-                  count: 0
-                }
-              ]
+                  count: 0,
+                },
+              ],
             },
             resSpec: {
               statusCode: 201,
@@ -44,15 +42,15 @@ __(function() {
                 {
                   _id: 0,
                   name: 'foo',
-                  count: 0
+                  count: 0,
                 },
                 {
                   _id: 1,
                   name: 'bar',
-                  count: 0
-                }
-              ]
-            }
+                  count: 0,
+                },
+              ],
+            },
           },
           {
             reqSpec: {
@@ -60,22 +58,22 @@ __(function() {
               url: '/memCacheCounterAdvanced',
               body: {
                 name: 'baz',
-                count: 0
-              }
+                count: 0,
+              },
             },
             resSpec: {
               statusCode: 201,
               body: {
                 _id: 2,
                 name: 'baz',
-                count: 0
-              }
-            }
+                count: 0,
+              },
+            },
           },
           {
             reqSpec: {
               method: 'GET',
-              url: '/memCacheCounterAdvanced'
+              url: '/memCacheCounterAdvanced',
             },
             resSpec: {
               statusCode: 200,
@@ -83,20 +81,20 @@ __(function() {
                 {
                   _id: 0,
                   name: 'foo',
-                  count: 0
+                  count: 0,
                 },
                 {
                   _id: 1,
                   name: 'bar',
-                  count: 0
+                  count: 0,
                 },
                 {
                   _id: 2,
                   name: 'baz',
-                  count: 0
-                }
-              ]
-            }
+                  count: 0,
+                },
+              ],
+            },
           },
           {
             reqSpec: {
@@ -104,8 +102,8 @@ __(function() {
               url: '/memCacheCounterAdvanced',
               parameters: {
                 skip: 1,
-                limit: 1
-              }
+                limit: 1,
+              },
             },
             resSpec: {
               statusCode: 200,
@@ -113,33 +111,33 @@ __(function() {
                 {
                   _id: 1,
                   name: 'bar',
-                  count: 0
-                }
-              ]
-            }
+                  count: 0,
+                },
+              ],
+            },
           },
           {
             reqSpec: {
               method: 'GET',
-              url: '/memCacheCounterAdvanced/1'
+              url: '/memCacheCounterAdvanced/1',
             },
             resSpec: {
               statusCode: 200,
               body: {
                 _id: 1,
                 name: 'bar',
-                count: 0
-              }
-            }
+                count: 0,
+              },
+            },
           },
           {
             reqSpec: {
               method: 'GET',
-              url: '/memCacheCounterAdvanced/3'
+              url: '/memCacheCounterAdvanced/3',
             },
             resSpec: {
               statusCode: 404,
-            }
+            },
           },
           {
             reqSpec: {
@@ -149,9 +147,9 @@ __(function() {
                 {
                   _id: 0,
                   name: 'foo',
-                  count: 10
-                }
-              ]
+                  count: 10,
+                },
+              ],
             },
             resSpec: {
               statusCode: 200,
@@ -159,10 +157,10 @@ __(function() {
                 {
                   _id: 0,
                   name: 'foo',
-                  count: 10
-                }
-              ]
-            }
+                  count: 10,
+                },
+              ],
+            },
           },
           {
             reqSpec: {
@@ -171,17 +169,17 @@ __(function() {
               body: {
                 _id: 1,
                 name: 'bar',
-                count: 4
-              }
+                count: 4,
+              },
             },
             resSpec: {
               statusCode: 201,
               body: {
                 _id: 1,
                 name: 'bar',
-                count: 4
-              }
-            }
+                count: 4,
+              },
+            },
           },
           {
             setup: function() {
@@ -201,15 +199,15 @@ __(function() {
               method: 'PATCH',
               url: '/memCacheCounterAdvanced',
               body: {
-                $inc: 1
-              }
+                $inc: 1,
+              },
             },
             resSpec: {
               statusCode: 200,
               body: {
-                n: 3
-              }
-            }
+                n: 3,
+              },
+            },
           },
           {
             reqSpec: {
@@ -217,39 +215,39 @@ __(function() {
               url: '/memCacheCounterAdvanced',
               body: {
                 $inc: 1,
-                $dec: 1
-              }
+                $dec: 1,
+              },
             },
             resSpec: {
               statusCode: 400,
-            }
+            },
           },
           {
             reqSpec: {
               method: 'PATCH',
               url: '/memCacheCounterAdvanced/1',
               body: {
-                $inc: 1
-              }
+                $inc: 1,
+              },
             },
             resSpec: {
               statusCode: 200,
               body: {
-                n: 1
-              }
-            }
+                n: 1,
+              },
+            },
           },
           {
             reqSpec: {
               method: 'PATCH',
               url: '/memCacheCounterAdvanced/666',
               body: {
-                $inc: 1
-              }
+                $inc: 1,
+              },
             },
             resSpec: {
               statusCode: 404,
-            }
+            },
           },
           {
             reqSpec: {
@@ -262,8 +260,8 @@ __(function() {
                 {_id: 0, name: 'foo', count: 1},
                 {_id: 1, name: 'bar', count: 2},
                 {_id: 2, name: 'baz', count: 1},
-              ]
-            }
+              ],
+            },
           },
           {
             setup: function() {
@@ -286,8 +284,8 @@ __(function() {
                 {_id: 0, name: 'foo', count: 0},
                 {_id: 1, name: 'bar', count: 0},
                 {_id: 2, name: 'baz', count: 0},
-              ]
-            }
+              ],
+            },
           },
           {
             setup: function() {
@@ -308,9 +306,9 @@ __(function() {
             resSpec: {
               statusCode: 200,
               body: {
-                n: 1
-              }
-            }
+                n: 1,
+              },
+            },
           },
           {
             reqSpec: {
@@ -319,9 +317,9 @@ __(function() {
             },
             resSpec: {
               statusCode: 404,
-            }
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -336,13 +334,13 @@ __(function() {
               body: [
                 {
                   name: 'foo',
-                  count: 0
+                  count: 0,
                 },
                 {
                   name: 'bar',
-                  count: 0
-                }
-              ]
+                  count: 0,
+                },
+              ],
             },
             resSpec: {
               statusCode: 201,
@@ -350,15 +348,15 @@ __(function() {
                 {
                   _id: '0',
                   name: 'foo',
-                  count: 0
+                  count: 0,
                 },
                 {
                   _id: '1',
                   name: 'bar',
-                  count: 0
-                }
-              ]
-            }
+                  count: 0,
+                },
+              ],
+            },
           },
           {
             reqSpec: {
@@ -366,7 +364,7 @@ __(function() {
               url: '/memCacheCounterBasic',
               body: {
                 name: 'baz',
-                count: 0
+                count: 0,
               },
             },
             resSpec: {
@@ -374,14 +372,14 @@ __(function() {
               body: {
                 _id: '2',
                 name: 'baz',
-                count: 0
+                count: 0,
               },
-            }
+            },
           },
           {
             reqSpec: {
               method: 'GET',
-              url: '/memCacheCounterBasic'
+              url: '/memCacheCounterBasic',
             },
             resSpec: {
               statusCode: 200,
@@ -389,43 +387,43 @@ __(function() {
                 {
                   _id: '0',
                   name: 'foo',
-                  count: 0
+                  count: 0,
                 },
                 {
                   _id: '1',
                   name: 'bar',
-                  count: 0
+                  count: 0,
                 },
                 {
                   _id: '2',
                   name: 'baz',
-                  count: 0
-                }
-              ]
-            }
+                  count: 0,
+                },
+              ],
+            },
           },
           {
             reqSpec: {
               method: 'GET',
-              url: '/memCacheCounterBasic/0'
+              url: '/memCacheCounterBasic/0',
             },
             resSpec: {
               statusCode: 200,
               body: {
                 _id: '0',
                 name: 'foo',
-                count: 0
-              }
-            }
+                count: 0,
+              },
+            },
           },
           {
             reqSpec: {
               method: 'GET',
-              url: '/memCacheCounterBasic/666'
+              url: '/memCacheCounterBasic/666',
             },
             resSpec: {
-              statusCode: 404
-            }
+              statusCode: 404,
+            },
           },
           {
             reqSpec: {
@@ -435,19 +433,19 @@ __(function() {
                 {
                   _id: '0',
                   name: 'foo',
-                  count: 1
+                  count: 1,
                 },
                 {
                   _id: '1',
                   name: 'bar',
-                  count: 1
+                  count: 1,
                 },
                 {
                   _id: '2',
                   name: 'baz',
-                  count: 1
-                }
-              ]
+                  count: 1,
+                },
+              ],
             },
             resSpec: {
               statusCode: 200,
@@ -455,20 +453,20 @@ __(function() {
                 {
                   _id: '0',
                   name: 'foo',
-                  count: 1
+                  count: 1,
                 },
                 {
                   _id: '1',
                   name: 'bar',
-                  count: 1
+                  count: 1,
                 },
                 {
                   _id: '2',
                   name: 'baz',
-                  count: 1
-                }
-              ]
-            }
+                  count: 1,
+                },
+              ],
+            },
           },
           {
             reqSpec: {
@@ -477,12 +475,12 @@ __(function() {
               body: {
                 _id: '2',
                 name: 'yaz',
-                count: 1
-              }
+                count: 1,
+              },
             },
             resSpec: {
               statusCode: 400,
-            }
+            },
           },
           {
             teardown: function() {
@@ -494,55 +492,55 @@ __(function() {
               body: {
                 _id: '2',
                 name: 'yaz',
-                count: 1
-              }
+                count: 1,
+              },
             },
             resSpec: {
               statusCode: 200,
               body: {
                 _id: '2',
                 name: 'yaz',
-                count: 1
-              }
-            }
+                count: 1,
+              },
+            },
           },
           {
             reqSpec: {
               method: 'PATCH',
               url: '/memCacheCounterBasic',
-              body: {n: 1}
+              body: {n: 1},
             },
             resSpec: {
               statusCode: 200,
               body: {
-                n: 3
-              }
-            }
+                n: 3,
+              },
+            },
           },
           {
             reqSpec: {
               method: 'PATCH',
               url: '/memCacheCounterBasic/1',
-              body: {n: 1}
+              body: {n: 1},
             },
             resSpec: {
               statusCode: 200,
               body: {
-                n: 1
-              }
-            }
+                n: 1,
+              },
+            },
           },
           {
             reqSpec: {
               method: 'DELETE',
-              url: '/memCacheCounterBasic'
+              url: '/memCacheCounterBasic',
             },
             resSpec: {
               statusCode: 200,
               body: {
-                n: 3
-              }
-            }
+                n: 3,
+              },
+            },
           },
           {
             setup: function() {
@@ -558,16 +556,16 @@ __(function() {
             },
             reqSpec: {
               method: 'DELETE',
-              url: '/memCacheCounterBasic/1'
+              url: '/memCacheCounterBasic/1',
             },
             resSpec: {
               statusCode: 200,
               body: {
-                n: 1
-              }
-            }
+                n: 1,
+              },
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -591,13 +589,13 @@ __(function() {
               body: [
                 {
                   name: 'foo',
-                  count: 0
+                  count: 0,
                 },
                 {
                   name: 'bar',
-                  count: 0
-                }
-              ]
+                  count: 0,
+                },
+              ],
             },
             resSpec: {
               statusCode: 201,
@@ -605,15 +603,15 @@ __(function() {
                 {
                   _id: ObjectId('000000000000000000000000'),
                   name: 'foo',
-                  count: 0
+                  count: 0,
                 },
                 {
                   _id: ObjectId('000000000000000000000001'),
                   name: 'bar',
-                  count: 0
-                }
-              ]
-            }
+                  count: 0,
+                },
+              ],
+            },
           },
           {
             reqSpec: {
@@ -621,7 +619,7 @@ __(function() {
               url: '/mongoCounterBasic',
               body: {
                 name: 'baz',
-                count: 0
+                count: 0,
               },
             },
             resSpec: {
@@ -629,14 +627,14 @@ __(function() {
               body: {
                 _id: ObjectId('000000000000000000000002'),
                 name: 'baz',
-                count: 0
+                count: 0,
               },
-            }
+            },
           },
           {
             reqSpec: {
               method: 'GET',
-              url: '/mongoCounterBasic'
+              url: '/mongoCounterBasic',
             },
             resSpec: {
               statusCode: 200,
@@ -644,43 +642,43 @@ __(function() {
                 {
                   _id: ObjectId('000000000000000000000000'),
                   name: 'foo',
-                  count: 0
+                  count: 0,
                 },
                 {
                   _id: ObjectId('000000000000000000000001'),
                   name: 'bar',
-                  count: 0
+                  count: 0,
                 },
                 {
                   _id: ObjectId('000000000000000000000002'),
                   name: 'baz',
-                  count: 0
-                }
-              ]
-            }
+                  count: 0,
+                },
+              ],
+            },
           },
           {
             reqSpec: {
               method: 'GET',
-              url: '/mongoCounterBasic/000000000000000000000000'
+              url: '/mongoCounterBasic/000000000000000000000000',
             },
             resSpec: {
               statusCode: 200,
               body: {
                 _id: ObjectId('000000000000000000000000'),
                 name: 'foo',
-                count: 0
-              }
-            }
+                count: 0,
+              },
+            },
           },
           {
             reqSpec: {
               method: 'GET',
-              url: '/mongoCounterBasic/000000000000000000000666'
+              url: '/mongoCounterBasic/000000000000000000000666',
             },
             resSpec: {
-              statusCode: 404
-            }
+              statusCode: 404,
+            },
           },
           {
             reqSpec: {
@@ -690,19 +688,19 @@ __(function() {
                 {
                   _id: ObjectId('000000000000000000000000'),
                   name: 'foo',
-                  count: 1
+                  count: 1,
                 },
                 {
                   _id: ObjectId('000000000000000000000001'),
                   name: 'bar',
-                  count: 1
+                  count: 1,
                 },
                 {
                   _id: ObjectId('000000000000000000000002'),
                   name: 'baz',
-                  count: 1
-                }
-              ]
+                  count: 1,
+                },
+              ],
             },
             resSpec: {
               statusCode: 200,
@@ -710,20 +708,20 @@ __(function() {
                 {
                   _id: ObjectId('000000000000000000000000'),
                   name: 'foo',
-                  count: 1
+                  count: 1,
                 },
                 {
                   _id: ObjectId('000000000000000000000001'),
                   name: 'bar',
-                  count: 1
+                  count: 1,
                 },
                 {
                   _id: ObjectId('000000000000000000000002'),
                   name: 'baz',
-                  count: 1
-                }
-              ]
-            }
+                  count: 1,
+                },
+              ],
+            },
           },
           {
             reqSpec: {
@@ -732,18 +730,19 @@ __(function() {
               body: {
                 _id: ObjectId('000000000000000000000002'),
                 name: 'yaz',
-                count: 1
-              }
+                count: 1,
+              },
             },
             resSpec: {
               statusCode: 400,
-            }
+            },
           },
           {
             teardown: function() {
               assert.equal(
                 this.parent.collection.findOne({_id: ObjectId('000000000000000000000002')}).name,
-                'yaz')
+                'yaz'
+              )
             },
             reqSpec: {
               method: 'PUT',
@@ -751,55 +750,55 @@ __(function() {
               body: {
                 _id: ObjectId('000000000000000000000002'),
                 name: 'yaz',
-                count: 1
-              }
+                count: 1,
+              },
             },
             resSpec: {
               statusCode: 200,
               body: {
                 _id: ObjectId('000000000000000000000002'),
                 name: 'yaz',
-                count: 1
-              }
-            }
+                count: 1,
+              },
+            },
           },
           {
             reqSpec: {
               method: 'PATCH',
               url: '/mongoCounterBasic',
-              body: {n: 1}
+              body: {n: 1},
             },
             resSpec: {
               statusCode: 200,
               body: {
-                n: 3
-              }
-            }
+                n: 3,
+              },
+            },
           },
           {
             reqSpec: {
               method: 'PATCH',
               url: '/mongoCounterBasic/000000000000000000000001',
-              body: {n: 1}
+              body: {n: 1},
             },
             resSpec: {
               statusCode: 200,
               body: {
-                n: 1
-              }
-            }
+                n: 1,
+              },
+            },
           },
           {
             reqSpec: {
               method: 'DELETE',
-              url: '/mongoCounterBasic'
+              url: '/mongoCounterBasic',
             },
             resSpec: {
               statusCode: 200,
               body: {
-                n: 3
-              }
-            }
+                n: 3,
+              },
+            },
           },
           {
             setup: function() {
@@ -816,18 +815,18 @@ __(function() {
             },
             reqSpec: {
               method: 'DELETE',
-              url: '/mongoCounterBasic/000000000000000000000001'
+              url: '/mongoCounterBasic/000000000000000000000001',
             },
             resSpec: {
               statusCode: 200,
               body: {
-                n: 1
-              }
-            }
+                n: 1,
+              },
+            },
           },
-        ]
-      })
-    ]
+        ],
+      }),
+    ],
   })
 })
 

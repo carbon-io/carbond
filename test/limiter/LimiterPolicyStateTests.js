@@ -56,7 +56,7 @@ module.exports = o({
           assert.equal(ts, state._state[selector].pop())
           ts += 10
         })
-      }
+      },
     }),
     o({
       _type: testtube.Test,
@@ -75,7 +75,7 @@ module.exports = o({
         selectors.forEach(function(selector) {
           assert.equal(state.visits(selector), 6)
         })
-      }
+      },
     }),
     o({
       _type: testtube.Test,
@@ -115,7 +115,7 @@ module.exports = o({
         numPurged = state.purge(5)
         assert.equal(numPurged, 6)
         assert.equal(_.keys(state._state).length, 0)
-      }
+      },
     }),
     o({
       _type: testtube.Test,
@@ -128,7 +128,7 @@ module.exports = o({
         assert.equal(_.keys(state._state).length, 2)
         state.reset()
         assert.equal(_.keys(state._state).length, 0)
-      }
+      },
     }),
-  ]
+  ],
 })

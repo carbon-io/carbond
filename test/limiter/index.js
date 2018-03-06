@@ -20,7 +20,7 @@ module.exports = o({
     _o('./PolicyLimiterTests'),
     _o('./ChainLimiterTests'),
     _o('./ServiceIntegrationTests'),
-    _o('./TooBusyLimiterTests')
-  ]
+    _o('./TooBusyLimiterTests'),
+  ],
 })
 

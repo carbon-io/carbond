@@ -21,12 +21,13 @@ __(function() {
         _type: carbond.test.ServiceTest,
         name: 'EndpointACLTests',
         service: _o(
-          '../../standalone-examples/ServiceSimpleAuthorizationExample').Service1,
+          '../../standalone-examples/ServiceSimpleAuthorizationExample'
+        ).Service1,
         _mongoFixtures: {
           db: path.join(path.dirname(module.filename),
-                        '..',
-                        'fixtures',
-                        'SimpleAuthorizationDB.json')
+            '..',
+            'fixtures',
+            'SimpleAuthorizationDB.json'),
         },
         tests: [
           // -- role:Admin
@@ -35,33 +36,33 @@ __(function() {
               method: 'GET',
               url: '/hello',
               headers: {
-                API_KEY: 'a'
-              }
+                API_KEY: 'a',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: {
-                msg: 'Hello World!'
-              }
-            }
+                msg: 'Hello World!',
+              },
+            },
           },
           {
             reqSpec: {
               method: 'POST',
               url: '/hello',
               headers: {
-                API_KEY: 'a'
+                API_KEY: 'a',
               },
               body: {
-                hello: 'world'
-              }
+                hello: 'world',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: {
-                msg: 'Hello World! {"hello":"world"}'
-              }
-            }
+                msg: 'Hello World! {"hello":"world"}',
+              },
+            },
           },
           // -- title:CFO
           {
@@ -69,33 +70,33 @@ __(function() {
               method: 'GET',
               url: '/hello',
               headers: {
-                API_KEY: 'b'
-              }
+                API_KEY: 'b',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: {
-                msg: 'Hello World!'
-              }
-            }
+                msg: 'Hello World!',
+              },
+            },
           },
           {
             reqSpec: {
               method: 'POST',
               url: '/hello',
               headers: {
-                API_KEY: 'b'
+                API_KEY: 'b',
               },
               body: {
-                hello: 'world'
-              }
+                hello: 'world',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: {
-                msg: 'Hello World! {"hello":"world"}'
-              }
-            }
+                msg: 'Hello World! {"hello":"world"}',
+              },
+            },
           },
           // -- user:10002
           {
@@ -103,30 +104,30 @@ __(function() {
               method: 'GET',
               url: '/hello',
               headers: {
-                API_KEY: 'c'
-              }
+                API_KEY: 'c',
+              },
             },
             resSpec: {
-              statusCode: 403
-            }
+              statusCode: 403,
+            },
           },
           {
             reqSpec: {
               method: 'POST',
               url: '/hello',
               headers: {
-                API_KEY: 'c'
+                API_KEY: 'c',
               },
               body: {
-                readdown: 'writeup'
-              }
+                readdown: 'writeup',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: {
-                msg: 'Hello World! {"readdown":"writeup"}'
-              }
-            }
+                msg: 'Hello World! {"readdown":"writeup"}',
+              },
+            },
           },
           // -- *
           {
@@ -134,43 +135,44 @@ __(function() {
               method: 'GET',
               url: '/hello',
               headers: {
-                API_KEY: 'd'
-              }
+                API_KEY: 'd',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: {
-                msg: 'Hello World!'
-              }
-            }
+                msg: 'Hello World!',
+              },
+            },
           },
           {
             reqSpec: {
               method: 'POST',
               url: '/hello',
               headers: {
-                API_KEY: 'd'
+                API_KEY: 'd',
               },
               body: {
-                boo: 'hoo'
-              }
+                boo: 'hoo',
+              },
             },
             resSpec: {
-              statusCode: 403
-            }
-          }
-        ]
+              statusCode: 403,
+            },
+          },
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
         name: 'CollectionACLTests',
         service: _o(
-          '../../standalone-examples/ServiceSimpleAuthorizationExample').Service2,
+          '../../standalone-examples/ServiceSimpleAuthorizationExample'
+        ).Service2,
         _mongoFixtures: {
           db: path.join(path.dirname(module.filename),
-                        '..',
-                        'fixtures',
-                        'SimpleAuthorizationDB.json')
+            '..',
+            'fixtures',
+            'SimpleAuthorizationDB.json'),
         },
         tests: [
           // -- role:Admin
@@ -179,8 +181,8 @@ __(function() {
               method: 'GET',
               url: '/hello',
               headers: {
-                API_KEY: 'a'
-              }
+                API_KEY: 'a',
+              },
             },
             resSpec: {
               statusCode: 200,
@@ -188,32 +190,33 @@ __(function() {
                 assert(_.isArray(val))
                 assert.equal(val.length, 1)
                 assert.equal(val[0].msg, 'foo')
-              }
-            }
+              },
+            },
           },
           {
             reqSpec: {
               method: 'POST',
               url: '/hello',
               headers: {
-                API_KEY: 'a'
+                API_KEY: 'a',
               },
               body: {
-                msg: 'bar'
-              }
+                msg: 'bar',
+              },
             },
             resSpec: {
               statusCode: 201,
               headers: function(val) {
                 assert('carbonio-id' in val)
                 assert(core.ejson.isObjectId(
-                  core.ejson.parse(val['carbonio-id'])))
+                  core.ejson.parse(val['carbonio-id'])
+                ))
               },
               body: function(body) {
                 assert.equal(body.msg, 'bar')
                 assert(core.ejson.isObjectId(body._id))
-              }
-            }
+              },
+            },
           },
           // -- title:CFO
           {
@@ -221,8 +224,8 @@ __(function() {
               method: 'GET',
               url: '/hello',
               headers: {
-                API_KEY: 'b'
-              }
+                API_KEY: 'b',
+              },
             },
             resSpec: {
               statusCode: 200,
@@ -230,41 +233,44 @@ __(function() {
                 assert(_.isArray(val))
                 assert.equal(val.length, 2)
                 assert.deepEqual(_.intersection(
-                  ['foo', 'bar'], _.map(val, function(val) {return val['msg']})),
-                  ['foo', 'bar'])
-              }
-            }
+                  ['foo', 'bar'], _.map(val, function(val) {
+                    return val['msg']
+                  })
+                ),
+                ['foo', 'bar'])
+              },
+            },
           },
           {
             reqSpec: {
               method: 'GET',
               url: '/hello/000000000000000000000000',
               headers: {
-                API_KEY: 'b'
-              }
+                API_KEY: 'b',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: function(val) {
                 assert(_.isObject(val))
                 assert.equal(val.msg, 'foo')
-              }
-            }
+              },
+            },
           },
           {
             reqSpec: {
               method: 'POST',
               url: '/hello',
               headers: {
-                API_KEY: 'b'
+                API_KEY: 'b',
               },
               body: {
-                msg: 'bar'
-              }
+                msg: 'bar',
+              },
             },
             resSpec: {
-              statusCode: 403
-            }
+              statusCode: 403,
+            },
           },
           // -- user:10002
           {
@@ -272,52 +278,53 @@ __(function() {
               method: 'GET',
               url: '/hello',
               headers: {
-                API_KEY: 'c'
-              }
+                API_KEY: 'c',
+              },
             },
             resSpec: {
-              statusCode: 403
-            }
+              statusCode: 403,
+            },
           },
           {
             reqSpec: {
               method: 'POST',
               url: '/hello',
               headers: {
-                API_KEY: 'c'
+                API_KEY: 'c',
               },
               body: {
-                msg: 'baz'
-              }
+                msg: 'baz',
+              },
             },
             resSpec: {
               statusCode: 201,
               headers: function(val) {
                 assert('carbonio-id' in val)
                 assert(core.ejson.isObjectId(
-                  core.ejson.parse(val['carbonio-id'])))
+                  core.ejson.parse(val['carbonio-id'])
+                ))
               },
               body: function(body) {
                 assert.equal(body.msg, 'baz')
                 assert(core.ejson.isObjectId(body._id))
-              }
-            }
+              },
+            },
           },
           {
             reqSpec: {
               method: 'GET',
               url: '/hello/000000000000000000000000',
               headers: {
-                API_KEY: 'c'
-              }
+                API_KEY: 'c',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: function(val) {
                 assert(_.isObject(val))
                 assert.equal(val.msg, 'foo')
-              }
-            }
+              },
+            },
           },
           // -- *
           {
@@ -325,56 +332,57 @@ __(function() {
               method: 'GET',
               url: '/hello',
               headers: {
-                API_KEY: 'd'
-              }
+                API_KEY: 'd',
+              },
             },
             resSpec: {
-              statusCode: 403
-            }
+              statusCode: 403,
+            },
           },
           {
             reqSpec: {
               method: 'POST',
               url: '/hello',
               headers: {
-                API_KEY: 'd'
+                API_KEY: 'd',
               },
               body: {
-                boo: 'hoo'
-              }
+                boo: 'hoo',
+              },
             },
             resSpec: {
-              statusCode: 403
-            }
+              statusCode: 403,
+            },
           },
           {
             reqSpec: {
               method: 'GET',
               url: '/hello/000000000000000000000000',
               headers: {
-                API_KEY: 'd'
-              }
+                API_KEY: 'd',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: function(val) {
                 assert(_.isObject(val))
                 assert.equal(val.msg, 'foo')
-              }
-            }
+              },
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
         name: 'ExternalACLTests',
         service: _o(
-          '../../standalone-examples/ServiceExternalACLExample'),
+          '../../standalone-examples/ServiceExternalACLExample'
+        ),
         _mongoFixtures: {
           db: path.join(path.dirname(module.filename),
-                        '..',
-                        'fixtures',
-                        'SimpleAuthorizationDB.json')
+            '..',
+            'fixtures',
+            'SimpleAuthorizationDB.json'),
         },
         tests: [
           // -- role:Admin
@@ -383,8 +391,8 @@ __(function() {
               method: 'GET',
               url: '/hello',
               headers: {
-                API_KEY: 'a'
-              }
+                API_KEY: 'a',
+              },
             },
             resSpec: {
               statusCode: 200,
@@ -392,32 +400,33 @@ __(function() {
                 assert(_.isArray(val))
                 assert.equal(val.length, 1)
                 assert.equal(val[0].msg, 'foo')
-              }
-            }
+              },
+            },
           },
           {
             reqSpec: {
               method: 'POST',
               url: '/hello',
               headers: {
-                API_KEY: 'a'
+                API_KEY: 'a',
               },
               body: {
-                msg: 'bar'
-              }
+                msg: 'bar',
+              },
             },
             resSpec: {
               statusCode: 201,
               headers: function(val) {
                 assert('carbonio-id' in val)
                 assert(core.ejson.isObjectId(
-                  core.ejson.parse(val['carbonio-id'])))
+                  core.ejson.parse(val['carbonio-id'])
+                ))
               },
               body: function(body) {
                 assert.equal(body.msg, 'bar')
                 assert(core.ejson.isObjectId(body._id))
-              }
-            }
+              },
+            },
           },
           // -- title:CFO
           {
@@ -425,8 +434,8 @@ __(function() {
               method: 'GET',
               url: '/hello',
               headers: {
-                API_KEY: 'b'
-              }
+                API_KEY: 'b',
+              },
             },
             resSpec: {
               statusCode: 200,
@@ -434,41 +443,44 @@ __(function() {
                 assert(_.isArray(val))
                 assert.equal(val.length, 2)
                 assert.deepEqual(_.intersection(
-                  ['foo', 'bar'], _.map(val, function(val) {return val['msg']})),
-                  ['foo', 'bar'])
-              }
-            }
+                  ['foo', 'bar'], _.map(val, function(val) {
+                    return val['msg']
+                  })
+                ),
+                ['foo', 'bar'])
+              },
+            },
           },
           {
             reqSpec: {
               method: 'GET',
               url: '/hello/000000000000000000000000',
               headers: {
-                API_KEY: 'b'
-              }
+                API_KEY: 'b',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: function(val) {
                 assert(_.isObject(val))
                 assert.equal(val.msg, 'foo')
-              }
-            }
+              },
+            },
           },
           {
             reqSpec: {
               method: 'POST',
               url: '/hello',
               headers: {
-                API_KEY: 'b'
+                API_KEY: 'b',
               },
               body: {
-                msg: 'bar'
-              }
+                msg: 'bar',
+              },
             },
             resSpec: {
-              statusCode: 403
-            }
+              statusCode: 403,
+            },
           },
           // -- user:10002
           {
@@ -476,52 +488,53 @@ __(function() {
               method: 'GET',
               url: '/hello',
               headers: {
-                API_KEY: 'c'
-              }
+                API_KEY: 'c',
+              },
             },
             resSpec: {
-              statusCode: 403
-            }
+              statusCode: 403,
+            },
           },
           {
             reqSpec: {
               method: 'POST',
               url: '/hello',
               headers: {
-                API_KEY: 'c'
+                API_KEY: 'c',
               },
               body: {
-                msg: 'baz'
-              }
+                msg: 'baz',
+              },
             },
             resSpec: {
               statusCode: 201,
               headers: function(val) {
                 assert('carbonio-id' in val)
                 assert(core.ejson.isObjectId(
-                  core.ejson.parse(val['carbonio-id'])))
+                  core.ejson.parse(val['carbonio-id'])
+                ))
               },
               body: function(body) {
                 assert.equal(body.msg, 'baz')
                 assert(core.ejson.isObjectId(body._id))
-              }
-            }
+              },
+            },
           },
           {
             reqSpec: {
               method: 'GET',
               url: '/hello/000000000000000000000000',
               headers: {
-                API_KEY: 'c'
-              }
+                API_KEY: 'c',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: function(val) {
                 assert(_.isObject(val))
                 assert.equal(val.msg, 'foo')
-              }
-            }
+              },
+            },
           },
           // -- *
           {
@@ -529,47 +542,47 @@ __(function() {
               method: 'GET',
               url: '/hello',
               headers: {
-                API_KEY: 'd'
-              }
+                API_KEY: 'd',
+              },
             },
             resSpec: {
-              statusCode: 403
-            }
+              statusCode: 403,
+            },
           },
           {
             reqSpec: {
               method: 'POST',
               url: '/hello',
               headers: {
-                API_KEY: 'd'
+                API_KEY: 'd',
               },
               body: {
-                boo: 'hoo'
-              }
+                boo: 'hoo',
+              },
             },
             resSpec: {
-              statusCode: 403
-            }
+              statusCode: 403,
+            },
           },
           {
             reqSpec: {
               method: 'GET',
               url: '/hello/000000000000000000000000',
               headers: {
-                API_KEY: 'd'
-              }
+                API_KEY: 'd',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: function(val) {
                 assert(_.isObject(val))
                 assert.equal(val.msg, 'foo')
-              }
-            }
+              },
+            },
           },
-        ]
-      })
-    ]
+        ],
+      }),
+    ],
   })
 })
 

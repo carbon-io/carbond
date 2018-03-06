@@ -12,10 +12,10 @@ var myService = o({ // IMPORTANT: do not use "o.main" here
     hello: o({
       _type: carbon.carbond.Endpoint,
       get: function(req) {
-        return { msg: 'Hello World!' }
-      }
-    })
-  }
+        return {msg: 'Hello World!'}
+      },
+    }),
+  },
 })
 
 function startService(done) {
@@ -45,6 +45,6 @@ if (module === require.main) {
 
 module.exports = {
   myService: myService,
-  startService: startService
+  startService: startService,
 }
 

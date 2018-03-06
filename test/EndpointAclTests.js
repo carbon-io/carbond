@@ -9,14 +9,14 @@ function basicAuthString(username) {
   return 'Basic ' + Buffer(username + ':' + username, 'utf8').toString('base64')
 }
 var USER_HEADERS = {
-  ADMIN: { authorization: basicAuthString("admin") },
-  BOB:   { authorization: basicAuthString("bob") }
+  ADMIN: {authorization: basicAuthString('admin')},
+  BOB: {authorization: basicAuthString('bob')},
 }
 var ENDPOINTS = {
-  SAB_FALSE:    "/api/e1/f1",
-  SAB_TRUE:     "/api/e2/f2",
-  SAB_GET:      "/api/e3/f3",
-  SAB_FUNCTION: "/api/e4/f4"
+  SAB_FALSE: '/api/e1/f1',
+  SAB_TRUE: '/api/e2/f2',
+  SAB_GET: '/api/e3/f3',
+  SAB_FUNCTION: '/api/e4/f4',
 }
 
 /**************************************************************************
@@ -33,12 +33,12 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: "EndpointAclTests",
+    name: 'EndpointAclTests',
 
     /**********************************************************************
      * description
      */
-    description: "Test ACL composition in hierarchical endpoints",
+    description: 'Test ACL composition in hierarchical endpoints',
 
     /**********************************************************************
      * service
@@ -51,80 +51,80 @@ __(function() {
     tests: [
       // selfAndBelow: false
       {
-        reqSpec: { url: ENDPOINTS.SAB_FALSE, method: "GET", headers: USER_HEADERS.ADMIN },
-        resSpec: { statusCode: 200 }
+        reqSpec: {url: ENDPOINTS.SAB_FALSE, method: 'GET', headers: USER_HEADERS.ADMIN},
+        resSpec: {statusCode: 200},
       },
       {
-        reqSpec: { url: ENDPOINTS.SAB_FALSE, method: "POST", headers: USER_HEADERS.ADMIN },
-        resSpec: { statusCode: 200 }
+        reqSpec: {url: ENDPOINTS.SAB_FALSE, method: 'POST', headers: USER_HEADERS.ADMIN},
+        resSpec: {statusCode: 200},
       },
       {
-        reqSpec: { url: ENDPOINTS.SAB_FALSE, method: "GET", headers: USER_HEADERS.BOB },
-        resSpec: { statusCode: 200 }
+        reqSpec: {url: ENDPOINTS.SAB_FALSE, method: 'GET', headers: USER_HEADERS.BOB},
+        resSpec: {statusCode: 200},
       },
       {
-        reqSpec: { url: ENDPOINTS.SAB_FALSE, method: "POST", headers: USER_HEADERS.BOB },
-        resSpec: { statusCode: 403 }
+        reqSpec: {url: ENDPOINTS.SAB_FALSE, method: 'POST', headers: USER_HEADERS.BOB},
+        resSpec: {statusCode: 403},
       },
       {
-        reqSpec: { url: ENDPOINTS.SAB_FALSE, method: "PUT", headers: USER_HEADERS.ADMIN },
-        resSpec: { statusCode: 404 }
+        reqSpec: {url: ENDPOINTS.SAB_FALSE, method: 'PUT', headers: USER_HEADERS.ADMIN},
+        resSpec: {statusCode: 404},
       },
 
       // selfAndBelow: true
       {
-        reqSpec: { url: ENDPOINTS.SAB_TRUE, method: "POST", headers: USER_HEADERS.ADMIN },
-        resSpec: { statusCode: 403 }
+        reqSpec: {url: ENDPOINTS.SAB_TRUE, method: 'POST', headers: USER_HEADERS.ADMIN},
+        resSpec: {statusCode: 403},
       },
       {
-        reqSpec: { url: ENDPOINTS.SAB_TRUE, method: "GET", headers: USER_HEADERS.ADMIN },
-        resSpec: { statusCode: 200 }
+        reqSpec: {url: ENDPOINTS.SAB_TRUE, method: 'GET', headers: USER_HEADERS.ADMIN},
+        resSpec: {statusCode: 200},
       },
       {
-        reqSpec: { url: ENDPOINTS.SAB_TRUE, method: "GET", headers: USER_HEADERS.BOB },
-        resSpec: { statusCode: 403 }
+        reqSpec: {url: ENDPOINTS.SAB_TRUE, method: 'GET', headers: USER_HEADERS.BOB},
+        resSpec: {statusCode: 403},
       },
       {
-        reqSpec: { url: ENDPOINTS.SAB_TRUE, method: "POST", headers: USER_HEADERS.BOB },
-        resSpec: { statusCode: 403 }
+        reqSpec: {url: ENDPOINTS.SAB_TRUE, method: 'POST', headers: USER_HEADERS.BOB},
+        resSpec: {statusCode: 403},
       },
 
       // selfAndBelow: "get"
 
       {
-        reqSpec: { url: ENDPOINTS.SAB_GET, method: "POST", headers: USER_HEADERS.ADMIN },
-        resSpec: { statusCode: 200 }
+        reqSpec: {url: ENDPOINTS.SAB_GET, method: 'POST', headers: USER_HEADERS.ADMIN},
+        resSpec: {statusCode: 200},
       },
       {
-        reqSpec: { url: ENDPOINTS.SAB_GET, method: "GET", headers: USER_HEADERS.ADMIN },
-        resSpec: { statusCode: 200 }
+        reqSpec: {url: ENDPOINTS.SAB_GET, method: 'GET', headers: USER_HEADERS.ADMIN},
+        resSpec: {statusCode: 200},
       },
       {
-        reqSpec: { url: ENDPOINTS.SAB_GET, method: "GET", headers: USER_HEADERS.BOB },
-        resSpec: { statusCode: 403 }
+        reqSpec: {url: ENDPOINTS.SAB_GET, method: 'GET', headers: USER_HEADERS.BOB},
+        resSpec: {statusCode: 403},
       },
       {
-        reqSpec: { url: ENDPOINTS.SAB_GET, method: "POST", headers: USER_HEADERS.BOB },
-        resSpec: { statusCode: 403 }
+        reqSpec: {url: ENDPOINTS.SAB_GET, method: 'POST', headers: USER_HEADERS.BOB},
+        resSpec: {statusCode: 403},
       },
 
       // selfAndBelow: fn
       {
-        reqSpec: { url: ENDPOINTS.SAB_FUNCTION, method: "POST", headers: USER_HEADERS.ADMIN },
-        resSpec: { statusCode: 403 }
+        reqSpec: {url: ENDPOINTS.SAB_FUNCTION, method: 'POST', headers: USER_HEADERS.ADMIN},
+        resSpec: {statusCode: 403},
       },
       {
-        reqSpec: { url: ENDPOINTS.SAB_FUNCTION, method: "GET", headers: USER_HEADERS.ADMIN },
-        resSpec: { statusCode: 200 }
+        reqSpec: {url: ENDPOINTS.SAB_FUNCTION, method: 'GET', headers: USER_HEADERS.ADMIN},
+        resSpec: {statusCode: 200},
       },
       {
-        reqSpec: { url: ENDPOINTS.SAB_FUNCTION, method: "GET", headers: USER_HEADERS.BOB },
-        resSpec: { statusCode: 403 }
+        reqSpec: {url: ENDPOINTS.SAB_FUNCTION, method: 'GET', headers: USER_HEADERS.BOB},
+        resSpec: {statusCode: 403},
       },
       {
-        reqSpec: { url: ENDPOINTS.SAB_FUNCTION, method: "POST", headers: USER_HEADERS.BOB },
-        resSpec: { statusCode: 200 }
-      }
-    ]
+        reqSpec: {url: ENDPOINTS.SAB_FUNCTION, method: 'POST', headers: USER_HEADERS.BOB},
+        resSpec: {statusCode: 200},
+      },
+    ],
   })
 })

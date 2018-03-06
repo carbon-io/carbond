@@ -7,6 +7,6 @@ var o = carbon.atom.o(module)
 
 __(function() {
   o.main({
-    _type: _o('../lib/HelloService')
+    _type: _o('../lib/HelloService'),
   })
 })

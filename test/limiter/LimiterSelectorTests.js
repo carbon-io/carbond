@@ -18,7 +18,7 @@ module.exports = o({
         assert.throws(function() {
           var limiterSelector = o({_type: LimiterSelector})
         }, Error)
-      }
+      },
     }),
-  ]
+  ],
 })

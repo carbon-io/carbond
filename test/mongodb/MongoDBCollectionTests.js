@@ -69,8 +69,8 @@ __(function() {
         },
         resSpec: {
           statusCode: 200,
-          body: [{_id: '94577', state: 'CA'}]
-        }
+          body: [{_id: '94577', state: 'CA'}],
+        },
       },
       {
         name: 'headWithExplicitQueryTest',
@@ -83,8 +83,8 @@ __(function() {
         },
         resSpec: {
           statusCode: 200,
-          body: null
-        }
+          body: null,
+        },
       },
 
       // Test find with paging and implicit query
@@ -92,7 +92,7 @@ __(function() {
         name: 'findWithPagingAndImplicitQueryTest',
         reqSpec: {
           url: '/zipcodes',
-          method: 'GET'
+          method: 'GET',
         },
         resSpec: {
           statusCode: 200,
@@ -100,20 +100,21 @@ __(function() {
             assert(_.isArray(body))
             assert.equal(
               body.length,
-              this.parent.service.endpoints.zipcodes.findConfig.pageSize)
-          }
-        }
+              this.parent.service.endpoints.zipcodes.findConfig.pageSize
+            )
+          },
+        },
       },
       {
         name: 'headWithPagingAndImplicitQueryTest',
         reqSpec: {
           url: '/zipcodes',
-          method: 'HEAD'
+          method: 'HEAD',
         },
         resSpec: {
           statusCode: 200,
-          body: null
-        }
+          body: null,
+        },
       },
 
       // Test find maxPageSize enforcement
@@ -124,8 +125,8 @@ __(function() {
             url: '/zipcodes',
             method: 'GET',
             parameters: {
-              limit: this.parent.service.endpoints.zipcodes.findConfig.maxPageSize + 5
-            }
+              limit: this.parent.service.endpoints.zipcodes.findConfig.maxPageSize + 5,
+            },
           }
         },
         resSpec: {
@@ -134,9 +135,10 @@ __(function() {
             assert(_.isArray(body))
             assert.equal(
               body.length,
-              this.parent.service.endpoints.zipcodes.findConfig.maxPageSize)
-          }
-        }
+              this.parent.service.endpoints.zipcodes.findConfig.maxPageSize
+            )
+          },
+        },
       },
       {
         name: 'headMaxPageSizeTest',
@@ -145,14 +147,14 @@ __(function() {
             url: '/zipcodes',
             method: 'HEAD',
             parameters: {
-              limit: this.parent.service.endpoints.zipcodes.findConfig.maxPageSize + 5
-            }
+              limit: this.parent.service.endpoints.zipcodes.findConfig.maxPageSize + 5,
+            },
           }
         },
         resSpec: {
           statusCode: 200,
-          body: null
-        }
+          body: null,
+        },
       },
 
       // Test find with paging and implicit query
@@ -163,8 +165,8 @@ __(function() {
             url: '/zipcodes',
             method: 'GET',
             parameters: {
-              limit: this.parent.service.endpoints.zipcodes.findConfig.maxPageSize + 5
-            }
+              limit: this.parent.service.endpoints.zipcodes.findConfig.maxPageSize + 5,
+            },
           }
         },
         resSpec: {
@@ -173,9 +175,10 @@ __(function() {
             assert('link' in headers)
             assert.equal(
               headers.link,
-              '<http://localhost:8888/zipcodes?page=1&limit=10>; rel="next"')
-          }
-        }
+              '<http://localhost:8888/zipcodes?page=1&limit=10>; rel="next"'
+            )
+          },
+        },
       },
       {
         name: 'headLinkHeadersSizeTest',
@@ -184,8 +187,8 @@ __(function() {
             url: '/zipcodes',
             method: 'HEAD',
             parameters: {
-              limit: this.parent.service.endpoints.zipcodes.findConfig.maxPageSize + 5
-            }
+              limit: this.parent.service.endpoints.zipcodes.findConfig.maxPageSize + 5,
+            },
           }
         },
         resSpec: {
@@ -194,30 +197,31 @@ __(function() {
             assert('link' in headers)
             assert.equal(
               headers.link,
-              '<http://localhost:8888/zipcodes?page=1&limit=10>; rel="next"')
-          }
-        }
+              '<http://localhost:8888/zipcodes?page=1&limit=10>; rel="next"'
+            )
+          },
+        },
       },
 
       // Test findObject
       {
         reqSpec: {
           url: '/zipcodes/94577',
-          method: 'GET'
+          method: 'GET',
         },
         resSpec: {
           statusCode: 200,
-          body: { _id: '94577', state: 'CA', }
-        }
+          body: {_id: '94577', state: 'CA'},
+        },
       },
       {
         reqSpec: {
           url: '/zipcodes/94119',
-          method: 'GET'
+          method: 'GET',
         },
         resSpec: {
           statusCode: 404,
-        }
+        },
       },
 
       // Test insert
@@ -227,13 +231,13 @@ __(function() {
           method: 'POST',
           body: {
             _id: '94114',
-            state: 'CA'
+            state: 'CA',
           },
         },
         resSpec: {
           // body needs to be a list
-          statusCode: 400
-        }
+          statusCode: 400,
+        },
       },
       {
         reqSpec: {
@@ -241,13 +245,13 @@ __(function() {
           method: 'POST',
           body: [{
             _id: '94114',
-            state: 'CA'
+            state: 'CA',
           }],
         },
         resSpec: {
           // _id is not allowed on insert, save must be used in this case
-          statusCode: 400
-        }
+          statusCode: 400,
+        },
       },
       {
         setup: function() {
@@ -255,21 +259,21 @@ __(function() {
           // instead
           this.generateIdStub =
             sinon.stub(this.parent.service.endpoints.zipcodes.idGenerator,
-                       'generateId').callsFake(function() {
-                          return '94114'
-                        })
+              'generateId').callsFake(function() {
+              return '94114'
+            })
         },
         teardown: function() {
           try {
             var collection = this.parent.service.endpoints.zipcodes
             var dbObject =
               collection.collection.findOne({
-                _id: '94114'
+                _id: '94114',
               })
             assert(!_.isNil(dbObject))
             assert.deepEqual(dbObject, {
               _id: '94114',
-              state: 'CA'
+              state: 'CA',
             })
           } finally {
             this.generateIdStub.restore()
@@ -279,7 +283,7 @@ __(function() {
           url: '/zipcodes',
           method: 'POST',
           body: [{
-            state: 'CA'
+            state: 'CA',
           }],
         },
         resSpec: {
@@ -290,9 +294,9 @@ __(function() {
           },
           body: [{
             _id: '94114',
-            state: 'CA'
-          }]
-        }
+            state: 'CA',
+          }],
+        },
       },
 
       // Test GET of previously inserted object
@@ -304,13 +308,13 @@ __(function() {
           parameters: {
             query: {_id: '94114'},
             sort: {'_id': 1},
-            limit: 1
+            limit: 1,
           },
         },
         resSpec: {
           statusCode: 200,
-          body: [{_id: '94114', state: 'CA'}]
-        }
+          body: [{_id: '94114', state: 'CA'}],
+        },
       },
 
       // Test for carbond#172
@@ -322,15 +326,15 @@ __(function() {
           method: 'PUT',
           body: {
             _id: '95125',
-            state: 'CA'
+            state: 'CA',
           },
         },
         resSpec: {
           statusCode: 201,
           headers: function(headers, ctx) {
             assert.equal(headers.location, '/zipcodes/95125')
-          }
-        }
+          },
+        },
       },
       {
         name: 'carbon-io/carbond#174',
@@ -343,12 +347,12 @@ __(function() {
           method: 'PUT',
           body: {
             _id: '945/77',
-            state: 'CA'
+            state: 'CA',
           },
         },
         resSpec: {
-          statusCode: 400
-        }
+          statusCode: 400,
+        },
       },
 
       // Test update
@@ -357,23 +361,23 @@ __(function() {
           url: '/zipcodes',
           method: 'PATCH',
           parameters: {query: {_id: '00631'}},
-          body: {state: 'NY'}
+          body: {state: 'NY'},
         },
         resSpec: {
-          statusCode: 400
-        }
+          statusCode: 400,
+        },
       },
       {
         reqSpec: {
           url: '/zipcodes',
           method: 'PATCH',
           parameters: {query: {_id: '00631'}},
-          body: {$set: {state: 'NY'}}
+          body: {$set: {state: 'NY'}},
         },
         resSpec: {
           statusCode: 200,
           body: {n: 1},
-        }
+        },
       },
 
       // Test remove
@@ -385,8 +389,8 @@ __(function() {
         },
         resSpec: {
           statusCode: 200,
-          body: {n: 1}
-        }
+          body: {n: 1},
+        },
       },
 
       // Test saveObject
@@ -394,7 +398,7 @@ __(function() {
         reqSpec: {
           url: '/zipcodes/94114',
           method: 'PUT',
-          body: {_id: '94114', state: 'CA'}
+          body: {_id: '94114', state: 'CA'},
         },
         resSpec: {
           statusCode: 201,
@@ -402,14 +406,14 @@ __(function() {
             assert.equal(headers.location, '/zipcodes/94114')
             assert.equal(ejson.parse(headers[ctx.global.idHeaderName]), '94114')
           },
-          body: {_id: '94114', state: 'CA'}
-        }
+          body: {_id: '94114', state: 'CA'},
+        },
       },
       {
         reqSpec: {
           url: '/zipcodes/94114',
           method: 'PUT',
-          body: {_id: '94114', state: 'CA'}
+          body: {_id: '94114', state: 'CA'},
         },
         resSpec: {
           statusCode: 200,
@@ -417,8 +421,8 @@ __(function() {
             assert(_.isUndefined(headers.location))
             assert(_.isUndefined(headers[ctx.global.idHeaderName]))
           },
-          body: {_id: '94114', state: 'CA'}
-        }
+          body: {_id: '94114', state: 'CA'},
+        },
       },
 
       // Test updateObject
@@ -426,7 +430,7 @@ __(function() {
         reqSpec: {
           url: '/zipcodes/94114',
           method: 'PATCH',
-          body: {state: 'NY'}
+          body: {state: 'NY'},
         },
         resSpec: {
           statusCode: 200,
@@ -434,20 +438,20 @@ __(function() {
             assert(_.isUndefined(headers.location))
             assert(_.isUndefined(headers[ctx.global.idHeaderName]))
           },
-          body: {n: 1}
-        }
+          body: {n: 1},
+        },
       },
 
       // Test removeObject
       {
         reqSpec: {
           url: '/zipcodes/94114',
-          method: 'DELETE'
+          method: 'DELETE',
         },
         resSpec: {
           statusCode: 200,
-          body: {n: 1}
-        }
+          body: {n: 1},
+        },
       },
 
       // Test whole collection replace
@@ -459,19 +463,19 @@ __(function() {
             {
               _id: '94114',
               state: 'CA',
-              city: 'San Francisco'
+              city: 'San Francisco',
             },
             {
               _id: '94577',
               state: 'CA',
-              city: 'San Leandro'
+              city: 'San Leandro',
             },
-          ]
+          ],
         },
         resSpec: {
           // body does not match schema
-          statusCode: 400
-        }
+          statusCode: 400,
+        },
       },
       {
         setup: function() {
@@ -486,27 +490,27 @@ __(function() {
           body: [
             {
               _id: '94114',
-              state: 'CA'
+              state: 'CA',
             },
             {
               _id: '94577',
-              state: 'CA'
+              state: 'CA',
             },
-          ]
+          ],
         },
         resSpec: {
           statusCode: 200,
           body: [
             {
               _id: '94114',
-              state: 'CA'
+              state: 'CA',
             },
             {
               _id: '94577',
-              state: 'CA'
+              state: 'CA',
             },
-          ]
-        }
+          ],
+        },
       },
 
       // Test patch with ObjectId
@@ -516,12 +520,12 @@ __(function() {
           url: '/bag-of-props',
           method: 'POST',
           body: {
-            firstName: 'foo'
-          }
+            firstName: 'foo',
+          },
         },
         resSpec: {
-          statusCode: 201
-        }
+          statusCode: 201,
+        },
       },
       {
         name: 'Issue114Test1',
@@ -531,15 +535,15 @@ __(function() {
             method: 'PATCH',
             body: {
               '$set': {
-                lastName: 'bar'
-              }
-            }
+                lastName: 'bar',
+              },
+            },
           }
         },
         resSpec: {
           statusCode: 200,
-          body: {n: 1}
-        }
+          body: {n: 1},
+        },
       },
       {
         name: 'Issue114Test2',
@@ -550,15 +554,15 @@ __(function() {
             method: 'PATCH',
             body: {
               '$set': {
-                lastName: 'baz'
-              }
-            }
+                lastName: 'baz',
+              },
+            },
           }
         },
         resSpec: {
           statusCode: 200,
-          body: {n: 1}
-        }
+          body: {n: 1},
+        },
       },
 
       o({
@@ -572,19 +576,19 @@ __(function() {
             type: 'object',
             properties: {
               _id: {type: 'string'},
-              state: {type: 'string'}
+              state: {type: 'string'},
             },
             additionalProperties: false,
-            required: ['_id', 'state']
+            required: ['_id', 'state'],
           }
 
-          this.querySchema =  {
+          this.querySchema = {
             type: 'object',
             properties: {
               _id: {type: 'string'},
-              state: {type: 'string'}
+              state: {type: 'string'},
             },
-            additionalProperties: false
+            additionalProperties: false,
           }
 
           this.updateSchema = {
@@ -593,22 +597,22 @@ __(function() {
               '^\\$.+': {
                 type: 'object',
                 properties: {
-                  state: {type: 'string'}
+                  state: {type: 'string'},
                 },
                 required: ['state'],
-                additionalProperties: false
-              }
+                additionalProperties: false,
+              },
             },
-            additionalProperties: false
+            additionalProperties: false,
           }
 
           this.updateObjectSchema = {
             type: 'object',
             properties: {
-              state: {type: 'string'}
+              state: {type: 'string'},
             },
             required: ['state'],
-            additionalProperties: false
+            additionalProperties: false,
           }
 
           this.defaultErrorSchema = {
@@ -618,35 +622,35 @@ __(function() {
               description: {type: 'string'},
               message: {type: 'string'},
             },
-            required: ['code', 'description', 'message']
+            required: ['code', 'description', 'message'],
           }
 
           this.NotFoundResponse = {
             statusCode: 404,
             description: 'Collection resource cannot be found by the supplied _id.',
             schema: this.defaultErrorSchema,
-            headers: []
+            headers: [],
           }
 
           this.BadRequestResponse = {
             statusCode: 400,
             description: 'Request is malformed (i.e. invalid parameters).',
             schema: this.defaultErrorSchema,
-            headers: []
+            headers: [],
           }
 
           this.ForbiddenResponse = {
             statusCode: 403,
             description: 'User is not authorized to run this operation.',
             schema: this.defaultErrorSchema,
-            headers: []
+            headers: [],
           }
 
           this.InternalServerErrorResponse = {
             statusCode: 500,
             description: 'There was an unexpected internal error processing this request.',
             schema: this.defaultErrorSchema,
-            headers: []
+            headers: [],
           }
         },
         tests: [
@@ -671,52 +675,53 @@ __(function() {
                             type: 'object',
                             properties: {
                               _id: {type: 'string'},
-                              state: {type: 'string'}
+                              state: {type: 'string'},
                             },
                             additionalProperties: false,
-                            required: ['_id', 'state']
-                          }
+                            required: ['_id', 'state'],
+                          },
                         }, {
                           type: 'object',
                           properties: {
                             _id: {type: 'string'},
-                            state: {type: 'string'}
+                            state: {type: 'string'},
                           },
                           additionalProperties: false,
-                          required: ['_id', 'state']
-                        }
-                      ]
+                          required: ['_id', 'state'],
+                        },
+                      ],
                     },
-                    headers: ['Location', this.parent.ce.idHeaderName]
+                    headers: ['Location', this.parent.ce.idHeaderName],
                   },
                   '400': _.assign(_.clone(this.parent.BadRequestResponse), {
                     schema: {
                       oneOf: [
                         this.parent.BadRequestResponse.schema,
-                        this.parent.BadRequestResponse.schema
-                      ]
-                    }
+                        this.parent.BadRequestResponse.schema,
+                      ],
+                    },
                   }),
                   '403': _.assign(_.clone(this.parent.ForbiddenResponse), {
                     schema: {
                       oneOf: [
                         this.parent.ForbiddenResponse.schema,
-                        this.parent.ForbiddenResponse.schema
-                      ]
-                    }
+                        this.parent.ForbiddenResponse.schema,
+                      ],
+                    },
                   }),
                   '500': _.assign(_.clone(this.parent.InternalServerErrorResponse), {
                     schema: {
                       oneOf: [
                         this.parent.InternalServerErrorResponse.schema,
-                        this.parent.InternalServerErrorResponse.schema
-                      ]
-                    }
+                        this.parent.InternalServerErrorResponse.schema,
+                      ],
+                    },
                   }),
-                })
+                }
+              )
               assert.deepEqual(
                 this.parent.ce.getOperation('post').parameters, {
-                  'objects' : {
+                  'objects': {
                     description: 'Object(s) to insert',
                     name: 'objects',
                     schema: {
@@ -727,27 +732,27 @@ __(function() {
                             type: 'object',
                             properties: {
                               _id: {type: 'string'},
-                              state: {type: 'string'}
+                              state: {type: 'string'},
                             },
                             additionalProperties: false,
-                            required: ['state']
-                          }
+                            required: ['state'],
+                          },
                         }, {
                           type: 'object',
                           properties: {
                             _id: {type: 'string'},
-                            state: {type: 'string'}
+                            state: {type: 'string'},
                           },
                           additionalProperties: false,
-                          required: ['state']
-                        }
-                      ]
+                          required: ['state'],
+                        },
+                      ],
                     },
                     location: 'body',
                     required: true,
-                    default: undefined
+                    default: undefined,
                   },
-                  'object' : {
+                  'object': {
                     description: 'Object to insert',
                     name: 'object',
                     schema: {
@@ -758,28 +763,29 @@ __(function() {
                             type: 'object',
                             properties: {
                               _id: {type: 'string'},
-                              state: {type: 'string'}
+                              state: {type: 'string'},
                             },
                             additionalProperties: false,
-                            required: ['state']
-                          }
+                            required: ['state'],
+                          },
                         }, {
                           type: 'object',
                           properties: {
                             _id: {type: 'string'},
-                            state: {type: 'string'}
+                            state: {type: 'string'},
                           },
                           additionalProperties: false,
-                          required: ['state']
-                        }
-                      ]
+                          required: ['state'],
+                        },
+                      ],
                     },
                     location: 'body',
                     required: true,
-                    default: undefined
-                  }
-                })
-            }
+                    default: undefined,
+                  },
+                }
+              )
+            },
           }),
           o({
             _type: testtube.Test,
@@ -795,14 +801,15 @@ __(function() {
                     'possible additional properties.',
                     schema: {
                       type: 'array',
-                      items: this.parent.schema
+                      items: this.parent.schema,
                     },
-                    headers: []
+                    headers: [],
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
-                })
+                  '500': this.parent.InternalServerErrorResponse,
+                }
+              )
               assert.deepEqual(
                 this.parent.ce.getOperation('get').parameters, {
                   _id: {
@@ -812,11 +819,11 @@ __(function() {
                     schema: {
                       oneOf: [
                         {type: 'string'},
-                        {type: 'array', items: {type: 'string'}}
-                      ]
+                        {type: 'array', items: {type: 'string'}},
+                      ],
                     },
                     required: false,
-                    default: undefined
+                    default: undefined,
                   },
                   page: {
                     name: 'page',
@@ -825,10 +832,10 @@ __(function() {
                     schema: {
                       type: 'number',
                       multipleOf: 1,
-                      minimum: 0
+                      minimum: 0,
                     },
                     required: false,
-                    default: 0
+                    default: 0,
                   },
                   pageSize: {
                     name: 'pageSize',
@@ -836,11 +843,11 @@ __(function() {
                     schema: {
                       type: 'number',
                       multipleOf: 1,
-                      minimum: 0
+                      minimum: 0,
                     },
                     location: 'query',
                     required: false,
-                    default: null
+                    default: null,
                   },
                   skip: {
                     name: 'skip',
@@ -849,10 +856,10 @@ __(function() {
                     schema: {
                       type: 'number',
                       multipleOf: 1,
-                      minimum: 0
+                      minimum: 0,
                     },
                     required: false,
-                    default: null
+                    default: null,
                   },
                   limit: {
                     name: 'limit',
@@ -861,10 +868,10 @@ __(function() {
                     schema: {
                       type: 'number',
                       multipleOf: 1,
-                      minimum: 0
+                      minimum: 0,
                     },
                     required: false,
-                    default: null
+                    default: null,
                   },
                   query: {
                     name: 'query',
@@ -874,26 +881,26 @@ __(function() {
                       type: 'object',
                       properties: {
                         _id: {
-                          type: 'string'
+                          type: 'string',
                         },
                         state: {
-                          type: 'string'
-                        }
+                          type: 'string',
+                        },
                       },
-                      additionalProperties: false
+                      additionalProperties: false,
                     },
                     required: false,
-                    default: {}
+                    default: {},
                   },
                   sort: {
                     name: 'sort',
                     description: 'Sort spec (JSON)',
                     location: 'query',
                     schema: {
-                      type: 'object'
+                      type: 'object',
                     },
                     required: false,
-                    default: null
+                    default: null,
                   },
                   projection: {
                     name: 'projection',
@@ -905,20 +912,21 @@ __(function() {
                         type: 'number',
                         minimum: 0,
                         maximum: 1,
-                        multipleOf: 1
-                      }
+                        multipleOf: 1,
+                      },
                     },
                     required: false,
-                    default: null
-                  }
-                })
-            }
+                    default: null,
+                  },
+                }
+              )
+            },
           }),
           o({
             _type: testtube.Test,
             name: 'SaveConfigTest',
             doTest: function() {
-            }
+            },
           }),
           o({
             _type: testtube.Test,
@@ -930,44 +938,44 @@ __(function() {
                   '200': {
                     statusCode: 200,
                     description: 'Object(s) in the collection were successfully updated',
-                    schema:  {
+                    schema: {
                       type: 'object',
                       properties: {
                         n: {
                           type: 'number',
                           minimum: 0,
-                          multipleOf: 1
-                        }
+                          multipleOf: 1,
+                        },
                       },
                       required: ['n'],
-                      additionalProperties: false
+                      additionalProperties: false,
                     },
-                    headers: []
+                    headers: [],
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
-                }),
+                  '500': this.parent.InternalServerErrorResponse,
+                })
               assert.deepEqual(this.parent.ce.getOperation('patch').parameters,
-                               {
-                                 query: {
-                                   name: 'query',
-                                   description: 'Query spec (JSON)',
-                                   schema: this.parent.querySchema,
-                                   location: 'query',
-                                   required: false,
-                                   default: {}
-                                 },
-                                 update: {
-                                   name: 'update',
-                                   location: 'body',
-                                   description: 'The update spec',
-                                   schema: this.parent.updateSchema,
-                                   required: true,
-                                   default: undefined
-                                 }
-                               })
-            }
+                {
+                  query: {
+                    name: 'query',
+                    description: 'Query spec (JSON)',
+                    schema: this.parent.querySchema,
+                    location: 'query',
+                    required: false,
+                    default: {},
+                  },
+                  update: {
+                    name: 'update',
+                    location: 'body',
+                    description: 'The update spec',
+                    schema: this.parent.updateSchema,
+                    required: true,
+                    default: undefined,
+                  },
+                })
+            },
           }),
           o({
             _type: testtube.Test,
@@ -979,36 +987,36 @@ __(function() {
                   '200': {
                     statusCode: 200,
                     description: 'Object(s) in collection were successfully removed',
-                    schema:  {
+                    schema: {
                       type: 'object',
                       properties: {
                         n: {
                           type: 'number',
                           minimum: 0,
-                          multipleOf: 1
-                        }
+                          multipleOf: 1,
+                        },
                       },
                       required: ['n'],
-                      additionalProperties: false
+                      additionalProperties: false,
                     },
-                    headers: []
+                    headers: [],
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
-                }),
+                  '500': this.parent.InternalServerErrorResponse,
+                })
               assert.deepEqual(this.parent.ce.getOperation('delete').parameters,
-                               {
-                                 query: {
-                                   name: 'query',
-                                   description: 'Query spec (JSON)',
-                                   schema: this.parent.querySchema,
-                                   location: 'query',
-                                   required: false,
-                                   default: {}
-                                 }
-                               })
-            }
+                {
+                  query: {
+                    name: 'query',
+                    description: 'Query spec (JSON)',
+                    schema: this.parent.querySchema,
+                    location: 'query',
+                    required: false,
+                    default: {},
+                  },
+                })
+            },
           }),
           o({
             _type: testtube.Test,
@@ -1021,13 +1029,14 @@ __(function() {
                     statusCode: 200,
                     description: 'Returns the object resource found at this URL specified by id.',
                     schema: this.parent.schema,
-                    headers: []
+                    headers: [],
                   },
                   '404': this.parent.NotFoundResponse,
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
-                })
+                  '500': this.parent.InternalServerErrorResponse,
+                }
+              )
               assert.deepEqual(
                 this.parent.oe.getOperation('get').parameters, {
                   projection: {
@@ -1040,14 +1049,15 @@ __(function() {
                         type: 'number',
                         minimum: 0,
                         maximum: 1,
-                        multipleOf: 1
-                      }
+                        multipleOf: 1,
+                      },
                     },
                     required: false,
-                    default: null
-                  }
-                })
-            }
+                    default: null,
+                  },
+                }
+              )
+            },
           }),
           o({
             _type: testtube.Test,
@@ -1061,7 +1071,7 @@ __(function() {
                     description: 'The object was successfully saved. The body will ' +
                                  'contain the saved object.',
                     schema: this.parent.schema,
-                    headers: []
+                    headers: [],
                   },
                   '201': {
                     statusCode: 201,
@@ -1070,24 +1080,24 @@ __(function() {
                                  'resource and the body will contain the inserted object if ' +
                                  'configured to do so.',
                     schema: this.parent.schema,
-                    headers: ['Location', this.parent.ce.idHeaderName]
+                    headers: ['Location', this.parent.ce.idHeaderName],
                   },
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
+                  '500': this.parent.InternalServerErrorResponse,
                 })
               assert.deepEqual(this.parent.oe.getOperation('put').parameters,
-                               {
-                                 object: {
-                                   name: 'object',
-                                   description: 'Object to save',
-                                   schema:  this.parent.schema,
-                                   location: 'body',
-                                   required: true,
-                                   default: undefined
-                                 }
-                               })
-            }
+                {
+                  object: {
+                    name: 'object',
+                    description: 'Object to save',
+                    schema: this.parent.schema,
+                    location: 'body',
+                    required: true,
+                    default: undefined,
+                  },
+                })
+            },
           }),
           o({
             _type: testtube.Test,
@@ -1106,31 +1116,31 @@ __(function() {
                           type: 'number',
                           minimum: 0,
                           maximum: 1,
-                          multipleOf: 1
-                        }
+                          multipleOf: 1,
+                        },
                       },
                       required: ['n'],
-                      additionalProperties: false
+                      additionalProperties: false,
                     },
-                    headers: []
+                    headers: [],
                   },
                   '404': this.parent.NotFoundResponse,
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
+                  '500': this.parent.InternalServerErrorResponse,
                 })
               assert.deepEqual(this.parent.oe.getOperation('patch').parameters,
-                               {
-                                 update: {
-                                   name: 'update',
-                                   description: 'The update spec',
-                                   schema:  this.parent.updateObjectSchema,
-                                   location: 'body',
-                                   required: true,
-                                   default: undefined
-                                 }
-                               })
-            }
+                {
+                  update: {
+                    name: 'update',
+                    description: 'The update spec',
+                    schema: this.parent.updateObjectSchema,
+                    location: 'body',
+                    required: true,
+                    default: undefined,
+                  },
+                })
+            },
           }),
           o({
             _type: testtube.Test,
@@ -1149,24 +1159,24 @@ __(function() {
                           type: 'number',
                           minimum: 0,
                           maximum: 1,
-                          multipleOf: 1
-                        }
+                          multipleOf: 1,
+                        },
                       },
                       required: ['n'],
-                      additionalProperties: false
+                      additionalProperties: false,
                     },
-                    headers: []
+                    headers: [],
                   },
                   '404': this.parent.NotFoundResponse,
                   '400': this.parent.BadRequestResponse,
                   '403': this.parent.ForbiddenResponse,
-                  '500': this.parent.InternalServerErrorResponse
+                  '500': this.parent.InternalServerErrorResponse,
                 })
               assert.deepEqual(this.parent.oe.getOperation('delete').parameters, {})
-            }
+            },
           }),
-        ]
-      })
+        ],
+      }),
     ],
 
     // XXX: move to fixtures
@@ -1174,92 +1184,92 @@ __(function() {
     zipcodes: [
       {
         _id: '00501',
-        state: 'NY'
+        state: 'NY',
       },
       {
         _id: '00544',
-        state: 'NY'
+        state: 'NY',
       },
       {
         _id: '00601',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00602',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00603',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00604',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00605',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00606',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00610',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00611',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00612',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00613',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00614',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00616',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00617',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00622',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00623',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00624',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00627',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '00631',
-        state: 'PR'
+        state: 'PR',
       },
       {
         _id: '94577',
-        state: 'CA'
+        state: 'CA',
       },
       {
         _id: '30301',
-        state: 'GA'
-      }
+        state: 'GA',
+      },
     ],
 
     /*****************************************************************************
@@ -1290,6 +1300,6 @@ __(function() {
           // ignore
         }
       })
-    }
+    },
   })
 })

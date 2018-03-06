@@ -16,29 +16,29 @@ __(function() {
       {
         reqSpec: {
           method: 'GET',
-          url: '/hello'
+          url: '/hello',
         },
         resSpec: {
           statusCode: 200,
           body: {
-            msg: 'Hello World!'
-          }
-        }
+            msg: 'Hello World!',
+          },
+        },
       },
       {
         reqSpec: {
           method: 'POST',
           url: '/hello',
-          body: {msg: 'foo bar baz'}
+          body: {msg: 'foo bar baz'},
         },
         resSpec: {
           statusCode: 200,
           body: {
-            msg: 'foo bar baz'
-          }
-        }
-      }
-    ]
+            msg: 'foo bar baz',
+          },
+        },
+      },
+    ],
   })
 })
 

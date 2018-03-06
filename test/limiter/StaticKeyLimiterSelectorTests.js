@@ -17,12 +17,14 @@ module.exports = o({
       name: 'TestStaticKeyValidation',
       description: 'Test staticKey property validation',
       doTest: function() {
-        [null, undefined, {foo: 'bar'}, function () {var foo = 'bar'}].forEach(function(val) {
+        [null, undefined, {foo: 'bar'}, function() {
+          var foo = 'bar'
+        }].forEach(function(val) {
           assert.throws(function() {
             o({_type: StaticKeyLimiterSelector, staticKey: val})
           }, TypeError)
         })
-      }
+      },
     }),
     o({
       _type: testtube.Test,
@@ -34,18 +36,18 @@ module.exports = o({
         assert(s1.hash === s1.hash)
         assert(s1.hash != s2.hash)
         assert(s2.hash === s2.hash)
-      }
+      },
     }),
     o({
       _type: testtube.Test,
       name: 'TestKeyFn',
       description: 'Test key function',
-      doTest: function () {
+      doTest: function() {
         var s1 = o({_type: StaticKeyLimiterSelector, staticKey: 'foo'})
         var s2 = o({_type: StaticKeyLimiterSelector, staticKey: 'bar'})
         assert.equal(s1.key(), 'foo')
         assert.equal(s2.key(), 'bar')
-      }
-    })
-  ]
+      },
+    }),
+  ],
 })

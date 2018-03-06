@@ -23,24 +23,24 @@ module.exports = o({
       _type: carbond.mongodb.MongoDBCollection,
       collectionName: 'zipcodes',
       enabled: {
-        '*': true
+        '*': true,
       },
       schema: {
         type: 'object',
         properties: {
           _id: {type: 'string'},
-          state: {type: 'string'}
+          state: {type: 'string'},
         },
         additionalProperties: false,
-        required: ['_id', 'state']
+        required: ['_id', 'state'],
       },
       querySchema: {
         type: 'object',
         properties: {
           _id: {type: 'string'},
-          state: {type: 'string'}
+          state: {type: 'string'},
         },
-        additionalProperties: false
+        additionalProperties: false,
       },
       updateSchema: {
         type: 'object',
@@ -48,43 +48,43 @@ module.exports = o({
           '^\\$.+': {
             type: 'object',
             properties: {
-              state: {type: 'string'}
+              state: {type: 'string'},
             },
             required: ['state'],
-            additionalProperties: false
-          }
+            additionalProperties: false,
+          },
         },
-        additionalProperties: false
+        additionalProperties: false,
       },
       updateObjectSchema: {
         type: 'object',
         properties: {
-          state: {type: 'string'}
+          state: {type: 'string'},
         },
         required: ['state'],
-        additionalProperties: false
+        additionalProperties: false,
       },
       findConfig: {
         pageSize: 5,
         maxPageSize: 10,
-        supportsPagination: true
+        supportsPagination: true,
       },
       saveObjectConfig: {
-        supportsUpsert: true
+        supportsUpsert: true,
       },
       // idGenerator doesn't really make sense in this context, but is here for tests
       idGenerator: {
         generateId: function() {
           return (zipCounter++).toString()
-        }
-      }
+        },
+      },
     }),
     'bag-of-props': o({
       _type: carbond.mongodb.MongoDBCollection,
       collectionName: 'bag-of-props',
 
       enabled: {
-        '*': true
+        '*': true,
       },
 
       schema: {
@@ -93,8 +93,8 @@ module.exports = o({
           _id: {type: 'ObjectId'},
         },
         additionalProperties: true,
-        required: ['_id']
+        required: ['_id'],
       },
-    })
-  }
+    }),
+  },
 })

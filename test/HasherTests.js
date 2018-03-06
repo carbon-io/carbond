@@ -6,9 +6,7 @@ var bcrypt = require('bcryptjs')
 var sinon = require('sinon')
 
 var __ = require('@carbon-io/carbon-core').fibers.__(module)
-var _o = require('@carbon-io/carbon-core').bond._o(module)
 var o  = require('@carbon-io/carbon-core').atom.o(module)
-var oo  = require('@carbon-io/carbon-core').atom.oo(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
 var Hasher = require('../lib/security/Hasher')
@@ -35,12 +33,12 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: "HasherTests",
+    name: 'HasherTests',
 
     /**********************************************************************
      * name
      */
-    description: "Test the various predefined hashers",
+    description: 'Test the various predefined hashers',
 
     /**********************************************************************
      * setup
@@ -71,7 +69,7 @@ __(function() {
           assert.throws(function() {
             var hasher = o({_type: Hasher})
           }, Error)
-        }
+        },
       }),
       o({
         _type: testtube.Test,
@@ -84,7 +82,7 @@ __(function() {
             assert(_.isString(name))
             assert(name in Hasher._hashers)
           })
-        }
+        },
       }),
       o({
         _type: testtube.Test,
@@ -97,7 +95,7 @@ __(function() {
           assert.throws(function() {
             Hasher.getHasher('foo')
           }, Error)
-        }
+        },
       }),
       o({
         _type: testtube.Test,
@@ -120,7 +118,7 @@ __(function() {
           } finally {
             mock.restore()
           }
-        }
+        },
       }),
 
       //
@@ -134,7 +132,7 @@ __(function() {
         doTest: function() {
           var hasher = o({_type: NoopHasher})
           assert.equal(hasher.hash('foo'), 'foo')
-        }
+        },
       }),
 
       //
@@ -149,7 +147,7 @@ __(function() {
           var hasher = o({_type: Sha256Hasher})
           var digest = crypto.createHash('sha256').update('foo').digest('hex')
           hasher.eq(hasher.hash('foo'), digest)
-        }
+        },
       }),
 
       //
@@ -162,13 +160,13 @@ __(function() {
         description: 'Test the BcryptHasher hash function',
         doTest: function() {
           var check = function(hasher, data) {
-            digest = hasher.hash(data)
+            var digest = hasher.hash(data)
             assert.equal(digest, bcrypt.hashSync(data, bcrypt.getSalt(digest)))
           }
 
           check(o({_type: BcryptHasher}), 'foo')
           check(o({_type: BcryptHasher, rounds: 12}), 'foo')
-        }
+        },
       }),
       o({
         _type: testtube.Test,
@@ -186,8 +184,8 @@ __(function() {
           } finally {
             hasher.hash.restore()
           }
-        }
+        },
       }),
-    ]
+    ],
   })
 })

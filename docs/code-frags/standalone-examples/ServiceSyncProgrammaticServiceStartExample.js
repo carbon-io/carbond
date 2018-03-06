@@ -13,10 +13,10 @@ var myService = o({ // IMPORTANT: do not use "o.main" here
     hello: o({
       _type: carbon.carbond.Endpoint,
       get: function(req) {
-        return { msg: "Hello World!" }
-      }
-    })
-  }
+        return {msg: 'Hello World!'}
+      },
+    }),
+  },
 })
 
 function startService() {
@@ -29,7 +29,7 @@ function startService() {
     myService.stop()
     myService.logInfo('Service stopped')
   } catch (e) {
-    myService.logError("Error starting service " + err)
+    myService.logError('Error starting service ' + e)
     return 1
   }
   return 0
@@ -44,5 +44,5 @@ if (module === require.main) {
 
 module.exports = {
   myService: myService,
-  startService: startService
+  startService: startService,
 }

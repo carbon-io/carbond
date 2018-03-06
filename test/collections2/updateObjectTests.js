@@ -41,9 +41,9 @@ __(function() {
           endpoints: {
             updateObject: o({
               _type: pong.Collection,
-              enabled: {updateObject: true}
-            })
-          }
+              enabled: {updateObject: true},
+            }),
+          },
         }),
         tests: [
           {
@@ -54,17 +54,17 @@ __(function() {
               method: 'PATCH',
               headers: {
                 'x-pong': ejson.stringify({
-                  updateObject: 1
-                })
+                  updateObject: 1,
+                }),
               },
               body: {
-                foo: 'bar'
-              }
+                foo: 'bar',
+              },
             },
             resSpec: {
               statusCode: 200,
-              body: {n: 1}
-            }
+              body: {n: 1},
+            },
           },
           {
             name: 'UpdateObjectNotFoundTest',
@@ -74,16 +74,16 @@ __(function() {
               method: 'PATCH',
               headers: {
                 'x-pong': ejson.stringify({
-                  updateObject: 0
-                })
+                  updateObject: 0,
+                }),
               },
               body: {
-                foo: 'bar'
-              }
+                foo: 'bar',
+              },
             },
             resSpec: {
-              statusCode: 404
-            }
+              statusCode: 404,
+            },
           },
           {
             name: 'UpdateObjectInvalidNumberOfObjectsUpdatedTest',
@@ -93,16 +93,16 @@ __(function() {
               method: 'PATCH',
               headers: {
                 'x-pong': ejson.stringify({
-                  updateObject: 2
-                })
+                  updateObject: 2,
+                }),
               },
               body: {
-                foo: 'bar'
-              }
+                foo: 'bar',
+              },
             },
             resSpec: {
-              statusCode: 500
-            }
+              statusCode: 500,
+            },
           },
           {
             name: 'UpdateObjectNoBodyTest',
@@ -112,16 +112,16 @@ __(function() {
               method: 'PATCH',
               headers: {
                 'x-pong': ejson.stringify({
-                  updateObject: 1
-                })
-              }
+                  updateObject: 1,
+                }),
+              },
               // NOTE: an undefined body gets converted to `{}` which complies with the default
               //       update schema
             },
             resSpec: {
               statusCode: 200,
-              body: {n: 1}
-            }
+              body: {n: 1},
+            },
           },
           {
             name: 'UpdateObjectReturnValueValidationTest',
@@ -131,13 +131,13 @@ __(function() {
               method: 'PATCH',
               headers: {
                 'x-pong': ejson.stringify({
-                  updateObject: {n: 0}
-                })
-              }
+                  updateObject: {n: 0},
+                }),
+              },
             },
             resSpec: {
               statusCode: 500,
-            }
+            },
           },
           {
             name: 'UpdateObjectUpsertButNotSupportedTest',
@@ -147,16 +147,16 @@ __(function() {
               method: 'PATCH',
               headers: {
                 'x-pong': ejson.stringify({
-                  updateObject: {val: {$args: 0}, created: true}
-                })
+                  updateObject: {val: {$args: 0}, created: true},
+                }),
               },
               body: {
-                foo: 'bar'
-              }
+                foo: 'bar',
+              },
             },
             resSpec: {
-              statusCode: 500
-            }
+              statusCode: 500,
+            },
           },
           {
             name: 'UpdateObjectUpsertWithUpsertParamButNotSupportedTest',
@@ -179,22 +179,22 @@ __(function() {
               url: '/updateObject/0',
               method: 'PATCH',
               parameters: {
-                upsert: true
+                upsert: true,
               },
               headers: {
                 'x-pong': ejson.stringify({
-                  updateObject: {val: {$args: 0}, created: true}
-                })
+                  updateObject: {val: {$args: 0}, created: true},
+                }),
               },
               body: {
-                foo: 'bar'
-              }
+                foo: 'bar',
+              },
             },
             resSpec: {
-              statusCode: 500
-            }
+              statusCode: 500,
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -211,15 +211,15 @@ __(function() {
                   properties: {
                     foo: {
                       type: 'string',
-                      pattern: '^(bar|baz|yaz)$'
-                    }
+                      pattern: '^(bar|baz|yaz)$',
+                    },
                   },
                   patternProperties: {
-                    '^\\d+$': {type: 'string'}
+                    '^\\d+$': {type: 'string'},
                   },
-                  additionalProperties: false
-                }
-              }
+                  additionalProperties: false,
+                },
+              },
             }),
             updateObject1: o({
               _type: pong.Collection,
@@ -230,17 +230,17 @@ __(function() {
                   properties: {
                     foo: {
                       type: 'string',
-                      pattern: '^(bar|baz|yaz)$'
-                    }
+                      pattern: '^(bar|baz|yaz)$',
+                    },
                   },
                   patternProperties: {
-                    '^\\d+$': {type: 'string'}
+                    '^\\d+$': {type: 'string'},
                   },
-                  additionalProperties: false
-                }
-              }
-            })
-          }
+                  additionalProperties: false,
+                },
+              },
+            }),
+          },
         }),
         tests: [
           {
@@ -251,17 +251,17 @@ __(function() {
               method: 'PATCH',
               headers: {
                 'x-pong': ejson.stringify({
-                  updateObject: 1
-                })
+                  updateObject: 1,
+                }),
               },
               body: {
                 bar: 'foo',
-                666: 'foo'
-              }
+                666: 'foo',
+              },
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'SuccessUpdateObjectSchemaTest',
@@ -271,18 +271,18 @@ __(function() {
               method: 'PATCH',
               headers: {
                 'x-pong': ejson.stringify({
-                  updateObject: 1
-                })
+                  updateObject: 1,
+                }),
               },
               body: {
                 foo: 'bar',
-                666: 'foo'
-              }
+                666: 'foo',
+              },
             },
             resSpec: {
               statusCode: 200,
-              body: {n: 1}
-            }
+              body: {n: 1},
+            },
           },
           {
             name: 'FailUpdateObject1SchemaTest',
@@ -292,11 +292,15 @@ __(function() {
             },
             reqSpec: function() {
               return _.assign(_.clone(this.history.getReqSpec('FailUpdateObjectSchemaTest')),
-                              {url: '/updateObject1/0'})
+                {url: '/updateObject1/0'})
             },
             resSpec: {
-              $property: {get: function() {return this.history.getResSpec('FailUpdateObjectSchemaTest')}}
-            }
+              $property: {
+                get: function() {
+                  return this.history.getResSpec('FailUpdateObjectSchemaTest')
+                },
+              },
+            },
           },
           {
             name: 'SuccessUpdateObject1SchemaTest',
@@ -306,13 +310,17 @@ __(function() {
             },
             reqSpec: function() {
               return _.assign(_.clone(this.history.getReqSpec('SuccessUpdateObjectSchemaTest')),
-                              {url: '/updateObject1/0'})
+                {url: '/updateObject1/0'})
             },
             resSpec: {
-              $property: {get: function() {return this.history.getResSpec('SuccessUpdateObjectSchemaTest')}}
-            }
-          }
-        ]
+              $property: {
+                get: function() {
+                  return this.history.getResSpec('SuccessUpdateObjectSchemaTest')
+                },
+              },
+            },
+          },
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -324,10 +332,10 @@ __(function() {
               _type: pong.Collection,
               enabled: {updateObject: true},
               updateObjectConfig: {
-                supportsUpsert: true
-              }
-            })
-          }
+                supportsUpsert: true,
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -350,17 +358,17 @@ __(function() {
                 'x-pong': ejson.stringify({
                   updateObject: {
                     val: 1,
-                    created: true
-                  }
-                })
+                    created: true,
+                  },
+                }),
               },
               body: {
-                foo: 'bar'
-              }
+                foo: 'bar',
+              },
             },
             resSpec: {
-              statusCode: 500
-            }
+              statusCode: 500,
+            },
           },
           {
             name: 'UpdateObjectWithUpsertTest',
@@ -370,19 +378,19 @@ __(function() {
                 url: '/updateObject/0',
                 method: 'PATCH',
                 parameters: {
-                  upsert: true
+                  upsert: true,
                 },
                 headers: {
                   'x-pong': ejson.stringify({
                     updateObject: {
                       val: {[context.global.idParameterName]: '0'},
-                      created: true
-                    }
-                  })
+                      created: true,
+                    },
+                  }),
                 },
                 body: {
-                  foo: 'bar'
-                }
+                  foo: 'bar',
+                },
               }
             },
             resSpec: {
@@ -391,8 +399,8 @@ __(function() {
                 assert.deepStrictEqual(headers.location, '/updateObject/0')
                 assert.deepStrictEqual(headers[context.global.idHeaderName], '"0"')
               },
-              body: {n: 1}
-            }
+              body: {n: 1},
+            },
           },
           {
             name: 'UpdateObjectWithUpsertReturnsNumberOfUpsertedObjectsTest',
@@ -413,26 +421,26 @@ __(function() {
                 url: '/updateObject/0',
                 method: 'PATCH',
                 parameters: {
-                  upsert: true
+                  upsert: true,
                 },
                 headers: {
                   'x-pong': ejson.stringify({
                     updateObject: {
                       val: 1,
-                      created: true
-                    }
-                  })
+                      created: true,
+                    },
+                  }),
                 },
                 body: {
-                  foo: 'bar'
-                }
+                  foo: 'bar',
+                },
               }
             },
             resSpec: {
-              statusCode: 500
-            }
+              statusCode: 500,
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -445,10 +453,10 @@ __(function() {
               enabled: {updateObject: true},
               updateObjectConfig: {
                 supportsUpsert: true,
-                returnsUpsertedObject: true
-              }
-            })
-          }
+                returnsUpsertedObject: true,
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -472,18 +480,18 @@ __(function() {
                   'x-pong': ejson.stringify({
                     updateObject: {
                       val: {[context.global.idParameterName]: '0', foo: 'bar'},
-                      created: true
-                    }
-                  })
+                      created: true,
+                    },
+                  }),
                 },
                 body: {
-                  foo: 'bar'
-                }
+                  foo: 'bar',
+                },
               }
             },
             resSpec: {
-              statusCode: 500
-            }
+              statusCode: 500,
+            },
           },
           {
             name: 'UpdateObjectWithUpsertTest',
@@ -493,19 +501,19 @@ __(function() {
                 url: '/updateObject/0',
                 method: 'PATCH',
                 parameters: {
-                  upsert: true
+                  upsert: true,
                 },
                 headers: {
                   'x-pong': ejson.stringify({
                     updateObject: {
                       val: {[context.global.idParameterName]: '0', foo: 'bar'},
-                      created: true
-                    }
-                  })
+                      created: true,
+                    },
+                  }),
                 },
                 body: {
-                  foo: 'bar'
-                }
+                  foo: 'bar',
+                },
               }
             },
             resSpec: {
@@ -516,8 +524,8 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, {[context.global.idParameterName]: '0', foo: 'bar'})
-              }
-            }
+              },
+            },
           },
           {
             name: 'UpdateObjectWithUpsertReturnsNumberOfUpsertedObjectsTest',
@@ -538,26 +546,26 @@ __(function() {
                 url: '/updateObject/0',
                 method: 'PATCH',
                 parameters: {
-                  upsert: true
+                  upsert: true,
                 },
                 headers: {
                   'x-pong': ejson.stringify({
                     updateObject: {
                       val: 1,
-                      created: true
-                    }
-                  })
+                      created: true,
+                    },
+                  }),
                 },
                 body: {
-                  foo: 'bar'
-                }
+                  foo: 'bar',
+                },
               }
             },
             resSpec: {
-              statusCode: 500
-            }
+              statusCode: 500,
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -577,14 +585,14 @@ __(function() {
                       schema: {
                         type: 'number',
                         minimum: 0,
-                        multipleOf: 2
-                      }
-                    }
-                  }
-                }
-              }
-            })
-          }
+                        multipleOf: 2,
+                      },
+                    },
+                  },
+                },
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -606,9 +614,9 @@ __(function() {
                   name: 'update',
                   location: 'body',
                   description: carbond.collections.UpdateObjectConfig._STRINGS.parameters.update.description,
-                  schema: { type: 'object' },
+                  schema: {type: 'object'},
                   required: true,
-                  default: undefined
+                  default: undefined,
                 },
                 foo: {
                   name: 'foo',
@@ -616,10 +624,10 @@ __(function() {
                   description: undefined,
                   schema: {type: 'number', minimum: 0, multipleOf: 2},
                   required: false,
-                  default: undefined
+                  default: undefined,
                 },
               })
-            }
+            },
           }),
           {
             name: 'UpdateObjectConfigCustomParameterPassedViaOptionsFailTest',
@@ -636,16 +644,16 @@ __(function() {
                 method: 'PATCH',
                 headers: {
                   'x-pong': ejson.stringify({
-                    updateObject: 1
+                    updateObject: 1,
                   }),
-                  foo: 3
+                  foo: 3,
                 },
-                body: {foo: 'bar'}
+                body: {foo: 'bar'},
               }
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'UpdateObjectConfigCustomParameterPassedViaOptionsSuccessTest',
@@ -662,18 +670,18 @@ __(function() {
                 method: 'PATCH',
                 headers: {
                   'x-pong': ejson.stringify({
-                    updateObject: 1
+                    updateObject: 1,
                   }),
-                  foo: 4
+                  foo: 4,
                 },
-                body: {foo: 'bar'}
+                body: {foo: 'bar'},
               }
             },
             resSpec: {
-              statusCode: 200
-            }
-          }
-        ]
+              statusCode: 200,
+            },
+          },
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -704,15 +712,15 @@ __(function() {
                 context.postUpdateObjectOperation = 1
                 res.set('context', ejson.stringify(context))
                 return carbond.collections.Collection.prototype.postUpdateObjectOperation.apply(this, arguments)
-              }
-            })
-          }
+              },
+            }),
+          },
         }),
         tests: [
           {
             reqSpec: {
               url: '/updateObject/0',
-              method: 'PATCH'
+              method: 'PATCH',
             },
             resSpec: {
               statusCode: 200,
@@ -722,14 +730,14 @@ __(function() {
                   preUpdateObject: 1,
                   updateObject: 1,
                   postUpdateObject: 1,
-                  postUpdateObjectOperation: 1
+                  postUpdateObjectOperation: 1,
                 })
-              }
-            }
-          }
-        ]
-      })
-    ]
+              },
+            },
+          },
+        ],
+      }),
+    ],
   })
 })
 

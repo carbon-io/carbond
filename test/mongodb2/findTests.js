@@ -47,16 +47,16 @@ __(function() {
             find: o({
               _type: pong.MongoDBCollection,
               enabled: {find: true},
-              collectionName: 'find'
-            })
-          }
+              collectionName: 'find',
+            }),
+          },
         }),
         fixture: {
           find: [
             {_id: getObjectId(0), foo: 'bar', bar: 9},
             {_id: getObjectId(1), bar: 'baz', bar: 3},
-            {_id: getObjectId(2), baz: 'yaz', bar: 5}
-          ]
+            {_id: getObjectId(2), baz: 'yaz', bar: 5},
+          ],
         },
         tests: [
           {
@@ -73,8 +73,8 @@ __(function() {
               headers: function(headers) {
                 assert(_.isNil(headers.link))
               },
-              body: undefined
-            }
+              body: undefined,
+            },
           },
           {
             name: 'FindTest',
@@ -92,8 +92,8 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepEqual(body, this.parent.fixture.find)
-              }
-            }
+              },
+            },
           },
           {
             name: 'FindIdQueryTest',
@@ -103,8 +103,8 @@ __(function() {
                 url: '/find',
                 method: 'GET',
                 parameters: {
-                  _id: [getObjectId(0).toString(), getObjectId(1).toString()]
-                }
+                  _id: [getObjectId(0).toString(), getObjectId(1).toString()],
+                },
               }
             },
             resSpec: {
@@ -114,8 +114,8 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepEqual(body, this.parent.fixture.find.slice(0, 2))
-              }
-            }
+              },
+            },
           },
           {
             name: 'FindPageSkipAndLimitParametersEnabledByDefaultTest',
@@ -124,8 +124,10 @@ __(function() {
               this.parent.populateDb({
                 find: _.map(
                   _.range(this.parent.service.endpoints.find.findConfig.pageSize * 2),
-                  function() { return {foo: 'bar'} }
-                )
+                  function() {
+                    return {foo: 'bar'}
+                  }
+                ),
               })
             },
             teardown: function() {
@@ -138,8 +140,8 @@ __(function() {
                 parameters: {
                   skip: 1,
                   limit: 1,
-                  page: 1
-                }
+                  page: 1,
+                },
               }
             },
             resSpec: {
@@ -148,14 +150,15 @@ __(function() {
                 assert.equal(
                   headers.link,
                   '<http://localhost:8888/find?page=0&skip=1&limit=1>; rel="prev", ' +
-                  '<http://localhost:8888/find?page=2&skip=1&limit=1>; rel="next"')
+                  '<http://localhost:8888/find?page=2&skip=1&limit=1>; rel="next"'
+                )
               },
               body: function(body, context) {
                 assert.deepEqual(body, [
-                  {_id: getObjectId(51), foo: 'bar'}
+                  {_id: getObjectId(51), foo: 'bar'},
                 ])
-              }
-            }
+              },
+            },
           },
           {
             name: 'FindQueryTest',
@@ -165,9 +168,9 @@ __(function() {
               method: 'GET',
               parameters: {
                 query: {
-                  bar: {$gt: 5}
+                  bar: {$gt: 5},
                 },
-              }
+              },
             },
             resSpec: {
               statusCode: 200,
@@ -176,8 +179,8 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepEqual(body, this.parent.fixture.find.slice(0, 1))
-              }
-            }
+              },
+            },
 
           },
           {
@@ -189,8 +192,8 @@ __(function() {
                 method: 'GET',
                 parameters: {
                   _id: [getObjectId(0).toString(), getObjectId(1).toString()],
-                  query: {bar: {$lt: 10}}
-                }
+                  query: {bar: {$lt: 10}},
+                },
               }
             },
             resSpec: {
@@ -200,8 +203,8 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepEqual(body, this.parent.fixture.find.slice(0, 2))
-              }
-            }
+              },
+            },
           },
           {
             name: 'FindSortTest',
@@ -210,7 +213,7 @@ __(function() {
               method: 'GET',
               parameters: {
                 sort: {bar: 1},
-              }
+              },
             },
             resSpec: {
               statusCode: 200,
@@ -221,8 +224,8 @@ __(function() {
                 assert.deepEqual(body, _.sortBy(this.parent.fixture.find, function(object) {
                   return object.bar
                 }))
-              }
-            }
+              },
+            },
           },
           {
             name: 'FindProjectionTest',
@@ -231,7 +234,7 @@ __(function() {
               method: 'GET',
               parameters: {
                 projection: {foo: 1},
-              }
+              },
             },
             resSpec: {
               statusCode: 200,
@@ -241,11 +244,12 @@ __(function() {
               body: function(body, context) {
                 assert.deepEqual(
                   body,
-                  _.map(this.parent.fixture.find, _.partialRight(_.pick, ['_id', 'foo'])))
-              }
-            }
+                  _.map(this.parent.fixture.find, _.partialRight(_.pick, ['_id', 'foo']))
+                )
+              },
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: MongoDBCollectionHttpTest,
@@ -260,17 +264,17 @@ __(function() {
               collectionName: 'find',
               findConfig: {
                 pageSize: 4,
-                maxPageSize: 8
-              }
-            })
-          }
+                maxPageSize: 8,
+              },
+            }),
+          },
         }),
         fixture: {
           find: function() {
             return _.map(_.range(20), function(i) {
               return {_id: getObjectId(i), foo: 'bar', bar: i}
             })
-          }
+          },
         },
         tests: [
           {
@@ -279,8 +283,8 @@ __(function() {
               url: '/find',
               method: 'GET',
               parameters: {
-                page: 2
-              }
+                page: 2,
+              },
             },
             resSpec: {
               statusCode: 200,
@@ -288,8 +292,8 @@ __(function() {
                 assert.deepEqual(body, _.map(_.range(8, 12), function(i) {
                   return {_id: getObjectId(i), foo: 'bar', bar: i}
                 }))
-              }
-            }
+              },
+            },
           },
           {
             name: 'FindPageAndLimitTest',
@@ -298,8 +302,8 @@ __(function() {
               method: 'GET',
               parameters: {
                 page: 2,
-                limit: 8
-              }
+                limit: 8,
+              },
             },
             resSpec: {
               statusCode: 200,
@@ -307,8 +311,8 @@ __(function() {
                 assert.deepEqual(body, _.map(_.range(8, 16), function(i) {
                   return {_id: getObjectId(i), foo: 'bar', bar: i}
                 }))
-              }
-            }
+              },
+            },
           },
           {
             name: 'FindPageSizeTest',
@@ -317,8 +321,8 @@ __(function() {
               method: 'GET',
               parameters: {
                 page: 2,
-                pageSize: 2
-              }
+                pageSize: 2,
+              },
             },
             resSpec: {
               statusCode: 200,
@@ -326,8 +330,8 @@ __(function() {
                 assert.deepEqual(body, _.map(_.range(4, 6), function(i) {
                   return {_id: getObjectId(i), foo: 'bar', bar: i}
                 }))
-              }
-            }
+              },
+            },
           },
           {
             name: 'FindPageSizeMaxPageSizeEnforcedOnPageSizeTest',
@@ -336,8 +340,8 @@ __(function() {
               method: 'GET',
               parameters: {
                 page: 1,
-                pageSize: 10
-              }
+                pageSize: 10,
+              },
             },
             resSpec: {
               statusCode: 200,
@@ -345,8 +349,8 @@ __(function() {
                 assert.deepEqual(body, _.map(_.range(8, 16), function(i) {
                   return {_id: getObjectId(i), foo: 'bar', bar: i}
                 }))
-              }
-            }
+              },
+            },
           },
           {
             name: 'FindPageSizeMaxPageSizeEnforcedOnLimitTest',
@@ -355,8 +359,8 @@ __(function() {
               method: 'GET',
               parameters: {
                 page: 1,
-                limit: 10
-              }
+                limit: 10,
+              },
             },
             resSpec: {
               statusCode: 200,
@@ -364,8 +368,8 @@ __(function() {
                 assert.deepEqual(body, _.map(_.range(4, 12), function(i) {
                   return {_id: getObjectId(i), foo: 'bar', bar: i}
                 }))
-              }
-            }
+              },
+            },
           },
           {
             name: 'FindPageAndSkipTest',
@@ -374,8 +378,8 @@ __(function() {
               method: 'GET',
               parameters: {
                 page: 2,
-                skip: 10
-              }
+                skip: 10,
+              },
             },
             resSpec: {
               statusCode: 200,
@@ -383,10 +387,10 @@ __(function() {
                 assert.deepEqual(body, _.map(_.range(18, 20), function(i) {
                   return {_id: getObjectId(i), foo: 'bar', bar: i}
                 }))
-              }
-            }
+              },
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: MongoDBCollectionHttpTest,
@@ -400,17 +404,17 @@ __(function() {
               enabled: {find: true},
               collectionName: 'find',
               findConfig: {
-                supportsIdQuery: false
-              }
-            })
-          }
+                supportsIdQuery: false,
+              },
+            }),
+          },
         }),
         fixture: {
           find: [
             {_id: getObjectId(0), foo: 'bar'},
             {_id: getObjectId(1), bar: 'baz'},
-            {_id: getObjectId(2), baz: 'yaz'}
-          ]
+            {_id: getObjectId(2), baz: 'yaz'},
+          ],
         },
         tests: [
           {
@@ -420,17 +424,17 @@ __(function() {
               return {
                 url: '/find',
                 method: 'GET',
-                parameters: {_id: getObjectId(0)}
+                parameters: {_id: getObjectId(0)},
               }
             },
             resSpec: {
               statusCode: 200,
               body: function(body, context) {
                 assert.deepEqual(body, this.parent.fixture.find)
-              }
-            }
-          }
-        ]
+              },
+            },
+          },
+        ],
       }),
       o({
         _type: MongoDBCollectionHttpTest,
@@ -444,17 +448,17 @@ __(function() {
               enabled: {find: true},
               collectionName: 'find',
               findConfig: {
-                supportsSkipAndLimit: false
-              }
-            })
-          }
+                supportsSkipAndLimit: false,
+              },
+            }),
+          },
         }),
         fixture: {
           find: [
             {_id: getObjectId(0), foo: 'bar'},
             {_id: getObjectId(1), bar: 'baz'},
-            {_id: getObjectId(2), baz: 'yaz'}
-          ]
+            {_id: getObjectId(2), baz: 'yaz'},
+          ],
         },
         tests: [
           {
@@ -466,7 +470,7 @@ __(function() {
                 method: 'GET',
                 parameters: {
                   skip: 1,
-                  limit: 1
+                  limit: 1,
                 },
               }
             },
@@ -476,11 +480,11 @@ __(function() {
                 assert.equal(headers.link, '<http://localhost:8888/find?page=1&skip=1&limit=1>; rel="next"')
               },
               body: function(body, context) {
-                assert.deepEqual(body, this.parent.fixture.find.slice(1,2))
-              }
-            }
+                assert.deepEqual(body, this.parent.fixture.find.slice(1, 2))
+              },
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: MongoDBCollectionHttpTest,
@@ -494,17 +498,17 @@ __(function() {
               enabled: {find: true},
               collectionName: 'find',
               findConfig: {
-                supportsPagination: false
-              }
-            })
-          }
+                supportsPagination: false,
+              },
+            }),
+          },
         }),
         fixture: {
           find: [
             {_id: getObjectId(0), foo: 'bar'},
             {_id: getObjectId(1), bar: 'baz'},
-            {_id: getObjectId(2), baz: 'yaz'}
-          ]
+            {_id: getObjectId(2), baz: 'yaz'},
+          ],
         },
         tests: [
           {
@@ -515,7 +519,7 @@ __(function() {
               method: 'GET',
               parameters: {
                 skip: 1,
-                limit: 1
+                limit: 1,
               },
             },
             resSpec: {
@@ -525,8 +529,8 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepEqual(body, this.parent.fixture.find.slice(1, 2))
-              }
-            }
+              },
+            },
           },
           {
             name: 'pageNotHonoredTest',
@@ -537,7 +541,7 @@ __(function() {
               parameters: {
                 page: 1,
                 skip: 1,
-                limit: 1
+                limit: 1,
               },
             },
             resSpec: {
@@ -547,10 +551,10 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepEqual(body, this.parent.fixture.find.slice(1, 2))
-              }
-            }
-          }
-        ]
+              },
+            },
+          },
+        ],
       }),
       o({
         _type: MongoDBCollectionHttpTest,
@@ -567,12 +571,12 @@ __(function() {
                 type: 'object',
                 properties: {
                   foo: {
-                    type: 'string'
-                  }
+                    type: 'string',
+                  },
                 },
                 required: ['foo'],
-                additionalProperties: false
-              }
+                additionalProperties: false,
+              },
             }),
             find1: o({
               _type: pong.MongoDBCollection,
@@ -583,13 +587,13 @@ __(function() {
                   type: 'object',
                   properties: {
                     foo: {
-                      type: 'string'
-                    }
+                      type: 'string',
+                    },
                   },
                   required: ['foo'],
-                  additionalProperties: false
-                }
-              }
+                  additionalProperties: false,
+                },
+              },
             }),
             find2: o({
               _type: pong.MongoDBCollection,
@@ -599,33 +603,33 @@ __(function() {
                 type: 'object',
                 properties: {
                   foo: {
-                    type: 'string'
-                  }
+                    type: 'string',
+                  },
                 },
                 required: ['foo'],
-                additionalProperties: false
+                additionalProperties: false,
               },
               findConfig: {
                 '$parameters.query.schema': {
                   type: 'object',
                   properties: {
                     bar: {
-                      type: 'string'
-                    }
+                      type: 'string',
+                    },
                   },
                   required: ['bar'],
-                  additionalProperties: false
-                }
-              }
-            })
-          }
+                  additionalProperties: false,
+                },
+              },
+            }),
+          },
         }),
         fixture: {
           find: [
             {_id: getObjectId(0), foo: 'bar'},
             {_id: getObjectId(1), bar: 'baz'},
-            {_id: getObjectId(2), baz: 'yaz'}
-          ]
+            {_id: getObjectId(2), baz: 'yaz'},
+          ],
         },
         tests: [
           o({
@@ -636,13 +640,13 @@ __(function() {
                 type: 'object',
                 properties: {
                   foo: {
-                    type: 'string'
-                  }
+                    type: 'string',
+                  },
                 },
                 required: ['foo'],
-                additionalProperties: false
+                additionalProperties: false,
               })
-            }
+            },
           }),
           {
             name: 'CollectionQuerySchemaFailTest',
@@ -650,12 +654,12 @@ __(function() {
               url: '/find',
               method: 'GET',
               parameters: {
-                query: {bar: 'baz'}
+                query: {bar: 'baz'},
               },
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'CollectionQuerySchemaSuccessTest',
@@ -663,13 +667,13 @@ __(function() {
               url: '/find',
               method: 'GET',
               parameters: {
-                query: {foo: 'bar'}
+                query: {foo: 'bar'},
               },
             },
             resSpec: {
               statusCode: 200,
-              body: [{_id: getObjectId(0), foo: 'bar'}]
-            }
+              body: [{_id: getObjectId(0), foo: 'bar'}],
+            },
           },
           {
             name: 'ConfigQuerySchemaFailTest',
@@ -678,13 +682,15 @@ __(function() {
             },
             reqSpec: function() {
               return _.assign(this.history.getReqSpec('CollectionQuerySchemaFailTest'),
-                              {url: '/find1'})
+                {url: '/find1'})
             },
             resSpec: {
               $property: {
-                get: function() { return this.history.getResSpec('CollectionQuerySchemaFailTest') }
-              }
-            }
+                get: function() {
+                  return this.history.getResSpec('CollectionQuerySchemaFailTest')
+                },
+              },
+            },
           },
           {
             name: 'ConfigQuerySchemaSuccessTest',
@@ -693,13 +699,15 @@ __(function() {
             },
             reqSpec: function() {
               return _.assign(this.history.getReqSpec('CollectionQuerySchemaSuccessTest'),
-                              {url: '/find1'})
+                {url: '/find1'})
             },
             resSpec: {
               $property: {
-                get: function() { return this.history.getResSpec('CollectionQuerySchemaSuccessTest') }
-              }
-            }
+                get: function() {
+                  return this.history.getResSpec('CollectionQuerySchemaSuccessTest')
+                },
+              },
+            },
           },
           {
             name: 'CollectionQuerySchemaOverrideConfigQuerySchemaFailTest',
@@ -708,13 +716,15 @@ __(function() {
             },
             reqSpec: function() {
               return _.assign(this.history.getReqSpec('CollectionQuerySchemaFailTest'),
-                              {url: '/find2'})
+                {url: '/find2'})
             },
             resSpec: {
               $property: {
-                get: function() { return this.history.getResSpec('CollectionQuerySchemaFailTest') }
-              }
-            }
+                get: function() {
+                  return this.history.getResSpec('CollectionQuerySchemaFailTest')
+                },
+              },
+            },
           },
           {
             name: 'CollectionQuerySchemaOverrideConfigQuerySchemaSuccessTest',
@@ -723,16 +733,18 @@ __(function() {
             },
             reqSpec: function() {
               return _.assign(this.history.getReqSpec('CollectionQuerySchemaSuccessTest'),
-                              {url: '/find2'})
+                {url: '/find2'})
             },
             resSpec: {
               $property: {
-                get: function() { return this.history.getResSpec('CollectionQuerySchemaSuccessTest') }
-              }
-            }
-          }
-        ]
-      })
-    ]
+                get: function() {
+                  return this.history.getResSpec('CollectionQuerySchemaSuccessTest')
+                },
+              },
+            },
+          },
+        ],
+      }),
+    ],
   })
 })

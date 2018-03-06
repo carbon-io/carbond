@@ -28,17 +28,17 @@ var PongCollectionSubclass = oo({
           schema: {
             type: 'string',
           },
-          required: false
+          required: false,
         },
         yaz: {
           location: 'header',
           schema: {
             type: 'string',
           },
-          required: false
+          required: false,
         },
       }, this.parameters)
-    }
+    },
   }),
   FindObjectConfigClass: oo({
     _type: carbond.collections.FindObjectConfig,
@@ -49,17 +49,17 @@ var PongCollectionSubclass = oo({
           schema: {
             type: 'string',
           },
-          required: false
+          required: false,
         },
         yaz: {
           location: 'header',
           schema: {
             type: 'string',
           },
-          required: false
+          required: false,
         },
       }, this.parameters)
-    }
+    },
   }),
 })
 
@@ -78,7 +78,7 @@ __(function() {
               _type: carbond.collections.Collection,
               enabled: {
                 find: true,
-                insert: true
+                insert: true,
               },
               idParameterName: 'foo',
               idPathParameterName: 'foo',
@@ -86,20 +86,20 @@ __(function() {
                 type: 'object',
                 properties: {
                   foo: {
-                    type: 'string'
-                  }
+                    type: 'string',
+                  },
                 },
-                required: ['foo']
+                required: ['foo'],
               },
               parameters: {
                 bar: {
                   location: 'header',
                   schema: {
                     type: 'number',
-                    minimum: 0
+                    minimum: 0,
                   },
-                  required: true
-                }
+                  required: true,
+                },
               },
               findConfig: {
                 parameters: {
@@ -109,10 +109,10 @@ __(function() {
                       schema: {
                         type: 'string',
                       },
-                      required: false
-                    }
-                  }
-                }
+                      required: false,
+                    },
+                  },
+                },
               },
               find: function(options) {
                 return [{foo: '0', options: options}]
@@ -122,16 +122,16 @@ __(function() {
                 return _.map(objects, function(object) {
                   return _.assign(_.clone(object), {options: options, foo: (++id).toString()})
                 })
-              }
-            })
-          }
+              },
+            }),
+          },
         }),
         tests: [
           {
             name: 'OptionalOperationParameterOverridesRequiredCollectionParameterNotPresentTest',
             reqSpec: {
               url: '/foo',
-              method: 'GET'
+              method: 'GET',
             },
             resSpec: {
               statusCode: 200,
@@ -139,10 +139,10 @@ __(function() {
                 foo: '0',
                 options: {
                   foo: undefined,   // present because of the ID query parameter on colllection
-                  bar: undefined
-                }
-              }]
-            }
+                  bar: undefined,
+                },
+              }],
+            },
           },
           {
             name: 'OperationParameterSchemaOverridesRequiredCollectionParameterPresentValidTest',
@@ -150,8 +150,8 @@ __(function() {
               url: '/foo',
               method: 'GET',
               headers: {
-                bar: 0              // gets parsed as a string
-              }
+                bar: 0,              // gets parsed as a string
+              },
             },
             resSpec: {
               statusCode: 200,
@@ -160,22 +160,22 @@ __(function() {
                   foo: '0',
                   options: {
                     foo: undefined,
-                    bar: '0'
-                  }
+                    bar: '0',
+                  },
                 }])
-              }
-            }
+              },
+            },
           },
           {
             name: 'RequiredCollectionParameterNotPresentTest',
             reqSpec: {
               url: '/foo',
               method: 'POST',
-              body: [{}]
+              body: [{}],
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'RequiredCollectionParameterPresentInvalidTest',
@@ -183,13 +183,13 @@ __(function() {
               url: '/foo',
               method: 'POST',
               headers: {
-                bar: 'foo'
+                bar: 'foo',
               },
-              body: [{}]
+              body: [{}],
             },
             resSpec: {
               statusCode: 400,
-            }
+            },
           },
           {
             name: 'RequiredCollectionParameterPresentValidTest',
@@ -197,9 +197,9 @@ __(function() {
               url: '/foo',
               method: 'POST',
               headers: {
-                bar: 0
+                bar: 0,
               },
-              body: [{}]
+              body: [{}],
             },
             resSpec: {
               statusCode: 201,
@@ -207,13 +207,13 @@ __(function() {
                 assert.deepStrictEqual(body, [{
                   foo: '1',
                   options: {
-                    bar: 0
-                  }
+                    bar: 0,
+                  },
                 }])
-              }
-            }
+              },
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -233,10 +233,10 @@ __(function() {
                 type: 'object',
                 properties: {
                   foo: {
-                    type: 'string'
-                  }
+                    type: 'string',
+                  },
                 },
-                required: ['foo']
+                required: ['foo'],
               },
               findConfig: {
                 parameters: {
@@ -245,9 +245,9 @@ __(function() {
                     schema: {
                       type: 'string',
                     },
-                    required: false
-                  }
-                }
+                    required: false,
+                  },
+                },
               },
               findObjectConfig: {
                 parameters: {
@@ -257,10 +257,10 @@ __(function() {
                       schema: {
                         type: 'string',
                       },
-                      required: false
-                    }
-                  }
-                }
+                      required: false,
+                    },
+                  },
+                },
               },
             }),
             bar: o({
@@ -275,15 +275,15 @@ __(function() {
                 type: 'object',
                 properties: {
                   bar: {
-                    type: 'string'
-                  }
+                    type: 'string',
+                  },
                 },
-                required: ['bar']
+                required: ['bar'],
               },
               findConfig: {
                 parameters: {
-                  $delete: 'foo'
-                }
+                  $delete: 'foo',
+                },
               },
               findObjectConfig: {
                 parameters: {
@@ -296,15 +296,15 @@ __(function() {
                           schema: {
                             type: 'string',
                           },
-                          required: false
-                        }
-                      }
-                    }
+                          required: false,
+                        },
+                      },
+                    },
                   ],
-                }
+                },
               },
             }),
-          }
+          },
         }),
         tests: [
           o({
@@ -319,7 +319,7 @@ __(function() {
                   description: undefined,
                   schema: {type: 'string'},
                   required: false,
-                  default: undefined
+                  default: undefined,
                 },
                 foo: {
                   name: 'foo',
@@ -328,22 +328,22 @@ __(function() {
                   schema: {
                     oneOf: [
                       {type: 'string'},
-                      {type: 'array', items: {type: 'string'}}
-                    ]
+                      {type: 'array', items: {type: 'string'}},
+                    ],
                   },
                   required: false,
-                  default: undefined
-                }
+                  default: undefined,
+                },
               })
               assert.deepEqual(collections.foo.endpoints[':foo'].get.parameters, {
                 bar: {
                   name: 'bar',
                   location: 'header',
                   description: undefined,
-                  schema: { type: 'string' },
+                  schema: {type: 'string'},
                   required: false,
-                  default: undefined
-                }
+                  default: undefined,
+                },
               })
               assert.deepEqual(collections.bar.get.parameters, {
                 yaz: {
@@ -352,7 +352,7 @@ __(function() {
                   description: undefined,
                   schema: {type: 'string'},
                   required: false,
-                  default: undefined
+                  default: undefined,
                 },
                 bar: {
                   name: 'bar',
@@ -361,12 +361,12 @@ __(function() {
                   schema: {
                     oneOf: [
                       {type: 'string'},
-                      {type: 'array', items: {type: 'string'}}
-                    ]
+                      {type: 'array', items: {type: 'string'}},
+                    ],
                   },
                   required: false,
-                  default: undefined
-                }
+                  default: undefined,
+                },
               })
               assert.deepEqual(collections.bar.endpoints[':bar'].get.parameters, {
                 yaz: {
@@ -375,7 +375,7 @@ __(function() {
                   description: undefined,
                   schema: {type: 'string'},
                   required: false,
-                  default: undefined
+                  default: undefined,
                 },
                 baz: {
                   name: 'baz',
@@ -383,10 +383,10 @@ __(function() {
                   description: undefined,
                   schema: {type: 'string'},
                   required: false,
-                  default: undefined
-                }
+                  default: undefined,
+                },
               })
-            }
+            },
           }),
           {
             name: 'ImplicitMergeParamTest',
@@ -406,19 +406,19 @@ __(function() {
               method: 'GET',
               headers: {
                 'x-pong': ejson.stringify({
-                  find: [{ foo: '0'}]
+                  find: [{foo: '0'}],
                 }),
                 bar: 0,
-                baz: 1
+                baz: 1,
               },
               parameters: {
-                foo: '"0"'
-              }
+                foo: '"0"',
+              },
             },
             resSpec: {
               statusCode: 200,
-              body: [{foo: '0'}]
-            }
+              body: [{foo: '0'}],
+            },
           },
           {
             name: 'ExplicitMergeParamTest',
@@ -438,16 +438,16 @@ __(function() {
               method: 'GET',
               headers: {
                 'x-pong': ejson.stringify({
-                  findObject: {foo: '0'}
+                  findObject: {foo: '0'},
                 }),
                 bar: 0,
-                baz: 1
-              }
+                baz: 1,
+              },
             },
             resSpec: {
               statusCode: 200,
-              body: {foo: '0'}
-            }
+              body: {foo: '0'},
+            },
           },
           {
             name: 'DeleteParamTest',
@@ -467,19 +467,19 @@ __(function() {
               method: 'GET',
               headers: {
                 'x-pong': ejson.stringify({
-                  find: [{bar: '0'}]
+                  find: [{bar: '0'}],
                 }),
                 foo: 0,
-                yaz: 1
+                yaz: 1,
               },
               parameters: {
-                bar: '"0"'
-              }
+                bar: '"0"',
+              },
             },
             resSpec: {
               statusCode: 200,
-              body: [{bar: '0'}]
-            }
+              body: [{bar: '0'}],
+            },
           },
           {
             name: 'MultiopParamTest',
@@ -500,19 +500,19 @@ __(function() {
               method: 'GET',
               headers: {
                 'x-pong': ejson.stringify({
-                  findObject: {bar: '0'}
+                  findObject: {bar: '0'},
                 }),
                 foo: 0,
                 yaz: 1,
-                baz: 2
-              }
+                baz: 2,
+              },
             },
             resSpec: {
               statusCode: 200,
-              body: {bar: '0'}
-            }
-          }
-        ]
+              body: {bar: '0'},
+            },
+          },
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -524,7 +524,7 @@ __(function() {
             foo: o({
               _type: pong.Collection,
               enabled: {
-                '*': true
+                '*': true,
               },
               idGenerator: pong.util.collectionIdGenerator,
               idParameterName: '_id',
@@ -534,19 +534,19 @@ __(function() {
                   _id: {type: 'string'},
                   foo: {type: 'string'},
                   bar: {type: 'string'},
-                  baz: {type: 'string'}
+                  baz: {type: 'string'},
                 },
                 required: ['_id', 'foo', 'bar', 'baz'],
-                additionalProperties: false
+                additionalProperties: false,
               },
               insertConfig: {
                 responses: {
                   '$201.schema.items.required': ['_id', 'foo', 'bar'],
                   '$201.schema.items.properties': {
-                    $delete: 'baz'
+                    $delete: 'baz',
                   },
-                  '$400.description': 'Whoopsie-daisy!'
-                }
+                  '$400.description': 'Whoopsie-daisy!',
+                },
               },
               insertObjectConfig: {
                 responses: {
@@ -556,19 +556,19 @@ __(function() {
                     schema: {
                       type: 'object',
                       properties: {
-                        _id: {type: 'string'}
+                        _id: {type: 'string'},
                       },
                       required: ['_id'],
-                      additionalProperties: false
+                      additionalProperties: false,
                     },
-                    headers: ['Location', 'carbonio-id']
-                  }
-                }
+                    headers: ['Location', 'carbonio-id'],
+                  },
+                },
               },
               findConfig: {
                 responses: {
-                  '$200.headers[0]': 'foo'
-                }
+                  '$200.headers[0]': 'foo',
+                },
               },
               postFindOperation: function(result, config, req, res) {
                 result = pong.Collection.prototype.postFindOperation.apply(this, arguments)
@@ -584,15 +584,15 @@ __(function() {
                       schema: {
                         type: 'object',
                         properties: {
-                          _id: {type: 'string'}
+                          _id: {type: 'string'},
                         },
                         required: ['_id'],
-                        additionalProperties: false
+                        additionalProperties: false,
                       },
-                      headers: ['Location', 'carbonio-id']
-                    }
-                  }
-                }
+                      headers: ['Location', 'carbonio-id'],
+                    },
+                  },
+                },
               },
               saveObjectConfig: {
                 responses: {
@@ -607,19 +607,19 @@ __(function() {
                             type: 'object',
                             properties: {
                               _id: {type: 'string'},
-                              foo: {type: 'string'}
+                              foo: {type: 'string'},
                             },
                             required: ['_id', 'foo'],
-                            additionalProperties: false
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            })
-          }
+                            additionalProperties: false,
+                          },
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -638,20 +638,20 @@ __(function() {
             doTest: function(context) {
               let collection = this.parent.service.endpoints.foo
               assert.deepEqual(collection.post.responses[201].schema.oneOf[0].items.required,
-                               ['_id', 'foo', 'bar'])
+                ['_id', 'foo', 'bar'])
               assert.deepEqual(collection.post.responses[201].schema.oneOf[0].items.properties, {
-                  _id: {type: 'string'},
-                  foo: {type: 'string'},
-                  bar: {type: 'string'}
+                _id: {type: 'string'},
+                foo: {type: 'string'},
+                bar: {type: 'string'},
               })
               assert.equal(collection.post.responses[400].description, 'Whoopsie-daisy!')
               assert.deepEqual(collection.post.responses[201].schema.oneOf[1], {
                 type: 'object',
                 properties: {
-                  _id: {type: 'string'}
+                  _id: {type: 'string'},
                 },
                 required: ['_id'],
-                additionalProperties: false
+                additionalProperties: false,
               })
               assert.equal(collection.get.responses[200].headers[0], 'foo')
               assert.deepEqual(collection.endpoints[`:${context.global.idParameterName}`].get.responses[200], {
@@ -660,12 +660,12 @@ __(function() {
                 schema: {
                   type: 'object',
                   properties: {
-                    _id: {type: 'string'}
+                    _id: {type: 'string'},
                   },
                   required: ['_id'],
-                  additionalProperties: false
+                  additionalProperties: false,
                 },
-                headers: ['Location', context.global.idHeaderName]
+                headers: ['Location', context.global.idHeaderName],
               })
               assert.deepEqual(collection.endpoints[`:${context.global.idParameterName}`].put.responses[200], {
                 statusCode: 200,
@@ -674,20 +674,20 @@ __(function() {
                   type: 'object',
                   properties: {
                     [context.global.idParameterName]: {type: 'string'},
-                    foo: {type: 'string'}
+                    foo: {type: 'string'},
                   },
                   required: [context.global.idParameterName, 'foo'],
-                  additionalProperties: false
+                  additionalProperties: false,
                 },
-                headers: []
+                headers: [],
               })
               assert.deepEqual(collection.endpoints[`:${context.global.idParameterName}`].put.responses[400], {
                 statusCode: 400,
                 description: 'foo bar baz',
                 schema: collection.defaultErrorSchema,
-                headers: []
+                headers: [],
               })
-            }
+            },
           }),
           {
             name: 'Insert201UnrequireBazSuccessTest',
@@ -700,11 +700,11 @@ __(function() {
                     insert: [{
                       [context.global.idParameterName]: '0',
                       foo: 'bar',
-                      bar: 'baz'
-                    }]
-                  })
+                      bar: 'baz',
+                    }],
+                  }),
                 },
-                body: [{foo: 'bar', bar: 'baz', baz: '666'}]
+                body: [{foo: 'bar', bar: 'baz', baz: '666'}],
               }
             },
             resSpec: {
@@ -713,10 +713,10 @@ __(function() {
                 assert.deepEqual(body, [{
                   [context.global.idParameterName]: '0',
                   foo: 'bar',
-                  bar: 'baz'
+                  bar: 'baz',
                 }])
-              }
-            }
+              },
+            },
           },
           {
             name: 'Insert201UnrequireBazFailAdditionalParameterTest',
@@ -735,19 +735,19 @@ __(function() {
                       [context.global.idParameterName]: '0',
                       foo: 'bar',
                       bar: 'baz',
-                      baz: '666'
-                    }]
-                  })
+                      baz: '666',
+                    }],
+                  }),
                 },
-                body: [{foo: 'bar', bar: 'baz', baz: '666'}]
+                body: [{foo: 'bar', bar: 'baz', baz: '666'}],
               }
             },
             resSpec: {
               statusCode: 500,
               body: function(body) {
                 assert.ok(body.match(/^Error: Output did not validate against: .+/))
-              }
-            }
+              },
+            },
           },
           {
             name: 'InsertObject201OverrideSuccessTest',
@@ -757,18 +757,18 @@ __(function() {
                 method: 'POST',
                 headers: {
                   'x-pong': ejson.stringify({
-                    insertObject: {[context.global.idParameterName]: '0'}
-                  })
+                    insertObject: {[context.global.idParameterName]: '0'},
+                  }),
                 },
-                body: {foo: 'bar', bar: 'baz', baz: 'yaz'}
+                body: {foo: 'bar', bar: 'baz', baz: 'yaz'},
               }
             },
             resSpec: {
               statusCode: 201,
               body: function(body, context) {
                 assert.deepEqual(body, {[context.global.idParameterName]: '0'})
-              }
-            }
+              },
+            },
           },
           {
             name: 'InsertObject201OverrideFailTest',
@@ -787,19 +787,19 @@ __(function() {
                       [context.global.idParameterName]: '0',
                       foo: 'bar',
                       bar: 'baz',
-                      baz: 'yaz'
-                    }
-                  })
+                      baz: 'yaz',
+                    },
+                  }),
                 },
-                body: {foo: 'bar', bar: 'baz', baz: 'yaz'}
+                body: {foo: 'bar', bar: 'baz', baz: 'yaz'},
               }
             },
             resSpec: {
               statusCode: 500,
               body: function(body) {
                 assert.ok(body.match(/^Error: Output did not validate against: .+/))
-              }
-            }
+              },
+            },
           },
           {
             name: 'Find201OverrideSuccessTest',
@@ -813,18 +813,18 @@ __(function() {
                       [context.global.idParameterName]: '0',
                       foo: 'bar',
                       bar: 'baz',
-                      baz: 'yaz'
-                    }]
-                  })
-                }
+                      baz: 'yaz',
+                    }],
+                  }),
+                },
               }
             },
             resSpec: {
               statusCode: 200,
               headers: function(headers) {
                 assert.equal(headers['foo'], 'bar')
-              }
-            }
+              },
+            },
           },
           {
             name: 'FindObject200ExplicitMergeSuccessTest',
@@ -835,20 +835,20 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     findObject: {
-                      [context.global.idParameterName]: '0'
-                    }
-                  })
-                }
+                      [context.global.idParameterName]: '0',
+                    },
+                  }),
+                },
               }
             },
             resSpec: {
               statusCode: 200,
               body: function(body, context) {
                 assert.deepEqual(body, {
-                  [context.global.idParameterName]: '0'
+                  [context.global.idParameterName]: '0',
                 })
-              }
-            }
+              },
+            },
           },
           {
             name: 'FindObject200ExplicitMergeFailTest',
@@ -865,22 +865,22 @@ __(function() {
                   'x-pong': ejson.stringify({
                     findObject: {
                       [context.global.idParameterName]: '0',
-                      foo: 'bar'
-                    }
-                  })
-                }
+                      foo: 'bar',
+                    },
+                  }),
+                },
               }
             },
             resSpec: {
               statusCode: 500,
               body: function(body) {
                 assert.ok(body.match(/^Error: Output did not validate against:.+/))
-              }
-            }
-          }
-        ]
-      })
-    ]
+              },
+            },
+          },
+        ],
+      }),
+    ],
   })
 })
 

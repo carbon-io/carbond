@@ -220,7 +220,7 @@ var _MongoDBCollection = oo({
 
   postRemoveObjectOperation: function(result, config, req, res) {
     return util.overrideOrSuper(MongoDBCollection, this, 'postRemoveObjectOperation', arguments, req)
-  }
+  },
 })
 
 module.exports = _MongoDBCollection

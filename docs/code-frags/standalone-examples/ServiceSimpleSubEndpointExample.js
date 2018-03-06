@@ -39,11 +39,11 @@ __(function() {
               // delete the user
               deleteUser(req.params.id)
               return null
-            }
-          })
-        }
-      })
-    }
+            },
+          }),
+        },
+      }),
+    },
   })
 })
 // post-endpoints

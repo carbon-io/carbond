@@ -22,7 +22,7 @@ var testService = o({
         return next(new testService.errors.Forbidden('thou shall not pass!'))
       }
       next()
-    }
+    },
   ],
   errorHandlingMiddleware: [
     sinon.spy(function(err, req, res, next) {
@@ -34,7 +34,7 @@ var testService = o({
       } else {
         next(err)
       }
-    })
+    }),
   ],
   _handleError: sinon.spy(function() {
     carbond.Service.prototype._handleError.apply(this, arguments)
@@ -51,10 +51,10 @@ var testService = o({
       get: {
         service: function(req, res) {
           return {foo: 'bar'}
-        }
-      }
-    })
-  }
+        },
+      },
+    }),
+  },
 })
 
 __(function() {
@@ -81,15 +81,15 @@ __(function() {
                       schema: {
                         type: 'object',
                         properties: {
-                          foo: {type: 'string'}
+                          foo: {type: 'string'},
                         },
                         required: ['foo'],
-                        additionalProperties: false
-                      }
-                    }
-                  }
-                })
-              }
+                        additionalProperties: false,
+                      },
+                    },
+                  },
+                }),
+              },
             }),
             tests: [
               {
@@ -98,14 +98,14 @@ __(function() {
                   method: 'GET',
                   headers: {
                     'x-pong': ejson.stringify({
-                      get: {foo: 'foo'}
-                    })
-                  }
+                      get: {foo: 'foo'},
+                    }),
+                  },
                 },
                 resSpec: {
                   statusCode: 200,
-                  body: {foo: 'foo'}
-                }
+                  body: {foo: 'foo'},
+                },
               },
               {
                 reqSpec: {
@@ -113,21 +113,21 @@ __(function() {
                   method: 'GET',
                   headers: {
                     'x-pong': ejson.stringify({
-                      get: {bar: 'bar'}
-                    })
-                  }
+                      get: {bar: 'bar'},
+                    }),
+                  },
                 },
                 resSpec: {
                   statusCode: 500,
                   body: {
                     code: 500,
-                    description: 'Internal Server Error'
-                  }
-                }
-              }
-            ]
+                    description: 'Internal Server Error',
+                  },
+                },
+              },
+            ],
           }),
-        ]
+        ],
       }),
       o({
         _type: tt.Test,
@@ -147,15 +147,15 @@ __(function() {
                       schema: {
                         type: 'object',
                         properties: {
-                          foo: {type: 'string'}
+                          foo: {type: 'string'},
                         },
                         required: ['foo'],
-                        additionalProperties: false
-                      }
-                    }
-                  }
-                })
-              }
+                        additionalProperties: false,
+                      },
+                    },
+                  },
+                }),
+              },
             }),
             tests: [
               {
@@ -164,14 +164,14 @@ __(function() {
                   method: 'GET',
                   headers: {
                     'x-pong': ejson.stringify({
-                      get: {foo: 'foo'}
-                    })
-                  }
+                      get: {foo: 'foo'},
+                    }),
+                  },
                 },
                 resSpec: {
                   statusCode: 200,
-                  body: {foo: 'foo'}
-                }
+                  body: {foo: 'foo'},
+                },
               },
               {
                 setup: function() {
@@ -189,22 +189,24 @@ __(function() {
                   method: 'GET',
                   headers: {
                     'x-pong': ejson.stringify({
-                      get: {bar: 'bar'}
-                    })
-                  }
+                      get: {bar: 'bar'},
+                    }),
+                  },
                 },
                 resSpec: {
                   statusCode: 500,
                   body: function(body) {
                     assert(
                       body.startsWith(
-                        'Error: Output did not validate against: Additional properties not allowed: bar'))
-                  }
-                }
-              }
-            ]
+                        'Error: Output did not validate against: Additional properties not allowed: bar'
+                      )
+                    )
+                  },
+                },
+              },
+            ],
           }),
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -222,12 +224,12 @@ __(function() {
             },
             reqSpec: {
               url: '/foo',
-              method: 'GET'
+              method: 'GET',
             },
             resSpec: {
               statusCode: 200,
-              body: {foo: 'bar'}
-            }
+              body: {foo: 'bar'},
+            },
           },
           {
             name: 'TopLevelErrorHandlingMiddlewareErrorTest',
@@ -241,16 +243,16 @@ __(function() {
             },
             reqSpec: {
               url: '/foo',
-              method: 'GET'
+              method: 'GET',
             },
             resSpec: {
               statusCode: 403,
               body: {
                 code: 403,
                 description: 'Forbidden',
-                message: 'thou shall not pass!'
-              }
-            }
+                message: 'thou shall not pass!',
+              },
+            },
           },
           {
             name: 'ErrorHandlingMiddlewareFallthroughTest',
@@ -266,16 +268,16 @@ __(function() {
             },
             reqSpec: {
               url: '/foo',
-              method: 'GET'
+              method: 'GET',
             },
             resSpec: {
               statusCode: 403,
               body: {
                 code: 403,
                 description: 'Forbidden',
-                message: 'thou shall not pass!'
-              }
-            }
+                message: 'thou shall not pass!',
+              },
+            },
           },
           {
             name: 'ErrorHandlingMiddlewareShortCircuitTest',
@@ -293,18 +295,18 @@ __(function() {
             },
             reqSpec: {
               url: '/foo',
-              method: 'GET'
+              method: 'GET',
             },
             resSpec: {
               statusCode: 500,
               body: {
-                error: 'errorHandlingMiddleware'
-              }
-            }
+                error: 'errorHandlingMiddleware',
+              },
+            },
           },
-        ]
-      })
-    ]
+        ],
+      }),
+    ],
   })
   module.exports = errorHandlingTests
 })

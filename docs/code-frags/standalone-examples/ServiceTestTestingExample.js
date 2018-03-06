@@ -7,37 +7,37 @@ var o  = carbon.atom.o(module)
 __(function() {
   module.exports = o.main({
     _type: carbond.test.ServiceTest,
-    name: "HelloWorldServiceTest",
+    name: 'HelloWorldServiceTest',
     service: _o('./HelloWorldService'), // path to your Service
     tests: [
       {
         reqSpec: {
-          method: "GET",
-          url: '/hello'
+          method: 'GET',
+          url: '/hello',
         },
         resSpec: {
           statusCode: 200,
           body: {
-            msg: "Hello World!"
-          }
-        }
+            msg: 'Hello World!',
+          },
+        },
       },
       {
         reqSpec: {
-          method: "POST",
+          method: 'POST',
           url: '/hello',
           body: {
-            msg: "Hello World!"
-          }
+            msg: 'Hello World!',
+          },
         },
         resSpec: {
           statusCode: 200,
           body: {
-            msg: "Hello World!"
-          }
-        }
-      }
-    ]
+            msg: 'Hello World!',
+          },
+        },
+      },
+    ],
   })
 })
 

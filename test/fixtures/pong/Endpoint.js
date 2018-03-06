@@ -40,7 +40,7 @@ var _Endpoint = oo({
     description: 'pong head',
     service: function(req, res) {
       return util.overrideOrSuper(Endpoint, this, 'head', arguments, req, true)
-    }
+    },
   },
 
   get: {
@@ -48,7 +48,7 @@ var _Endpoint = oo({
     description: 'pong get',
     service: function(req, res) {
       return util.overrideOrSuper(Endpoint, this, 'get', arguments, req, true)
-    }
+    },
   },
 
   put: {
@@ -56,7 +56,7 @@ var _Endpoint = oo({
     description: 'pong put',
     service: function(req, res) {
       return util.overrideOrSuper(Endpoint, this, 'put', arguments, req, true)
-    }
+    },
   },
 
   patch: {
@@ -64,7 +64,7 @@ var _Endpoint = oo({
     description: 'pong patch',
     service: function(req, res) {
       return util.overrideOrSuper(Endpoint, this, 'patch', arguments, req, true)
-    }
+    },
   },
 
   delete: {
@@ -72,7 +72,7 @@ var _Endpoint = oo({
     description: 'pong delete',
     service: function(req, res) {
       return util.overrideOrSuper(Endpoint, this, 'delete', arguments, req, true)
-    }
+    },
   },
 })
 

@@ -31,7 +31,7 @@ module.exports = o.main({
         update: true,
         updateObject: true,
         remove: true,
-        removeObject: true
+        removeObject: true,
       },
 
       insert: function(objects, context) {
@@ -40,12 +40,12 @@ module.exports = o.main({
           val: _.map(objects, function(obj) {
             return _.assignIn(_.cloneDeep(obj), {_id: (count++).toString()})
           }),
-          created: true
+          created: true,
         }
       },
 
       findConfig: {
-        supportsPagination: true
+        supportsPagination: true,
       },
 
       find: function(context) {
@@ -54,7 +54,7 @@ module.exports = o.main({
           return {
             [self.idParameterName]: (context.skip + id).toString(),
             op: 'find',
-            context: context
+            context: context,
           }
         })
       },
@@ -66,7 +66,7 @@ module.exports = o.main({
       update: function(update, context) {
         return {
           val: 1,
-          created: context.upsert ? true : false
+          created: context.upsert ? true : false,
         }
       },
 
@@ -76,8 +76,8 @@ module.exports = o.main({
 
       insertObject: function(obj, context) {
         return {
-          val: _.assignIn(_.cloneDeep(obj), {_id: "0"}),
-          created: true
+          val: _.assignIn(_.cloneDeep(obj), {_id: '0'}),
+          created: true,
         }
       },
 
@@ -87,33 +87,33 @@ module.exports = o.main({
         }
         return {
           _id: id,
-          op: "findObject",
-          context: context
+          op: 'findObject',
+          context: context,
         }
       },
 
       saveObjectConfig: {
-        supportsUpsert: true
+        supportsUpsert: true,
       },
 
       saveObject: function(obj, context) {
         return {
           val: obj,
-          created: true
+          created: true,
         }
       },
 
       updateObject: function(id, update, context) {
         return {
           val: 1,
-          created: context.upsert ? true : false
+          created: context.upsert ? true : false,
         }
       },
 
       removeObject: function(id, context) {
         return 1
-      }
+      },
 
-    })
-  }
+    }),
+  },
 })

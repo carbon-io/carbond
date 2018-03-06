@@ -18,7 +18,7 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: "AclTests",
+    name: 'AclTests',
 
     /**********************************************************************
      * doTest
@@ -30,12 +30,14 @@ __(function() {
         permissionDefinitions: {
           read: true,
           write: false,
-          exec: false
+          exec: false,
         },
 
         groupDefinitions: {
           role: 'role.name',
-          title: function(user) { return user.title }
+          title: function(user) {
+            return user.title
+          },
           // user is not in groupDefinitions although it can be. This is to check _id is properly used as default
         },
 
@@ -43,73 +45,75 @@ __(function() {
           {
             user: '*',
             permissions: {
-          read: true,
+              read: true,
               write: true,
-              exec: false
-            }
+              exec: false,
+            },
           },
 
           {
             user: 3,
             permissions: {
               read: true,
-              write: true
-            }
+              write: true,
+            },
           },
 
           {
             user: 5,
             permissions: {
-              "*": function(user) { return user.isAwesome }
-            }
+              '*': function(user) {
+                return user.isAwesome
+              },
+            },
           },
 
           {
             user: 6,
             permissions: {
-              read: false
-            }
+              read: false,
+            },
           },
 
           {
-            user: { role: "Admin" },
+            user: {role: 'Admin'},
             permissions: {
-              "*": true
-            }
+              '*': true,
+            },
           },
 
           {
-            user: { title: "CEO" },
+            user: {title: 'CEO'},
             permissions: {
               read: true,
               write: true,
-              exec: false
-            }
+              exec: false,
+            },
           },
 
           {
-            user: { title: "COO" },
+            user: {title: 'COO'},
             permissions: {
               read: true,
-              write: false
-            }
-          }
-        ]
+              write: false,
+            },
+          },
+        ],
       })
 
       var u1 = {
         _id: 1,
-        title: "CEO"
+        title: 'CEO',
       }
 
       var u2 = {
         _id: 2,
-        role: { name: "Admin" },
-        title: "COO"
+        role: {name: 'Admin'},
+        title: 'COO',
       }
 
       var u3 = {
-        _id: 3
+        _id: 3,
       }
 
       var u4 = {
@@ -117,11 +121,11 @@ __(function() {
 
       var u5 = {
         _id: 5,
-        isAwesome: false
+        isAwesome: false,
       }
 
       var u6 = {
-        _id: 6
+        _id: 6,
       }
 
       // u1
@@ -177,10 +181,10 @@ __(function() {
         groupDefinitions: {},
         entries: [
           {
-            user: { foop: 3 },
-            permissions: {}
-          }
-        ]
+            user: {foop: 3},
+            permissions: {},
+          },
+        ],
       })
 
       // should barf
@@ -195,7 +199,7 @@ __(function() {
 
         permissionDefinitions: {
           read: true,
-          write: false
+          write: false,
         },
 
         entries: [
@@ -203,10 +207,10 @@ __(function() {
             user: 3,
             permissions: {
               read: true,
-              write: true
-            }
-          }
-        ]
+              write: true,
+            },
+          },
+        ],
       })
 
       var acl4 = o({
@@ -214,7 +218,7 @@ __(function() {
 
         permissionDefinitions: {
           read: true,
-          write: false
+          write: false,
         },
 
         entries: [
@@ -222,15 +226,15 @@ __(function() {
             user: 3,
             permissions: {
               read: true,
-              write: false
-            }
-          }
-        ]
+              write: false,
+            },
+          },
+        ],
       })
 
       var andAcl = acl3.and(acl4)
       assert(andAcl.hasPermission(u3, 'read'))
       assert(!andAcl.hasPermission(u3, 'write'))
-    }
+    },
   })
 })

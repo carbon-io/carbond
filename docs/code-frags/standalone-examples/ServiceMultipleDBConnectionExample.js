@@ -10,28 +10,28 @@ __(function() {
     port: 8888,
     dbUris: {
       main: 'mongodb://localhost:27017/mydb',
-      reporting: 'mongodb://localhost:27017/reporting'
+      reporting: 'mongodb://localhost:27017/reporting',
     },
     endpoints: {
       messages: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
           return this.getService().dbs['main']
-                                  .getCollection('messages')
-                                  .find()
-                                  .toArray()
-        }
+            .getCollection('messages')
+            .find()
+            .toArray()
+        },
       }),
       dashboards: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
           return this.getService().dbs['reporting']
-                                  .getCollection('dashboards')
-                                  .find()
-                                  .toArray()
-        }
-      })
-    }
+            .getCollection('dashboards')
+            .find()
+            .toArray()
+        },
+      }),
+    },
   })
 })
 

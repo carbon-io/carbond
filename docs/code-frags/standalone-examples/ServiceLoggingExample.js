@@ -19,7 +19,7 @@ __(function() {
       hello: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
-          this.getService().logInfo("GET on /hello called")
+          this.getService().logInfo('GET on /hello called')
           try {
             // Do stuff
             // post-logging-simpleExampleBody
@@ -28,12 +28,12 @@ __(function() {
             }
             // pre-logging-simpleExampleFooter
           } catch (e) {
-            this.getService().logError("Error while doing stuff")
+            this.getService().logError('Error while doing stuff')
           }
-          return {msg: "Hello World!"}
-        }
-      })
-    }
+          return {msg: 'Hello World!'}
+        },
+      }),
+    },
   // pre-logging-simpleExampleVerbosityFooter
   })
 })

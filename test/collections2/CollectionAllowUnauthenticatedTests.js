@@ -1,14 +1,10 @@
 var assert = require('assert')
-var url = require('url')
 
 var _ = require('lodash')
-var sinon = require('sinon')
 
 var __ = require('@carbon-io/carbon-core').fibers.__(module)
 var ejson = require('@carbon-io/carbon-core').ejson
 var o = require('@carbon-io/carbon-core').atom.o(module)
-var _o = require('@carbon-io/carbon-core').bond._o(module)
-var testtube = require('@carbon-io/carbon-core').testtube
 
 var carbond = require('../..')
 var pong = require('../fixtures/pong')
@@ -24,7 +20,7 @@ __(function() {
       _type: carbond.security.ApiKeyAuthenticator,
       findUser: function(key) {
         return (key === 'foo') ? {name: 'foo'} : undefined
-      }
+      },
     }),
     service: {
       $property: {
@@ -37,70 +33,70 @@ __(function() {
                 rejectUnauthenticated: o({
                   _type: pong.Collection,
                   idGenerator: pong.util.collectionIdGenerator,
-                  enabled: {'*': true}
+                  enabled: {'*': true},
                 }),
                 allowUnauthenticated: o({
                   _type: pong.Collection,
                   idGenerator: pong.util.collectionIdGenerator,
                   enabled: {'*': true},
                   insertConfig: {
-                    allowUnauthenticated: true
+                    allowUnauthenticated: true,
                   },
                   insertObjectConfig: {
-                    allowUnauthenticated: true
+                    allowUnauthenticated: true,
                   },
                   findConfig: {
-                    allowUnauthenticated: true
+                    allowUnauthenticated: true,
                   },
                   findObjectConfig: {
-                    allowUnauthenticated: true
+                    allowUnauthenticated: true,
                   },
                   saveConfig: {
-                    allowUnauthenticated: true
+                    allowUnauthenticated: true,
                   },
                   saveObjectConfig: {
-                    allowUnauthenticated: true
+                    allowUnauthenticated: true,
                   },
                   updateConfig: {
-                    allowUnauthenticated: true
+                    allowUnauthenticated: true,
                   },
                   updateObjectConfig: {
-                    allowUnauthenticated: true
+                    allowUnauthenticated: true,
                   },
                   removeConfig: {
-                    allowUnauthenticated: true
+                    allowUnauthenticated: true,
                   },
                   removeObjectConfig: {
-                    allowUnauthenticated: true
-                  }
+                    allowUnauthenticated: true,
+                  },
                 }),
                 insertAllowUnauthenticatedInsertObjectRejectUnauthenticated: o({
                   _type: pong.Collection,
                   idGenerator: pong.util.collectionIdGenerator,
                   enabled: {insert: true, insertObject: true},
                   insertConfig: {
-                    allowUnauthenticated: true
-                  }
+                    allowUnauthenticated: true,
+                  },
                 }),
                 insertRejectUnauthenticatedInsertObjectAllowUnauthenticated: o({
                   _type: pong.Collection,
                   idGenerator: pong.util.collectionIdGenerator,
                   enabled: {insert: true, insertObject: true},
                   insertObjectConfig: {
-                    allowUnauthenticated: true
+                    allowUnauthenticated: true,
                   },
                 }),
                 insertAndInsertObjectRejectUnauthenticated: o({
                   _type: pong.Collection,
                   idGenerator: pong.util.collectionIdGenerator,
-                  enabled: {insert: true, insertObject: true}
+                  enabled: {insert: true, insertObject: true},
                 }),
-              }
+              },
             })
           }
           return this._service
-        }
-      }
+        },
+      },
     },
     setup: function(context) {
       carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -130,14 +126,15 @@ __(function() {
       }
       assert(_.isNil(
         this.service.endpoints.insertAllowUnauthenticatedInsertObjectRejectUnauthenticated
-                              .allowUnauthenticated
+          .allowUnauthenticated
       ))
       assert(_.isNil(
         this.service.endpoints.insertRejectUnauthenticatedInsertObjectAllowUnauthenticated
-                              .allowUnauthenticated
-        ))
+          .allowUnauthenticated
+      ))
       assert(_.isNil(
-        this.service.endpoints.insertAndInsertObjectRejectUnauthenticated.allowUnauthenticated))
+        this.service.endpoints.insertAndInsertObjectRejectUnauthenticated.allowUnauthenticated
+      ))
     },
     tests: [
 
@@ -152,14 +149,14 @@ __(function() {
           headers: {
             'Api-Key': 'foo',
             'x-pong': ejson.stringify({
-              insert: {$args: 0}
-            })
+              insert: {$args: 0},
+            }),
           },
-          body: [{foo: 'bar'}]
+          body: [{foo: 'bar'}],
         },
         resSpec: {
-          statusCode: 201
-        }
+          statusCode: 201,
+        },
       },
       {
         name: 'InsertInvalidUserAuthenticationNotEnforcedTest',
@@ -169,14 +166,14 @@ __(function() {
           headers: {
             'Api-Key': 'bar',
             'x-pong': ejson.stringify({
-              insert: {$args: 0}
-            })
+              insert: {$args: 0},
+            }),
           },
-          body: [{foo: 'bar'}]
+          body: [{foo: 'bar'}],
         },
         resSpec: {
-          statusCode: 201
-        }
+          statusCode: 201,
+        },
       },
       {
         name: 'InsertValidUserAuthenticationEnforcedTest',
@@ -186,14 +183,14 @@ __(function() {
           headers: {
             'Api-Key': 'foo',
             'x-pong': ejson.stringify({
-              insert: {$args: 0}
-            })
+              insert: {$args: 0},
+            }),
           },
-          body: [{foo: 'bar'}]
+          body: [{foo: 'bar'}],
         },
         resSpec: {
-          statusCode: 201
-        }
+          statusCode: 201,
+        },
       },
       {
         name: 'InsertInvalidUserAuthenticationEnforcedTest',
@@ -203,14 +200,14 @@ __(function() {
           headers: {
             'Api-Key': 'bar',
             'x-pong': ejson.stringify({
-              insert: {$args: 0}
-            })
+              insert: {$args: 0},
+            }),
           },
-          body: [{foo: 'bar'}]
+          body: [{foo: 'bar'}],
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
       {
         name: 'InsertOpInsertAllowUnauthenticatedInsertObjectRejectUnauthenticatedTest',
@@ -220,14 +217,14 @@ __(function() {
           headers: {
             'Api-Key': 'bar',
             'x-pong': ejson.stringify({
-              insert: {$args: 0}
-            })
+              insert: {$args: 0},
+            }),
           },
-          body: [{foo: 'bar'}]
+          body: [{foo: 'bar'}],
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
       {
         name: 'InsertOpInsertRejectUnauthenticatedInsertObjectAllowUnauthenticatedTest',
@@ -237,14 +234,14 @@ __(function() {
           headers: {
             'Api-Key': 'bar',
             'x-pong': ejson.stringify({
-              insert: {$args: 0}
-            })
+              insert: {$args: 0},
+            }),
           },
-          body: [{foo: 'bar'}]
+          body: [{foo: 'bar'}],
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
       {
         name: 'InsertOpInsertAndInsertObjectRejectUnauthenticatedTest',
@@ -254,14 +251,14 @@ __(function() {
           headers: {
             'Api-Key': 'bar',
             'x-pong': ejson.stringify({
-              insert: {$args: 0}
-            })
+              insert: {$args: 0},
+            }),
           },
-          body: [{foo: 'bar'}]
+          body: [{foo: 'bar'}],
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
 
       // ------------------
@@ -275,14 +272,14 @@ __(function() {
           headers: {
             'Api-Key': 'foo',
             'x-pong': ejson.stringify({
-              insertObject: {$args: 0}
-            })
+              insertObject: {$args: 0},
+            }),
           },
-          body: {foo: 'bar'}
+          body: {foo: 'bar'},
         },
         resSpec: {
-          statusCode: 201
-        }
+          statusCode: 201,
+        },
       },
       {
         name: 'InsertObjectInvalidUserAuthenticationNotEnforcedTest',
@@ -292,14 +289,14 @@ __(function() {
           headers: {
             'Api-Key': 'bar',
             'x-pong': ejson.stringify({
-              insertObject: {$args: 0}
-            })
+              insertObject: {$args: 0},
+            }),
           },
-          body: {foo: 'bar'}
+          body: {foo: 'bar'},
         },
         resSpec: {
-          statusCode: 201
-        }
+          statusCode: 201,
+        },
       },
       {
         name: 'InsertObjectValidUserAuthenticationEnforcedTest',
@@ -309,14 +306,14 @@ __(function() {
           headers: {
             'Api-Key': 'foo',
             'x-pong': ejson.stringify({
-              insertObject: {$args: 0}
-            })
+              insertObject: {$args: 0},
+            }),
           },
-          body: {foo: 'bar'}
+          body: {foo: 'bar'},
         },
         resSpec: {
-          statusCode: 201
-        }
+          statusCode: 201,
+        },
       },
       {
         name: 'InsertObjectInvalidUserAuthenticationEnforcedTest',
@@ -326,14 +323,14 @@ __(function() {
           headers: {
             'Api-Key': 'bar',
             'x-pong': ejson.stringify({
-              insertObject: {$args: 0}
-            })
+              insertObject: {$args: 0},
+            }),
           },
-          body: {foo: 'bar'}
+          body: {foo: 'bar'},
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
       {
         name: 'InsertObjectOpInsertAllowUnauthenticatedInsertObjectRejectUnauthenticatedTest',
@@ -343,14 +340,14 @@ __(function() {
           headers: {
             'Api-Key': 'bar',
             'x-pong': ejson.stringify({
-              insertObject: {$args: 0}
-            })
+              insertObject: {$args: 0},
+            }),
           },
-          body: {foo: 'bar'}
+          body: {foo: 'bar'},
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
       {
         name: 'InsertObjectOpInsertRejectUnauthenticatedInsertObjectAllowUnauthenticatedTest',
@@ -360,14 +357,14 @@ __(function() {
           headers: {
             'Api-Key': 'bar',
             'x-pong': ejson.stringify({
-              insertObject: {$args: 0}
-            })
+              insertObject: {$args: 0},
+            }),
           },
-          body: {foo: 'bar'}
+          body: {foo: 'bar'},
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
       {
         name: 'InsertObjectOpInsertAndInsertObjectRejectUnauthenticatedTest',
@@ -377,14 +374,14 @@ __(function() {
           headers: {
             'Api-Key': 'bar',
             'x-pong': ejson.stringify({
-              insertObject: {$args: 0}
-            })
+              insertObject: {$args: 0},
+            }),
           },
-          body: {foo: 'bar'}
+          body: {foo: 'bar'},
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
 
       // ----------
@@ -399,14 +396,14 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                find: [{[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}]
-              })
-            }
+                find: [{[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}],
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'FindInvalidUserAuthenticationNotEnforcedTest',
@@ -417,14 +414,14 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                find: [{[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}]
-              })
-            }
+                find: [{[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}],
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'FindValidUserAuthenticationEnforcedTest',
@@ -435,14 +432,14 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                find: [{[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}]
-              })
-            }
+                find: [{[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}],
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'FindInvalidUserAuthenticationEnforcedTest',
@@ -453,14 +450,14 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                find: [{[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}]
-              })
-            }
+                find: [{[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}],
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
 
       // ----------------
@@ -475,14 +472,14 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                findObject: {[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}
-              })
-            }
+                findObject: {[context.global.allowUnauthenticatedId]: '0', foo: 'bar'},
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'FindObjectInvalidUserAuthenticationNotEnforcedTest',
@@ -493,14 +490,14 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                findObject: {[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}
-              })
-            }
+                findObject: {[context.global.allowUnauthenticatedId]: '0', foo: 'bar'},
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'FindObjectValidUserAuthenticationEnforcedTest',
@@ -511,14 +508,14 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                findObject: {[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}
-              })
-            }
+                findObject: {[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'},
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'FindObjectInvalidUserAuthenticationEnforcedTest',
@@ -529,14 +526,14 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                findObject: {[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}
-              })
-            }
+                findObject: {[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'},
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
 
       // -----------------
@@ -551,14 +548,14 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                find: [{[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}]
-              })
-            }
+                find: [{[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}],
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'FindHEADInvalidUserAuthenticationNotEnforcedTest',
@@ -569,14 +566,14 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                find: [{[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}]
-              })
-            }
+                find: [{[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}],
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'FindHEADValidUserAuthenticationEnforcedTest',
@@ -587,14 +584,14 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                find: [{[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}]
-              })
-            }
+                find: [{[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}],
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'FindHEADInvalidUserAuthenticationEnforcedTest',
@@ -605,14 +602,14 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                find: [{[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}]
-              })
-            }
+                find: [{[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}],
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
 
       // -----------------------
@@ -627,14 +624,14 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                findObject: {[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}
-              })
-            }
+                findObject: {[context.global.allowUnauthenticatedId]: '0', foo: 'bar'},
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'FindObjectHEADInvalidUserAuthenticationNotEnforcedTest',
@@ -645,14 +642,14 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                findObject: {[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}
-              })
-            }
+                findObject: {[context.global.allowUnauthenticatedId]: '0', foo: 'bar'},
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'FindObjectHEADValidUserAuthenticationEnforcedTest',
@@ -663,14 +660,14 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                findObject: {[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}
-              })
-            }
+                findObject: {[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'},
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'FindObjectHEADInvalidUserAuthenticationEnforcedTest',
@@ -681,14 +678,14 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                findObject: {[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}
-              })
-            }
+                findObject: {[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'},
+              }),
+            },
           }
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
 
       // ----------
@@ -703,15 +700,15 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                save: {$args: 0}
-              })
+                save: {$args: 0},
+              }),
             },
-            body: [{[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}]
+            body: [{[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}],
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'SaveInvalidUserAuthenticationNotEnforcedTest',
@@ -722,15 +719,15 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                save: {$args: 0}
-              })
+                save: {$args: 0},
+              }),
             },
-            body: [{[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}]
+            body: [{[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}],
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'SaveValidUserAuthenticationEnforcedTest',
@@ -741,15 +738,15 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                save: {$args: 0}
-              })
+                save: {$args: 0},
+              }),
             },
-            body: [{[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}]
+            body: [{[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}],
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'SaveInvalidUserAuthenticationEnforcedTest',
@@ -760,15 +757,15 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                save: {$args: 0}
-              })
+                save: {$args: 0},
+              }),
             },
-            body: [{[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}]
+            body: [{[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}],
           }
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
 
       // ----------------
@@ -783,15 +780,15 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                saveObject: {$args: 0}
-              })
+                saveObject: {$args: 0},
+              }),
             },
-            body: {[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}
+            body: {[context.global.allowUnauthenticatedId]: '0', foo: 'bar'},
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'SaveObjectInvalidUserAuthenticationNotEnforcedTest',
@@ -802,15 +799,15 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                saveObject: {$args: 0}
-              })
+                saveObject: {$args: 0},
+              }),
             },
-            body: {[context.global.allowUnauthenticatedId]: '0', foo: 'bar'}
+            body: {[context.global.allowUnauthenticatedId]: '0', foo: 'bar'},
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'SaveObjectValidUserAuthenticationEnforcedTest',
@@ -821,15 +818,15 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                saveObject: {$args: 0}
-              })
+                saveObject: {$args: 0},
+              }),
             },
-            body: {[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}
+            body: {[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'},
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'SaveObjectInvalidUserAuthenticationEnforcedTest',
@@ -840,15 +837,15 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                saveObject: {$args: 0}
-              })
+                saveObject: {$args: 0},
+              }),
             },
-            body: {[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'}
+            body: {[context.global.rejectUnauthenticatedId]: '0', foo: 'bar'},
           }
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
 
       // ------------
@@ -863,15 +860,15 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                update: 1
-              })
+                update: 1,
+              }),
             },
-            body: {foo: 'bar'}
+            body: {foo: 'bar'},
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'UpdateInvalidUserAuthenticationNotEnforcedTest',
@@ -882,15 +879,15 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                update: 1
-              })
+                update: 1,
+              }),
             },
-            body: {foo: 'bar'}
+            body: {foo: 'bar'},
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'UpdateValidUserAuthenticationEnforcedTest',
@@ -901,15 +898,15 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                update: 1
-              })
+                update: 1,
+              }),
             },
-            body: {foo: 'bar'}
+            body: {foo: 'bar'},
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'UpdateInvalidUserAuthenticationEnforcedTest',
@@ -920,15 +917,15 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                update: 1
-              })
+                update: 1,
+              }),
             },
-            body: {foo: 'bar'}
+            body: {foo: 'bar'},
           }
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
 
       // ------------------
@@ -943,15 +940,15 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                updateObject: 1
-              })
+                updateObject: 1,
+              }),
             },
-            body: {foo: 'bar'}
+            body: {foo: 'bar'},
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'UpdateObjectInvalidUserAuthenticationNotEnforcedTest',
@@ -962,15 +959,15 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                updateObject: 1
-              })
+                updateObject: 1,
+              }),
             },
-            body: {foo: 'bar'}
+            body: {foo: 'bar'},
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'UpdateObjectValidUserAuthenticationEnforcedTest',
@@ -981,15 +978,15 @@ __(function() {
             headers: {
               'Api-Key': 'foo',
               'x-pong': ejson.stringify({
-                updateObject: 1
-              })
+                updateObject: 1,
+              }),
             },
-            body: {foo: 'bar'}
+            body: {foo: 'bar'},
           }
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'UpdateObjectInvalidUserAuthenticationEnforcedTest',
@@ -1000,15 +997,15 @@ __(function() {
             headers: {
               'Api-Key': 'bar',
               'x-pong': ejson.stringify({
-                updateObject: 1
-              })
+                updateObject: 1,
+              }),
             },
-            body: {foo: 'bar'}
+            body: {foo: 'bar'},
           }
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
 
       // ------------
@@ -1022,13 +1019,13 @@ __(function() {
           headers: {
             'Api-Key': 'foo',
             'x-pong': ejson.stringify({
-              remove: 1
-            })
-          }
+              remove: 1,
+            }),
+          },
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'RemoveInvalidUserAuthenticationNotEnforcedTest',
@@ -1038,13 +1035,13 @@ __(function() {
           headers: {
             'Api-Key': 'bar',
             'x-pong': ejson.stringify({
-              remove: 1
-            })
-          }
+              remove: 1,
+            }),
+          },
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'RemoveValidUserAuthenticationEnforcedTest',
@@ -1054,13 +1051,13 @@ __(function() {
           headers: {
             'Api-Key': 'foo',
             'x-pong': ejson.stringify({
-              remove: 1
-            })
-          }
+              remove: 1,
+            }),
+          },
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'RemoveInvalidUserAuthenticationEnforcedTest',
@@ -1070,13 +1067,13 @@ __(function() {
           headers: {
             'Api-Key': 'bar',
             'x-pong': ejson.stringify({
-              remove: 1
-            })
-          }
+              remove: 1,
+            }),
+          },
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
 
       // ------------------
@@ -1090,14 +1087,14 @@ __(function() {
           headers: {
             'Api-Key': 'foo',
             'x-pong': ejson.stringify({
-              removeObject: 1
-            })
+              removeObject: 1,
+            }),
           },
-          body: [{foo: 'bar'}]
+          body: [{foo: 'bar'}],
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'RemoveObjectInvalidUserAuthenticationNotEnforcedTest',
@@ -1107,14 +1104,14 @@ __(function() {
           headers: {
             'Api-Key': 'bar',
             'x-pong': ejson.stringify({
-              removeObject: 1
-            })
+              removeObject: 1,
+            }),
           },
-          body: [{foo: 'bar'}]
+          body: [{foo: 'bar'}],
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'RemoveObjectValidUserAuthenticationEnforcedTest',
@@ -1124,14 +1121,14 @@ __(function() {
           headers: {
             'Api-Key': 'foo',
             'x-pong': ejson.stringify({
-              removeObject: 1
-            })
+              removeObject: 1,
+            }),
           },
-          body: [{foo: 'bar'}]
+          body: [{foo: 'bar'}],
         },
         resSpec: {
-          statusCode: 200
-        }
+          statusCode: 200,
+        },
       },
       {
         name: 'RemoveObjectInvalidUserAuthenticationEnforcedTest',
@@ -1141,15 +1138,15 @@ __(function() {
           headers: {
             'Api-Key': 'bar',
             'x-pong': ejson.stringify({
-              removeObject: 1
-            })
+              removeObject: 1,
+            }),
           },
-          body: [{foo: 'bar'}]
+          body: [{foo: 'bar'}],
         },
         resSpec: {
-          statusCode: 401
-        }
+          statusCode: 401,
+        },
       },
-    ]
+    ],
   })
 })

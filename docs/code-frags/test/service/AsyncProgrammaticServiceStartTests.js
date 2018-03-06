@@ -1,6 +1,4 @@
 var assert = require('assert')
-
-var _ = require('lodash')
 var sinon = require('sinon')
 
 var core = require('@carbon-io/carbon-core')
@@ -25,16 +23,16 @@ __(function() {
           {
             reqSpec: {
               method: 'GET',
-              url: '/hello'
+              url: '/hello',
             },
             resSpec: {
               statusCode: 200,
               body: {
-                msg: 'Hello World!'
-              }
-            }
-          }
-        ]
+                msg: 'Hello World!',
+              },
+            },
+          },
+        ],
       }),
       o({
         _type: testtube.Test,
@@ -47,7 +45,7 @@ __(function() {
           try {
             var startCalled = false
             var stopCalled = false
-            for (var i=0; i<this.logInfoSpy.callCount; i++) {
+            for (var i = 0; i < this.logInfoSpy.callCount; i++) {
               if (this.logInfoSpy.getCall(i).args[0] === 'Service started') {
                 startCalled = true
               }
@@ -62,9 +60,9 @@ __(function() {
         },
         doTest: function(ctx, done) {
           this.mod.startService(done)
-        }
-      })
-    ]
+        },
+      }),
+    ],
   })
 })
 

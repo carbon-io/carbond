@@ -15,7 +15,7 @@ __(function() {
       if (username === 'skroob') {
         return {
           username: username,
-          email: 'pres@skroob.com'
+          email: 'pres@skroob.com',
         }
       }
       throw new HttpErrors.Unauthorized()
@@ -30,7 +30,7 @@ __(function() {
         authenticate: function(req) {
           var user = figureOutWhoUserIs(req)
           return user
-        }
+        },
       }),
       // post-authentication-customAuthenticator
       endpoints: {
@@ -38,9 +38,9 @@ __(function() {
           _type: carbon.carbond.Endpoint,
           get: function(req) {
             return {msg: 'Hello ' + req.user.email + '!'}
-          }
-        })
-      }
+          },
+        }),
+      },
     })
   })
   // post-authentication-customAuthFooter
@@ -56,18 +56,18 @@ __(function() {
       dbUri: 'mongodb://localhost:27017/mydb',
       authenticator: o({
         _type: carbon.carbond.security.MongoDBHttpBasicAuthenticator,
-        userCollection: "users",
-        usernameField: "username",
-        passwordField: "password"
+        userCollection: 'users',
+        usernameField: 'username',
+        passwordField: 'password',
       }),
       endpoints: {
         hello: o({
           _type: carbon.carbond.Endpoint,
           get: function(req) {
             return {msg: 'Hello ' + req.user.email + '!'}
-          }
-        })
-      }
+          },
+        }),
+      },
     })
   })
   // post-authentication-HTTPBasicAuth
@@ -81,19 +81,19 @@ __(function() {
       dbUri: 'mongodb://localhost:27017/mydb',
       authenticator: o({
         _type: carbon.carbond.security.MongoDBApiKeyAuthenticator,
-        apiKeyParameterName: "API_KEY",
-        apiKeyLocation: "header", // can be "header" or "query"
-        userCollection: "users",
-        apiKeyField: "apiKey"
+        apiKeyParameterName: 'API_KEY',
+        apiKeyLocation: 'header', // can be "header" or "query"
+        userCollection: 'users',
+        apiKeyField: 'apiKey',
       }),
       endpoints: {
         hello: o({
           _type: carbon.carbond.Endpoint,
           get: function(req) {
             return {msg: 'Hello ' + req.user.email + '!'}
-          }
-        })
-      }
+          },
+        }),
+      },
     })
   })
   // post-authentication-APIKeyAuth
@@ -103,6 +103,6 @@ __(function() {
   module.exports = {
     Service1: Service1,
     Service2: Service2,
-    Service3: Service3
+    Service3: Service3,
   }
 })

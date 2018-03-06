@@ -10,8 +10,8 @@ __(function() {
     description: 'Services tests',
     tests: [
       _o('./ErrorHandlingTests'),
-      _o('./ParameterParsingTests')
-    ]
+      _o('./ParameterParsingTests'),
+    ],
   })
 
   module.exports = serviceTests

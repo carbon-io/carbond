@@ -22,7 +22,7 @@ module.exports = o({
           assert.throws(function() {
             o({
               _type: WindowLimiterPolicy,
-              window: val
+              window: val,
             })
           }, TypeError)
         })
@@ -30,7 +30,7 @@ module.exports = o({
           assert.throws(function() {
             o({
               _type: WindowLimiterPolicy,
-              reqLimit: val
+              reqLimit: val,
             })
           }, TypeError)
         })
@@ -38,10 +38,10 @@ module.exports = o({
           o({
             _type: WindowLimiterPolicy,
             window: 10000,
-            reqLimit: 10
+            reqLimit: 10,
           })
         }, TypeError)
-      }
+      },
     }),
     o({
       _type: testtube.Test,
@@ -54,7 +54,7 @@ module.exports = o({
           1000, // allow
           1500, // reject
           1900, // reject
-          2000  // allow
+          2000,  // allow
         ]
         sinon.stub(Date, 'now').callsFake(function() {
           return results.shift()
@@ -67,7 +67,7 @@ module.exports = o({
         var policy = o({
           _type: WindowLimiterPolicy,
           window: 1000,
-          reqLimit: 1
+          reqLimit: 1,
         })
         policy.initializeState()
         assert(policy.allow(undefined, undefined, 'foo'))
@@ -76,7 +76,7 @@ module.exports = o({
         assert(!policy.allow(undefined, undefined, 'foo'))
         assert(!policy.allow(undefined, undefined, 'foo'))
         assert(policy.allow(undefined, undefined, 'foo'))
-      }
-    })
-  ]
+      },
+    }),
+  ],
 })

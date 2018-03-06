@@ -9,11 +9,13 @@ var _ = require('lodash')
  * endpoint ACLs are composed.
  */
 var USERS = [
-  { _id: 1, username: "admin", password: "admin", role: "Admin" },
-  { _id: 2, username: "bob", password: "bob", role: "User" }
+  {_id: 1, username: 'admin', password: 'admin', role: 'Admin'},
+  {_id: 2, username: 'bob', password: 'bob', role: 'User'},
 ]
 
-var okFn = function() { return {ok: 1} }
+var okFn = function() {
+  return {ok: 1}
+}
 
 module.exports = o({
   _type: carbond.Service,
@@ -28,7 +30,7 @@ module.exports = o({
     findUser: function(username) {
       var u = _.find(USERS, {username: username})
       return u
-    }
+    },
   }),
 
   endpoints: {
@@ -41,18 +43,18 @@ module.exports = o({
         groupDefinitions: {role: 'role'},
         entries: [
           {
-            user: {role: "Admin"},
+            user: {role: 'Admin'},
             permissions: {
-              get: true
-            }
+              get: true,
+            },
           },
           {
-            user: "*", // All other users
+            user: '*', // All other users
             permissions: {
-              get: false
-            }
-          }
-        ]
+              get: false,
+            },
+          },
+        ],
       }),
       get: okFn,
       post: okFn,
@@ -66,22 +68,22 @@ module.exports = o({
             groupDefinitions: {role: 'role'},
             entries: [
               {
-                user: {role: "Admin"},
+                user: {role: 'Admin'},
                 permissions: {
                   get: true,
-                  post: true
-                }
+                  post: true,
+                },
               },
               {
-                user: "*", // All other users
+                user: '*', // All other users
                 permissions: {
-                  get: true
-                }
-              }
-            ]
-          })
-        })
-      }
+                  get: true,
+                },
+              },
+            ],
+          }),
+        }),
+      },
     }),
 
     // selfAndBelow: true
@@ -93,19 +95,19 @@ module.exports = o({
         groupDefinitions: {role: 'role'},
         entries: [
           {
-            user: {role: "Admin"},
+            user: {role: 'Admin'},
             permissions: {
               post: false,
-              get: true
-            }
+              get: true,
+            },
           },
           {
-            user: "*", // All other users
+            user: '*', // All other users
             permissions: {
-              get: false
-            }
-          }
-        ]
+              get: false,
+            },
+          },
+        ],
       }),
       get: okFn,
       post: okFn,
@@ -119,22 +121,22 @@ module.exports = o({
             groupDefinitions: {role: 'role'},
             entries: [
               {
-                user: {role: "Admin"},
+                user: {role: 'Admin'},
                 permissions: {
                   post: true,
-                  get: true
-                }
+                  get: true,
+                },
               },
               {
-                user: "*", // All other users
+                user: '*', // All other users
                 permissions: {
-                  get: true
-                }
-              }
-            ]
-          })
-        })
-      }
+                  get: true,
+                },
+              },
+            ],
+          }),
+        }),
+      },
     }),
 
     // selfAndBelow: "get"
@@ -142,23 +144,23 @@ module.exports = o({
       _type: carbond.Endpoint,
       acl: o({
         _type: carbond.security.EndpointAcl,
-        selfAndBelow: "get",
+        selfAndBelow: 'get',
         groupDefinitions: {role: 'role'},
         entries: [
           {
-            user: {role: "Admin"},
+            user: {role: 'Admin'},
             permissions: {
               post: false,
-              get: true
-            }
+              get: true,
+            },
           },
           {
-            user: "*", // All other users
+            user: '*', // All other users
             permissions: {
-              get: false
-            }
-          }
-        ]
+              get: false,
+            },
+          },
+        ],
       }),
       get: okFn,
       post: okFn,
@@ -172,22 +174,22 @@ module.exports = o({
             groupDefinitions: {role: 'role'},
             entries: [
               {
-                user: {role: "Admin"},
+                user: {role: 'Admin'},
                 permissions: {
                   post: true,
-                  get: true
-                }
+                  get: true,
+                },
               },
               {
-                user: "*", // All other users
+                user: '*', // All other users
                 permissions: {
-                  get: true
-                }
-              }
-            ]
-          })
-        })
-      }
+                  get: true,
+                },
+              },
+            ],
+          }),
+        }),
+      },
     }),
 
     // selfAndBelow: fn
@@ -196,11 +198,11 @@ module.exports = o({
       acl: o({
         _type: carbond.security.EndpointAcl,
         selfAndBelow: function(user, permission, env) {
-          if(user) {
-            if(user.role === "Admin") {
-              return permission === "get"
+          if (user) {
+            if (user.role === 'Admin') {
+              return permission === 'get'
             } else {
-              return permission === "post"
+              return permission === 'post'
             }
           }
           return false
@@ -208,19 +210,19 @@ module.exports = o({
         groupDefinitions: {role: 'role'},
         entries: [
           {
-            user: {role: "Admin"},
+            user: {role: 'Admin'},
             permissions: {
               post: true,
-              get: false
-            }
+              get: false,
+            },
           },
           {
-            user: "*", // All other users
+            user: '*', // All other users
             permissions: {
-              get: false
-            }
-          }
-        ]
+              get: false,
+            },
+          },
+        ],
       }),
       get: okFn,
       post: okFn,
@@ -234,23 +236,23 @@ module.exports = o({
             groupDefinitions: {role: 'role'},
             entries: [
               {
-                user: {role: "Admin"},
+                user: {role: 'Admin'},
                 permissions: {
                   post: true,
-                  get: true
-                }
+                  get: true,
+                },
               },
               {
-                user: "*", // All other users
+                user: '*', // All other users
                 permissions: {
                   post: true,
-                  get: true
-                }
-              }
-            ]
-          })
-        })
-      }
-    })
-  }
+                  get: true,
+                },
+              },
+            ],
+          }),
+        }),
+      },
+    }),
+  },
 })

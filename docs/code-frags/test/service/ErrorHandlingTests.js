@@ -20,60 +20,60 @@ __(function() {
           method: 'POST',
           url: '/hello',
           body: {
-            hello: 'world'
-          }
+            hello: 'world',
+          },
         },
         resSpec: {
           statusCode: 200,
           body: {
-            msg: 'Hello World! {"hello":"world"}'
-          }
-        }
+            msg: 'Hello World! {"hello":"world"}',
+          },
+        },
       },
       {
         reqSpec: {
           method: 'POST',
-          url: '/hello'
+          url: '/hello',
         },
         resSpec: {
           statusCode: 400,
           body: {
             code: 400,
             description: 'Bad Request',
-            message: 'Must supply a body'
-          }
-        }
+            message: 'Must supply a body',
+          },
+        },
       },
       {
         reqSpec: {
           method: 'POST',
           url: '/goodbye',
           body: {
-            goodbye: 'world'
-          }
+            goodbye: 'world',
+          },
         },
         resSpec: {
           statusCode: 200,
           body: {
-            msg: 'Goodbye World! {"goodbye":"world"}'
-          }
-        }
+            msg: 'Goodbye World! {"goodbye":"world"}',
+          },
+        },
       },
       {
         reqSpec: {
           method: 'POST',
-          url: '/goodbye'
+          url: '/goodbye',
         },
         resSpec: {
           statusCode: 400,
           body: {
             code: 400,
             description: 'Bad Request',
-            message: 'Must supply a body'
-          }
-        }
-      }
-    ]
+            message: 'Must supply a body',
+          },
+        },
+      },
+    ],
   })
 })
 

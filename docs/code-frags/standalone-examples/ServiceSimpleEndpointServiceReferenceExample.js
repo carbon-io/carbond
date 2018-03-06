@@ -13,11 +13,11 @@ __(function() {
         get: function(req) {
           return {
             running: true,
-            msg: "Up and running on port: " + this.getService().port
+            msg: 'Up and running on port: ' + this.getService().port,
           }
-        }
-      })
-    }
+        },
+      }),
+    },
   })
 })
 // post-endpoints

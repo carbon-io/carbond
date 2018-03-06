@@ -26,7 +26,7 @@ __(function() {
         get: function(req) {
           // get all users
           return getUsers()
-        }
+        },
       }),
       'users/:id': o({
         _type: carbon.carbond.Endpoint,
@@ -38,9 +38,9 @@ __(function() {
           // delete the user
           deleteUser(req.params.id)
           return null
-        }
-      })
-    }
+        },
+      }),
+    },
   })
 })
 // post-endpoints

@@ -10,7 +10,7 @@ var testtube = require('@carbon-io/carbon-core').testtube
 var Endpoint = require('../../lib/Endpoint')
 var limiterPolicies = {
   LimiterPolicyState: require('../../lib/limiter/LimiterPolicyState'),
-  LimiterPolicy: require('../../lib/limiter/LimiterPolicy')
+  LimiterPolicy: require('../../lib/limiter/LimiterPolicy'),
 }
 var Operation = require('../../lib/Operation')
 var Service = require('../../lib/Service')
@@ -20,7 +20,7 @@ module.exports = o({
   name: 'LimiterPolicyTests',
   description: 'LimiterPolicy tests',
   LimiterPolicy_: oo({
-    _type: limiterPolicies.LimiterPolicy
+    _type: limiterPolicies.LimiterPolicy,
   }),
   setup: function() {
     var self = this
@@ -39,7 +39,7 @@ module.exports = o({
   Policy: function(node, sharedState) {
     var limiterPolicy = o({
       _type: this.LimiterPolicy_,
-      sharedState: _.isUndefined(sharedState) ? false : sharedState
+      sharedState: _.isUndefined(sharedState) ? false : sharedState,
     })
     limiterPolicy.initialize({}, node)
     return limiterPolicy
@@ -52,10 +52,10 @@ module.exports = o({
       doTest: function() {
         assert.throws(function() {
           var limiterPolicy = o({
-            _type: limiterPolicies.LimiterPolicy
+            _type: limiterPolicies.LimiterPolicy,
           })
         }, Error)
-      }
+      },
     }),
     o({
       _type: testtube.Test,
@@ -82,9 +82,9 @@ module.exports = o({
         node = o({
           _type: Operation,
           endpoint: {
-            path: '/foo'
+            path: '/foo',
           },
-          name: 'GET'
+          name: 'GET',
         })
         policy = this.parent.Policy(node)
         assert.equal(policy.stateKey, '/foo::GET')
@@ -92,7 +92,7 @@ module.exports = o({
         // endpoint level
         node = o({
           _type: Endpoint,
-          path: '/foo'
+          path: '/foo',
         })
         policy = this.parent.Policy(node)
         assert.equal(policy.stateKey, '/foo::ALL')
@@ -102,7 +102,7 @@ module.exports = o({
         assert.throws(function() {
           var key = policy.stateKey
         }, TypeError)
-      }
+      },
     }),
     o({
       _type: testtube.Test,
@@ -127,7 +127,7 @@ module.exports = o({
 
         // shared state policies should return the state that was passed in
         assert.equal(policy.initializeState(state), state)
-      }
+      },
     }),
-  ]
+  ],
 })

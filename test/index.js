@@ -17,7 +17,7 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: "CarbondTests",
+    name: 'CarbondTests',
 
     /**********************************************************************
      * tests
@@ -41,7 +41,7 @@ __(function() {
       _o('./StartStopTests'),
       _o('./SslTests'),
       _o('./util'),
-      _o('../docs/code-frags/test')
+      _o('../docs/code-frags/test'),
     ],
   })
 })

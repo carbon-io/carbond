@@ -1,9 +1,6 @@
-var path = require('path')
-
 var carbon = require('carbon-io')
 
 var __ = carbon.fibers.__(module)
-var _o = carbon.bond._o(module)
 var ejson = carbon.ejson
 var o = carbon.atom.o(module)
 
@@ -22,21 +19,21 @@ __(function() {
             _id: {
               type: 'number',
               minimum: 0,
-              multipleOf: 1
+              multipleOf: 1,
             },
             name: {
               type: 'string',
               minLength: 2,
-              maxLength: 64
+              maxLength: 64,
             },
             count: {
               type: 'number',
               minimum: 0,
-              multipleOf: 1
-            }
+              multipleOf: 1,
+            },
           },
           required: ['_id', 'name', 'count'],
-          additionalProperties: false
+          additionalProperties: false,
         },
         enabled: {'*': true},
         idGenerator: o({
@@ -48,7 +45,7 @@ __(function() {
               this._id = maxId + 1
             }
             return this._id++
-          }
+          },
         }),
         // pre-insert-memCacheCounterAdvanced
         insert: function(objects, options) {
@@ -66,7 +63,7 @@ __(function() {
         },
         // post-insertObject-memCacheCounterAdvanced
         findConfig: {
-          supportsPagination: true
+          supportsPagination: true,
         },
         // pre-find-memCacheCounterAdvanced
         find: function(options) {
@@ -117,7 +114,7 @@ __(function() {
           this.cache[object._id] = object
           return {
             created: created,
-            val: object
+            val: object,
           }
         },
         // post-saveObject-memCacheCounterAdvanced
@@ -130,24 +127,24 @@ __(function() {
                 $inc: {
                   type: 'number',
                   mimimum: 0,
-                  multipleOf: 1
-                }
+                  multipleOf: 1,
+                },
               },
               required: ['$inc'],
-              additionalProperties: false
+              additionalProperties: false,
             }, {
               type: 'object',
               properties: {
                 $dec: {
                   type: 'number',
                   mimimum: 0,
-                  multipleOf: 1
-                }
+                  multipleOf: 1,
+                },
               },
               required: ['$dec'],
-              additionalProperties: false
-            }]
-          }
+              additionalProperties: false,
+            }],
+          },
         },
         // post-updateConfig-memCacheCounterAdvanced
         // pre-update-memCacheCounterAdvanced
@@ -173,24 +170,24 @@ __(function() {
                 $inc: {
                   type: 'number',
                   mimimum: 0,
-                  multipleOf: 1
-                }
+                  multipleOf: 1,
+                },
               },
               required: ['$inc'],
-              additionalProperties: false
+              additionalProperties: false,
             }, {
               type: 'object',
               properties: {
                 $dec: {
                   type: 'number',
                   mimimum: 0,
-                  multipleOf: 1
-                }
+                  multipleOf: 1,
+                },
               },
               required: ['$dec'],
-              additionalProperties: false
-            }]
-          }
+              additionalProperties: false,
+            }],
+          },
         },
         // post-updateObjectConfig-memCacheCounterAdvanced
         // pre-updateObject-memCacheCounterAdvanced
@@ -208,7 +205,7 @@ __(function() {
         // post-updateObject-memCacheCounterAdvanced
         // pre-removeConfig-memCacheCounterAdvanced
         removeConfig: {
-          returnsRemovedObjects: true
+          returnsRemovedObjects: true,
         },
         // post-removeConfig-memCacheCounterAdvanced
         // pre-remove-memCacheCounterAdvanced
@@ -228,7 +225,7 @@ __(function() {
             return 1
           }
           return 0
-        }
+        },
         // post-removeObject-memCacheCounterAdvanced
       }),
       memCacheCounterBasic: o({
@@ -238,21 +235,21 @@ __(function() {
           type: 'object',
           properties: {
             _id: {
-              type: 'string'
+              type: 'string',
             },
             name: {
               type: 'string',
               minLength: 2,
-              maxLength: 64
+              maxLength: 64,
             },
             count: {
               type: 'number',
               minimum: 0,
-              multipleOf: 1
-            }
+              multipleOf: 1,
+            },
           },
           required: ['_id', 'name', 'count'],
-          additionalProperties: false
+          additionalProperties: false,
         },
         enabled: {'*': true},
         idGenerator: o({
@@ -260,7 +257,7 @@ __(function() {
           _id: 0,
           generateId: function(collection) {
             return (this._id++).toString()
-          }
+          },
         }),
         // pre-insert-memCacheCounterBasic
         insert: function(objects, options) {
@@ -311,12 +308,12 @@ __(function() {
               n: {
                 type: 'number',
                 mimimum: 0,
-                multipleOf: 1
-              }
-            }
+                multipleOf: 1,
+              },
+            },
           },
           required: ['n'],
-          additionalProperties: false
+          additionalProperties: false,
         },
         // post-updateConfig-memCacheCounterBasic
         // pre-update-memCacheCounterBasic
@@ -338,12 +335,12 @@ __(function() {
               n: {
                 type: 'number',
                 mimimum: 0,
-                multipleOf: 1
-              }
-            }
+                multipleOf: 1,
+              },
+            },
           },
           required: ['n'],
-          additionalProperties: false
+          additionalProperties: false,
         },
         // post-updateObjectConfig-memCacheCounterBasic
         // pre-updateObject-memCacheCounterBasic
@@ -363,7 +360,7 @@ __(function() {
         removeObject: function(id, options) {
           delete this.cache[id]
           return 1
-        }
+        },
         // post-removeObject-memCacheCounterBasic
       }),
       mongoCounterBasic: o({
@@ -373,8 +370,8 @@ __(function() {
           $property: {
             get: function() {
               return this.service.db.getCollection('mongo-counter')
-            }
-          }
+            },
+          },
         },
         schema: {
           type: 'object',
@@ -385,16 +382,16 @@ __(function() {
             name: {
               type: 'string',
               minLength: 2,
-              maxLength: 64
+              maxLength: 64,
             },
             count: {
               type: 'number',
               minimum: 0,
-              multipleOf: 1
-            }
+              multipleOf: 1,
+            },
           },
           required: ['_id', 'name', 'count'],
-          additionalProperties: false
+          additionalProperties: false,
         },
         idGenerator: o({
           _type: carbon.carbond.collections.IdGenerator,
@@ -411,7 +408,7 @@ __(function() {
             oid = '0'.repeat(24 - oid.length) + oid
             this._id++
             return ejson.types.ObjectId(oid)
-          }
+          },
         }),
         // pre-insert-mongoCounterBasic
         insert: function(objects, options) {
@@ -442,7 +439,8 @@ __(function() {
         // pre-saveObject-mongoCounterBasic
         saveObject: function(object, options) {
           return this.collection.findOneAndReplace(
-            {_id: object._id}, object, {returnOriginal: false}).value
+            {_id: object._id}, object, {returnOriginal: false}
+          ).value
         },
         // post-saveObject-mongoCounterBasic
         // pre-updateConfig-mongoCounterBasic
@@ -453,12 +451,12 @@ __(function() {
               n: {
                 type: 'number',
                 mimimum: 0,
-                multipleOf: 1
-              }
-            }
+                multipleOf: 1,
+              },
+            },
           },
           required: ['n'],
-          additionalProperties: false
+          additionalProperties: false,
         },
         // post-updateConfig-mongoCounterBasic
         // pre-update-mongoCounterBasic
@@ -475,12 +473,12 @@ __(function() {
               n: {
                 type: 'number',
                 mimimum: 0,
-                multipleOf: 1
-              }
-            }
+                multipleOf: 1,
+              },
+            },
           },
           required: ['n'],
-          additionalProperties: false
+          additionalProperties: false,
         },
         // post-updateObjectConfig-mongoCounterBasic
         // pre-updateObject-mongoCounterBasic
@@ -496,12 +494,11 @@ __(function() {
         // post-remove-mongoCounterBasic
         // pre-removeObject-mongoCounterBasic
         removeObject: function(id, options) {
-          var _ejson = ejson
           this.collection.removeObject(id)
           return 1
-        }
+        },
         // post-removeObject-mongoCounterBasic
       }),
-    }
+    },
   })
 })

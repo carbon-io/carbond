@@ -17,7 +17,7 @@ __(function() {
       function(req, res, next) {
         console.log('This is called on every request')
         next()
-      }
+      },
     ],
     // pre-services-structureBody
     // pre-services-endpointBody
@@ -32,13 +32,13 @@ __(function() {
       hello: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
-          return { msg: "Hello World!" }
-        }
-      })
+          return {msg: 'Hello World!'}
+        },
+      }),
       // pre-services-structureFooter
       // pre-services-middlewareFooter
       // pre-services-oMainFooter
-    }
+    },
   })
 })
 // post-services-structureFooter

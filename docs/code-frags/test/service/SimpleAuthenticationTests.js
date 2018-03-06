@@ -17,46 +17,48 @@ __(function() {
       o({
         _type: carbond.test.ServiceTest,
         service: _o(
-          '../../standalone-examples/ServiceSimpleAuthenticationExample').Service1,
+          '../../standalone-examples/ServiceSimpleAuthenticationExample'
+        ).Service1,
         tests: [
           {
             reqSpec: {
               method: 'GET',
               url: '/hello',
               parameters: {
-                username: 'skroob'
-              }
+                username: 'skroob',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: {
-                msg: 'Hello pres@skroob.com!'
-              }
-            }
+                msg: 'Hello pres@skroob.com!',
+              },
+            },
           },
           {
             reqSpec: {
               method: 'GET',
               url: '/hello',
               parameters: {
-                username: 'yogurt'
-              }
+                username: 'yogurt',
+              },
             },
             resSpec: {
-              statusCode: 401
-            }
-          }
-        ]
+              statusCode: 401,
+            },
+          },
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
         service: _o(
-          '../../standalone-examples/ServiceSimpleAuthenticationExample').Service2,
+          '../../standalone-examples/ServiceSimpleAuthenticationExample'
+        ).Service2,
         _mongoFixtures: {
-          db: path.join(path.dirname(module.filename), 
-                        '..', 
-                        'fixtures', 
-                        'SimpleAuthenticationDB.json')
+          db: path.join(path.dirname(module.filename),
+            '..',
+            'fixtures',
+            'SimpleAuthenticationDB.json'),
         },
         tests: [
           {
@@ -64,43 +66,44 @@ __(function() {
               method: 'GET',
               url: '/hello',
               headers: {
-                Authorization: 'Basic ' + 
-                               Buffer.from('skroob:12345', 
-                                           'ascii').toString('base64')
-              }
+                Authorization: 'Basic ' +
+                               Buffer.from('skroob:12345',
+                                 'ascii').toString('base64'),
+              },
             },
             resSpec: {
               statusCode: 200,
               body: {
-                msg: 'Hello pres@skroob.com!'
-              }
-            }
+                msg: 'Hello pres@skroob.com!',
+              },
+            },
           },
           {
             reqSpec: {
               method: 'GET',
               url: '/hello',
               headers: {
-                Authorization: 'Basic ' + 
-                               Buffer.from('yogurt:shwartz', 
-                                           'ascii').toString('base64')
-              }
+                Authorization: 'Basic ' +
+                               Buffer.from('yogurt:shwartz',
+                                 'ascii').toString('base64'),
+              },
             },
             resSpec: {
-              statusCode: 401
-            }
-          }
-        ]
+              statusCode: 401,
+            },
+          },
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
         service: _o(
-          '../../standalone-examples/ServiceSimpleAuthenticationExample').Service3,
+          '../../standalone-examples/ServiceSimpleAuthenticationExample'
+        ).Service3,
         _mongoFixtures: {
-          db: path.join(path.dirname(module.filename), 
-                        '..', 
-                        'fixtures', 
-                        'SimpleAuthenticationDB.json')
+          db: path.join(path.dirname(module.filename),
+            '..',
+            'fixtures',
+            'SimpleAuthenticationDB.json'),
         },
         tests: [
           {
@@ -108,31 +111,31 @@ __(function() {
               method: 'GET',
               url: '/hello',
               headers: {
-                API_KEY: '12345'
-              }
+                API_KEY: '12345',
+              },
             },
             resSpec: {
               statusCode: 200,
               body: {
-                msg: 'Hello pres@skroob.com!'
-              }
-            }
+                msg: 'Hello pres@skroob.com!',
+              },
+            },
           },
           {
             reqSpec: {
               method: 'GET',
               url: '/hello',
               headers: {
-                API_KEY: '964878'
-              }
+                API_KEY: '964878',
+              },
             },
             resSpec: {
-              statusCode: 401
-            }
-          }
-        ]
-      })
-    ]
+              statusCode: 401,
+            },
+          },
+        ],
+      }),
+    ],
   })
 })
 

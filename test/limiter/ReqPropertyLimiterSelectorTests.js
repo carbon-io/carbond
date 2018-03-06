@@ -16,9 +16,11 @@ module.exports = o({
       description: 'Test property path validation',
       doTest: function() {
         var s = undefined
-        var vals = [null, undefined, '', {foo: 'bar'}, function () {var foo = 'bar'}]
-        vals.forEach(function (val) {
-          assert.throws(function () {
+        var vals = [null, undefined, '', {foo: 'bar'}, function() {
+          var foo = 'bar'
+        }]
+        vals.forEach(function(val) {
+          assert.throws(function() {
             s = o({_type: ReqPropertyLimiterSelector, propertyPath: val})
           }, TypeError)
         })
@@ -26,7 +28,7 @@ module.exports = o({
           s = o({_type: ReqPropertyLimiterSelector, propertyPath: 'foo.bar.baz'})
         })
         assert.deepEqual(s.propertyPath, ['foo', 'bar', 'baz'])
-      }
+      },
     }),
     o({
       _type: testtube.Test,
@@ -35,25 +37,27 @@ module.exports = o({
       doTest: function() {
         var s = undefined
         var vals = [null, {foo: 'bar'}]
-        vals.forEach(function (val) {
-          assert.throws(function () {
+        vals.forEach(function(val) {
+          assert.throws(function() {
             s = o({
               _type: ReqPropertyLimiterSelector,
               propertyPath: 'foo',
-              transform: val
+              transform: val,
             })
           }, TypeError)
         })
-        var transform = function(val) { return val + 'bar'}
+        var transform = function(val) {
+          return val + 'bar'
+        }
         assert.doesNotThrow(function() {
           s = o({
             _type: ReqPropertyLimiterSelector,
             propertyPath: 'foo',
-            transform: transform
+            transform: transform,
           })
         })
         assert.equal(s.transform, transform)
-      }
+      },
     }),
     o({
       _type: testtube.Test,
@@ -63,36 +67,36 @@ module.exports = o({
         var req = {
           foo: {
             bar: {
-              baz: 1
-            }
+              baz: 1,
+            },
           },
           bar: {
             baz: {
-              foo: 2
-            }
+              foo: 2,
+            },
           },
           baz: {
             foo: {
-              bar: 3
-            }
-          }
+              bar: 3,
+            },
+          },
         }
         var s = o({
           _type: ReqPropertyLimiterSelector,
-          propertyPath: 'foo.bar.baz'
+          propertyPath: 'foo.bar.baz',
         })
         assert.equal(s.key(req), 1)
         s = o({
           _type: ReqPropertyLimiterSelector,
-          propertyPath: 'bar.baz.foo'
+          propertyPath: 'bar.baz.foo',
         })
         assert.equal(s.key(req), 2)
         s = o({
           _type: ReqPropertyLimiterSelector,
-          propertyPath: 'baz.foo.bar'
+          propertyPath: 'baz.foo.bar',
         })
         assert.equal(s.key(req), 3)
-      }
+      },
     }),
     o({
       _type: testtube.Test,
@@ -104,10 +108,10 @@ module.exports = o({
           propertyPath: 'foo.bar',
           transform: function(val) {
             return val.split('').reverse().join('')
-          }
+          },
         })
         assert.equal(s.key({foo: {bar: 'abcd'}}), 'dcba')
-      }
+      },
     }),
-  ]
+  ],
 })

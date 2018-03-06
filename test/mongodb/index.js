@@ -11,7 +11,7 @@ __(function() {
     setup: function() { },
     teardown: function() { },
     tests: [
-      _o('./MongoDBCollectionTests')
-    ]
+      _o('./MongoDBCollectionTests'),
+    ],
   })
 })

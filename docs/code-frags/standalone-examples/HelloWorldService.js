@@ -11,12 +11,12 @@ __(function() {
       hello: o({
         _type: carbon.carbond.Endpoint,
         get: function(req) {
-          return {msg: "Hello World!"}
+          return {msg: 'Hello World!'}
         },
         post: function(req) {
           return {msg: req.body.msg}
-        }
-      }) 
-    }
-  }) 
+        },
+      }),
+    },
+  })
 })

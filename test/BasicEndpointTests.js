@@ -35,109 +35,109 @@ __(function() {
       {
         reqSpec: {
           url: '/api/e1',
-          method: "GET"
+          method: 'GET',
         },
         resSpec: {
           statusCode: 200,
           body: {
-            methodCalled: "get",
-            reqParams: {}
-          }
-        }
+            methodCalled: 'get',
+            reqParams: {},
+          },
+        },
       },
 
       // Test POST
       {
         reqSpec: {
           url: '/api/e1',
-          method: "POST",
+          method: 'POST',
           body: {
             x: 1,
-            y: 2
-          }
+            y: 2,
+          },
         },
         resSpec: {
           statusCode: 200,
           body: {
-            methodCalled: "post",
+            methodCalled: 'post',
             reqParams: {},
-            reqBody:  {
+            reqBody: {
               x: 1,
-              y: 2
-            }
-          }
-        }
+              y: 2,
+            },
+          },
+        },
       },
 
       // Test PUT
       {
         reqSpec: {
           url: '/api/e1',
-          method: "PUT",
+          method: 'PUT',
           body: {
             x: [1],
-            y: 2
-          }
+            y: 2,
+          },
         },
         resSpec: {
           statusCode: 200,
           body: {
-            methodCalled: "put",
+            methodCalled: 'put',
             reqParams: {},
-            reqBody:  {
+            reqBody: {
               x: [1],
-              y: 2
-            }
-          }
-        }
+              y: 2,
+            },
+          },
+        },
       },
 
       // Test PATCH
       {
         reqSpec: {
           url: '/api/e1',
-          method: "PATCH",
+          method: 'PATCH',
           body: {
-            x: { a: 1 },
-            y: 2
-          }
+            x: {a: 1},
+            y: 2,
+          },
         },
         resSpec: {
           statusCode: 200,
           body: {
-            methodCalled: "patch",
+            methodCalled: 'patch',
             reqParams: {},
-            reqBody:  {
+            reqBody: {
               y: 2,
-              x: { a: 1 }
-            }
-          }
-        }
+              x: {a: 1},
+            },
+          },
+        },
       },
 
       // Test DELETE
       {
         reqSpec: {
           url: '/api/e1',
-          method: "DELETE",
+          method: 'DELETE',
           parameters: {
             n: 3,
-            m: { x: "hello" }
-          }
+            m: {x: 'hello'},
+          },
         },
         resSpec: {
           statusCode: 200,
           body: {
-            methodCalled: "delete",
+            methodCalled: 'delete',
             reqParams: {
               n: '3',
-              m: '{"x":"hello"}'
+              m: '{"x":"hello"}',
             },
-            middlewareCalled: true
-          }
-        }
+            middlewareCalled: true,
+          },
+        },
       },
-    ]
+    ],
 
 
   })

@@ -42,9 +42,9 @@ __(function() {
             insertObject: o({
               _type: pong.Collection,
               idGenerator: pong.util.collectionIdGenerator,
-              enabled: {insertObject: true}
-            })
-          }
+              enabled: {insertObject: true},
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -67,12 +67,12 @@ __(function() {
               body: [
                 {foo: 'bar'},
                 {bar: 'baz'},
-                {baz: 'yaz'}
-              ]
+                {baz: 'yaz'},
+              ],
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'InsertObjectTest',
@@ -86,10 +86,10 @@ __(function() {
                 method: 'POST',
                 headers: {
                   'x-pong': ejson.stringify({
-                    insertObject: {$args: 0}
-                  })
+                    insertObject: {$args: 0},
+                  }),
                 },
-                body: {foo: 'bar'}
+                body: {foo: 'bar'},
               }
             },
             resSpec: {
@@ -97,16 +97,17 @@ __(function() {
               headers: function(headers, context) {
                 assert.deepStrictEqual(
                   headers[context.global.idHeaderName],
-                  ejson.stringify('0'))
+                  ejson.stringify('0')
+                )
                 assert.deepStrictEqual(headers.location, '/insertObject/0')
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, {
                   [context.global.idParameterName]: '0',
-                  foo: 'bar'
+                  foo: 'bar',
                 })
-              }
-            }
+              },
+            },
           },
           {
             name: 'InsertObjectWithIdTest',
@@ -120,17 +121,17 @@ __(function() {
                 method: 'POST',
                 headers: {
                   'x-pong': ejson.stringify({
-                    insertObject: {$args: 0}
-                  })
+                    insertObject: {$args: 0},
+                  }),
                 },
-                body: {[context.global.idParameterName]: '0', foo: 'bar'}
+                body: {[context.global.idParameterName]: '0', foo: 'bar'},
               }
             },
             resSpec: {
               statusCode: 400,
-            }
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -148,14 +149,14 @@ __(function() {
                   properties: {
                     foo: {
                       type: 'string',
-                      pattern: '^(bar|baz|yaz)$'
-                    }
+                      pattern: '^(bar|baz|yaz)$',
+                    },
                   },
                   patternProperties: {
-                    '^\\d+$': {type: 'string'}
+                    '^\\d+$': {type: 'string'},
                   },
-                  additionalProperties: false
-                }
+                  additionalProperties: false,
+                },
               },
             }),
             insertObject1: o({
@@ -168,17 +169,17 @@ __(function() {
                   properties: {
                     foo: {
                       type: 'string',
-                      pattern: '^(bar|baz|yaz)$'
-                    }
+                      pattern: '^(bar|baz|yaz)$',
+                    },
                   },
                   patternProperties: {
-                    '^\\d+$': {type: 'string'}
+                    '^\\d+$': {type: 'string'},
                   },
-                  additionalProperties: false
-                }
+                  additionalProperties: false,
+                },
               },
-            })
-          }
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -201,11 +202,11 @@ __(function() {
             reqSpec: {
               url: '/insertObject',
               method: 'POST',
-              body: {bar: 'baz'}
+              body: {bar: 'baz'},
             },
             resSpec: {
               statusCode: 400,
-            }
+            },
           },
           {
             name: 'SuccessInsertObjectSchemaTest',
@@ -219,10 +220,10 @@ __(function() {
                 method: 'POST',
                 headers: {
                   'x-pong': ejson.stringify({
-                    insertObject: {$args: 0}
-                  })
+                    insertObject: {$args: 0},
+                  }),
                 },
-                body: {foo: 'bar'}
+                body: {foo: 'bar'},
               }
             },
             resSpec: {
@@ -230,16 +231,18 @@ __(function() {
               headers: function(headers, context) {
                 assert.deepStrictEqual(
                   headers[context.global.idHeaderName],
-                  ejson.stringify('0'))
+                  ejson.stringify('0')
+                )
                 assert.deepStrictEqual(
-                  headers.location, this.reqSpec.url + '/0')
+                  headers.location, this.reqSpec.url + '/0'
+                )
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, {
-                  [context.global.idParameterName]: '0', foo: 'bar'
+                  [context.global.idParameterName]: '0', foo: 'bar',
                 })
-              }
-            }
+              },
+            },
           },
           {
             name: 'FailInsertObject1SchemaTest',
@@ -251,11 +254,16 @@ __(function() {
             reqSpec: function() {
               return _.assign(
                 _.clone(this.history.getReqSpec('FailInsertObjectSchemaTest')),
-                {url: '/insertObject1'})
+                {url: '/insertObject1'}
+              )
             },
             resSpec: {
-              $property: {get: function() {return this.history.getResSpec('FailInsertObjectSchemaTest')}}
-            }
+              $property: {
+                get: function() {
+                  return this.history.getResSpec('FailInsertObjectSchemaTest')
+                },
+              },
+            },
           },
           {
             name: 'SuccessInsertObject1SchemaTest',
@@ -267,13 +275,18 @@ __(function() {
             reqSpec: function() {
               return _.assign(
                 _.clone(this.history.getReqSpec('SuccessInsertObjectSchemaTest')),
-                {url: '/insertObject1'})
+                {url: '/insertObject1'}
+              )
             },
             resSpec: {
-              $property: {get: function() {return this.history.getResSpec('SuccessInsertObjectSchemaTest')}}
-            }
+              $property: {
+                get: function() {
+                  return this.history.getResSpec('SuccessInsertObjectSchemaTest')
+                },
+              },
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -286,10 +299,10 @@ __(function() {
               idGenerator: pong.util.collectionIdGenerator,
               enabled: {insertObject: true},
               insertObjectConfig: {
-                returnsInsertedObject: false
-              }
-            })
-          }
+                returnsInsertedObject: false,
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -315,10 +328,10 @@ __(function() {
                 method: 'POST',
                 headers: {
                   'x-pong': ejson.stringify({
-                    insertObject: {$args: 0}
-                  })
+                    insertObject: {$args: 0},
+                  }),
                 },
-                body: {foo: 'bar'}
+                body: {foo: 'bar'},
               }
             },
             resSpec: {
@@ -326,14 +339,16 @@ __(function() {
               headers: function(headers, context) {
                 assert.deepStrictEqual(
                   headers[context.global.idHeaderName],
-                  ejson.stringify('0'))
+                  ejson.stringify('0')
+                )
                 assert.deepStrictEqual(
-                  headers.location, '/insertObject/0')
+                  headers.location, '/insertObject/0'
+                )
               },
-              body: undefined
-            }
-          }
-        ]
+              body: undefined,
+            },
+          },
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -353,14 +368,14 @@ __(function() {
                       schema: {
                         type: 'number',
                         minimum: 0,
-                        multipleOf: 2
-                      }
-                    }
-                  }
-                }
-              }
-            })
-          }
+                        multipleOf: 2,
+                      },
+                    },
+                  },
+                },
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -388,12 +403,12 @@ __(function() {
                     type: 'object',
                     properties: {
                       _id: {
-                        type: 'string'
-                      }
-                    }
+                        type: 'string',
+                      },
+                    },
                   },
                   required: true,
-                  default: undefined
+                  default: undefined,
                 },
                 foo: {
                   name: 'foo',
@@ -401,10 +416,10 @@ __(function() {
                   location: 'header',
                   schema: {type: 'number', minimum: 0, multipleOf: 2},
                   required: false,
-                  default: undefined
-                }
+                  default: undefined,
+                },
               })
-            }
+            },
           }),
           {
             name: 'InsertObjectConfigCustomParameterPassedViaOptionsFailTest',
@@ -422,16 +437,16 @@ __(function() {
                 method: 'POST',
                 headers: {
                   'x-pong': ejson.stringify({
-                    insertObject: {$args: 0}
+                    insertObject: {$args: 0},
                   }),
-                  foo: 3
+                  foo: 3,
                 },
-                body: {foo: 'bar'}
+                body: {foo: 'bar'},
               }
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'InsertObjectConfigCustomParameterPassedViaOptionsSuccessTest',
@@ -449,18 +464,18 @@ __(function() {
                 method: 'POST',
                 headers: {
                   'x-pong': ejson.stringify({
-                    insertObject: {$args: 0}
+                    insertObject: {$args: 0},
                   }),
-                  foo: 4
+                  foo: 4,
                 },
-                body: {foo: 'bar'}
+                body: {foo: 'bar'},
               }
             },
             resSpec: {
-              statusCode: 201
-            }
+              statusCode: 201,
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -482,7 +497,7 @@ __(function() {
               insertObject: function(object, options, context) {
                 context.insertObject = 1
                 object[this.idParameterName] = '0'
-                return  object
+                return object
               },
               postInsertObject: function(result, object, options, context) {
                 context.postInsertObject = 1
@@ -492,16 +507,16 @@ __(function() {
                 context.postInsertObjectOperation = 1
                 res.set('context', ejson.stringify(context))
                 return carbond.collections.Collection.prototype.postInsertObjectOperation.apply(this, arguments)
-              }
-            })
-          }
+              },
+            }),
+          },
         }),
         tests: [
           {
             reqSpec: {
               url: '/insertObject',
               method: 'POST',
-              body: {}
+              body: {},
             },
             resSpec: {
               statusCode: 201,
@@ -511,14 +526,14 @@ __(function() {
                   preInsertObject: 1,
                   insertObject: 1,
                   postInsertObject: 1,
-                  postInsertObjectOperation: 1
+                  postInsertObjectOperation: 1,
                 })
-              }
-            }
-          }
-        ]
-      })
-    ]
+              },
+            },
+          },
+        ],
+      }),
+    ],
   })
 })
 

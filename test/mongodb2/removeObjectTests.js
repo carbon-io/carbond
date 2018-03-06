@@ -1,16 +1,8 @@
 var assert = require('assert')
-var url = require('url')
-
-var _ = require('lodash')
-var sinon = require('sinon')
 
 var __ = require('@carbon-io/carbon-core').fibers.__(module)
-var ejson = require('@carbon-io/carbon-core').ejson
 var o = require('@carbon-io/carbon-core').atom.o(module)
-var _o = require('@carbon-io/carbon-core').bond._o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
-
-var carbond = require('../..')
 
 var pong = require('../fixtures/pong')
 var getObjectId = pong.util.getObjectId
@@ -47,16 +39,16 @@ __(function() {
             removeObject: o({
               _type: pong.MongoDBCollection,
               enabled: {removeObject: true},
-              collectionName: 'removeObject'
-            })
-          }
+              collectionName: 'removeObject',
+            }),
+          },
         }),
         fixture: {
           removeObject: [
             {_id: getObjectId(0), foo: 'bar'},
             {_id: getObjectId(1), bar: 'baz'},
-            {_id: getObjectId(2), baz: 'yaz'}
-          ]
+            {_id: getObjectId(2), baz: 'yaz'},
+          ],
         },
         tests: [
           {
@@ -68,10 +60,10 @@ __(function() {
             },
             resSpec: {
               statusCode: 200,
-              body: {n: 1}
-            }
+              body: {n: 1},
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: testtube.Test,
@@ -88,15 +80,15 @@ __(function() {
                   enabled: {removeObject: true},
                   collectionName: 'removeObject',
                   removeObjectConfig: {
-                    returnsRemovedObject: true
-                  }
-                })
-              }
+                    returnsRemovedObject: true,
+                  },
+                }),
+              },
             })
           })
-        }
-      })
-    ]
+        },
+      }),
+    ],
   })
 })
 

@@ -23,37 +23,37 @@ module.exports = o({
       enabled: {
         saveObject: true,
         updateObject: true,
-        removeObject: true
+        removeObject: true,
       },
 
       saveObjectConfig: {
-        supportsUpsert: true
+        supportsUpsert: true,
       },
       saveObject: function(object, context, options) {
         return {
           val: object,
-          created: true
+          created: true,
         }
       },
 
       // updateObject
       updateObjectConfig: {
-        supportsUpsert: true
+        supportsUpsert: true,
       },
       updateObject: function(id, update, context, options) {
         return {
           val: _.assign({_id: id}, update),
-          created: context.upsert
+          created: context.upsert,
         }
       },
 
       // removeObject
       removeObjectConfig: {
-        returnsRemovedObject: true
+        returnsRemovedObject: true,
       },
       removeObject: function(id) {
         return {_id: id}
-      }
+      },
     }),
 
     // Endpoint to test config of saveObject, updateObject, and removeObject
@@ -63,28 +63,28 @@ module.exports = o({
       enabled: {
         saveObject: true,
         updateObject: true,
-        removeObject: true
+        removeObject: true,
       },
 
       // updateObject
       updateObjectConfig: {
         supportsUpsert: true,
-        returnsUpsertedObject: true
+        returnsUpsertedObject: true,
       },
       updateObject: function(id, update, context, options) {
         return {
           val: _.assign({_id: id}, update),
-          created: context.upsert
+          created: context.upsert,
         }
       },
 
       // removeObject
       removeObjectConfig: {
-        returnsRemovedObject: false
+        returnsRemovedObject: false,
       },
       removeObject: function(id) {
         return 0
-      }
+      },
 
     }),
 
@@ -95,7 +95,7 @@ module.exports = o({
       enabled: {
         saveObject: true,
         updateObject: true,
-        removeObject: true
+        removeObject: true,
       },
 
       // updateObject
@@ -105,11 +105,11 @@ module.exports = o({
 
       // removeObject
       removeObjectConfig: {
-        returnsRemovedObject: false
+        returnsRemovedObject: false,
       },
       removeObject: function(id) {
         return 1
-      }
+      },
 
     }),
 
@@ -118,14 +118,14 @@ module.exports = o({
       _type: carbond.collections.Collection,
 
       enabled: {
-        insert: true
+        insert: true,
       },
 
       idGenerator: o({
         id: 0,
         generateId: function() {
           return (this.id++).toString()
-        }
+        },
       }),
 
       insertConfig: {
@@ -138,22 +138,22 @@ module.exports = o({
               items: {
                 type: 'object',
                 properties: {
-                  _id: { type: 'string' }
+                  _id: {type: 'string'},
                 },
                 required: ['_id'],
-                additionalProperties: true
-              }
+                additionalProperties: true,
+              },
             },
-            headers: ['Location', this.idHeaderName]
-          }
+            headers: ['Location', this.idHeaderName],
+          },
         ],
-        returnsInsertedObjects: true
+        returnsInsertedObjects: true,
       },
 
       insert: function(objects) {
         return objects
-      }
-    })
+      },
+    }),
 
-  }
+  },
 })

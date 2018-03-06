@@ -30,16 +30,16 @@ __(function() {
         },
         reqSpec: {
           method: 'GET',
-          url: '/hello'
+          url: '/hello',
         },
         resSpec: {
           statusCode: 200,
           body: {
-            msg: "Hello World!"
-          }
-        }
-      }
-    ]
+            msg: 'Hello World!',
+          },
+        },
+      },
+    ],
   })
 })
 

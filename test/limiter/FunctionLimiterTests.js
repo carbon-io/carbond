@@ -24,28 +24,28 @@ module.exports = o({
         assert.throws(function() {
           o({
             _type: FunctionLimiter,
-            _fn: 'foo'
+            _fn: 'foo',
           })
         }, TypeError)
         assert.throws(function() {
           o({
             _type: FunctionLimiter,
-            _fn: {}
+            _fn: {},
           })
         }, TypeError)
         assert.throws(function() {
           o({
             _type: FunctionLimiter,
-            _fn: function(req) {}
+            _fn: function(req) {},
           })
         }, TypeError)
         assert.throws(function() {
           o({
             _type: FunctionLimiter,
-            _fn: function(req, res, next, foo) {}
+            _fn: function(req, res, next, foo) {},
           })
         }, TypeError)
-      }
+      },
     }),
     o({
       _type: testtube.Test,
@@ -66,7 +66,7 @@ module.exports = o({
             }
             this.state.visits = _.isUndefined(this.state.visits) ? 1 : this.state.visits + 1
             next()
-          }
+          },
         })
 
         limiter.initialize({_handleError: _handleErrorSpy}, undefined)
@@ -75,8 +75,8 @@ module.exports = o({
         assert(nextSpy.called)
         assert(nextSpy.firstCall.args[0] instanceof HttpErrors.ServiceUnavailable)
         // NOTE: during normal flow (i.e., when a limiter is initialized with an
-        //       actual instance of Service), _handleError will be called via the 
-        //       error handling middleware chain as a side effect of calling 
+        //       actual instance of Service), _handleError will be called via the
+        //       error handling middleware chain as a side effect of calling
         //       next(err)
         // assert.equal(_handleErrorSpy.args[0].length, 2)
         // assert(_handleErrorSpy.args[0][0] instanceof HttpErrors.ServiceUnavailable)
@@ -117,7 +117,7 @@ module.exports = o({
         _handleErrorSpy.reset()
         nextSpy.reset()
         resSpy.reset()
-      }
+      },
     }),
     o({
       _type: testtube.Test,
@@ -139,9 +139,9 @@ module.exports = o({
             }
             this.state.visits = _.isUndefined(this.state.visits) ? 1 : this.state.visits + 1
             return true
-          }
+          },
         })
-        
+
         limiter.initialize({_handleError: _handleErrorSpy}, undefined)
 
         limiter.process({}, resSpy, nextSpy)
@@ -179,7 +179,7 @@ module.exports = o({
         _handleErrorSpy.reset()
         nextSpy.reset()
         resSpy.reset()
-      }
+      },
     }),
-  ]
+  ],
 })

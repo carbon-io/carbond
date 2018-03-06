@@ -18,16 +18,16 @@ __(function() {
     name: 'SingleDBConnectionTests',
     service: _o('../../standalone-examples/ServiceSingleDBConnectionExample'),
     _mongoFixtures: {
-      db: path.join(path.dirname(module.filename), 
-                    '..', 
-                    'fixtures', 
-                    'SingleDBConnectionTestsDB.json')
+      db: path.join(path.dirname(module.filename),
+        '..',
+        'fixtures',
+        'SingleDBConnectionTestsDB.json'),
     },
     tests: [
       {
         reqSpec: {
           method: 'GET',
-          url: '/hello'
+          url: '/hello',
         },
         resSpec: {
           statusCode: 200,
@@ -35,10 +35,10 @@ __(function() {
             assert(_.isArray(val))
             assert.equal(val.length, 1)
             assert.equal(val[0].text, 'foo bar')
-          }
-        }
-      }
-    ]
+          },
+        },
+      },
+    ],
   })
 })
 

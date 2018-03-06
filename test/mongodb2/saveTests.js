@@ -1,16 +1,6 @@
-var assert = require('assert')
-var url = require('url')
-
-var _ = require('lodash')
-var sinon = require('sinon')
-
 var __ = require('@carbon-io/carbon-core').fibers.__(module)
-var ejson = require('@carbon-io/carbon-core').ejson
 var o = require('@carbon-io/carbon-core').atom.o(module)
-var _o = require('@carbon-io/carbon-core').bond._o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
-
-var carbond = require('../..')
 
 var pong = require('../fixtures/pong')
 var getObjectId = pong.util.getObjectId
@@ -47,13 +37,13 @@ __(function() {
             save: o({
               _type: pong.MongoDBCollection,
               enabled: {save: true},
-              collectionName: 'save'
-            })
-          }
+              collectionName: 'save',
+            }),
+          },
         }),
         fixture: {
           save: [
-          ]
+          ],
         },
         tests: [
           {
@@ -64,12 +54,12 @@ __(function() {
               method: 'PUT',
               body: [
                 {_id: getObjectId(0), foo: 'bar'},
-              ]
+              ],
             },
             resSpec: {
               statusCode: 200,
-              body: [{_id: getObjectId(0), foo: 'bar'}]
-            }
+              body: [{_id: getObjectId(0), foo: 'bar'}],
+            },
           },
           {
             name: 'SaveMultipleObjectsTest',
@@ -80,17 +70,17 @@ __(function() {
               body: [
                 {_id: getObjectId(0), foo: 'bar'},
                 {_id: getObjectId(1), bar: 'baz'},
-                {_id: getObjectId(2), baz: 'yaz'}
-              ]
+                {_id: getObjectId(2), baz: 'yaz'},
+              ],
             },
             resSpec: {
               statusCode: 200,
               body: [
                 {_id: getObjectId(0), foo: 'bar'},
                 {_id: getObjectId(1), bar: 'baz'},
-                {_id: getObjectId(2), baz: 'yaz'}
-              ]
-            }
+                {_id: getObjectId(2), baz: 'yaz'},
+              ],
+            },
           },
           {
             name: 'SaveSingleObjectWithoutIdTest',
@@ -100,11 +90,11 @@ __(function() {
               method: 'PUT',
               body: [
                 {foo: 'bar'},
-              ]
+              ],
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'SaveMultipleObjectsWithoutIdsTest',
@@ -115,14 +105,14 @@ __(function() {
               body: [
                 {foo: 'bar'},
                 {bar: 'baz'},
-                {baz: 'yaz'}
-              ]
+                {baz: 'yaz'},
+              ],
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: MongoDBCollectionHttpTest,
@@ -142,18 +132,18 @@ __(function() {
                     _id: {type: 'ObjectId'},
                     foo: {
                       type: 'string',
-                      pattern: '^(bar|baz|yaz)$'
-                    }
+                      pattern: '^(bar|baz|yaz)$',
+                    },
                   },
                   required: ['_id'],
                   patternProperties: {
-                    '^\\d+$': {type: 'string'}
+                    '^\\d+$': {type: 'string'},
                   },
-                  additionalProperties: false
-                }
-              }
-            })
-          }
+                  additionalProperties: false,
+                },
+              },
+            }),
+          },
         }),
         fixture: [],
         tests: [
@@ -167,11 +157,11 @@ __(function() {
                 {_id: getObjectId(0), foo: 'bar'},
                 {_id: getObjectId(1), bar: 'baz'},
                 {_id: getObjectId(2), foo: 'bur'},
-              ]
+              ],
             },
             resSpec: {
               statusCode: 400,
-            }
+            },
           },
           {
             name: 'SuccessSaveSchemaTest',
@@ -182,19 +172,19 @@ __(function() {
               body: [
                 {_id: getObjectId(0), foo: 'bar'},
                 {_id: getObjectId(1), '666': 'bar'},
-                {_id: getObjectId(2), '777': 'baz'}
-              ]
+                {_id: getObjectId(2), '777': 'baz'},
+              ],
             },
             resSpec: {
               statusCode: 200,
               body: [
                 {_id: getObjectId(0), foo: 'bar'},
                 {_id: getObjectId(1), '666': 'bar'},
-                {_id: getObjectId(2), '777': 'baz'}
-              ]
-            }
+                {_id: getObjectId(2), '777': 'baz'},
+              ],
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: MongoDBCollectionHttpTest,
@@ -208,10 +198,10 @@ __(function() {
               enabled: {save: true},
               collectionName: 'save',
               saveConfig: {
-                returnsSavedObjects: false
-              }
-            })
-          }
+                returnsSavedObjects: false,
+              },
+            }),
+          },
         }),
         tests: [
           {
@@ -222,12 +212,12 @@ __(function() {
               method: 'PUT',
               body: [
                 {_id: getObjectId(0), foo: 'bar'},
-              ]
+              ],
             },
             resSpec: {
               statusCode: 204,
-              body: undefined
-            }
+              body: undefined,
+            },
           },
           {
             name: 'SaveMultipleObjectsTest',
@@ -238,17 +228,17 @@ __(function() {
               body: [
                 {_id: getObjectId(0), foo: 'bar'},
                 {_id: getObjectId(1), bar: 'baz'},
-                {_id: getObjectId(2), baz: 'yaz'}
-              ]
+                {_id: getObjectId(2), baz: 'yaz'},
+              ],
             },
             resSpec: {
               statusCode: 204,
-              body: undefined
-            }
+              body: undefined,
+            },
           },
-        ]
-      })
-    ]
+        ],
+      }),
+    ],
   })
 })
 

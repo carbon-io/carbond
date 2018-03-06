@@ -1,16 +1,9 @@
 var assert = require('assert')
-var url = require('url')
-
 var _ = require('lodash')
-var sinon = require('sinon')
 
 var __ = require('@carbon-io/carbon-core').fibers.__(module)
-var ejson = require('@carbon-io/carbon-core').ejson
 var o = require('@carbon-io/carbon-core').atom.o(module)
-var _o = require('@carbon-io/carbon-core').bond._o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
-
-var carbond = require('../..')
 
 var pong = require('../fixtures/pong')
 var getObjectId = pong.util.getObjectId
@@ -47,16 +40,16 @@ __(function() {
             remove: o({
               _type: pong.MongoDBCollection,
               enabled: {remove: true},
-              collectionName: 'remove'
-            })
-          }
+              collectionName: 'remove',
+            }),
+          },
         }),
         fixture: {
           remove: [
             {_id: getObjectId(0), foo: 'bar'},
             {_id: getObjectId(1), bar: 'baz'},
-            {_id: getObjectId(0), baz: 'yaz'}
-          ]
+            {_id: getObjectId(0), baz: 'yaz'},
+          ],
         },
         tests: [
           {
@@ -71,8 +64,8 @@ __(function() {
             },
             resSpec: {
               statusCode: 200,
-              body: {n: 3}
-            }
+              body: {n: 3},
+            },
           },
           {
             name: 'RemoveWithQueryTest',
@@ -87,15 +80,15 @@ __(function() {
               url: '/remove',
               method: 'DELETE',
               parameters: {
-                query: {foo: 'bar'}
-              }
+                query: {foo: 'bar'},
+              },
             },
             resSpec: {
               statusCode: 200,
-              body: {n: 1}
-            }
+              body: {n: 1},
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: MongoDBCollectionHttpTest,
@@ -109,17 +102,17 @@ __(function() {
               enabled: {remove: true},
               collectionName: 'remove',
               removeConfig: {
-                supportsQuery: false
-              }
-            })
-          }
+                supportsQuery: false,
+              },
+            }),
+          },
         }),
         fixture: {
           remove: [
             {_id: getObjectId(0), foo: 'bar'},
             {_id: getObjectId(1), bar: 'baz'},
-            {_id: getObjectId(0), baz: 'yaz'}
-          ]
+            {_id: getObjectId(0), baz: 'yaz'},
+          ],
         },
         tests: [
           {
@@ -132,15 +125,15 @@ __(function() {
               url: '/remove',
               method: 'DELETE',
               parameters: {
-                query: {foo: 'bar'}
-              }
+                query: {foo: 'bar'},
+              },
             },
             resSpec: {
               statusCode: 200,
-              body: {n: 3}
-            }
+              body: {n: 3},
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: testtube.Test,
@@ -157,13 +150,13 @@ __(function() {
                   enabled: {remove: true},
                   collectionName: 'remove',
                   removeConfig: {
-                    returnsRemovedObjects: true
-                  }
-                })
-              }
+                    returnsRemovedObjects: true,
+                  },
+                }),
+              },
             })
           })
-        }
+        },
       }),
       o({
         _type: MongoDBCollectionHttpTest,
@@ -180,12 +173,12 @@ __(function() {
                 type: 'object',
                 properties: {
                   foo: {
-                    type: 'string'
-                  }
+                    type: 'string',
+                  },
                 },
                 required: ['foo'],
-                additionalProperties: false
-              }
+                additionalProperties: false,
+              },
             }),
             remove1: o({
               _type: pong.MongoDBCollection,
@@ -196,13 +189,13 @@ __(function() {
                   type: 'object',
                   properties: {
                     foo: {
-                      type: 'string'
-                    }
+                      type: 'string',
+                    },
                   },
                   required: ['foo'],
-                  additionalProperties: false
-                }
-              }
+                  additionalProperties: false,
+                },
+              },
             }),
             remove2: o({
               _type: pong.MongoDBCollection,
@@ -212,33 +205,33 @@ __(function() {
                 type: 'object',
                 properties: {
                   foo: {
-                    type: 'string'
-                  }
+                    type: 'string',
+                  },
                 },
                 required: ['foo'],
-                additionalProperties: false
+                additionalProperties: false,
               },
               removeConfig: {
                 '$parameters.query.schema': {
                   type: 'object',
                   properties: {
                     bar: {
-                      type: 'string'
-                    }
+                      type: 'string',
+                    },
                   },
                   required: ['bar'],
-                  additionalProperties: false
-                }
-              }
-            })
-          }
+                  additionalProperties: false,
+                },
+              },
+            }),
+          },
         }),
         fixture: {
           remove: [
             {_id: getObjectId(0), foo: 'bar'},
             {_id: getObjectId(1), bar: 'baz'},
-            {_id: getObjectId(2), baz: 'yaz'}
-          ]
+            {_id: getObjectId(2), baz: 'yaz'},
+          ],
         },
         tests: [
           o({
@@ -249,13 +242,13 @@ __(function() {
                 type: 'object',
                 properties: {
                   foo: {
-                    type: 'string'
-                  }
+                    type: 'string',
+                  },
                 },
                 required: ['foo'],
-                additionalProperties: false
+                additionalProperties: false,
               })
-            }
+            },
           }),
           {
             name: 'CollectionQuerySchemaFailTest',
@@ -264,11 +257,11 @@ __(function() {
               method: 'DELETE',
               parameters: {
                 query: {bar: 'baz'},
-              }
+              },
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'CollectionQuerySchemaSuccessTest',
@@ -281,13 +274,13 @@ __(function() {
               url: '/remove',
               method: 'DELETE',
               parameters: {
-                query: {foo: 'bar'}
-              }
+                query: {foo: 'bar'},
+              },
             },
             resSpec: {
               statusCode: 200,
-              body: {n: 1}
-            }
+              body: {n: 1},
+            },
           },
           {
             name: 'ConfigQuerySchemaFailTest',
@@ -296,13 +289,15 @@ __(function() {
             },
             reqSpec: function() {
               return _.assign(this.history.getReqSpec('CollectionQuerySchemaFailTest'),
-                              {url: '/remove1'})
+                {url: '/remove1'})
             },
             resSpec: {
               $property: {
-                get: function() { return this.history.getResSpec('CollectionQuerySchemaFailTest') }
-              }
-            }
+                get: function() {
+                  return this.history.getResSpec('CollectionQuerySchemaFailTest')
+                },
+              },
+            },
           },
           {
             name: 'ConfigQuerySchemaSuccessTest',
@@ -312,13 +307,15 @@ __(function() {
             },
             reqSpec: function() {
               return _.assign(this.history.getReqSpec('CollectionQuerySchemaSuccessTest'),
-                              {url: '/remove1'})
+                {url: '/remove1'})
             },
             resSpec: {
               $property: {
-                get: function() { return this.history.getResSpec('CollectionQuerySchemaSuccessTest') }
-              }
-            }
+                get: function() {
+                  return this.history.getResSpec('CollectionQuerySchemaSuccessTest')
+                },
+              },
+            },
           },
           {
             name: 'CollectionQuerySchemaOverrideConfigQuerySchemaFailTest',
@@ -327,13 +324,15 @@ __(function() {
             },
             reqSpec: function() {
               return _.assign(this.history.getReqSpec('CollectionQuerySchemaFailTest'),
-                              {url: '/remove2'})
+                {url: '/remove2'})
             },
             resSpec: {
               $property: {
-                get: function() { return this.history.getResSpec('CollectionQuerySchemaFailTest') }
-              }
-            }
+                get: function() {
+                  return this.history.getResSpec('CollectionQuerySchemaFailTest')
+                },
+              },
+            },
           },
           {
             name: 'CollectionQuerySchemaOverrideConfigQuerySchemaSuccessTest',
@@ -343,17 +342,19 @@ __(function() {
             },
             reqSpec: function() {
               return _.assign(this.history.getReqSpec('CollectionQuerySchemaSuccessTest'),
-                              {url: '/remove2'})
+                {url: '/remove2'})
             },
             resSpec: {
               $property: {
-                get: function() { return this.history.getResSpec('CollectionQuerySchemaSuccessTest') }
-              }
-            }
-          }
-        ]
-      })
-    ]
+                get: function() {
+                  return this.history.getResSpec('CollectionQuerySchemaSuccessTest')
+                },
+              },
+            },
+          },
+        ],
+      }),
+    ],
   })
 })
 

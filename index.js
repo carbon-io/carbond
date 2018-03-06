@@ -52,7 +52,7 @@ module.exports = {
     SaveConfig: require('./lib/collections/SaveConfig'),
     SaveObjectConfig: require('./lib/collections/SaveObjectConfig'),
     UpdateConfig: require('./lib/collections/UpdateConfig'),
-    UpdateObjectConfig: require('./lib/collections/UpdateObjectConfig')
+    UpdateObjectConfig: require('./lib/collections/UpdateObjectConfig'),
   },
   limiter: {
     ChainLimiter: require('./lib/limiter/ChainLimiter'),
@@ -78,7 +78,7 @@ module.exports = {
     MongoDBSaveConfig: require('./lib/mongodb/MongoDBSaveConfig'),
     MongoDBSaveObjectConfig: require('./lib/mongodb/MongoDBSaveObjectConfig'),
     MongoDBUpdateConfig: require('./lib/mongodb/MongoDBUpdateConfig'),
-    MongoDBUpdateObjectConfig: require('./lib/mongodb/MongoDBUpdateObjectConfig')
+    MongoDBUpdateObjectConfig: require('./lib/mongodb/MongoDBUpdateObjectConfig'),
   },
   security: {
     Acl: require('./lib/security/Acl'),
@@ -93,26 +93,26 @@ module.exports = {
     Hasher: require('./lib/security/Hasher'),
     NoopHasher: require('./lib/security/NoopHasher'),
     Sha256Hasher: require('./lib/security/Sha256Hasher'),
-    BcryptHasher: require('./lib/security/BcryptHasher')
+    BcryptHasher: require('./lib/security/BcryptHasher'),
   },
   logger: o({
     _type: core.logging.Logger,
     parent: 'carbon-io',
     config: {
       name: 'carbond',
-      level: 'WARN'
-    }
+      level: 'WARN',
+    },
   }),
   test: {
     ServiceTest: require('./lib/test/ServiceTest'),
-  }
+  },
 }
 
 Object.defineProperty(module.exports, 'logger', {
   enumerable: false,
   configurable: true,
   writable: true,
-  value: module.exports.logger
+  value: module.exports.logger,
 })
 
 Object.defineProperty(module.exports, '$Test', {
@@ -120,6 +120,6 @@ Object.defineProperty(module.exports, '$Test', {
   configurable: false,
   get: function() {
     return require('./test/index.js')
-  }
+  },
 })
 

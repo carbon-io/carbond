@@ -47,16 +47,16 @@ __(function() {
             findObject: o({
               _type: pong.MongoDBCollection,
               enabled: {findObject: true},
-              collectionName: 'findObject'
-            })
-          }
+              collectionName: 'findObject',
+            }),
+          },
         }),
         fixture: {
           findObject: [
             {_id: getObjectId(0), foo: 'bar'},
             {_id: getObjectId(1), bar: 'baz', omit: 'me'},
-            {_id: getObjectId(2), baz: 'yaz'}
-          ]
+            {_id: getObjectId(2), baz: 'yaz'},
+          ],
         },
         tests: [
           {
@@ -68,8 +68,8 @@ __(function() {
             },
             resSpec: {
               statusCode: 200,
-              body: undefined
-            }
+              body: undefined,
+            },
           },
           {
             name: 'FindObjectTest',
@@ -80,8 +80,8 @@ __(function() {
             },
             resSpec: {
               statusCode: 200,
-              body: {_id: getObjectId(0), foo: 'bar'}
-            }
+              body: {_id: getObjectId(0), foo: 'bar'},
+            },
           },
           {
             name: 'FindObjectNotFoundTest',
@@ -91,8 +91,8 @@ __(function() {
               method: 'GET',
             },
             resSpec: {
-              statusCode: 404
-            }
+              statusCode: 404,
+            },
           },
           {
             name: 'FindObjectNegativeProjectionTest',
@@ -101,13 +101,13 @@ __(function() {
               url: '/findObject/' + getObjectId(1).toString(),
               method: 'GET',
               parameters: {
-                projection: {omit: 0}
-              }
+                projection: {omit: 0},
+              },
             },
             resSpec: {
               statusCode: 200,
-              body: {_id: getObjectId(1), bar: 'baz'}
-            }
+              body: {_id: getObjectId(1), bar: 'baz'},
+            },
           },
           {
             name: 'FindObjectPositiveProjectionTest',
@@ -116,13 +116,13 @@ __(function() {
               url: '/findObject/' + getObjectId(1).toString(),
               method: 'GET',
               parameters: {
-                projection: {bar: 1}
-              }
+                projection: {bar: 1},
+              },
             },
             resSpec: {
               statusCode: 200,
-              body: {_id: getObjectId(1), bar: 'baz'}
-            }
+              body: {_id: getObjectId(1), bar: 'baz'},
+            },
           },
           {
             name: 'FindObjectProjectionBooleanValidationErrorTest',
@@ -131,12 +131,12 @@ __(function() {
               url: '/findObject/' + getObjectId(1).toString(),
               method: 'GET',
               parameters: {
-                projection: {omit: -1}
-              }
+                projection: {omit: -1},
+              },
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'FindObjectProjectionBooleanValidationErrorTest',
@@ -145,16 +145,16 @@ __(function() {
               url: '/findObject/' + getObjectId(1).toString(),
               method: 'GET',
               parameters: {
-                projection: {bar: true}
-              }
+                projection: {bar: true},
+              },
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
-        ]
-      })
-    ]
+        ],
+      }),
+    ],
   })
 })
 

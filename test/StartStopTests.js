@@ -20,7 +20,7 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: "StartStopTests",
+    name: 'StartStopTests',
 
     /**********************************************************************
      * doTest
@@ -28,25 +28,30 @@ __(function() {
     doTest: function(context, done) {
       syncTest()
       asyncTest1(function(err1) {
-        if (err1) { console.log(err1) }
+        if (err1) {
+          console.log(err1)
+        }
         asyncTest2(function(err2) {
-          if (err2) { console.log(err2) }
+          if (err2) {
+            console.log(err2)
+          }
           asyncTest3(function(err3) {
-            if (err3) { console.log(err3) }
+            if (err3) {
+              console.log(err3)
+            }
             done()
           })
         })
       })
-    }
+    },
   })
-
   /*******************************************************************************
    * syncTest
    */
   function syncTest() {
     var service = o({
       _type: carbond.Service,
-      
+
       verbosity: 'warn',
 
       doStart: function() {
@@ -55,7 +60,7 @@ __(function() {
 
       doStop: function() {
         this._started = false
-      }
+      },
 
     })
 
@@ -72,7 +77,7 @@ __(function() {
       console.log(e.stack)
       service.stop()
     }
-    
+
   }
 
   /*******************************************************************************
@@ -81,20 +86,22 @@ __(function() {
   function asyncTest1(done) {
     var service = o({
       _type: carbond.Service,
-      
+
       verbosity: 'warn',
 
       doStart: function() {
         this._started = true
       },
-      
+
       doStop: function() {
         this._started = false
-      }
+      },
     })
 
     service.start({}, function(err) {
-      if (err) console.log(err)
+      if (err) {
+        console.log(err)
+      }
       assert(service._started)
       service.stop()
       assert(!service._started)
@@ -110,23 +117,27 @@ __(function() {
       _type: carbond.Service,
 
       verbosity: 'warn',
-      
+
       doStart: function(options, cb) {
         this._started = true
         cb()
       },
-      
+
       doStop: function(cb) {
         this._started = false
         cb()
-      }
+      },
     })
 
     service.start({}, function(err) {
-      if (err) { console.log(err) }
+      if (err) {
+        console.log(err)
+      }
       assert(service._started)
       service.stop(function(err) {
-        if (err) { console.log(err) }
+        if (err) {
+          console.log(err)
+        }
         assert(!service._started)
         done(err)
       })
@@ -141,14 +152,14 @@ __(function() {
       _type: carbond.Service,
 
       verbosity: 'warn',
-      
+
       doStart: function() {
         this._started = true
       },
-      
+
       doStop: function() {
         this._started = false
-      }
+      },
     })
 
     service.start()

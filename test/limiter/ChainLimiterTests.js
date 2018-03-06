@@ -8,7 +8,7 @@ var testtube = require('@carbon-io/carbon-core').testtube
 
 var limiters = {
   FunctionLimiter: require('../../lib/limiter/FunctionLimiter'),
-  ChainLimiter: require('../../lib/limiter/ChainLimiter')
+  ChainLimiter: require('../../lib/limiter/ChainLimiter'),
 }
 var Service = require('../../lib/Service')
 
@@ -40,7 +40,7 @@ module.exports = o({
         }
         this.state.visits += 1
         return next()
-      }
+      },
     })
   },
   tests: [
@@ -53,14 +53,14 @@ module.exports = o({
         var limiters_ = [
           this.parent.buildLimiter(),
           this.parent.buildLimiter(),
-          this.parent.buildLimiter()
+          this.parent.buildLimiter(),
         ]
         limiters_.forEach(function(limiter) {
           sinon.spy(limiter, 'initialize')
         })
         var limiterChain = o({
           _type: limiters.ChainLimiter,
-          limiters: limiters_
+          limiters: limiters_,
         })
         limiterChain.initialize(this.parent.service, this.parent.service)
         limiters_.forEach(function(limiter) {
@@ -68,7 +68,7 @@ module.exports = o({
           assert.equal(limiter.service, self.parent.service)
           assert.equal(limiter.node, self.parent.service)
         })
-      }
+      },
     }),
     o({
       _type: testtube.Test,
@@ -79,14 +79,14 @@ module.exports = o({
         var limiters_ = [
           this.parent.buildLimiter(3),
           this.parent.buildLimiter(2),
-          this.parent.buildLimiter(1)
+          this.parent.buildLimiter(1),
         ]
         limiters_.forEach(function(limiter) {
           sinon.stub(limiter, 'sendUnavailable').callsFake(function() { })
         })
         var limiterChain = o({
           _type: limiters.ChainLimiter,
-          limiters: limiters_
+          limiters: limiters_,
         })
         limiterChain.initialize(this.parent.service, this.parent.service)
 
@@ -144,7 +144,7 @@ module.exports = o({
         assert(!limiters_[2].sendUnavailable.called)
         reset()
         limiters_[0].process.restore()
-      }
+      },
     }),
-  ]
+  ],
 })

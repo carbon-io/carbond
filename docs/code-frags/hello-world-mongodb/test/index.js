@@ -14,8 +14,8 @@ __(function() {
       throw new testtube.errors.SkipTestError('re-enable when collections are finished')
     },
     tests: [
-      _o('./HelloServiceTest')
-    ]
+      _o('./HelloServiceTest'),
+    ],
   })
 })
 

@@ -11,21 +11,21 @@ __(function() {
         _type: carbon.carbond.Endpoint,
         post: function(req) {
           if (Object.keys(req.body).length === 0) {
-            throw new carbon.HttpErrors.BadRequest("Must supply a body")
+            throw new carbon.HttpErrors.BadRequest('Must supply a body')
           }
-          return { msg: "Hello World! " + carbon.ejson.stringify(req.body) }
-        }
+          return {msg: 'Hello World! ' + carbon.ejson.stringify(req.body)}
+        },
       }),
       goodbye: o({
         _type: carbon.carbond.Endpoint,
         post: function(req) {
           if (Object.keys(req.body).length === 0) {
-            throw new (this.getService().errors.BadRequest)("Must supply a body")
+            throw new (this.getService().errors.BadRequest)('Must supply a body')
           }
-          return { msg: "Goodbye World! " + carbon.ejson.stringify(req.body) }
-        }
-      })
-    }
-  }) 
+          return {msg: 'Goodbye World! ' + carbon.ejson.stringify(req.body)}
+        },
+      }),
+    },
+  })
 })
 

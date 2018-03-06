@@ -18,7 +18,7 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: "ServiceCodeFragsTestSuite",
+    name: 'ServiceCodeFragsTestSuite',
 
     /**********************************************************************
      * tests
@@ -39,7 +39,7 @@ __(function() {
       _o('./ErrorHandlingTests'),
       _o('./LoggingTests'),
       _o('../../standalone-examples/ServiceTestTestingExample'),
-    ]
+    ],
   })
 })
 

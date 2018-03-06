@@ -1,13 +1,8 @@
 var assert = require('assert')
-var url = require('url')
-
-var _ = require('lodash')
-var sinon = require('sinon')
 
 var __ = require('@carbon-io/carbon-core').fibers.__(module)
 var ejson = require('@carbon-io/carbon-core').ejson
 var o = require('@carbon-io/carbon-core').atom.o(module)
-var _o = require('@carbon-io/carbon-core').bond._o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
 var carbond = require('../..')
@@ -48,9 +43,9 @@ __(function() {
               _type: pong.MongoDBCollection,
               idGenerator: pong.util.mongoDbCollectionIdGenerator,
               enabled: {insertObject: true},
-              collectionName: 'insertObject'
-            })
-          }
+              collectionName: 'insertObject',
+            }),
+          },
         }),
         setup: function(context) {
           MongoDBCollectionHttpTest.prototype.setup.apply(this, arguments)
@@ -71,12 +66,12 @@ __(function() {
               body: [
                 {foo: 'bar'},
                 {bar: 'baz'},
-                {baz: 'yaz'}
-              ]
+                {baz: 'yaz'},
+              ],
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'InsertObjectTest',
@@ -89,7 +84,7 @@ __(function() {
               return {
                 url: '/insertObject',
                 method: 'POST',
-                body: {foo: 'bar'}
+                body: {foo: 'bar'},
               }
             },
             resSpec: {
@@ -97,17 +92,19 @@ __(function() {
               headers: function(headers, context) {
                 assert.deepStrictEqual(
                   headers[context.global.idHeaderName],
-                  ejson.stringify(getObjectId(0)))
+                  ejson.stringify(getObjectId(0))
+                )
                 assert.deepStrictEqual(
-                  headers.location, '/insertObject/' + getObjectId(0).toString())
+                  headers.location, '/insertObject/' + getObjectId(0).toString()
+                )
               },
               body: function(body, context) {
                 assert.deepEqual(body, {
                   _id: getObjectId(0),
-                  foo: 'bar'
+                  foo: 'bar',
                 })
-              }
-            }
+              },
+            },
           },
           {
             name: 'InsertObjectWithIdTest',
@@ -116,14 +113,14 @@ __(function() {
               return {
                 url: '/insertObject',
                 method: 'POST',
-                body: {_id: getObjectId(0), foo: 'bar'}
+                body: {_id: getObjectId(0), foo: 'bar'},
               }
             },
             resSpec: {
               statusCode: 400,
-            }
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: MongoDBCollectionHttpTest,
@@ -143,17 +140,17 @@ __(function() {
                   properties: {
                     foo: {
                       type: 'string',
-                      pattern: '^(bar|baz|yaz)$'
-                    }
+                      pattern: '^(bar|baz|yaz)$',
+                    },
                   },
                   patternProperties: {
-                    '^\\d+$': {type: 'string'}
+                    '^\\d+$': {type: 'string'},
                   },
-                  additionalProperties: false
-                }
-              }
-            })
-          }
+                  additionalProperties: false,
+                },
+              },
+            }),
+          },
         }),
         setup: function(context) {
           MongoDBCollectionHttpTest.prototype.setup.apply(this, arguments)
@@ -175,12 +172,12 @@ __(function() {
               return {
                 url: '/insertObject',
                 method: 'POST',
-                body: {bar: 'baz'}
+                body: {bar: 'baz'},
               }
             },
             resSpec: {
               statusCode: 400,
-            }
+            },
           },
           {
             name: 'SuccessInsertObjectSchemaTest',
@@ -192,7 +189,7 @@ __(function() {
               return {
                 url: '/insertObject',
                 method: 'POST',
-                body: {foo: 'bar'}
+                body: {foo: 'bar'},
               }
             },
             resSpec: {
@@ -200,18 +197,20 @@ __(function() {
               headers: function(headers, context) {
                 assert.deepStrictEqual(
                   headers[context.global.idHeaderName],
-                  ejson.stringify(getObjectId(0)))
+                  ejson.stringify(getObjectId(0))
+                )
                 assert.deepStrictEqual(
-                  headers.location, '/insertObject/' + getObjectId(0).toString())
+                  headers.location, '/insertObject/' + getObjectId(0).toString()
+                )
               },
               body: function(body, context) {
                 assert.deepEqual(body, {
-                  _id: getObjectId(0), foo: 'bar'
+                  _id: getObjectId(0), foo: 'bar',
                 })
-              }
-            }
+              },
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: MongoDBCollectionHttpTest,
@@ -226,10 +225,10 @@ __(function() {
               enabled: {insertObject: true},
               collectionName: 'insertObject',
               insertObjectConfig: {
-                returnsInsertedObject: false
-              }
-            })
-          }
+                returnsInsertedObject: false,
+              },
+            }),
+          },
         }),
         setup: function(context) {
           MongoDBCollectionHttpTest.prototype.setup.apply(this, arguments)
@@ -251,7 +250,7 @@ __(function() {
               return {
                 url: '/insertObject',
                 method: 'POST',
-                body: {foo: 'bar'}
+                body: {foo: 'bar'},
               }
             },
             resSpec: {
@@ -259,16 +258,18 @@ __(function() {
               headers: function(headers, context) {
                 assert.deepStrictEqual(
                   headers[context.global.idHeaderName],
-                  ejson.stringify(getObjectId(0)))
+                  ejson.stringify(getObjectId(0))
+                )
                 assert.deepStrictEqual(
-                  headers.location, '/insertObject/' + getObjectId(0).toString())
+                  headers.location, '/insertObject/' + getObjectId(0).toString()
+                )
               },
-              body: undefined
-            }
-          }
-        ]
-      })
-    ]
+              body: undefined,
+            },
+          },
+        ],
+      }),
+    ],
   })
 })
 

@@ -46,8 +46,8 @@ var MongoDBCollectionHttpTest = oo({
     $property: {
       get: function() {
         return this.service.db
-      }
-    }
+      },
+    },
   },
 
   /*****************************************************************************
@@ -66,7 +66,7 @@ var MongoDBCollectionHttpTest = oo({
     // XXX
     this.dropDb()
     fixture = _.isNil(fixture) ? this.fixture : fixture
-    for(var colName in fixture) {
+    for (var colName in fixture) {
       var id = 0
       col = db.getCollection(colName)
       var colFixture = _.isFunction(fixture[colName]) ? fixture[colName].call(this) : fixture[colName]
@@ -74,10 +74,12 @@ var MongoDBCollectionHttpTest = oo({
         col.insert(
           _.assignIn(
             _.clone(colFixture[i]),
-            {_id: getObjectId(id++)}))
+            {_id: getObjectId(id++)}
+          )
+        )
       }
     }
-  }
+  },
 })
 
 module.exports = MongoDBCollectionHttpTest

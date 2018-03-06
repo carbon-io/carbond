@@ -14,7 +14,7 @@ __(function() {
         apiKeyParameterName: 'API_KEY',
         apiKeyLocation: 'header',
         userCollection: 'users',
-        apiKeyField: 'apiKey'
+        apiKeyField: 'apiKey',
       }),
       endpoints: {
         hello: o({
@@ -23,51 +23,53 @@ __(function() {
             _type: carbon.carbond.security.EndpointAcl,
             groupDefinitions: { // This ACL defined two groups, 'role' and 'title'.
               role: 'role', // We define a group called 'role' based on the user
-                            // property named 'role'.
-              title: function(user) { return user.title }
+              // property named 'role'.
+              title: function(user) {
+                return user.title
+              },
             },
             entries: [
               {
-                user: { role: 'Admin' },
+                user: {role: 'Admin'},
                 permissions: {
-                  '*': true // '*' grants all permissions
-                }
+                  '*': true, // '*' grants all permissions
+                },
               },
               {
-                user: { title: 'CFO' },
+                user: {title: 'CFO'},
                 permissions: { // We could have used '*' here but are being
-                               // explicit.
+                  // explicit.
                   get: true,
-                  post: true
-                }
+                  post: true,
+                },
               },
               {
                 user: '10002', // User with _id '10002'
                 permissions: {
                   get: false,
-                  post: true
-                }
+                  post: true,
+                },
               },
               {
                 user: '*', // All other users
                 permissions: {
                   get: true,
-                  post: false
-                }
-              }
-            ]
+                  post: false,
+                },
+              },
+            ],
           }),
 
           get: function(req) {
-            return { msg: 'Hello World!' }
+            return {msg: 'Hello World!'}
           },
 
           post: function(req) {
-            return { msg: 'Hello World! ' + JSON.stringify(req.body) }
-          }
+            return {msg: 'Hello World! ' + JSON.stringify(req.body)}
+          },
 
-        })
-      }
+        }),
+      },
     })
   })
   // post-access-control-endpointACLExample
@@ -86,7 +88,7 @@ __(function() {
         apiKeyParameterName: 'API_KEY',
         apiKeyLocation: 'header',
         userCollection: 'users',
-        apiKeyField: 'apiKey'
+        apiKeyField: 'apiKey',
       }),
       endpoints: {
         hello: o({
@@ -96,44 +98,46 @@ __(function() {
           acl: o({
             _type: carbon.carbond.security.CollectionAcl,
             groupDefinitions: { // This ACL defined two groups, 'role' and
-                                // 'title'.
+              // 'title'.
               role: 'role', // We define a group called 'role' based on the
-                            // user property named 'role'.
-              title: function(user) { return user.title }
+              // user property named 'role'.
+              title: function(user) {
+                return user.title
+              },
             },
             entries: [
               {
-                user: { role: 'Admin' },
+                user: {role: 'Admin'},
                 permissions: {
-                  '*': true // '*' grants all permissions
-                }
+                  '*': true, // '*' grants all permissions
+                },
               },
               {
-                user: { title: 'CFO' },
+                user: {title: 'CFO'},
                 permissions: {
                   find: true,
                   findObject: true,
-                  '*': false // This is implied since the default value for
-                             // all permissions is `false`.
-                }
+                  '*': false, // This is implied since the default value for
+                  // all permissions is `false`.
+                },
               },
               {
                 user: '10002', // User with _id '10002'
                 permissions: {
                   insertObject: true,
-                  findObject: true
-                }
+                  findObject: true,
+                },
               },
               {
                 user: '*', // All other users
                 permissions: {
-                  findObject: true
-                }
-              }
-            ]
-          })
-        })
-      }
+                  findObject: true,
+                },
+              },
+            ],
+          }),
+        }),
+      },
     })
   })
   // post-access-control-collectionACLExample

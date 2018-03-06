@@ -24,7 +24,7 @@ module.exports = {
     function(req, res, next) {
       middlewareCalled = true
       next()
-    }
+    },
   ],
 
   endpoints: {
@@ -33,46 +33,46 @@ module.exports = {
       _type: carbond.Endpoint,
       get: function(req, res) {
         return {
-          methodCalled: "get",
-          reqParams: req.query
+          methodCalled: 'get',
+          reqParams: req.query,
         }
       },
 
       post: function(req, res) {
         return {
-          methodCalled: "post",
+          methodCalled: 'post',
           reqParams: req.query,
-          reqBody: req.body
+          reqBody: req.body,
         }
       },
 
       put: function(req, res) {
         return {
-          methodCalled: "put",
+          methodCalled: 'put',
           reqParams: req.query,
-          reqBody: req.body
+          reqBody: req.body,
         }
       },
 
       patch: function(req, res) {
         return {
-          methodCalled: "patch",
+          methodCalled: 'patch',
           reqParams: req.query,
-          reqBody: req.body
+          reqBody: req.body,
         }
       },
 
       delete: function(req, res) {
         return {
-          methodCalled: "delete",
+          methodCalled: 'delete',
           reqParams: {
             n: req.query.n,
-            m: req.query.m
+            m: req.query.m,
           },
-          middlewareCalled: middlewareCalled
+          middlewareCalled: middlewareCalled,
         }
-      }
+      },
 
-    })
-  }
+    }),
+  },
 }

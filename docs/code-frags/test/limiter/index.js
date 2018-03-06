@@ -17,14 +17,14 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: "LimiterCodeFragsTestSuite",
+    name: 'LimiterCodeFragsTestSuite',
 
     /**********************************************************************
      * tests
      */
     tests: [
       _o('./TooBusyLimiterExampleTests'),
-      _o('./PolicyLimiterExampleTests')
+      _o('./PolicyLimiterExampleTests'),
     ],
   })
 })

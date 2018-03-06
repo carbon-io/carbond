@@ -17,7 +17,7 @@ var COLOPS =  [
   'update',
   'updateObject',
   'remove',
-  'removeObject'
+  'removeObject',
 ]
 
 var ENDOPS = [
@@ -25,7 +25,7 @@ var ENDOPS = [
   'get',
   'put',
   'patch',
-  'delete'
+  'delete',
 ]
 
 function getObjectId(n) {
@@ -116,7 +116,7 @@ var collectionIdGenerator = o({
 
   generateId: function() {
     return (this.id++).toString()
-  }
+  },
 })
 
 var mongoDbCollectionIdGenerator = o({
@@ -128,7 +128,7 @@ var mongoDbCollectionIdGenerator = o({
 
   generateId: function() {
     return getObjectId(this.id++)
-  }
+  },
 })
 
 module.exports = {
@@ -136,6 +136,6 @@ module.exports = {
   getObjectId: getObjectId,
   mongoDbCollectionIdGenerator: mongoDbCollectionIdGenerator,
   overrideOrSuper: overrideOrSuper,
-  setNestedProps: setNestedProps
+  setNestedProps: setNestedProps,
 }
 

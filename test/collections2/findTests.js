@@ -42,9 +42,9 @@ __(function() {
             find: o({
               _type: pong.Collection,
               idGenerator: pong.util.collectionIdGenerator,
-              enabled: {find: true}
-            })
-          }
+              enabled: {find: true},
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -67,10 +67,10 @@ __(function() {
                     find: [
                       {[context.global.idParameterName]: '0', foo: 'bar'},
                       {[context.global.idParameterName]: '1', bar: 'baz'},
-                      {[context.global.idParameterName]: '2', baz: 'yaz'}
-                    ]
-                  })
-                }
+                      {[context.global.idParameterName]: '2', baz: 'yaz'},
+                    ],
+                  }),
+                },
               }
             },
             resSpec: {
@@ -78,8 +78,8 @@ __(function() {
               headers: function(headers) {
                 assert(_.isNil(headers.link))
               },
-              body: undefined
-            }
+              body: undefined,
+            },
           },
           {
             name: 'FindReturnObjectValidationErrorTest',
@@ -90,14 +90,14 @@ __(function() {
                 method: 'GET',
                 headers: {
                   'x-pong': ejson.stringify({
-                    find: {[context.global.idParameterName]: '0', foo: 'bar'}
-                  })
-                }
+                    find: {[context.global.idParameterName]: '0', foo: 'bar'},
+                  }),
+                },
               }
             },
             resSpec: {
-              statusCode: 500
-            }
+              statusCode: 500,
+            },
           },
           {
             name: 'FindTest',
@@ -111,10 +111,10 @@ __(function() {
                     find: [
                       {[context.global.idParameterName]: '0', foo: 'bar'},
                       {[context.global.idParameterName]: '1', bar: 'baz'},
-                      {[context.global.idParameterName]: '2', baz: 'yaz'}
-                    ]
-                  })
-                }
+                      {[context.global.idParameterName]: '2', baz: 'yaz'},
+                    ],
+                  }),
+                },
               }
             },
             resSpec: {
@@ -126,10 +126,10 @@ __(function() {
                 assert.deepStrictEqual(body, [
                   {[context.global.idParameterName]: '0', foo: 'bar'},
                   {[context.global.idParameterName]: '1', bar: 'baz'},
-                  {[context.global.idParameterName]: '2', baz: 'yaz'}
+                  {[context.global.idParameterName]: '2', baz: 'yaz'},
                 ])
-              }
-            }
+              },
+            },
           },
           {
             name: 'FindIdQueryTest',
@@ -142,7 +142,8 @@ __(function() {
                 assert(this.findSpy.called)
                 assert.deepEqual(
                   this.findSpy.firstCall.args[0][context.global.idParameterName],
-                  ['0', '1', '2'])
+                  ['0', '1', '2']
+                )
               } finally {
                 this.findSpy.restore()
               }
@@ -152,17 +153,17 @@ __(function() {
                 url: '/find',
                 method: 'GET',
                 parameters: {
-                  [context.global.idParameterName]: ['0', '1', '2']
+                  [context.global.idParameterName]: ['0', '1', '2'],
                 },
                 headers: {
                   'x-pong': ejson.stringify({
                     find: [
                       {[context.global.idParameterName]: '0', foo: 'bar'},
                       {[context.global.idParameterName]: '1', bar: 'baz'},
-                      {[context.global.idParameterName]: '2', baz: 'yaz'}
-                    ]
-                  })
-                }
+                      {[context.global.idParameterName]: '2', baz: 'yaz'},
+                    ],
+                  }),
+                },
               }
             },
             resSpec: {
@@ -174,10 +175,10 @@ __(function() {
                 assert.deepStrictEqual(body, [
                   {[context.global.idParameterName]: '0', foo: 'bar'},
                   {[context.global.idParameterName]: '1', bar: 'baz'},
-                  {[context.global.idParameterName]: '2', baz: 'yaz'}
+                  {[context.global.idParameterName]: '2', baz: 'yaz'},
                 ])
-              }
-            }
+              },
+            },
           },
           {
             name: 'FindPageSkipAndLimitParametersIgnoredTest',
@@ -190,7 +191,9 @@ __(function() {
                 assert.equal(
                   _.intersection(
                     ['skip', 'limit', 'page'],
-                    _.keys(this.findSpy.firstCall.args[0])).length, 0)
+                    _.keys(this.findSpy.firstCall.args[0])
+                  ).length, 0
+                )
               } finally {
                 this.findSpy.restore()
               }
@@ -202,13 +205,13 @@ __(function() {
                 parameters: {
                   skip: 6,
                   limit: 6,
-                  page: 6
+                  page: 6,
                 },
                 headers: {
                   'x-pong': ejson.stringify({
-                    find: [{[context.global.idParameterName]: '0', foo: 'bar'}]
-                  })
-                }
+                    find: [{[context.global.idParameterName]: '0', foo: 'bar'}],
+                  }),
+                },
               }
             },
             resSpec: {
@@ -218,10 +221,10 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [{[context.global.idParameterName]: '0', foo: 'bar'}])
-              }
-            }
+              },
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -234,10 +237,10 @@ __(function() {
               idGenerator: pong.util.collectionIdGenerator,
               enabled: {find: true},
               findConfig: {
-                supportsIdQuery: false
-              }
-            })
-          }
+                supportsIdQuery: false,
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -266,13 +269,13 @@ __(function() {
                 url: '/find',
                 method: 'GET',
                 parameters: {
-                  [context.global.idParameterName]: 0
+                  [context.global.idParameterName]: 0,
                 },
                 headers: {
                   'x-pong': ejson.stringify({
-                    find: []
-                  })
-                }
+                    find: [],
+                  }),
+                },
               }
             },
             resSpec: {
@@ -282,10 +285,10 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [])
-              }
-            }
-          }
-        ]
+              },
+            },
+          },
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -298,10 +301,10 @@ __(function() {
               idGenerator: pong.util.collectionIdGenerator,
               enabled: {find: true},
               findConfig: {
-                supportsSkipAndLimit: true
-              }
-            })
-          }
+                supportsSkipAndLimit: true,
+              },
+            }),
+          },
         }),
         tests: [
           {
@@ -315,7 +318,9 @@ __(function() {
                 assert.equal(
                   _.intersection(
                     ['skip', 'limit'],
-                    _.keys(this.findSpy.firstCall.args[0])).length, 2)
+                    _.keys(this.findSpy.firstCall.args[0])
+                  ).length, 2
+                )
               } finally {
                 this.findSpy.restore()
               }
@@ -326,13 +331,13 @@ __(function() {
                 method: 'GET',
                 parameters: {
                   skip: 1,
-                  limit: 1
+                  limit: 1,
                 },
                 headers: {
                   'x-pong': ejson.stringify({
-                    find: []
-                  })
-                }
+                    find: [],
+                  }),
+                },
               }
             },
             resSpec: {
@@ -342,8 +347,8 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [])
-              }
-            }
+              },
+            },
           },
           {
             name: 'PageNotHonoredTest',
@@ -358,7 +363,9 @@ __(function() {
                 assert.equal(
                   _.intersection(
                     ['page', 'skip', 'limit'],
-                    _.keys(this.findSpy.firstCall.args[0])).length, 2)
+                    _.keys(this.findSpy.firstCall.args[0])
+                  ).length, 2
+                )
                 assert.equal(this.findSpy.firstCall.args[0].skip, 6)
                 assert.equal(this.findSpy.firstCall.args[0].limit, 6)
               } finally {
@@ -377,9 +384,9 @@ __(function() {
                 },
                 headers: {
                   'x-pong': ejson.stringify({
-                    find: []
-                  })
-                }
+                    find: [],
+                  }),
+                },
               }
             },
             resSpec: {
@@ -389,10 +396,10 @@ __(function() {
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [])
-              }
-            }
-          }
-        ]
+              },
+            },
+          },
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -407,10 +414,10 @@ __(function() {
               findConfig: {
                 supportsPagination: true,
                 pageSize: 2,
-                maxPageSize: 10
-              }
-            })
-          }
+                maxPageSize: 10,
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -436,7 +443,9 @@ __(function() {
                 assert.equal(
                   _.intersection(
                     ['page', 'skip', 'limit'],
-                    _.keys(this.findSpy.firstCall.args[0])).length, 2)
+                    _.keys(this.findSpy.firstCall.args[0])
+                  ).length, 2
+                )
                 assert.equal(this.findSpy.firstCall.args[0].skip, 6)
                 assert.equal(this.findSpy.firstCall.args[0].limit, 2)
               } finally {
@@ -449,16 +458,16 @@ __(function() {
                 url: '/find',
                 method: 'GET',
                 parameters: {
-                  page: 3
+                  page: 3,
                 },
                 headers: {
                   'x-pong': ejson.stringify({
                     find: [
                       {[context.global.idParameterName]: '6', foo: 'bar'},
-                      {[context.global.idParameterName]: '7', bar: 'baz'}
-                    ]
-                  })
-                }
+                      {[context.global.idParameterName]: '7', bar: 'baz'},
+                    ],
+                  }),
+                },
               }
             },
             resSpec: {
@@ -466,15 +475,16 @@ __(function() {
               headers: function(headers) {
                 assert.equal(
                   headers.link,
-                  '<http://localhost:8888/find?page=2>; rel="prev", <http://localhost:8888/find?page=4>; rel="next"')
+                  '<http://localhost:8888/find?page=2>; rel="prev", <http://localhost:8888/find?page=4>; rel="next"'
+                )
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [
                   {[context.global.idParameterName]: '6', foo: 'bar'},
-                  {[context.global.idParameterName]: '7', bar: 'baz'}
+                  {[context.global.idParameterName]: '7', bar: 'baz'},
                 ])
-              }
-            }
+              },
+            },
           },
           {
             name: 'NoPrevLinkPaginationTest',
@@ -489,7 +499,9 @@ __(function() {
                 assert.equal(
                   _.intersection(
                     ['page', 'skip', 'limit'],
-                    _.keys(this.findSpy.firstCall.args[0])).length, 2)
+                    _.keys(this.findSpy.firstCall.args[0])
+                  ).length, 2
+                )
               } finally {
                 this.findSpy.restore()
                 this.preFindOperationSpy.restore()
@@ -503,10 +515,10 @@ __(function() {
                   'x-pong': ejson.stringify({
                     find: [
                       {[context.global.idParameterName]: '0', foo: 'bar'},
-                      {[context.global.idParameterName]: '1', bar: 'baz'}
-                    ]
-                  })
-                }
+                      {[context.global.idParameterName]: '1', bar: 'baz'},
+                    ],
+                  }),
+                },
               }
             },
             resSpec: {
@@ -514,15 +526,16 @@ __(function() {
               headers: function(headers) {
                 assert.equal(
                   headers.link,
-                  '<http://localhost:8888/find?page=1>; rel="next"')
+                  '<http://localhost:8888/find?page=1>; rel="next"'
+                )
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [
                   {[context.global.idParameterName]: '0', foo: 'bar'},
-                  {[context.global.idParameterName]: '1', bar: 'baz'}
+                  {[context.global.idParameterName]: '1', bar: 'baz'},
                 ])
-              }
-            }
+              },
+            },
           },
           {
             name: 'NoNextLinkPaginationTest',
@@ -537,7 +550,9 @@ __(function() {
                 assert.equal(
                   _.intersection(
                     ['page', 'skip', 'limit'],
-                    _.keys(this.findSpy.firstCall.args[0])).length, 2)
+                    _.keys(this.findSpy.firstCall.args[0])
+                  ).length, 2
+                )
               } finally {
                 this.findSpy.restore()
                 this.preFindOperationSpy.restore()
@@ -548,15 +563,15 @@ __(function() {
                 url: '/find',
                 method: 'GET',
                 parameters: {
-                  page: 2
+                  page: 2,
                 },
                 headers: {
                   'x-pong': ejson.stringify({
                     find: [
-                      {[context.global.idParameterName]: '4', foo: 'bar'}
-                    ]
-                  })
-                }
+                      {[context.global.idParameterName]: '4', foo: 'bar'},
+                    ],
+                  }),
+                },
               }
             },
             resSpec: {
@@ -564,14 +579,15 @@ __(function() {
               headers: function(headers) {
                 assert.equal(
                   headers.link,
-                  '<http://localhost:8888/find?page=1>; rel="prev"')
+                  '<http://localhost:8888/find?page=1>; rel="prev"'
+                )
               },
               body: function(body, context) {
                 assert.deepStrictEqual(body, [
                   {[context.global.idParameterName]: '4', foo: 'bar'},
                 ])
-              }
-            }
+              },
+            },
           },
           {
             name: 'NoNextOrPrevLinkPaginationTest',
@@ -586,7 +602,9 @@ __(function() {
                 assert.equal(
                   _.intersection(
                     ['page', 'skip', 'limit'],
-                    _.keys(this.findSpy.firstCall.args[0])).length, 2)
+                    _.keys(this.findSpy.firstCall.args[0])
+                  ).length, 2
+                )
               } finally {
                 this.findSpy.restore()
                 this.preFindOperationSpy.restore()
@@ -599,10 +617,10 @@ __(function() {
                 headers: {
                   'x-pong': ejson.stringify({
                     find: [
-                      {[context.global.idParameterName]: '0', foo: 'bar'}
-                    ]
-                  })
-                }
+                      {[context.global.idParameterName]: '0', foo: 'bar'},
+                    ],
+                  }),
+                },
               }
             },
             resSpec: {
@@ -614,8 +632,8 @@ __(function() {
                 assert.deepStrictEqual(body, [
                   {[context.global.idParameterName]: '0', foo: 'bar'},
                 ])
-              }
-            }
+              },
+            },
           },
           {
             name: 'MaxPageSizeTest',
@@ -628,10 +646,12 @@ __(function() {
               try {
                 assert.equal(
                   this.preFindOperationSpy.firstCall.args[1].parameters.limit,
-                  this.parent.service.endpoints.find.findConfig.maxPageSize + 1)
+                  this.parent.service.endpoints.find.findConfig.maxPageSize + 1
+                )
                 assert.equal(
                   this.findSpy.firstCall.args[0].limit,
-                  this.parent.service.endpoints.find.findConfig.maxPageSize)
+                  this.parent.service.endpoints.find.findConfig.maxPageSize
+                )
               } finally {
                 this.findSpy.restore()
                 this.preFindOperationSpy.restore()
@@ -642,20 +662,20 @@ __(function() {
                 url: '/find',
                 method: 'GET',
                 parameters: {
-                  limit: this.parent.service.endpoints.find.findConfig.maxPageSize + 1
+                  limit: this.parent.service.endpoints.find.findConfig.maxPageSize + 1,
                 },
                 headers: {
                   'x-pong': ejson.stringify({
                     find: _.map(_.range(this.parent.service.endpoints.find.findConfig.maxPageSize), function(n) {
                       return {[context.global.idParameterName]: n.toString(), foo: 'bar'}
-                    })
-                  })
-                }
+                    }),
+                  }),
+                },
               }
             },
             resSpec: {
-              statusCode: 200
-            }
+              statusCode: 200,
+            },
           },
           {
             name: 'LimitEnforcedTest',
@@ -668,10 +688,12 @@ __(function() {
               try {
                 assert.equal(
                   this.preFindOperationSpy.firstCall.args[1].parameters.limit,
-                  this.parent.service.endpoints.find.findConfig.maxPageSize + 1)
+                  this.parent.service.endpoints.find.findConfig.maxPageSize + 1
+                )
                 assert.equal(
                   this.findSpy.firstCall.args[0].limit,
-                  this.parent.service.endpoints.find.findConfig.maxPageSize)
+                  this.parent.service.endpoints.find.findConfig.maxPageSize
+                )
               } finally {
                 this.findSpy.restore()
                 this.preFindOperationSpy.restore()
@@ -682,20 +704,20 @@ __(function() {
                 url: '/find',
                 method: 'GET',
                 parameters: {
-                  limit: this.parent.service.endpoints.find.findConfig.maxPageSize + 1
+                  limit: this.parent.service.endpoints.find.findConfig.maxPageSize + 1,
                 },
                 headers: {
                   'x-pong': ejson.stringify({
                     find: _.map(_.range(this.parent.service.endpoints.find.findConfig.maxPageSize) + 1, function(n) {
                       return {[context.global.idParameterName]: n.toString(), foo: 'bar'}
-                    })
-                  })
-                }
+                    }),
+                  }),
+                },
               }
             },
             resSpec: {
-              statusCode: 500
-            }
+              statusCode: 500,
+            },
           },
           {
             name: 'pageSizeTest',
@@ -707,9 +729,11 @@ __(function() {
             teardown: function(context) {
               try {
                 assert.equal(
-                  this.preFindOperationSpy.firstCall.args[1].parameters.pageSize, 5)
+                  this.preFindOperationSpy.firstCall.args[1].parameters.pageSize, 5
+                )
                 assert.equal(
-                  this.findSpy.firstCall.args[0].limit, 5)
+                  this.findSpy.firstCall.args[0].limit, 5
+                )
               } finally {
                 this.findSpy.restore()
                 this.preFindOperationSpy.restore()
@@ -720,22 +744,22 @@ __(function() {
                 url: '/find',
                 method: 'GET',
                 parameters: {
-                  pageSize: 5
+                  pageSize: 5,
                 },
                 headers: {
                   'x-pong': ejson.stringify({
                     find: _.map(_.range(5), function(n) {
                       return {[context.global.idParameterName]: n.toString(), foo: 'bar'}
-                    })
-                  })
-                }
+                    }),
+                  }),
+                },
               }
             },
             resSpec: {
-              statusCode: 200
-            }
+              statusCode: 200,
+            },
           },
-        ]
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -755,14 +779,14 @@ __(function() {
                       schema: {
                         type: 'number',
                         minimum: 0,
-                        multipleOf: 2
-                      }
-                    }
-                  }
-                }
-              }
-            })
-          }
+                        multipleOf: 2,
+                      },
+                    },
+                  },
+                },
+              },
+            }),
+          },
         }),
         setup: function(context) {
           carbond.test.ServiceTest.prototype.setup.apply(this, arguments)
@@ -785,7 +809,7 @@ __(function() {
                   description: undefined,
                   schema: {type: 'number', minimum: 0, multipleOf: 2},
                   required: false,
-                  default: undefined
+                  default: undefined,
                 },
                 [context.global.idParameterName]: {
                   name: context.global.idParameterName,
@@ -794,14 +818,14 @@ __(function() {
                   schema: {
                     oneOf: [
                       {type: 'string'},
-                      {type: 'array', items: {type: 'string'}}
-                    ]
+                      {type: 'array', items: {type: 'string'}},
+                    ],
                   },
                   required: false,
-                  default: undefined
-                }
+                  default: undefined,
+                },
               })
-            }
+            },
           }),
           {
             name: 'FindConfigCustomParameterPassedViaOptionsFailTest',
@@ -818,15 +842,15 @@ __(function() {
                 method: 'GET',
                 headers: {
                   'x-pong': ejson.stringify({
-                    find: [{[context.global.idParameterName]: '0', foo: 'bar'}]
+                    find: [{[context.global.idParameterName]: '0', foo: 'bar'}],
                   }),
-                  foo: 3
-                }
+                  foo: 3,
+                },
               }
             },
             resSpec: {
-              statusCode: 400
-            }
+              statusCode: 400,
+            },
           },
           {
             name: 'FindConfigCustomParameterPassedViaOptionsSuccessTest',
@@ -843,17 +867,17 @@ __(function() {
                 method: 'GET',
                 headers: {
                   'x-pong': ejson.stringify({
-                    find: [{[context.global.idParameterName]: '0', foo: 'bar'}]
+                    find: [{[context.global.idParameterName]: '0', foo: 'bar'}],
                   }),
-                  foo: 4
-                }
+                  foo: 4,
+                },
               }
             },
             resSpec: {
-              statusCode: 200
-            }
-          }
-        ]
+              statusCode: 200,
+            },
+          },
+        ],
       }),
       o({
         _type: carbond.test.ServiceTest,
@@ -884,15 +908,15 @@ __(function() {
                 context.postFindOperation = 1
                 res.set('context', ejson.stringify(context))
                 return carbond.collections.Collection.prototype.postFindOperation.apply(this, arguments)
-              }
-            })
-          }
+              },
+            }),
+          },
         }),
         tests: [
           {
             reqSpec: {
               url: '/find',
-              method: 'GET'
+              method: 'GET',
             },
             resSpec: {
               statusCode: 200,
@@ -902,14 +926,14 @@ __(function() {
                   preFind: 1,
                   find: 1,
                   postFind: 1,
-                  postFindOperation: 1
+                  postFindOperation: 1,
                 })
-              }
-            }
-          }
-        ]
-      })
-    ]
+              },
+            },
+          },
+        ],
+      }),
+    ],
   })
 })
 

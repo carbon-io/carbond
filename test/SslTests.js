@@ -11,14 +11,14 @@ var testtube = require('@carbon-io/carbon-core').testtube
 
 var carbond = require('..')
 
-ALICE_CERT = path.resolve(__dirname, 'data/ssl/certs/client.cert.pem')
-ALICE_KEY = path.resolve(__dirname, 'data/ssl/keys/client_np.key.pem')
-CARL_CERT = path.resolve(__dirname, 'data/ssl/certs/carl.cert.pem')
-CARL_KEY = path.resolve(__dirname, 'data/ssl/keys/carl_np.key.pem')
-SERVER_CERT = path.resolve(__dirname, 'data/ssl/certs/server.cert.pem')
-SERVER_KEY = path.resolve(__dirname, 'data/ssl/keys/server_np.key.pem')
-INTERMEDIATE_CA_CERT = path.resolve(__dirname, 'data/ssl/ca/intermediate-ca.cert.pem')
-ROOT_CA_CERT = path.resolve(__dirname, 'data/ssl/ca/root-ca.cert.pem')
+var ALICE_CERT = path.resolve(__dirname, 'data/ssl/certs/client.cert.pem')
+var ALICE_KEY = path.resolve(__dirname, 'data/ssl/keys/client_np.key.pem')
+var CARL_CERT = path.resolve(__dirname, 'data/ssl/certs/carl.cert.pem')
+var CARL_KEY = path.resolve(__dirname, 'data/ssl/keys/carl_np.key.pem')
+var SERVER_CERT = path.resolve(__dirname, 'data/ssl/certs/server.cert.pem')
+var SERVER_KEY = path.resolve(__dirname, 'data/ssl/keys/server_np.key.pem')
+var INTERMEDIATE_CA_CERT = path.resolve(__dirname, 'data/ssl/ca/intermediate-ca.cert.pem')
+var ROOT_CA_CERT = path.resolve(__dirname, 'data/ssl/ca/root-ca.cert.pem')
 
 /**************************************************************************
  * SslTests
@@ -33,7 +33,7 @@ __(function() {
     /**********************************************************************
      * name
      */
-    name: "SslTests",
+    name: 'SslTests',
 
     /**********************************************************************
      * tests
@@ -41,7 +41,7 @@ __(function() {
     tests: [
       o({
         _type: carbond.test.ServiceTest,
-        name: "SslClientRequestCertTests",
+        name: 'SslClientRequestCertTests',
         service: o({
           _type: carbond.Service,
 
@@ -53,7 +53,7 @@ __(function() {
             serverKeyPath: SERVER_KEY,
             trustedCertsPaths: [
               INTERMEDIATE_CA_CERT,
-              ROOT_CA_CERT
+              ROOT_CA_CERT,
             ],
             requestCert: true,
           },
@@ -61,31 +61,31 @@ __(function() {
           endpoints: {
             foo: o({
               _type: carbond.Endpoint,
-              get: function (req, res) {
+              get: function(req, res) {
                 return 'bar'
-              }
+              },
             }),
-          }
+          },
         }),
         tests: [
           {
             reqSpec: {
               url: '/api/foo',
-              method: "GET",
+              method: 'GET',
               options: {
                 strictSSL: true,
                 cert: fs.readFileSync(ALICE_CERT),
                 key: fs.readFileSync(ALICE_KEY),
                 ca: [
                   fs.readFileSync(INTERMEDIATE_CA_CERT),
-                  fs.readFileSync(ROOT_CA_CERT)
-                ]
-              }
+                  fs.readFileSync(ROOT_CA_CERT),
+                ],
+              },
             },
             resSpec: {
               statusCode: 200,
-              body: 'bar'
-            }
+              body: 'bar',
+            },
           },
           o({
             _type: testtube.Test,
@@ -107,8 +107,8 @@ __(function() {
                   strictSSL: true,
                   ca: [
                     fs.readFileSync(INTERMEDIATE_CA_CERT),
-                    fs.readFileSync(ROOT_CA_CERT)
-                  ]
+                    fs.readFileSync(ROOT_CA_CERT),
+                  ],
                 })
                 req.get()
               }, /socket hang up/)
@@ -122,17 +122,17 @@ __(function() {
                   key: fs.readFileSync(CARL_KEY),
                   ca: [
                     fs.readFileSync(INTERMEDIATE_CA_CERT),
-                    fs.readFileSync(ROOT_CA_CERT)
-                  ]
+                    fs.readFileSync(ROOT_CA_CERT),
+                  ],
                 })
                 req.get()
               }, /socket hang up/)
               assert.equal(self.logSpy.callCount, 2)
               assert(self.logSpy.secondCall.args[0].match(/Secure connection not authorized: .+/))
-            }
+            },
           }),
-        ]
-      })
-    ]
+        ],
+      }),
+    ],
   })
 })

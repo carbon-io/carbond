@@ -6,14 +6,14 @@ var oo = require('@carbon-io/carbon-core').atom.oo(module)
 var _o = require('@carbon-io/carbon-core').bond._o(module)
 var testtube = require('@carbon-io/carbon-core').testtube
 
-var TooBusyLimiterExample = 
+var TooBusyLimiterExample =
   _.cloneDeep(require('../../standalone-examples/TooBusyLimiterExample'))
 
 _.assign(TooBusyLimiterExample, {
-    hostname: '127.0.0.1',
-    port: 8888,
-    enableBusyLimiter: true
-  })
+  hostname: '127.0.0.1',
+  port: 8888,
+  enableBusyLimiter: true,
+})
 
 /**************************************************************************
  * TooBusyLimiterExampleTests
@@ -43,12 +43,12 @@ __(function() {
       {
         reqSpec: {
           url: '/foo',
-          method: 'GET'
+          method: 'GET',
         },
         resSpec: {
-          statusCode: 200
-        }
-      }
-    ]
+          statusCode: 200,
+        },
+      },
+    ],
   })
 })

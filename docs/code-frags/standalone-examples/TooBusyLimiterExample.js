@@ -11,7 +11,7 @@ var TooBusyLimiter = require('../../../lib/limiter/TooBusyLimiter')
 
 var TooBusyLimiterExample = {
   _type: Service,
-  
+
   serviceName: 'TooBusyLimiterExample',
   description: 'TooBusyLimiter example service',
 
@@ -20,7 +20,7 @@ var TooBusyLimiterExample = {
   busyLimiter: o({
     _type: TooBusyLimiter,
     useFiberPoolSize: true,
-    fiberPoolAllowedOverflow: .2
+    fiberPoolAllowedOverflow: .2,
   }),
 
   doStart: function(options) {
@@ -32,7 +32,7 @@ var TooBusyLimiterExample = {
   },
 
   doStop: function() {
-    if (typeof this.loggingInterval != 'undefined') {
+    if (typeof this.loggingInterval !== 'undefined') {
       clearInterval(this.loggingInterval)
     }
   },
@@ -45,9 +45,9 @@ var TooBusyLimiterExample = {
         setTimeout(function() {
           res.json({get: 'foo'})
         }, 500)
-      }
-    })
-  }
+      },
+    }),
+  },
 }
 
 module.exports = TooBusyLimiterExample
