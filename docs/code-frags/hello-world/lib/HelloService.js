@@ -22,7 +22,7 @@ __(function() {
     // post-definingYourServiceHeader
     // pre-collections-simpleCollection2
     port: 8888,
-    //dbUri: 'mongodb://localhost:27017/mydb',
+    dbUri: 'mongodb://localhost:27017/mydb',
     // post-collections-simpleCollection2
     // first definition is for presentation, second is for testing
     dbUri: _o('env:CARBONIO_TEST_DB_URI') || 'mongodb://localhost:27017/mydb',
