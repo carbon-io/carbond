@@ -123,7 +123,7 @@ HOST: {{host}}
 
 {{#ifnotempty responses}}
 {{#each responses}}
-+ Response {{statusCode}} ({{@root.consumes.[0]}})
++ Response {{@key}} ({{@root.consumes.[0]}})
 {{#ifnotempty headers}}
     + Headers
 {{#each headers}}
