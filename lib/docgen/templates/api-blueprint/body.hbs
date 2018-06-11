@@ -57,6 +57,19 @@ HOST: {{host}}
 {{{description}}}
 {{~/if}}
 
+
+{{#if requestSchemaElements}}
+Request schema description:
+{{> schemaElements requestSchemaElements}}
+{{/if}}
+
+
+{{#if responseSchemaElements}}
+Response schema description:
+{{> schemaElements responseSchemaElements}}
+{{/if}}
+
+
 {{! ---------- attributes ---------- ~}}
 
 {{~!
