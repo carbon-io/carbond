@@ -7,6 +7,8 @@ var o  = require('@carbon-io/carbon-core').atom.o(module).main
 var oo  = require('@carbon-io/carbon-core').atom.oo(module)
 var tt = require('@carbon-io/test-tube')
 
+var HttpErrors = require('@carbon-io/carbon-core').HttpErrors
+
 var FunctionLimiter = require('../../lib/limiter/FunctionLimiter')
 var ApiKeyAuthenticator = require('../../lib/security/ApiKeyAuthenticator')
 var Service = require('../../lib/Service')
@@ -24,12 +26,18 @@ var CountDownLimiter = oo({
 
   _init: function() {
     FunctionLimiter.prototype._init.call(this)
+
+    this.throttlingResponse = o({
+      type: HttpErrors.ServiceUnavailable,
+      message: this.name
+    });
+
     this.state.visits = this.maxVisits
   },
 
   fn: function(req, res, next) {
     if (this.state.visits <= 0) {
-      return this.sendUnavailable(res, next, this.name)
+      return this.sendUnavailable(res, next)
     }
     this.state.visits--
     next()
