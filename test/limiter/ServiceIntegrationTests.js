@@ -28,7 +28,7 @@ var CountDownLimiter = oo({
     FunctionLimiter.prototype._init.call(this)
 
     this.throttlingResponse = o({
-      type: HttpErrors.ServiceUnavailable,
+      error: HttpErrors.ServiceUnavailable,
       message: this.name
     });
 
