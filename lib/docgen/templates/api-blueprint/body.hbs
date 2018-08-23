@@ -59,13 +59,13 @@ HOST: {{host}}
 
 
 {{#if requestSchemaElements}}
-Request schema description:
+### Request attributes
 {{> schemaElements requestSchemaElements}}
 {{/if}}
 
 
 {{#if responseSchemaElements}}
-Response schema description:
+### Response attributes
 {{> schemaElements responseSchemaElements}}
 {{/if}}
 
@@ -76,8 +76,18 @@ Response schema description:
 {{#each this}}
 {{! XXX: good way to add object schemas here? should probably just use description and choose the longer
          form for parameters with object types}}
-    + {{name}} ({{#truthy schema}}{{schema.type}}, {{/truthy}}{{#if required}}required{{else}}optional{{/if}})
+    + {{name}}: {{#truthy example}}`{{example}}`{{/truthy}} ({{#truthy schema}}{{schema.type}}, {{/truthy}}{{#if required}}required{{else}}optional{{/if}})
       {{~#truthy description}} - {{APIBPSanitizeParameterDescription description}}{{/truthy}}
+    {{#truthy schema.enum}}
+        {{#truthy schema.default}}
+        + Default: {{schema.default}}
+        {{/truthy}}
+        + Members
+        {{#each schema.enum}}
+            + `{{this}}`
+        {{/each}}
+    {{/truthy}}
+
 {{#if_eq schema.type "object"}}
 
 {{#indent spaces=8}}
@@ -137,7 +147,7 @@ Response schema description:
     + Body
 {{#indent spaces=8}}
 {{#MDCodeBlock}}
-{{~#if example}}{{{MDRenderSchema example}}}{{else}}{{{MDRenderBody schema}}}{{/if~}}
+{{~#if example}}{{MDRenderSchema example}}{{else}}{{MDRenderBody schema}}{{/if~}}
 {{/MDCodeBlock}}
 {{/indent}}
     + Schema
