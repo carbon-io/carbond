@@ -70,6 +70,43 @@ HOST: {{host}}
 {{/indent}}
 {{/if}}
 
+{{~! ---------- parameters ---------- }}
+
+{{#APIBPURLParameters parameters}}
+{{#indent spaces=4}}
++ Parameters
+{{#each this}}
+{{! XXX: good way to add object schemas here? should probably just use description and choose the longer
+         form for parameters with object types}}
+    + {{name}}: {{#truthy example}}`{{example}}`{{/truthy}} ({{#truthy schema}}{{schema.type}}, {{/truthy}}{{#if required}}required{{else}}optional{{/if}})
+      {{~#truthy description}} - {{APIBPSanitizeParameterDescription description}}{{/truthy}}
+    {{#truthy schema.enum}}
+        {{#truthy schema.default}}
+        + Default: {{schema.default}}
+        {{/truthy}}
+        + Members
+        {{#each schema.enum}}
+            + `{{this}}`
+        {{/each}}
+    {{/truthy}}
+
+{{#if_eq schema.type "object"}}
+
+{{#indent spaces=8}}
+{{#MDCodeBlock}}
+{{{MDRenderBody schema}}}
+{{/MDCodeBlock}}
+{{~/indent}}
+{{~/if_eq}}
+{{#if default}}
+        + Default: `{{json default}}`
+{{/if}}
+{{/each}}
+{{/indent}}
+{{/APIBPURLParameters}}
+
+{{~! ---------- /parameters ---------- ~}}
+
 {{#if parameters.header.length}}
 {{~! XXX: not really sure what to do with headers values here. throwing in the type and description if they are defined}}
     + Headers
