@@ -58,18 +58,6 @@ HOST: {{host}}
 {{~/if}}
 
 
-{{! ---------- payloads ---------- ~}}
-
-{{#each requests}}
-{{! XXX: what if we can consume multiple media types? }}
-+ Request ({{@root.consumes.[0]}})
-{{#if requestSchemaElements}}
-    ### Request attributes
-{{#indent spaces=4}}
-{{> schemaElements requestSchemaElements}}
-{{/indent}}
-{{/if}}
-
 {{~! ---------- parameters ---------- }}
 
 {{#APIBPURLParameters parameters}}
@@ -106,6 +94,19 @@ HOST: {{host}}
 {{/APIBPURLParameters}}
 
 {{~! ---------- /parameters ---------- ~}}
+
+
+{{! ---------- payloads ---------- ~}}
+
+{{#each requests}}
+{{! XXX: what if we can consume multiple media types? }}
++ Request ({{@root.consumes.[0]}})
+{{#if requestSchemaElements}}
+    ### Request attributes
+{{#indent spaces=4}}
+{{> schemaElements requestSchemaElements}}
+{{/indent}}
+{{/if}}
 
 {{#if parameters.header.length}}
 {{~! XXX: not really sure what to do with headers values here. throwing in the type and description if they are defined}}
