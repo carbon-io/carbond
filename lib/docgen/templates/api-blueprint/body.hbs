@@ -61,7 +61,6 @@ HOST: {{host}}
 {{~! ---------- parameters ---------- }}
 
 {{#APIBPURLParameters parameters}}
-{{#indent spaces=4}}
 + Parameters
 {{#each this}}
 {{! XXX: good way to add object schemas here? should probably just use description and choose the longer
@@ -90,7 +89,6 @@ HOST: {{host}}
         + Default: `{{json default}}`
 {{/if}}
 {{/each}}
-{{/indent}}
 {{/APIBPURLParameters}}
 
 {{~! ---------- /parameters ---------- ~}}
