@@ -58,46 +58,9 @@ HOST: {{host}}
 {{~/if}}
 
 
-{{~! ---------- parameters ---------- }}
-
-{{#APIBPURLParameters parameters}}
-+ Parameters
-{{#each this}}
-{{! XXX: good way to add object schemas here? should probably just use description and choose the longer
-         form for parameters with object types}}
-    + {{name}}: {{#truthy example}}`{{example}}`{{/truthy}} ({{#truthy schema}}{{schema.type}}, {{/truthy}}{{#if required}}required{{else}}optional{{/if}})
-      {{~#truthy description}} - {{APIBPSanitizeParameterDescription description}}{{/truthy}}
-    {{#truthy schema.enum}}
-        {{#truthy schema.default}}
-        + Default: {{schema.default}}
-        {{/truthy}}
-        + Members
-        {{#each schema.enum}}
-            + `{{this}}`
-        {{/each}}
-    {{/truthy}}
-
-{{#if_eq schema.type "object"}}
-
-{{#indent spaces=8}}
-{{#MDCodeBlock}}
-{{{MDRenderBody schema}}}
-{{/MDCodeBlock}}
-{{~/indent}}
-{{~/if_eq}}
-{{#if default}}
-        + Default: `{{json default}}`
-{{/if}}
-{{/each}}
-{{/APIBPURLParameters}}
-
-{{~! ---------- /parameters ---------- ~}}
-
-
 {{! ---------- payloads ---------- ~}}
 
 {{#each requests}}
-{{#if (or parameters.body.length parameters.header.length requestSchemaElements)}}
 {{! XXX: what if we can consume multiple media types? }}
 + Request ({{@root.consumes.[0]}})
 {{#if requestSchemaElements}}
@@ -115,23 +78,22 @@ HOST: {{host}}
 {{~/each}}
 {{~/if}}
 
-{{#if parameters.body.0.schema}}
+{{#if schema}}
 
     + Body
 {{#indent spaces=8}}
 {{#MDCodeBlock}}
-{{~#if parameters.body.0.example}}{{{MDRenderSchema parameters.body.0.example}}}{{else}}{{{MDRenderBody parameters.body.0.schema}}}{{/if~}}
+{{~#if parameters.body.0.example}}{{{MDRenderSchema parameters.body.0.example}}}{{else}}{{{MDRenderBody schema}}}{{/if~}}
 {{/MDCodeBlock}}
 {{/indent}}
     + Schema
 {{#indent spaces=8}}
 {{#MDCodeBlock}}
-{{{MDRenderSchema parameters.body.0.schema}}}
+{{{MDRenderSchema schema}}}
 {{/MDCodeBlock}}
 {{/indent~}}
 
 {{/if~}}
-{{/if}}
 {{/each}}
 
 {{#ifnotempty responses}}
