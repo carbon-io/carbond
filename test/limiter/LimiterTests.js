@@ -8,6 +8,7 @@ var HttpErrors = require('@carbon-io/carbon-core').HttpErrors
 var o  = require('@carbon-io/carbon-core').atom.o(module).main
 var testtube = require('@carbon-io/carbon-core').testtube
 
+var Service = require('../../lib/Service')
 var Limiter = require('../../lib/limiter/Limiter')
 
 module.exports = o({
@@ -50,5 +51,46 @@ module.exports = o({
         assert(resSpy.append.args[0][1] === '60')
       }
     }),
+    o({
+      _type: testtube.Test,
+      name: 'TestLogRejections',
+      description: 'Test logRejections',
+
+      logWarningSpy: sinon.spy(),
+
+      setup: function () {
+        sinon.stub(Limiter.prototype, '_C').callsFake(function() {})
+        sinon.stub(Service.prototype, 'logWarning').callsFake(this.logWarningSpy)
+      },
+      teardown: function () {
+        Service.prototype.logWarning.restore()
+        Limiter.prototype._C.restore()
+      },
+      doTest: function() {
+        const _handleErrorSpy = sinon.spy()
+        const service = o({ _type: Service, _handleError: _handleErrorSpy})
+
+        // Do not log rejected requests
+        let resSpy = sinon.spy()
+        resSpy.append = sinon.spy()
+
+        let limiter = o({ _type: Limiter }) // logRejections: false
+        limiter.initialize(service, service)
+        limiter.sendUnavailable(resSpy)
+
+        assert(!this.logWarningSpy.called)
+
+        // Log rejected requests
+        resSpy = sinon.spy()
+        resSpy.append = sinon.spy()
+
+        limiter = o({ _type: Limiter, logRejections: true })
+        limiter.initialize(service, service)
+        limiter.sendUnavailable(resSpy)
+
+        assert(this.logWarningSpy.called)
+
+      }
+    })
   ]
 })
