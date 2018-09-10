@@ -13,11 +13,13 @@ module.exports = o({
     _o('./LimiterSelectorTests'),
     _o('./StaticKeyLimiterSelectorTests'),
     _o('./ReqPropertyLimiterSelectorTests'),
+    _o('./AccessKeyLimiterSelectorTests'),
     _o('./FunctionLimiterTests'),
     _o('./LimiterPolicyStateTests'),
     _o('./LimiterPolicyTests'),
     _o('./WindowLimiterPolicyTests'),
     _o('./PolicyLimiterTests'),
+    _o('./AccessKeyLimiterTests'),
     _o('./ChainLimiterTests'),
     _o('./ServiceIntegrationTests'),
     _o('./TooBusyLimiterTests')
