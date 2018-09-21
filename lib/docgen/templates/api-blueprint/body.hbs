@@ -57,18 +57,6 @@ HOST: {{host}}
 {{{description}}}
 {{~/if}}
 
-
-{{#if requestSchemaElements}}
-### Request attributes
-{{> schemaElements requestSchemaElements}}
-{{/if}}
-
-
-{{#if responseSchemaElements}}
-### Response attributes
-{{> schemaElements responseSchemaElements}}
-{{/if}}
-
 {{~! ---------- parameters ---------- }}
 
 {{#APIBPURLParameters parameters}}
@@ -106,7 +94,7 @@ HOST: {{host}}
 
 {{! ---------- payloads ---------- ~}}
 
-{{#if (or parameters.body.length parameters.header.length)}}
+{{#each requests}}
 {{! XXX: what if we can consume multiple media types? }}
 + Request ({{@root.consumes.[0]}})
 {{#if parameters.header.length}}
@@ -117,23 +105,23 @@ HOST: {{host}}
 {{~/each}}
 {{~/if}}
 
-{{#if parameters.body.0.schema}}
+{{#if schema}}
 
     + Body
 {{#indent spaces=8}}
 {{#MDCodeBlock}}
-{{~#if parameters.body.0.example}}{{{MDRenderSchema parameters.body.0.example}}}{{else}}{{{MDRenderBody parameters.body.0.schema}}}{{/if~}}
+{{~#if parameters.body.0.example}}{{{MDRenderSchema parameters.body.0.example}}}{{else}}{{{MDRenderBody schema}}}{{/if~}}
 {{/MDCodeBlock}}
 {{/indent}}
     + Schema
 {{#indent spaces=8}}
 {{#MDCodeBlock}}
-{{{MDRenderSchema parameters.body.0.schema}}}
+{{{MDRenderSchema schema}}}
 {{/MDCodeBlock}}
 {{/indent~}}
 
 {{/if~}}
-{{/if}}
+{{/each}}
 
 {{#ifnotempty responses}}
 {{#each responses}}
